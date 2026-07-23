@@ -345,6 +345,16 @@
     <Content Include="Views\CampaignPoll\Details.cshtml" />
     <Content Include="Views\CampaignPoll\Thanks.cshtml" />
     <Content Include="README.md" />
+    <Content Include="docs\Architecture.md" />
+    <Content Include="docs\Database.md" />
+    <Content Include="docs\BusinessModules.md" />
+    <Content Include="docs\CodingStandards.md" />
+    <Content Include="docs\Security.md" />
+    <Content Include="docs\UIStandards.md" />
+    <Content Include="docs\DevelopmentWorkflow.md" />
+    <Content Include="docs\GitWorkflow.md" />
+    <Content Include="docs\Performance.md" />
+    <Content Include="docs\EnterpriseStandards.md" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\custom\hero-slider.js" />
     <Content Include="Scripts\custom\menu-cms.js" />
@@ -738,6 +748,20 @@
     <Content Include="Views\AboutLeader\Faq.cshtml" />
     <Content Include="Views\Shared\_Downloads.cshtml" />
     <Content Include="Views\Downloads\Index.cshtml" />
+    <Content Include="templates\ModuleChecklist.md" />
+    <Content Include="templates\CRUDChecklist.md" />
+    <Content Include="templates\ControllerTemplate.md" />
+    <Content Include="templates\ServiceTemplate.md" />
+    <Content Include="templates\ViewModelTemplate.md" />
+    <Content Include="templates\RazorViewTemplate.md" />
+    <Content Include="templates\JavaScriptTemplate.md" />
+    <Content Include="templates\CSSTemplate.md" />
+    <Content Include="templates\SQLTemplate.md" />
+    <Content Include="templates\TestChecklist.md" />
+    <Content Include="templates\ReleaseChecklist.md" />
+    <Content Include="templates\AIFeaturePrompt.md" />
+    <Content Include="templates\AdminModuleTemplate.md" />
+    <Content Include="templates\DashboardModuleTemplate.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
