@@ -1,0 +1,61 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build Results
+[Bb]in/
+[Oo]bj/
+
+# NuGet
+packages/
+!packages/build/
+
+# Logs
+logs/
+*.log
+
+# Cache
+cache/
+
+# Output
+output/
+
+# Temp
+Temp/
+tmp/
+
+# IIS Express
+.vs/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# Node
+node_modules/
+
+# npm
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+
+# Publish
+Publish/
+
+# Backup
+*.bak
+
+# OS Files
+.DS_Store
