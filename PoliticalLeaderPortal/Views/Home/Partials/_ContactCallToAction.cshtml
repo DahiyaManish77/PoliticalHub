@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<section class="contact-cta-section" id="contact-section">
+
+    <div class="container">
+
+        <div class="contact-cta-wrapper">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-7">
+
+                    <span class="contact-badge">
+                        Contact & Support
+                    </span>
+
+                    <h2 class="contact-title">
+                        Need Assistance Or Want To Connect?
+                    </h2>
+
+                    <p class="contact-description">
+                        Have a question, suggestion, concern or development
+                        related issue? Our team is always available to help
+                        and guide you. Connect with us and share your thoughts.
+                    </p>
+
+                    <div class="contact-info">
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+
+                            <div>
+                                <h6>Call Office</h6>
+                                <span>+91 98765 43210</span>
+                            </div>
+
+                        </div>
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+
+                            <div>
+                                <h6>Email Us</h6>
+                                <span>info@sangeetsom.in</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5">
+
+                    <div class="contact-buttons">
+
+                        <a href="@Url.Action("ContactUs", "CitizenConnect", new { area = "" })"
+                           class="btn-contact-us">
+                            Contact Us
+                        </a>
+
+                        <a href="@Url.Action("Suggestion", "CitizenConnect", new { area = "" })"
+                           class="btn-send-suggestion">
+                            Send Suggestion
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,146 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.LeaderIntroductionVM
+
+@{
+    ViewBag.Title = "Leader Introduction";
+    var previewUrl = Url.Action("Index", "Home", new { area = "" });
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Leader Introduction</h1>
+        <p>Edit the public homepage profile, vision and mission section.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@previewUrl" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Home
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@using (Html.BeginForm("Index", "LeaderIntroduction", FormMethod.Post, new { enctype = "multipart/form-data", @class = "leader-cms-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.LeaderIntroductionId)
+    @Html.HiddenFor(m => m.PortraitImagePath)
+
+    <div class="admin-card leader-cms-card">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="cms-form-grid">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SectionLabel)
+                        @Html.TextBoxFor(m => m.SectionLabel, new { @class = "form-control", placeholder = "Leader Introduction" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LeaderName)
+                        @Html.TextBoxFor(m => m.LeaderName, new { @class = "form-control", placeholder = "Leader name" })
+                        @Html.ValidationMessageFor(m => m.LeaderName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RoleTagline)
+                        @Html.TextBoxFor(m => m.RoleTagline, new { @class = "form-control", placeholder = "Public service and development" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        @Html.LabelFor(m => m.IntroText)
+                        @Html.TextAreaFor(m => m.IntroText, new { @class = "form-control", rows = "4" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        @Html.LabelFor(m => m.SecondaryText)
+                        @Html.TextAreaFor(m => m.SecondaryText, new { @class = "form-control", rows = "4" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.VisionTitle)
+                        @Html.TextBoxFor(m => m.VisionTitle, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MissionTitle)
+                        @Html.TextBoxFor(m => m.MissionTitle, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.VisionText)
+                        @Html.TextAreaFor(m => m.VisionText, new { @class = "form-control", rows = "4" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MissionText)
+                        @Html.TextAreaFor(m => m.MissionText, new { @class = "form-control", rows = "4" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="leader-cms-side">
+                    <div class="leader-cms-preview">
+                        <img src="@Url.Content(String.IsNullOrWhiteSpace(Model.PortraitImagePath) ? "~/Content/images/leader.png" : Model.PortraitImagePath)" alt="@Model.LeaderName" />
+                        <strong>@Model.LeaderName</strong>
+                        <span>@Model.RoleTagline</span>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PortraitImageFile)
+                        <input type="file" name="PortraitImageFile" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StatusTitle)
+                        @Html.TextBoxFor(m => m.StatusTitle, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StatusText)
+                        @Html.TextAreaFor(m => m.StatusText, new { @class = "form-control", rows = "3" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PrimaryButtonText)
+                        @Html.TextBoxFor(m => m.PrimaryButtonText, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PrimaryButtonUrl)
+                        @Html.TextBoxFor(m => m.PrimaryButtonUrl, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SecondaryButtonText)
+                        @Html.TextBoxFor(m => m.SecondaryButtonText, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SecondaryButtonUrl)
+                        @Html.TextBoxFor(m => m.SecondaryButtonUrl, new { @class = "form-control" })
+                    </div>
+
+                    <label class="cms-check">
+                        @Html.CheckBoxFor(m => m.IsActive)
+                        <span>Show this content on home page</span>
+                    </label>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-save"></i>
+                        Save Leader Introduction
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

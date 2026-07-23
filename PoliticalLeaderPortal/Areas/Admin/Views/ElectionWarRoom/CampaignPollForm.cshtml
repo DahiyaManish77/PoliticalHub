@@ -1,0 +1,74 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignPollVM
+@{
+    bool isEdit = Model != null && Model.CampaignPollId > 0;
+    ViewBag.Title = isEdit ? "Edit Poll" : "Create Poll";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Create shareable public feedback polls with source tracking.</div>
+            </div>
+            <a href="@Url.Action("CampaignPolls", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditPoll" : "CreatePoll", "ElectionWarRoom", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.CampaignPollId)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                @if (isEdit && !String.IsNullOrWhiteSpace(Model.PublicUrl))
+                {
+                    <div class="alert alert-info d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div>
+                            <strong>Public poll link is ready.</strong>
+                            <div class="small"><code>@Model.PublicUrl</code></div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-sm btn-outline-primary" href="@Model.PublicUrl" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i>Open</a>
+                            <a class="btn btn-sm btn-outline-success" href="@Url.Action("PollResults", "ElectionWarRoom", new { id = Model.CampaignPollId })"><i class="bi bi-bar-chart me-1"></i>Results</a>
+                        </div>
+                    </div>
+                }
+                <div class="row g-3">
+                    <div class="col-lg-6">@Html.LabelFor(m => m.Title, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Title, new { @class = "form-control", required = "required", placeholder = "Local issues priority poll" }) @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger small" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.PollType, new { @class = "form-label" }) @Html.DropDownListFor(m => m.PollType, new SelectList(new[] { "Public Feedback", "Volunteer Survey", "Issue Survey", "Event Feedback", "Internal Team" }, Model.PollType), "Select", new { @class = "form-select" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.TargetArea, new { @class = "form-label" }) @Html.TextBoxFor(m => m.TargetArea, new { @class = "form-control", placeholder = "Ward / Booth / Constituency" })</div>
+
+                    <div class="col-12">@Html.LabelFor(m => m.Question, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Question, 3, 40, new { @class = "form-control", required = "required", placeholder = "What should be the top priority for this area?" }) @Html.ValidationMessageFor(m => m.Question, "", new { @class = "text-danger small" })</div>
+                    <div class="col-12">@Html.LabelFor(m => m.Description, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Description, 3, 40, new { @class = "form-control", placeholder = "Short public context for the poll" })</div>
+
+                    <div class="col-lg-3">@Html.LabelFor(m => m.StartDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.EndDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                    <div class="col-lg-2 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active</label></div>
+                    <div class="col-lg-2 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.RequireConsent, new { @class = "form-check-input" }) <label class="form-check-label">Consent</label></div>
+                    <div class="col-lg-2 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.ShowPublicResults, new { @class = "form-check-input" }) <label class="form-check-label">Public results</label></div>
+
+                    <div class="col-12">
+                        <label class="form-label">Options</label>
+                        <div class="row g-2">
+                            @for (int i = 0; i < 6; i++)
+                            {
+                                string value = Model != null && Model.Options.Count > i ? Model.Options[i].OptionText : "";
+                                <div class="col-lg-4"><input class="form-control" name="optionTexts" value="@value" placeholder="Option @(i + 1)" /></div>
+                            }
+                        </div>
+                        <div class="text-muted small mt-2">Minimum two options are required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action("CampaignPolls", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Poll</button>
+            </div>
+        }
+    </div>
+</div>
+
+

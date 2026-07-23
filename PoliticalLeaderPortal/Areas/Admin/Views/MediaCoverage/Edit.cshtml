@@ -1,0 +1,320 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM
+
+@{
+    ViewBag.Title = "Edit Media Coverage";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css" rel="stylesheet" />
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h3 class="mb-0">
+                Edit Media Coverage
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            @using (Html.BeginForm(
+                "Edit",
+                "MediaCoverage",
+                FormMethod.Post,
+                new
+                {
+                    enctype = "multipart/form-data"
+                }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(x => x.MediaCoverageId)
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Source Name
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.SourceName,
+                            new
+                            {
+                                @class = "form-control"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Coverage Date
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.CoverageDate,
+                            "{0:yyyy-MM-dd}",
+                            new
+                            {
+                                @class = "form-control",
+                                type = "date"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Title
+                    </label>
+
+                    @Html.TextBoxFor(
+                        x => x.Title,
+                        new
+                        {
+                            @class = "form-control"
+                        })
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Short Description
+                    </label>
+
+                    @Html.TextAreaFor(
+                        x => x.ShortDescription,
+                        4,
+                        1,
+                        new
+                        {
+                            @class = "form-control"
+                        })
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Description
+                    </label>
+
+                    @Html.TextAreaFor(
+                        x => x.FullDescription,
+                        new
+                        {
+                            @class = "form-control summernote"
+                        })
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Current Source Logo
+                        </label>
+
+                        <br />
+
+                        @if (!string.IsNullOrEmpty(Model.SourceLogoPath))
+                        {
+                            <img src="@Model.SourceLogoPath"
+                                 class="img-thumbnail"
+                                 style="max-height:120px;" />
+                        }
+                        else
+                        {
+                            <p class="text-muted">
+                                No Logo Uploaded
+                            </p>
+                        }
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Current Cover Image
+                        </label>
+
+                        <br />
+
+                        @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+                        {
+                            <img src="@Model.CoverImagePath"
+                                 class="img-thumbnail"
+                                 style="max-height:120px;" />
+                        }
+                        else
+                        {
+                            <p class="text-muted">
+                                No Cover Image Uploaded
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Change Source Logo
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.SourceLogoFile,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "file",
+                                accept = "image/*"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Change Cover Image
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.CoverImageFile,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "file",
+                                accept = "image/*"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        External URL
+                    </label>
+
+                    @Html.TextBoxFor(
+                        x => x.ExternalUrl,
+                        new
+                        {
+                            @class = "form-control"
+                        })
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Display Order
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.DisplayOrder,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "number"
+                            })
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label d-block">
+                            Featured
+                        </label>
+
+                        @Html.CheckBoxFor(
+                            x => x.IsFeatured)
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label d-block">
+                            Active
+                        </label>
+
+                        @Html.CheckBoxFor(
+                            x => x.IsActive)
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            View Count
+                        </label>
+
+                        @Html.TextBoxFor(
+                            x => x.ViewCount,
+                            new
+                            {
+                                @class = "form-control",
+                                @readonly = "readonly"
+                            })
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="fa fa-save"></i>
+                    Update
+
+                </button>
+
+                <a href="@Url.Action("Index", "MediaCoverage")"
+                   class="btn btn-secondary">
+
+                    Back
+
+                </a>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.summernote').summernote({
+
+            height: 300
+
+        });
+
+    });
+
+</script>

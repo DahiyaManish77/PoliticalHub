@@ -1,0 +1,91 @@
+@model List<PoliticalLeaderPortal.ViewModels.CitizenConnectVM>
+@{
+    ViewBag.Title = "Citizen Connect";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <h4 class="mb-0 fw-bold">Citizen Connect</h4>
+                <div class="text-muted small">Contact, volunteer and suggestion submissions.</div>
+            </div>
+            <span class="badge text-bg-primary">@Model.Count records</span>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "CitizenConnect", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            {
+                <div class="col-md-3">
+                    @Html.DropDownList("requestType", new SelectList(new[] { "", "Contact", "Volunteer", "Suggestion" }, ViewBag.RequestType), "All Types", new { @class = "form-select" })
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("status", new SelectList(new[] { "", "New", "In Review", "Resolved", "Closed" }, ViewBag.Status), "All Status", new { @class = "form-select" })
+                </div>
+                <div class="col-md-4">
+                    <input type="search" name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Search name, mobile, subject, district" />
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Type</th>
+                            <th>Citizen</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="badge text-bg-info">@item.RequestType</span></td>
+                                <td>
+                                    <strong>@item.FullName</strong>
+                                    <div class="small text-muted">@item.MobileNumber @item.Email</div>
+                                </td>
+                                <td>@item.Subject</td>
+                                <td><span class="badge text-bg-secondary">@item.Status</span></td>
+                                <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                <td class="text-end">
+                                    <a href="@Url.Action("Details", new { id = item.CitizenConnectId })" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger js-delete-connect" data-id="@item.CitizenConnectId"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".js-delete-connect").forEach(function (button) {
+            button.addEventListener("click", function () {
+                var id = button.getAttribute("data-id");
+                Swal.fire({ title: "Delete request?", icon: "warning", showCancelButton: true, confirmButtonText: "Delete" })
+                    .then(function (result) {
+                        if (!result.isConfirmed) return;
+                        fetch("@Url.Action("Delete", "CitizenConnect")", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                            body: "id=" + encodeURIComponent(id)
+                        }).then(function (response) { return response.json(); })
+                          .then(function (data) {
+                              Swal.fire(data.success ? "Deleted" : "Error", data.message, data.success ? "success" : "error")
+                                  .then(function () { if (data.success) location.reload(); });
+                          });
+                    });
+            });
+        });
+    </script>
+}

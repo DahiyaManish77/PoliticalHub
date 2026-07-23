@@ -1,0 +1,99 @@
+﻿@model PoliticalLeaderPortal.ViewModels.UpcomingEventVM
+
+@{
+    ViewBag.Title = "Event Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-info text-white">
+
+            <h4 class="mb-0">
+                Event Details
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (!string.IsNullOrWhiteSpace(Model.EventImagePath))
+            {
+                <div class="mb-4">
+
+                    <img src="@Url.Content(Model.EventImagePath)"
+                         class="img-fluid rounded shadow"
+                         style="max-height:400px;" />
+
+                </div>
+            }
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="200">Title</th>
+                    <td>@Model.Title</td>
+                </tr>
+
+                <tr>
+                    <th>Event Date</th>
+                    <td>@Model.EventDate.ToString("dd MMM yyyy")</td>
+                </tr>
+
+                <tr>
+                    <th>Event Time</th>
+                    <td>@Model.EventTime</td>
+                </tr>
+
+                <tr>
+                    <th>Location</th>
+                    <td>@Model.EventLocation</td>
+                </tr>
+
+                <tr>
+                    <th>Display Order</th>
+                    <td>@Model.DisplayOrder</td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        @(Model.IsActive ? "Active" : "Inactive")
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Short Description</th>
+                    <td>@Model.ShortDescription</td>
+                </tr>
+
+                <tr>
+                    <th>Full Description</th>
+                    <td>@Html.Raw(Model.FullDescription)</td>
+                </tr>
+
+            </table>
+
+            <a href="@Url.Action("Edit",
+                                 "UpcomingEvent",
+                                 new { id = Model.EventId })"
+               class="btn btn-warning">
+
+                Edit
+
+            </a>
+
+            <a href="@Url.Action("Index")"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,153 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignPollVM
+
+@{
+    Layout = null;
+}
+
+<section class="home-poll-section">
+    <div class="container">
+        <div class="home-poll-panel">
+            <div class="home-poll-copy">
+                <span class="home-poll-kicker">Public Feedback</span>
+                <h2>Polls and Surveys</h2>
+                @if (Model != null)
+                {
+                    <p>@(String.IsNullOrWhiteSpace(Model.Description) ? "Share your opinion and help the campaign team understand local priorities." : Model.Description)</p>
+                    <strong>@Model.Question</strong>
+                    <div class="home-poll-meta">
+                        @if (!String.IsNullOrWhiteSpace(Model.TargetArea))
+                        {
+                            <span><i class="bi bi-geo-alt"></i>@Model.TargetArea</span>
+                        }
+                        <span><i class="bi bi-chat-square-text"></i>@Model.TotalResponses responses</span>
+                    </div>
+                }
+                else
+                {
+                    <p>Active public polls and surveys will appear here when they are published from the campaign dashboard.</p>
+                    <strong>Collect structured feedback from citizens, supporters and volunteers.</strong>
+                }
+            </div>
+
+            <div class="home-poll-action">
+                @if (Model != null)
+                {
+                    <a href="@Url.Action("Details", "CampaignPoll", new { slug = Model.PublicSlug, source = "home" })" class="home-poll-btn">
+                        Participate Now
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("CampaignPolls", "ElectionWarRoom", new { area = "Admin" })" class="home-poll-btn">
+                        Create Poll
+                    </a>
+                }
+                <small>Results are for public feedback and issue understanding.</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .home-poll-section {
+        padding: 32px 0;
+        background: #ffffff;
+    }
+
+    .home-poll-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 24px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 24px;
+        background: #f8fafc;
+    }
+
+    .home-poll-kicker {
+        display: inline-flex;
+        margin-bottom: 6px;
+        color: #e85d04;
+        font-size: .76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .home-poll-copy h2 {
+        margin: 0;
+        color: #111827;
+        font-size: clamp(1.3rem, 2vw, 1.95rem);
+        font-weight: 800;
+    }
+
+    .home-poll-copy p {
+        margin: 8px 0 10px;
+        max-width: 720px;
+        color: #64748b;
+        line-height: 1.55;
+    }
+
+    .home-poll-copy strong {
+        display: block;
+        color: #0f172a;
+        font-size: 1rem;
+    }
+
+    .home-poll-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+        color: #475569;
+        font-size: .88rem;
+    }
+
+    .home-poll-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .home-poll-action {
+        display: grid;
+        gap: 8px;
+        justify-items: end;
+        min-width: 190px;
+    }
+
+    .home-poll-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 18px;
+        border-radius: 6px;
+        background: #111827;
+        color: #fff;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .home-poll-action small {
+        color: #64748b;
+        text-align: right;
+        max-width: 260px;
+    }
+
+    @@media (max-width: 767px) {
+        .home-poll-panel {
+            grid-template-columns: 1fr;
+            padding: 18px;
+        }
+
+        .home-poll-action {
+            justify-items: stretch;
+            min-width: 0;
+        }
+
+        .home-poll-action small {
+            text-align: left;
+        }
+    }
+</style>

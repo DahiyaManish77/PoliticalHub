@@ -1,0 +1,279 @@
+﻿@model PoliticalLeaderPortal.ViewModels.GalleryImageVM
+
+@{
+    ViewBag.Title = "Upload Gallery Images";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Upload Gallery Images
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Index","GalleryImage")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    @using (Html.BeginForm(
+        "Create",
+        "GalleryImage",
+        FormMethod.Post,
+        new
+        {
+            enctype = "multipart/form-data"
+        }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(x => x.GalleryCategoryId,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.DropDownListFor(
+                                x => x.GalleryCategoryId,
+                                Model.Categories,
+                                "-- Select Category --",
+                                new
+                                {
+                                    @class = "form-select"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.GalleryCategoryId,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(x => x.DisplayOrder,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(x => x.DisplayOrder,
+                                new
+                                {
+                                    @class = "form-control",
+                                    type = "number"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(x => x.ImageTitle,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(x => x.ImageTitle,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "Enter image title"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(x => x.ImageCaption,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextAreaFor(x => x.ImageCaption,
+                                new
+                                {
+                                    @class = "form-control",
+                                    rows = "4",
+                                    placeholder = "Enter image caption"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Select Images
+
+                            </label>
+
+                            <input type="file"
+                                   id="ImageFiles"
+                                   name="ImageFiles"
+                                   multiple
+                                   accept=".jpg,.jpeg,.png,.webp"
+                                   class="form-control" />
+
+                            <small class="text-muted">
+
+                                You can select multiple images at once.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div id="imagePreviewContainer"
+                             class="row g-3">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="form-check">
+
+                    @Html.CheckBoxFor(
+                        x => x.IsActive,
+                        new
+                        {
+                            @class = "form-check-input"
+                        })
+
+                    @Html.LabelFor(
+                        x => x.IsActive,
+                        new
+                        {
+                            @class = "form-check-label"
+                        })
+
+                </div>
+
+            </div>
+
+            <div class="card-footer bg-white">
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="bi bi-cloud-upload"></i>
+                    Upload Images
+
+                </button>
+
+                <a href="@Url.Action("Index","GalleryImage")"
+                   class="btn btn-outline-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </div>
+
+    }
+
+</div>
+
+@section Scripts {
+
+    Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#ImageFiles").on("change", function () {
+
+                $("#imagePreviewContainer").html("");
+
+                var files = this.files;
+
+                if (files.length === 0)
+                    return;
+
+                for (var i = 0; i < files.length; i++) {
+
+                    var file = files[i];
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+
+                        var html =
+                            '<div class="col-lg-2 col-md-3 col-sm-4 col-6">' +
+                            '<div class="card shadow-sm">' +
+                            '<img src="' + e.target.result + '" ' +
+                            'class="card-img-top" ' +
+                            'style="height:150px;object-fit:cover;" />' +
+                            '</div>' +
+                            '</div>';
+
+                        $("#imagePreviewContainer").append(html);
+
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+
+            });
+
+        });
+
+    </script>
+
+}

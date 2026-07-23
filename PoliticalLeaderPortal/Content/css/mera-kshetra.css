@@ -1,0 +1,449 @@
+.kshetra-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 28px;
+    align-items: end;
+    min-height: 430px;
+    padding: 92px clamp(18px, 5vw, 76px) 46px;
+    color: #fff;
+    overflow: hidden;
+    background:
+        linear-gradient(105deg, rgba(12, 24, 44, .94) 0%, rgba(12, 24, 44, .78) 48%, rgba(21, 88, 103, .62) 100%),
+        url("/Content/images/leader.png") right center/contain no-repeat,
+        linear-gradient(135deg, #10213f, #155867);
+}
+
+.kshetra-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 6px;
+    background: linear-gradient(90deg, #ff8a1c, #25b9cf, #1f3c88);
+}
+
+.kshetra-hero__content,
+.kshetra-quick-card {
+    position: relative;
+    z-index: 1;
+}
+
+.kshetra-eyebrow,
+.kshetra-label {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 999px;
+    background: rgba(255, 138, 28, .14);
+    color: #d95f00;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 7px 11px;
+}
+
+.kshetra-eyebrow {
+    color: #ffd9b1;
+    background: rgba(255, 255, 255, .12);
+}
+
+.kshetra-hero h1 {
+    margin: 14px 0 12px;
+    font-size: clamp(34px, 5vw, 70px);
+    line-height: .98;
+    font-weight: 800;
+}
+
+.kshetra-hero p {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255, 255, 255, .86);
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+.kshetra-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.kshetra-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.kshetra-btn:hover {
+    transform: translateY(-2px);
+}
+
+.kshetra-btn--primary {
+    background: #ff8a1c;
+    color: #111827;
+    box-shadow: 0 16px 32px rgba(255, 138, 28, .22);
+}
+
+.kshetra-btn--light {
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .2);
+}
+
+.kshetra-quick-card {
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 8px;
+    padding: 24px;
+    background: rgba(255, 255, 255, .12);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 24px 54px rgba(0, 0, 0, .22);
+}
+
+.kshetra-quick-card span {
+    display: block;
+    color: #ffd9b1;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kshetra-quick-card strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 24px;
+}
+
+.kshetra-quick-card p {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.kshetra-page {
+    background: #f6f8fb;
+    color: #14213d;
+    padding: 28px clamp(14px, 4vw, 64px) 56px;
+}
+
+.kshetra-stats,
+.kshetra-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.kshetra-stats {
+    margin: -58px auto 28px;
+    max-width: 1180px;
+    position: relative;
+    z-index: 2;
+}
+
+.kshetra-stats article,
+.kshetra-panel,
+.kshetra-card,
+.kshetra-priority-band,
+.kshetra-sources {
+    border: 1px solid rgba(20, 33, 61, .08);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 14px 34px rgba(20, 33, 61, .07);
+}
+
+.kshetra-stats article {
+    padding: 18px;
+}
+
+.kshetra-stats i,
+.kshetra-card i,
+.kshetra-panel--accent i {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff8a1c, #25b9cf);
+    margin-bottom: 12px;
+}
+
+.kshetra-stats span {
+    display: block;
+    color: #697386;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.kshetra-stats strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.kshetra-section-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(260px, .8fr);
+    gap: 18px;
+    max-width: 1180px;
+    margin: 0 auto 34px;
+}
+
+.kshetra-panel {
+    padding: clamp(22px, 3vw, 34px);
+}
+
+.kshetra-panel h2,
+.kshetra-priority-band h2,
+.kshetra-section-title h2 {
+    margin: 10px 0;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.16;
+    font-weight: 800;
+}
+
+.kshetra-panel h3,
+.kshetra-card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.kshetra-panel p,
+.kshetra-card p,
+.kshetra-priority-band p {
+    margin: 0;
+    color: #5f6b7a;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.kshetra-panel--accent {
+    background: #10213f;
+    color: #fff;
+}
+
+.kshetra-panel--accent p {
+    color: rgba(255, 255, 255, .78);
+}
+
+.kshetra-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.kshetra-tags span {
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: #eef7fa;
+    color: #116273;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.kshetra-section-title {
+    max-width: 1180px;
+    margin: 0 auto 18px;
+    text-align: center;
+}
+
+.kshetra-section-title span {
+    color: #d95f00;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kshetra-module-block {
+    max-width: 1180px;
+    margin: 0 auto 24px;
+}
+
+.kshetra-module-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.kshetra-module-heading span {
+    color: #14213d;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.kshetra-module-heading strong {
+    color: #697386;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kshetra-card-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.kshetra-card {
+    overflow: hidden;
+    padding: 22px;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.kshetra-card--featured {
+    border-color: rgba(255, 138, 28, .34);
+}
+
+.kshetra-card__image {
+    width: calc(100% + 44px);
+    height: 170px;
+    object-fit: cover;
+    margin: -22px -22px 18px;
+    display: block;
+}
+
+.kshetra-card__subtitle {
+    display: block;
+    margin: -2px 0 8px;
+    color: #0c7c91;
+    font-size: 13px;
+}
+
+.kshetra-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.kshetra-card__meta span,
+.kshetra-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background: #f2f7fa;
+    color: #26364f;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.kshetra-source-link {
+    margin-top: 12px;
+    background: #fff4e8;
+    color: #b95400;
+    text-decoration: none;
+}
+
+.kshetra-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(20, 33, 61, .11);
+}
+
+.kshetra-priority-band {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+    gap: 24px;
+    align-items: center;
+    max-width: 1180px;
+    margin: 0 auto 22px;
+    padding: clamp(24px, 4vw, 38px);
+}
+
+.kshetra-priority-list {
+    display: grid;
+    gap: 10px;
+}
+
+.kshetra-priority-list span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f5f8fb;
+    color: #26364f;
+    font-weight: 700;
+}
+
+.kshetra-priority-list i {
+    color: #16a085;
+}
+
+.kshetra-sources {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px;
+}
+
+.kshetra-sources span {
+    color: #697386;
+    font-weight: 800;
+}
+
+.kshetra-sources a {
+    color: #0c7c91;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    .kshetra-hero,
+    .kshetra-section-grid,
+    .kshetra-priority-band {
+        grid-template-columns: 1fr;
+    }
+
+    .kshetra-hero {
+        min-height: 380px;
+        padding-top: 72px;
+    }
+
+    .kshetra-stats,
+    .kshetra-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .kshetra-hero {
+        padding: 58px 16px 34px;
+    }
+
+    .kshetra-hero h1 {
+        font-size: 36px;
+    }
+
+    .kshetra-page {
+        padding-inline: 12px;
+    }
+
+    .kshetra-stats {
+        grid-template-columns: 1fr;
+        margin-top: -28px;
+    }
+
+    .kshetra-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kshetra-btn {
+        width: 100%;
+    }
+}

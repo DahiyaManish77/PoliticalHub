@@ -1,0 +1,186 @@
+@model List<PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.VoterVM>
+
+@{
+    ViewBag.Title = "Voter Management";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    bool canCreate = ViewBag.CanCreate == true;
+    bool canEdit = ViewBag.CanEdit == true;
+    bool canDelete = ViewBag.CanDelete == true;
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">Voter Management</h4>
+                <small>EPIC, booth, part, serial, voter contact and support mapping.</small>
+            </div>
+
+            @if (canCreate)
+            {
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="@Url.Action("Rolls", "Voter")" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                        Official Rolls
+                    </a>
+                    <a href="@Url.Action("DownloadLatestBackup")" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-download"></i>
+                        Download Backup
+                    </a>
+                    @using (Html.BeginForm("GenerateBackupNow", "Voter", FormMethod.Post, new { area = "Admin", @class = "d-inline" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-database-down"></i>
+                            Backup Now
+                        </button>
+                    }
+                    <a href="@Url.Action("Create")" class="btn btn-light btn-sm">
+                        <i class="bi bi-plus-circle"></i>
+                        Add Voter
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "Voter", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            {
+                <div class="col-lg-4">
+                    <input type="search"
+                           name="keyword"
+                           value="@ViewBag.Keyword"
+                           class="form-control"
+                           placeholder="Search by EPIC, name, mobile, booth, village, ward, support status" />
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" name="assembly" value="@ViewBag.Assembly" class="form-control" placeholder="Assembly" list="assemblyFilterList" />
+                    <datalist id="assemblyFilterList"></datalist>
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" name="block" value="@ViewBag.Block" class="form-control" placeholder="Block" list="blockFilterList" />
+                    <datalist id="blockFilterList"></datalist>
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" name="village" value="@ViewBag.Village" class="form-control" placeholder="Village" list="villageFilterList" />
+                    <datalist id="villageFilterList"></datalist>
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Photo</th>
+                            <th>EPIC</th>
+                            <th>Voter</th>
+                            <th>Mobile</th>
+                            <th>Booth</th>
+                            <th>Part / Serial</th>
+                            <th>Village / Ward</th>
+                            <th>Status</th>
+                            <th width="150">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!String.IsNullOrWhiteSpace(item.VoterPhotoPath))
+                                    {
+                                        <a href="@Url.Content(item.VoterPhotoPath)" target="_blank">
+                                            <img src="@Url.Content(item.VoterPhotoPath)" alt="@item.VoterName" style="width:42px;height:42px;object-fit:cover;border-radius:50%;border:1px solid #dee2e6;" />
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-muted">No Photo</span>
+                                    }
+                                    @if (!String.IsNullOrWhiteSpace(item.AadhaarPhotoPath))
+                                    {
+                                        <a href="@Url.Content(item.AadhaarPhotoPath)" target="_blank" class="d-block small mt-1">Aadhaar</a>
+                                    }
+                                </td>
+                                <td>@(String.IsNullOrWhiteSpace(item.EpicNumber) ? "-" : item.EpicNumber)</td>
+                                <td>
+                                    <strong>@item.VoterName</strong>
+                                    <div class="small text-muted">@item.FatherOrHusbandName</div>
+                                </td>
+                                <td>@(String.IsNullOrWhiteSpace(item.MobileNumber) ? "-" : item.MobileNumber)</td>
+                                <td>
+                                    <strong>@item.BoothNumber</strong>
+                                    <div class="small text-muted">@item.BoothName</div>
+                                </td>
+                                <td>@item.PartNumber / @item.SerialNumber</td>
+                                <td>@item.Village / @item.Ward</td>
+                                <td>
+                                    <span class="badge bg-info">@item.PoliticalStatus</span>
+                                    @if (item.IsPriorityVoter)
+                                    {
+                                        <span class="badge bg-warning text-dark">Priority</span>
+                                    }
+                                    @if (item.IsFirstTimeVoter)
+                                    {
+                                        <span class="badge bg-success">First Time</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (canEdit)
+                                    {
+                                        <a href="@Url.Action("Edit", new { id = item.VoterId })"
+                                           class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm btnDelete"
+                                                data-id="@item.VoterId"
+                                                data-delete-url="@Url.Action("Delete")">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var endpoint = "@Url.Action("LocationOptions", "Voter", new { area = "Admin" })";
+
+            function bindDatalist(field, listId) {
+                fetch(endpoint + "?field=" + encodeURIComponent(field))
+                    .then(function (response) { return response.json(); })
+                    .then(function (items) {
+                        var list = document.getElementById(listId);
+                        if (!list) return;
+                        list.innerHTML = "";
+                        items.forEach(function (item) {
+                            var option = document.createElement("option");
+                            option.value = item;
+                            list.appendChild(option);
+                        });
+                    });
+            }
+
+            bindDatalist("AssemblyConstituency", "assemblyFilterList");
+            bindDatalist("Block", "blockFilterList");
+            bindDatalist("Village", "villageFilterList");
+        })();
+    </script>
+}

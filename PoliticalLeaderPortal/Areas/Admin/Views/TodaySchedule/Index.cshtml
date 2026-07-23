@@ -1,0 +1,150 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.TodayScheduleVM>
+
+@{
+    ViewBag.Title = "Today's Schedule";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    bool canCreate = ViewBag.CanCreate == true;
+    bool canEdit = ViewBag.CanEdit == true;
+    bool canDelete = ViewBag.CanDelete == true;
+    var rows = Model == null ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.TodayScheduleVM>() : Model.ToList();
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <div class="text-uppercase small fw-semibold text-primary">Daily Planning</div>
+                <h4 class="mb-0 fw-bold">Today's Schedule</h4>
+                <small class="text-muted">Manage date, time, place, contact person, program type and status.</small>
+            </div>
+            @if (canCreate)
+            {
+                <a href="@Url.Action("Create", "TodaySchedule")" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle"></i> Add Schedule
+                </a>
+            }
+        </div>
+
+        <div class="card-body">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+
+            @using (Html.BeginForm("Index", "TodaySchedule", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            {
+                <div class="col-lg-3">
+                    <input type="date" name="date" value="@ViewBag.Date" class="form-control" />
+                </div>
+                <div class="col-lg-7">
+                    <input type="search" name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Search by title, place, contact, mobile, organizer, category or status" />
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+                </div>
+            }
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4"><div class="border rounded-2 bg-light p-3"><div class="small text-muted">Total Programs</div><div class="fs-4 fw-bold">@rows.Count</div></div></div>
+                <div class="col-md-4"><div class="border rounded-2 bg-light p-3"><div class="small text-muted">Completed</div><div class="fs-4 fw-bold">@rows.Count(x => x.Status == "Completed")</div></div></div>
+                <div class="col-md-4"><div class="border rounded-2 bg-light p-3"><div class="small text-muted">High Priority</div><div class="fs-4 fw-bold">@rows.Count(x => x.Priority == "High" || x.Priority == "Critical")</div></div></div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Program</th>
+                            <th>Place</th>
+                            <th>Contact</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th class="text-end" width="140">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!rows.Any())
+                        {
+                            <tr><td colspan="8" class="text-center text-muted py-5"><i class="bi bi-calendar2-check fs-1 d-block mb-2"></i>No schedule found.</td></tr>
+                        }
+                        @foreach (var item in rows)
+                        {
+                            <tr>
+                                <td>@item.ScheduleDate.ToString("dd MMM yyyy")</td>
+                                <td><span class="badge bg-dark">@item.ScheduleTime</span></td>
+                                <td>
+                                    <strong>@item.Title</strong>
+                                    <div class="small text-muted">@item.Description</div>
+                                </td>
+                                <td>
+                                    @item.Place
+                                    @if (!String.IsNullOrWhiteSpace(item.MapLink))
+                                    {
+                                        <a href="@item.MapLink" target="_blank" rel="noopener" class="small d-block">Map</a>
+                                    }
+                                </td>
+                                <td>
+                                    @item.ContactPerson
+                                    <div class="small text-muted">@item.ContactMobile</div>
+                                </td>
+                                <td>@item.Category</td>
+                                <td>
+                                    <span class="badge bg-@(item.Status == "Completed" ? "success" : item.Status == "Cancelled" ? "danger" : item.Priority == "High" || item.Priority == "Critical" ? "warning text-dark" : "info")">@item.Status</span>
+                                </td>
+                                <td class="text-end">
+                                    @if (canEdit)
+                                    {
+                                        <a href="@Url.Action("Edit", new { id = item.TodayScheduleId })" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-outline-danger btnDeleteSchedule" data-id="@item.TodayScheduleId" data-delete-url="@Url.Action("Delete")"><i class="bi bi-trash"></i></button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function notify(options) {
+                if (window.Swal) return Swal.fire(options);
+                alert(options.text || options.title || "");
+                return Promise.resolve({ isConfirmed: true });
+            }
+
+            document.querySelectorAll(".btnDeleteSchedule").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    notify({
+                        title: "Delete schedule?",
+                        text: "This schedule entry will be removed.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete",
+                        cancelButtonText: "Cancel"
+                    }).then(function (result) {
+                        if (!result.isConfirmed) return;
+                        fetch(button.getAttribute("data-delete-url"), {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "X-Requested-With": "XMLHttpRequest" },
+                            body: "id=" + encodeURIComponent(button.getAttribute("data-id"))
+                        })
+                        .then(function (response) { return response.json(); })
+                        .then(function (data) {
+                            notify({ title: data.success ? "Deleted" : "Not deleted", text: data.message, icon: data.success ? "success" : "error" })
+                                .then(function () { if (data.success) window.location.reload(); });
+                        });
+                    });
+                });
+            });
+        })();
+    </script>
+}

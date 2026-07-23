@@ -1,0 +1,169 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.StatisticVM>
+
+@{
+    ViewBag.Title = "Statistics";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+
+            <h4 class="mb-0">
+                Home Statistics
+            </h4>
+
+            <a href="@Url.Action("Create")"
+               class="btn btn-light btn-sm">
+
+                Add Statistic
+
+            </a>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Value
+                            </th>
+
+                            <th>
+                                Icon
+                            </th>
+
+                            <th>
+                                Order
+                            </th>
+
+                            <th>
+                                Active
+                            </th>
+
+                            <th width="150">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Title
+                                </td>
+
+                                <td>
+                                    @item.StatisticValue
+                                </td>
+
+                                <td>
+
+                                    <i class="@item.IconClass"></i>
+
+                                    @item.IconClass
+
+                                </td>
+
+                                <td>
+                                    @item.DisplayOrder
+                                </td>
+
+                                <td>
+                                    @(item.IsActive ? "Yes" : "No")
+                                </td>
+
+                                <td>
+
+                                    <a href="@Url.Action("Edit",
+                                    new { id = item.StatisticId })"
+                                       class="btn btn-warning btn-sm">
+
+                                        Edit
+
+                                    </a>
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm btnDelete"
+                                            data-id="@item.StatisticId">
+
+                                        Delete
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+
+</div>
+
+@section scripts{
+
+    <script>
+
+    $(".btnDelete").click(function () {
+
+        var id =
+            $(this).data("id");
+
+        Swal.fire({
+
+            title: "Delete?",
+            text: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true
+
+        }).then(function (result) {
+
+            if (result.isConfirmed) {
+
+                $.post(
+                    '@Url.Action("Delete")',
+                    { id: id },
+                    function () {
+
+                        location.reload();
+
+                    });
+
+            }
+
+        });
+
+    });
+
+    </script>
+
+}

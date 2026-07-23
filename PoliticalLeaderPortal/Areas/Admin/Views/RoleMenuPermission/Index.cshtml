@@ -1,0 +1,110 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.RoleMenuPermissionPageVM
+
+@{
+    ViewBag.Title = "Role Permissions";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">Role Permissions</h4>
+                <small>Assign admin menus and Election War Room modules to selected roles.</small>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "RoleMenuPermission", FormMethod.Get, new { area = "Admin", @class = "row g-2 align-items-end" }))
+            {
+                <div class="col-md-8 col-lg-5">
+                    <label class="form-label">Select Role</label>
+                    @Html.DropDownListFor(
+                        m => m.SelectedRoleId,
+                        Model.Roles,
+                        new
+                        {
+                            @class = "form-select",
+                            name = "roleId"
+                        })
+                </div>
+                <div class="col-md-4 col-lg-2 d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        Load
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Save", "RoleMenuPermission", FormMethod.Post, new { area = "Admin" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("roleId", Model.SelectedRoleId)
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="fw-bold mb-0">Allowed Menus / Modules</h5>
+                    <small class="text-muted">Tick View to show and allow access. Create/Edit/Delete are ready for module CRUD screens.</small>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save"></i>
+                    Save Permissions
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Menu / Module</th>
+                            <th>Controller</th>
+                            <th>Action</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Create</th>
+                            <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Menus.Count; i++)
+                        {
+                            var item = Model.Menus[i];
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(m => m.Menus[i].MenuId)
+                                    @Html.HiddenFor(m => m.Menus[i].MenuName)
+                                    @Html.HiddenFor(m => m.Menus[i].ControllerName)
+                                    @Html.HiddenFor(m => m.Menus[i].ActionName)
+                                    <div style="padding-left:@(Math.Max(0, item.MenuLevel - 1) * 18)px">
+                                        <i class="@(String.IsNullOrWhiteSpace(item.IconClass) ? "fas fa-folder" : item.IconClass) text-primary me-2"></i>
+                                        <strong>@item.MenuName</strong>
+                                    </div>
+                                </td>
+                                <td>@item.ControllerName</td>
+                                <td>@item.ActionName</td>
+                                <td class="text-center">@Html.CheckBoxFor(m => m.Menus[i].IsAllowed, new { @class = "form-check-input" })</td>
+                                <td class="text-center">@Html.CheckBoxFor(m => m.Menus[i].CanCreate, new { @class = "form-check-input" })</td>
+                                <td class="text-center">@Html.CheckBoxFor(m => m.Menus[i].CanEdit, new { @class = "form-check-input" })</td>
+                                <td class="text-center">@Html.CheckBoxFor(m => m.Menus[i].CanDelete, new { @class = "form-check-input" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var roleSelect = document.getElementById("SelectedRoleId");
+
+            if (roleSelect) {
+                roleSelect.setAttribute("name", "roleId");
+            }
+        })();
+    </script>
+}

@@ -1,0 +1,9 @@
+﻿@{
+    int hits = ViewBag.HomeHitCount == null ? 0 : Convert.ToInt32(ViewBag.HomeHitCount);
+}
+<section class="home-hit-counter-section" aria-label="Home page visitor counter">
+    <div class="home-hit-counter-card">
+        <span><i class="bi bi-eye"></i> Home Page Visits</span>
+        <strong>@hits.ToString("N0")</strong>
+    </div>
+</section>

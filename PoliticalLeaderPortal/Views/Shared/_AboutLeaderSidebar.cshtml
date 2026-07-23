@@ -1,0 +1,96 @@
+﻿
+@{
+    var action = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<div class="about-sidebar">
+
+    <div class="about-sidebar-header">
+
+        <h4>
+            About Som
+        </h4>
+
+        <p>
+            Know More About Sangeet Som
+        </p>
+
+    </div>
+
+    <ul class="about-sidebar-menu">
+
+        <li class="@(action == "Biography" ? "active" : "")">
+
+            <a href="@Url.Action("Biography", "AboutLeader")">
+
+                <i class="fas fa-user"></i>
+
+                Biography
+
+            </a>
+
+        </li>
+
+        <li class="@(action == "Vision" ? "active" : "")">
+
+            <a href="@Url.Action("Vision", "AboutLeader")">
+
+                <i class="fas fa-eye"></i>
+
+                Vision
+
+            </a>
+
+        </li>
+
+        <li class="@(action == "Achievements" ? "active" : "")">
+
+            <a href="@Url.Action("Achievements", "AboutLeader")">
+
+                <i class="fas fa-trophy"></i>
+
+                Public Work
+
+            </a>
+
+        </li>
+
+        <li class="@(action == "Timeline" ? "active" : "")">
+
+            <a href="@Url.Action("Timeline", "AboutLeader")">
+
+                <i class="fas fa-history"></i>
+
+                Political Timeline
+
+            </a>
+
+        </li>
+
+        <li class="@(action == "Awards" ? "active" : "")">
+
+            <a href="@Url.Action("Awards", "AboutLeader")">
+
+                <i class="fas fa-award"></i>
+
+                Awards
+
+            </a>
+
+        </li>
+
+        <li class="@(action == "Faq" ? "active" : "")">
+
+            <a href="@Url.Action("Faq", "AboutLeader")">
+
+                <i class="fas fa-question-circle"></i>
+
+                FAQ
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>

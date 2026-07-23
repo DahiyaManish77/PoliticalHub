@@ -1,0 +1,428 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\views\\home\\partials\\_heroslider.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\home\\partials\\_heroslider.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\areas\\admin\\controllers\\electionwarroomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\controllers\\electionwarroomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\services\\electionwarroomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\services\\electionwarroomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\views\\home\\partials\\_latestnews.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\home\\partials\\_latestnews.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\scripts\\custom\\site-latest-news.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\scripts\\custom\\site-latest-news.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\content\\css\\site-latest-news.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\content\\css\\site-latest-news.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\views\\shared\\_userlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\shared\\_userlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\views\\home\\partials\\_homepagesections.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\home\\partials\\_homepagesections.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\content\\css\\hero-slider.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\content\\css\\hero-slider.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\services\\menuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\services\\menuservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_navigationsettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_navigationsettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\views\\shared\\_navigation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\views\\shared\\_navigation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\content\\css\\menu-cms.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\content\\css\\menu-cms.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\controllers\\menucmscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\controllers\\menucmscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\views\\menucms\\createmenu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\views\\menucms\\createmenu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_publishingsettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_publishingsettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\views\\menucms\\_menuform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\views\\menucms\\_menuform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_appearancerouting.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\views\\menucms\\partials\\_appearancerouting.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\politicalleaderportal\\areas\\admin\\viewmodels\\menu\\menueditvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\areas\\admin\\viewmodels\\menu\\menueditvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\scripts\\custom\\hero-slider.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\scripts\\custom\\hero-slider.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\content\\images\\hero-default-1.svg||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\content\\images\\hero-default-1.svg||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\content\\images\\hero-default-2.svg||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\content\\images\\hero-default-2.svg||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|c:\\myproject\\politicalleaderportal\\politicalleaderportal\\politicalleaderportal\\content\\images\\hero-default-3.svg||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{9B809407-4E01-4954-8F2A-97D0045447BC}|PoliticalLeaderPortal\\PoliticalLeaderPortal.csproj|solutionrelative:politicalleaderportal\\content\\images\\hero-default-3.svg||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 31,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_UserLayout.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Shared\\_UserLayout.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Shared\\_UserLayout.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Shared\\_UserLayout.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Views\\Shared\\_UserLayout.cshtml",
+              "ViewState": "AgIAALUAAAAAAAAAAEBVwDIBAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-20T10:47:28.563Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "hero-default-3.svg",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-3.svg",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Content\\images\\hero-default-3.svg",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-3.svg",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Content\\images\\hero-default-3.svg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATvSURBVEhLtZZrbFRFFMd/d193724ppYUt2NKHtCAPoYCAgiAIKiRKAMGGgJpoKIJfRIh\u002BMX4RY0KsIESIWBLU4gdqVURJNCiIiYQIbWmxIFCQllcLTbul3b37uHP8cLfbhaIhMZ5k7kwmM//fmTMzZy78nyYi2p19ANXV1duBNdhj6K3vbKeUHStWrFh7u8q/WHV1tdyr1dbWSlVVlezZs2f7nToAjjs7Uq3XQyWCUoIohRKFUgqlLCzL4sKFCyxduhSl1JqKiop\u002BkLsCkqEAQlELK1hL7PonWJcnYNYMpvtng9BvYxDzUnJsaWkplmWt2bp1622QfnuQvvoL1/opvlh86Ciwmpk3fC9j0k5iXD\u002BPisZxBl5COcbhcJpE/tzGwei7LFu2jFgsRiQSYdeuXfj9/h2rVq1a2w8w9PWvC4dkDqwoKRz8\u002BJOTspmZuYn7Yrvo/NXJUVlCI3NIHzaFl2cU4HJo3Pg0m9OFVbS0tBCJRIhGoxQUFHD16lXKyso0AFef\u002BDf5gYy0/U/MGlc8vyjINH0FaZ0HuXRsNvVj36bB9RDnW7u5\u002BMdlrnV08/YzY/EMn8/kyZMoKCggbIYxvAbZ2dlUVlYmnXaQCEtWxoDd82Y9OLL0gRbPLH0JaWcPcmz/LDZa77PneAZtLZ3kBdIZPb6QuqCDd75txF38AobPR25uLsUjisnJycHn8yX3JQnIyhr49Oj8QNGCojZXiWMl7voGTtYtILD8Oz5eXkL5omImpFm0NjaT7nEzJGcItW1hmhyTQAQQRFNJ0X6AAT7XosWTXZmPGGWaq\u002Bk0J2unU/LKAfKzfAAMS/fy4rRcOjpvMdDhxuFy4vL7\u002BLLmalII0RIwUKoP5gLIG6RPmZm12fB1HeX0pefZlLWOjo\u002BOEbOslNuqMHx\u002BTCcYbifidnPqyk0QQbC1e09M6gpcAKunHc/LVZ9rLQcncnj6e4z3BuxJ2B9bwAZZEQurB2JKYcUtFKAJaNigfgDpGTOzp2ObETyky74Z\u002B7UO52D55cAJTcVjtncCQiIPiaCUQhA0hIcLM9HEjk6vI/0BodaFzmvtzn3WumibleGJRq1brmhP\u002Bg\u002BvzyUWj9kC9jQk4a0NtEMiCWUbagfptk2WrvZHg2f0rh\u002BtpTfONbcLSvyB/PvY8FUjp64EiSuhJxqn8VoXr\u002B2tZ86WI8z\u002B4AhzPzxCVe2VpKCG1pdiUlcQatHGeAaqytq64DhPO4MG\u002BLy\u002BnKI8Il3dbDx0iRs3ghgeJ\u002BnpaRSOKmbKSAdtN7u41dTE4gnDEsuzxe8aImViZS6MvZq3vjugm/GfTtWpwpwR\u002Bf7sIQMoLBnN/YnTF41btNwMEmxtJ97RzuZnJ\u002BB0aH2B/wdzaA6\u002Bb/uMN5vLn2sbTv1TWueZmusNdZyuOcPvNWc50fAXp\u002BrP09RwjuDFZgbFeviotISigD95AJKU3ip1DzSXvKG5mX95C7I7460jlb6yA1ON1sMzcvxkhm/hvnmd4WIyNcvF\u002BsfyqVg5kbxMOx3climlD5QKuKtVVFQcFxGJREwxI6aYpimmGRYzHBYzHBIzHJZwOCThUEjC4R4JpdQiIuXl5UnCPz04kwE8Hh3do6PrOrruRfd60b0GuteL12vgNQy8Xh9GSp2Yn9Tq9\u002BAA7Ny5c7uIrOm9vUop\u002B5TcpZAQTG0DOzZs2HDvPwH/xf4Gb5LkTqfRE7EAAAAASUVORK5CYII=",
+              "WhenOpened": "2026-07-23T12:36:01.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_HeroSlider.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_HeroSlider.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Home\\Partials\\_HeroSlider.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_HeroSlider.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Views\\Home\\Partials\\_HeroSlider.cshtml",
+              "ViewState": "AgIAACACAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-23T12:35:48.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "hero-default-2.svg",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-2.svg",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Content\\images\\hero-default-2.svg",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-2.svg",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Content\\images\\hero-default-2.svg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATvSURBVEhLtZZrbFRFFMd/d193724ppYUt2NKHtCAPoYCAgiAIKiRKAMGGgJpoKIJfRIh\u002BMX4RY0KsIESIWBLU4gdqVURJNCiIiYQIbWmxIFCQllcLTbul3b37uHP8cLfbhaIhMZ5k7kwmM//fmTMzZy78nyYi2p19ANXV1duBNdhj6K3vbKeUHStWrFh7u8q/WHV1tdyr1dbWSlVVlezZs2f7nToAjjs7Uq3XQyWCUoIohRKFUgqlLCzL4sKFCyxduhSl1JqKiop\u002BkLsCkqEAQlELK1hL7PonWJcnYNYMpvtng9BvYxDzUnJsaWkplmWt2bp1622QfnuQvvoL1/opvlh86Ciwmpk3fC9j0k5iXD\u002BPisZxBl5COcbhcJpE/tzGwei7LFu2jFgsRiQSYdeuXfj9/h2rVq1a2w8w9PWvC4dkDqwoKRz8\u002BJOTspmZuYn7Yrvo/NXJUVlCI3NIHzaFl2cU4HJo3Pg0m9OFVbS0tBCJRIhGoxQUFHD16lXKyso0AFef\u002BDf5gYy0/U/MGlc8vyjINH0FaZ0HuXRsNvVj36bB9RDnW7u5\u002BMdlrnV08/YzY/EMn8/kyZMoKCggbIYxvAbZ2dlUVlYmnXaQCEtWxoDd82Y9OLL0gRbPLH0JaWcPcmz/LDZa77PneAZtLZ3kBdIZPb6QuqCDd75txF38AobPR25uLsUjisnJycHn8yX3JQnIyhr49Oj8QNGCojZXiWMl7voGTtYtILD8Oz5eXkL5omImpFm0NjaT7nEzJGcItW1hmhyTQAQQRFNJ0X6AAT7XosWTXZmPGGWaq\u002Bk0J2unU/LKAfKzfAAMS/fy4rRcOjpvMdDhxuFy4vL7\u002BLLmalII0RIwUKoP5gLIG6RPmZm12fB1HeX0pefZlLWOjo\u002BOEbOslNuqMHx\u002BTCcYbifidnPqyk0QQbC1e09M6gpcAKunHc/LVZ9rLQcncnj6e4z3BuxJ2B9bwAZZEQurB2JKYcUtFKAJaNigfgDpGTOzp2ObETyky74Z\u002B7UO52D55cAJTcVjtncCQiIPiaCUQhA0hIcLM9HEjk6vI/0BodaFzmvtzn3WumibleGJRq1brmhP\u002Bg\u002BvzyUWj9kC9jQk4a0NtEMiCWUbagfptk2WrvZHg2f0rh\u002BtpTfONbcLSvyB/PvY8FUjp64EiSuhJxqn8VoXr\u002B2tZ86WI8z\u002B4AhzPzxCVe2VpKCG1pdiUlcQatHGeAaqytq64DhPO4MG\u002BLy\u002BnKI8Il3dbDx0iRs3ghgeJ\u002BnpaRSOKmbKSAdtN7u41dTE4gnDEsuzxe8aImViZS6MvZq3vjugm/GfTtWpwpwR\u002Bf7sIQMoLBnN/YnTF41btNwMEmxtJ97RzuZnJ\u002BB0aH2B/wdzaA6\u002Bb/uMN5vLn2sbTv1TWueZmusNdZyuOcPvNWc50fAXp\u002BrP09RwjuDFZgbFeviotISigD95AJKU3ip1DzSXvKG5mX95C7I7460jlb6yA1ON1sMzcvxkhm/hvnmd4WIyNcvF\u002BsfyqVg5kbxMOx3climlD5QKuKtVVFQcFxGJREwxI6aYpimmGRYzHBYzHBIzHJZwOCThUEjC4R4JpdQiIuXl5UnCPz04kwE8Hh3do6PrOrruRfd60b0GuteL12vgNQy8Xh9GSp2Yn9Tq9\u002BAA7Ny5c7uIrOm9vUop\u002B5TcpZAQTG0DOzZs2HDvPwH/xf4Gb5LkTqfRE7EAAAAASUVORK5CYII=",
+              "WhenOpened": "2026-07-23T12:35:58.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "hero-default-1.svg",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-1.svg",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Content\\images\\hero-default-1.svg",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\images\\hero-default-1.svg",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Content\\images\\hero-default-1.svg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATvSURBVEhLtZZrbFRFFMd/d193724ppYUt2NKHtCAPoYCAgiAIKiRKAMGGgJpoKIJfRIh\u002BMX4RY0KsIESIWBLU4gdqVURJNCiIiYQIbWmxIFCQllcLTbul3b37uHP8cLfbhaIhMZ5k7kwmM//fmTMzZy78nyYi2p19ANXV1duBNdhj6K3vbKeUHStWrFh7u8q/WHV1tdyr1dbWSlVVlezZs2f7nToAjjs7Uq3XQyWCUoIohRKFUgqlLCzL4sKFCyxduhSl1JqKiop\u002BkLsCkqEAQlELK1hL7PonWJcnYNYMpvtng9BvYxDzUnJsaWkplmWt2bp1622QfnuQvvoL1/opvlh86Ciwmpk3fC9j0k5iXD\u002BPisZxBl5COcbhcJpE/tzGwei7LFu2jFgsRiQSYdeuXfj9/h2rVq1a2w8w9PWvC4dkDqwoKRz8\u002BJOTspmZuYn7Yrvo/NXJUVlCI3NIHzaFl2cU4HJo3Pg0m9OFVbS0tBCJRIhGoxQUFHD16lXKyso0AFef\u002BDf5gYy0/U/MGlc8vyjINH0FaZ0HuXRsNvVj36bB9RDnW7u5\u002BMdlrnV08/YzY/EMn8/kyZMoKCggbIYxvAbZ2dlUVlYmnXaQCEtWxoDd82Y9OLL0gRbPLH0JaWcPcmz/LDZa77PneAZtLZ3kBdIZPb6QuqCDd75txF38AobPR25uLsUjisnJycHn8yX3JQnIyhr49Oj8QNGCojZXiWMl7voGTtYtILD8Oz5eXkL5omImpFm0NjaT7nEzJGcItW1hmhyTQAQQRFNJ0X6AAT7XosWTXZmPGGWaq\u002Bk0J2unU/LKAfKzfAAMS/fy4rRcOjpvMdDhxuFy4vL7\u002BLLmalII0RIwUKoP5gLIG6RPmZm12fB1HeX0pefZlLWOjo\u002BOEbOslNuqMHx\u002BTCcYbifidnPqyk0QQbC1e09M6gpcAKunHc/LVZ9rLQcncnj6e4z3BuxJ2B9bwAZZEQurB2JKYcUtFKAJaNigfgDpGTOzp2ObETyky74Z\u002B7UO52D55cAJTcVjtncCQiIPiaCUQhA0hIcLM9HEjk6vI/0BodaFzmvtzn3WumibleGJRq1brmhP\u002Bg\u002BvzyUWj9kC9jQk4a0NtEMiCWUbagfptk2WrvZHg2f0rh\u002BtpTfONbcLSvyB/PvY8FUjp64EiSuhJxqn8VoXr\u002B2tZ86WI8z\u002B4AhzPzxCVe2VpKCG1pdiUlcQatHGeAaqytq64DhPO4MG\u002BLy\u002BnKI8Il3dbDx0iRs3ghgeJ\u002BnpaRSOKmbKSAdtN7u41dTE4gnDEsuzxe8aImViZS6MvZq3vjugm/GfTtWpwpwR\u002Bf7sIQMoLBnN/YnTF41btNwMEmxtJ97RzuZnJ\u002BB0aH2B/wdzaA6\u002Bb/uMN5vLn2sbTv1TWueZmusNdZyuOcPvNWc50fAXp\u002BrP09RwjuDFZgbFeviotISigD95AJKU3ip1DzSXvKG5mX95C7I7460jlb6yA1ON1sMzcvxkhm/hvnmd4WIyNcvF\u002BsfyqVg5kbxMOx3climlD5QKuKtVVFQcFxGJREwxI6aYpimmGRYzHBYzHBIzHJZwOCThUEjC4R4JpdQiIuXl5UnCPz04kwE8Hh3do6PrOrruRfd60b0GuteL12vgNQy8Xh9GSp2Yn9Tq9\u002BAA7Ny5c7uIrOm9vUop\u002B5TcpZAQTG0DOzZs2HDvPwH/xf4Gb5LkTqfRE7EAAAAASUVORK5CYII=",
+              "WhenOpened": "2026-07-23T12:35:53.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "hero-slider.js",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Scripts\\custom\\hero-slider.js",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Scripts\\custom\\hero-slider.js",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Scripts\\custom\\hero-slider.js",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Scripts\\custom\\hero-slider.js",
+              "ViewState": "AgIAAIsAAAAAAAAAAIBZwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-07-23T12:32:01.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ElectionWarRoomController.cs",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\ElectionWarRoomController.cs",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\ElectionWarRoomController.cs",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\ElectionWarRoomController.cs",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\ElectionWarRoomController.cs",
+              "ViewState": "AgIAALEAAAAAAAAAAAAhwL8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-04T07:57:00.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "site-latest-news.js",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Scripts\\custom\\site-latest-news.js",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Scripts\\custom\\site-latest-news.js",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Scripts\\custom\\site-latest-news.js",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Scripts\\custom\\site-latest-news.js",
+              "ViewState": "AgIAADMAAAAAAAAAAAAqwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-07-20T11:14:33.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_LatestNews.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_LatestNews.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Home\\Partials\\_LatestNews.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_LatestNews.cshtml*",
+              "RelativeToolTip": "Views\\Home\\Partials\\_LatestNews.cshtml*",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABwAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-20T10:42:39.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "hero-slider.css",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\css\\hero-slider.css",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Content\\css\\hero-slider.css",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\css\\hero-slider.css",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Content\\css\\hero-slider.css",
+              "ViewState": "AgIAAAADAAAAAAAAAAAAAA0DAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-07-13T12:26:46.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ElectionWarRoomService.cs",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Services\\ElectionWarRoomService.cs",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Services\\ElectionWarRoomService.cs",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Services\\ElectionWarRoomService.cs*",
+              "RelativeToolTip": "Areas\\Admin\\Services\\ElectionWarRoomService.cs*",
+              "ViewState": "AgIAALg7AAAAAAAAAAAmwNU7AAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T15:14:25.551Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_HomePageSections.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_HomePageSections.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Home\\Partials\\_HomePageSections.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Partials\\_HomePageSections.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Views\\Home\\Partials\\_HomePageSections.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-13T11:25:58.262Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "site-latest-news.css",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\css\\site-latest-news.css",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Content\\css\\site-latest-news.css",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Content\\css\\site-latest-news.css",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Content\\css\\site-latest-news.css",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAIwH0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-07-20T10:41:39.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-13T11:23:57.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CreateMenu.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\CreateMenu.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\CreateMenu.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\CreateMenu.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\CreateMenu.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAuwCUAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-29T11:47:19.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "_Navigation.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Shared\\_Navigation.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Views\\Shared\\_Navigation.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Views\\Shared\\_Navigation.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Views\\Shared\\_Navigation.cshtml",
+              "ViewState": "AgIAAC4BAAAAAAAAAAAuwDUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T06:06:11.838Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "menu-cms.css",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Content\\css\\menu-cms.css",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Content\\css\\menu-cms.css",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Content\\css\\menu-cms.css",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Content\\css\\menu-cms.css",
+              "ViewState": "AgIAAEoXAAAAAAAAAAAqwHMXAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-29T11:53:11.91Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MenuService.cs",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Services\\MenuService.cs",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Services\\MenuService.cs",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Services\\MenuService.cs",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Services\\MenuService.cs",
+              "ViewState": "AgIAACsCAAAAAAAAAAAAACsCAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T10:53:43.002Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_NavigationSettings.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_NavigationSettings.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_NavigationSettings.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_NavigationSettings.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_NavigationSettings.cshtml",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAqwMwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T10:22:31.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MenuCMSController.cs",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\MenuCMSController.cs",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\MenuCMSController.cs",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\MenuCMSController.cs",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Controllers\\MenuCMSController.cs",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAqwO8AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T10:51:23.974Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "_PublishingSettings.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_PublishingSettings.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_PublishingSettings.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_PublishingSettings.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_PublishingSettings.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAuwCEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T04:35:14.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "_MenuForm.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\_MenuForm.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\_MenuForm.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\_MenuForm.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\_MenuForm.cshtml",
+              "ViewState": "AgIAADwAAAAAAAAAAAAqwEsAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-29T14:34:18.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "_AppearanceRouting.cshtml",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_AppearanceRouting.cshtml",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_AppearanceRouting.cshtml",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_AppearanceRouting.cshtml",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\Views\\MenuCMS\\Partials\\_AppearanceRouting.cshtml",
+              "ViewState": "AgIAALkAAAAAAAAAAAAqwOIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T04:33:54.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "MenuEditVM.cs",
+              "DocumentMoniker": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\ViewModels\\Menu\\MenuEditVM.cs",
+              "RelativeDocumentMoniker": "PoliticalLeaderPortal\\Areas\\Admin\\ViewModels\\Menu\\MenuEditVM.cs",
+              "ToolTip": "C:\\MyProject\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\PoliticalLeaderPortal\\Areas\\Admin\\ViewModels\\Menu\\MenuEditVM.cs",
+              "RelativeToolTip": "PoliticalLeaderPortal\\Areas\\Admin\\ViewModels\\Menu\\MenuEditVM.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAQwFwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T10:42:32.008Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

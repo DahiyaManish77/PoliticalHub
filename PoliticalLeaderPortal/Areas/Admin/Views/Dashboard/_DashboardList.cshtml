@@ -1,0 +1,29 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.AdminDashboardListItemVM>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="dashboard-empty-state">
+        <strong>No records yet</strong>
+        <span>Add content or campaign activity to populate this panel.</span>
+    </div>
+}
+else
+{
+    <div class="dashboard-list">
+        @foreach (var item in Model)
+        {
+            var routeValues = item.RouteValues ?? new { area = "Admin" };
+            <a class="dashboard-list-item" href="@Url.Action(item.ActionName, item.ControllerName, routeValues)">
+                <div>
+                    <strong>@item.Title</strong>
+                    <span>@item.Description</span>
+                    @if (item.Date.HasValue)
+                    {
+                        <small>@item.Date.Value.ToString("dd MMM yyyy")</small>
+                    }
+                </div>
+                <em class="badge bg-@item.BadgeClass">@item.BadgeText</em>
+            </a>
+        }
+    </div>
+}

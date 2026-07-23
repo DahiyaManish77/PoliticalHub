@@ -1,0 +1,8 @@
+﻿@{
+    int visits = ViewBag.HomeVisitTotal == null ? 0 : Convert.ToInt32(ViewBag.HomeVisitTotal);
+}
+<a href="@Url.Action("Index", "Home", new { area = "" })" class="site-home-visit-link" aria-label="Home page, @visits visits">
+    <i class="bi bi-house-door"></i>
+    <span class="site-home-visit-text">Home</span>
+    <span class="site-home-visit-count"><i class="bi bi-eye"></i> @visits.ToString("N0")</span>
+</a>

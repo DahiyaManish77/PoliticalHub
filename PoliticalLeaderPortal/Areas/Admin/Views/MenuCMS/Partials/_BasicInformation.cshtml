@@ -1,0 +1,79 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+<div class="row g-3">
+    <div class="col-lg-6">
+        <label class="menu-form-label" for="MenuName">
+            Menu Name <span class="required">*</span>
+        </label>
+        @Html.TextBoxFor(m => m.MenuName, new
+        {
+            @class = "menu-form-control",
+            placeholder = "Example : Home"
+        })
+        @Html.ValidationMessageFor(m => m.MenuName, "", new{@class = "menu-validation-message"})
+    </div>
+
+    <div class="col-lg-6">
+        <label class="menu-form-label" for="ParentMenuId">
+            Parent Menu
+        </label>
+        @Html.DropDownListFor(m => m.ParentMenuId, Model.ParentMenus, new
+        {
+            @class = "menu-select"
+        })
+    </div>
+
+    <div class="col-lg-4">
+        <label class="menu-form-label" for="AreaName">
+            Area Name
+        </label>
+        @Html.TextBoxFor(m => m.AreaName, new
+        {
+            @class = "menu-form-control",
+            placeholder = "Admin or leave blank"
+        })
+        <div class="menu-help-text">
+            Leave blank for public website pages.
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <label class="menu-form-label" for="ControllerName">
+            Controller Name
+        </label>
+        @Html.TextBoxFor(m => m.ControllerName, new
+        {
+            @class = "menu-form-control",
+            placeholder = "Example : News"
+        })
+        <div class="menu-help-text">
+            MVC controller without the Controller suffix.
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <label class="menu-form-label" for="ActionName">
+            Action Name
+        </label>
+        @Html.TextBoxFor(m => m.ActionName, new
+        {
+            @class = "menu-form-control",
+            placeholder = "Example : Index"
+        })
+        <div class="menu-help-text">
+            MVC action to open when the menu is clicked.
+        </div>
+    </div>
+
+    @*<div class="col-12">
+        <label class="menu-form-label" for="MenuDescription">
+            Description
+        </label>
+        @Html.TextAreaFor(m => m.MenuDescription, new
+        {
+            @class = "menu-textarea",
+            rows = "3",
+            placeholder = "Write menu description for admin reference..."
+        })
+    </div>*@
+</div>

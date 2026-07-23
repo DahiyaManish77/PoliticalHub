@@ -1,0 +1,236 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card" id="heroContentSection">
+
+    <!-- Section Header -->
+
+    <div class="hero-section-header">
+
+        <div>
+
+            <h3 class="hero-section-title">
+                <i class="fa fa-edit text-primary"></i>
+                Hero Content
+            </h3>
+
+            <p class="hero-section-description">
+                Create optional headline text and supporting content for your homepage hero banner.
+            </p>
+
+        </div>
+
+        <div class="hero-section-badge">
+            Content
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="row">
+
+        <!-- ========================= -->
+        <!-- LEFT -->
+        <!-- ========================= -->
+
+        <div class="col-lg-8">
+
+            <!-- TITLE -->
+
+            <div class="mb-4">
+
+                @Html.LabelFor(m => m.Title, new { @class = "form-label fw-semibold" })
+
+                @Html.TextBoxFor(m => m.Title,
+                    new
+                    {
+                        @class = "form-control hero-input",
+                        maxlength = "80",
+                        placeholder = "Example : Building a Better Tomorrow",
+                        id = "Title"
+                    })
+
+                <div class="hero-field-footer">
+
+                    <small class="text-muted">
+                        Optional primary headline displayed on the Hero Slider.
+                    </small>
+
+                    <span class="hero-counter"
+                          data-max="80"
+                          data-target="Title">
+
+                        0 / 80
+
+                    </span>
+
+                </div>
+
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+
+            </div>
+
+            <!-- SUB TITLE -->
+
+            <div class="mb-4">
+
+                @Html.LabelFor(m => m.SubTitle, new { @class = "form-label fw-semibold" })
+
+                @Html.TextBoxFor(m => m.SubTitle,
+                    new
+                    {
+                        @class = "form-control hero-input",
+                        maxlength = "120",
+                        placeholder = "Short supporting message",
+                        id = "SubTitle"
+                    })
+
+                <div class="hero-field-footer">
+
+                    <small class="text-muted">
+                        Optional supporting line. Leave blank for image/video-only slides.
+                    </small>
+
+                    <span class="hero-counter"
+                          data-max="120"
+                          data-target="SubTitle">
+
+                        0 / 120
+
+                    </span>
+
+                </div>
+
+                @Html.ValidationMessageFor(m => m.SubTitle, "", new { @class = "text-danger" })
+
+            </div>
+
+            <!-- DESCRIPTION -->
+
+            <div class="mb-3">
+
+                @Html.LabelFor(m => m.Description, new { @class = "form-label fw-semibold" })
+
+                @Html.TextAreaFor(m => m.Description,
+                    new
+                    {
+                        @class = "form-control hero-textarea",
+                        rows = "6",
+                        maxlength = "500",
+                        placeholder = "Write a compelling description for your Hero Slider.",
+                        id = "Description"
+                    })
+
+                <div class="hero-field-footer">
+
+                    <small class="text-muted">
+                        Optional summary of your campaign, vision or announcement.
+                    </small>
+
+                    <span class="hero-counter"
+                          data-max="500"
+                          data-target="Description">
+
+                        0 / 500
+
+                    </span>
+
+                </div>
+
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- RIGHT -->
+        <!-- ========================= -->
+
+        <div class="col-lg-4">
+
+            <!-- CONTENT QUALITY -->
+
+            <div class="hero-info-card">
+
+                <h5>
+                    <i class="fa fa-check-circle text-success"></i>
+                    Content Quality
+                </h5>
+
+                <ul class="hero-check-list">
+
+                    <li id="titleStatus">
+                        Optional Title
+                    </li>
+
+                    <li id="subtitleStatus">
+                        Optional Subtitle
+                    </li>
+
+                    <li id="descriptionStatus">
+                        Optional Description
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- WRITING TIPS -->
+
+            <div class="hero-info-card mt-4">
+
+                <h5>
+                    <i class="fa fa-lightbulb text-warning"></i>
+                    Writing Tips
+                </h5>
+
+                <ul class="hero-tip-list">
+
+                    <li>Keep title between 40–60 characters.</li>
+
+                    <li>Use action-oriented language.</li>
+
+                    <li>Avoid writing everything in CAPITAL letters.</li>
+
+                    <li>Keep subtitle concise.</li>
+
+                    <li>Description should be clear and easy to read.</li>
+
+                </ul>
+
+            </div>
+
+            <!-- LIVE PREVIEW -->
+
+            <div class="hero-info-card mt-4">
+
+                <h5>
+                    <i class="fa fa-eye text-primary"></i>
+                    Live Content Preview
+                </h5>
+
+                <div class="hero-mini-preview">
+
+                    <h2 id="previewTitle">
+                        Hero Title
+                    </h2>
+
+                    <h5 id="previewSubTitle">
+                        Hero Subtitle
+                    </h5>
+
+                    <p id="previewDescription">
+                        Hero description preview will appear here while typing.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

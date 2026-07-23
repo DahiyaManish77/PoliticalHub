@@ -1,0 +1,309 @@
+@using PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu
+@using System.Web.Routing
+@model List<MenuVM>
+
+@functions
+{
+    private RouteValueDictionary ParseRouteValues(MenuVM menu)
+    {
+        var values = new RouteValueDictionary();
+
+        if (!string.IsNullOrWhiteSpace(menu.AreaName))
+        {
+            values["area"] = menu.AreaName.Trim();
+        }
+
+        if (string.IsNullOrWhiteSpace(menu.RouteValues))
+        {
+            return values;
+        }
+
+        var pairs = menu.RouteValues.Split('&');
+
+        foreach (var pair in pairs)
+        {
+            var parts = pair.Split('=');
+
+            if (parts.Length == 2 &&
+                !string.IsNullOrWhiteSpace(parts[0]))
+            {
+                values[parts[0].Trim()] = parts[1].Trim();
+            }
+        }
+
+        return values;
+    }
+
+    private string GetMenuUrl(MenuVM menu)
+    {
+        if (!string.IsNullOrWhiteSpace(menu.CustomUrl))
+        {
+            return menu.CustomUrl;
+        }
+
+        if (!string.IsNullOrWhiteSpace(menu.ControllerName) &&
+            !string.IsNullOrWhiteSpace(menu.ActionName))
+        {
+            return Url.Action(
+                menu.ActionName.Trim(),
+                menu.ControllerName.Trim(),
+                ParseRouteValues(menu));
+        }
+
+        return "#";
+    }
+}
+
+@helper RenderMegaColumn(MenuVM menu)
+{
+    string menuUrl = GetMenuUrl(menu);
+    string target = menu.OpenInNewTab ? "_blank" : "_self";
+    string rel = menu.OpenInNewTab ? "noopener noreferrer" : "";
+    bool isClickable = menu.IsClickable && menuUrl != "#";
+
+    <section class="site-mega-column @menu.CssClass">
+
+        <a href="@(isClickable ? menuUrl : "#")"
+           class="site-mega-heading"
+           target="@target"
+           rel="@rel">
+            @menu.MenuName
+        </a>
+
+        @if (menu.Children != null && menu.Children.Any())
+        {
+            <ul class="site-mega-links">
+
+                @foreach (var child in menu.Children)
+                {
+                    string childUrl = GetMenuUrl(child);
+                    string childTarget = child.OpenInNewTab ? "_blank" : "_self";
+                    string childRel = child.OpenInNewTab ? "noopener noreferrer" : "";
+                    bool childClickable = child.IsClickable && childUrl != "#";
+
+                    <li>
+
+                        <a href="@(childClickable ? childUrl : "#")"
+                           target="@childTarget"
+                           rel="@childRel">
+                            @child.MenuName
+                        </a>
+
+                    </li>
+                }
+
+            </ul>
+        }
+
+    </section>
+}
+
+<nav class="site-navigation">
+
+    <header class="site-header">
+
+        <div class="site-header-container">
+
+            <!--==========================
+                LEFT SECTION
+            ===========================-->
+
+            <div class="site-header-left">
+
+                <button type="button"
+                        class="site-menu-toggle"
+                        id="siteMenuToggle"
+                        aria-label="Open Menu"
+                        aria-expanded="false"
+                        aria-controls="siteMegaMenu">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+                <a href="@Url.Action("Index","Home")"
+                   class="site-brand">
+
+                    <span class="site-brand-first">
+                        Sangeet
+                    </span>
+
+                    <span class="site-brand-last">
+                        Modi
+                    </span>
+
+                </a>
+
+            </div>
+
+            <!--==========================
+                RIGHT SECTION
+                (Continue in Part 1A-2)
+            ===========================-->
+
+            <div class="site-header-right">
+                <ul class="site-header-actions">
+
+                    <!-- Mera Saansad -->
+
+                    <li class="site-header-item">
+
+                        <a href="#"
+                           class="site-header-link">
+
+                            Mera Saansad
+
+                        </a>
+
+                    </li>
+
+                    <li class="site-header-divider"></li>
+
+                    <!-- Download App -->
+
+                    <li class="site-header-item">
+
+                        <a href="@Url.Action("Index", "SomApp", new { area = "" })"
+                           class="site-header-link">
+
+                            <span>Som App</span>
+
+                            <i class="bi bi-phone site-phone-icon"></i>
+
+                        </a>
+
+                    </li>
+
+                    <li class="site-header-divider"></li>
+
+                    <!-- Login -->
+
+                    <li class="site-header-item">
+
+                        <a href="@Url.Action("Login","Account")"
+                           class="site-header-link">
+
+                            <strong>Login</strong>
+
+                            <span class="site-slash">/</span>
+
+                            <span>Register</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="site-header-divider"></li>
+
+                    <!-- Search -->
+
+                    <li class="site-header-item">
+
+                        <a href="javascript:void(0);"
+                           id="siteSearchButton"
+                           class="site-header-link site-search-link">
+
+                            <span>Search</span>
+
+                            <i class="bi bi-search"></i>
+
+                        </a>
+
+                    </li>
+
+                    <li class="site-header-divider"></li>
+
+                    <!-- Language -->
+
+                    <li class="site-header-item">
+
+                        <div class="site-language-wrapper"
+                             id="siteLanguageWrapper">
+
+                            <button type="button"
+                                    id="siteLanguageButton"
+                                    class="site-language-button">
+
+                                <span id="siteSelectedLanguage">
+
+                                    English
+
+                                </span>
+
+                                <i class="bi bi-caret-down-fill"></i>
+
+                            </button>
+
+                            <ul class="site-language-dropdown">
+
+                                <li data-lang="en">
+                                    English
+                                </li>
+
+                                <li data-lang="hi">
+                                    ??????
+                                </li>
+
+                                <li data-lang="pa">
+                                    Punjabi
+                                </li>
+
+                                <li data-lang="gu">
+                                    Gujarati
+                                </li>
+
+                                <li data-lang="mr">
+                                    Marathi
+                                </li>
+
+                                <li data-lang="bn">
+                                    Bengali
+                                </li>
+
+                                <li data-lang="ta">
+                                    Tamil
+                                </li>
+
+                                <li data-lang="te">
+                                    Telugu
+                                </li>
+
+                                <li data-lang="kn">
+                                    Kannada
+                                </li>
+
+                                <li data-lang="ml">
+                                    Malayalam
+                                </li>
+
+                                <li data-lang="ur">
+                                    Urdu
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!--==================================================
+        FULL SCREEN MEGA MENU
+    ===================================================-->
+
+    <div class="site-mega-overlay"
+         id="siteMegaOverlay"></div>
+
+    <div class="site-mega-menu"
+         id="siteMegaMenu">
+
+        <div class="site-mega-container">

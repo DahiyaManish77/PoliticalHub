@@ -1,0 +1,238 @@
+﻿@model PoliticalLeaderPortal.ViewModels.GalleryImageVM
+
+@{
+    ViewBag.Title = "Delete Gallery Image";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold text-danger">
+                Delete Gallery Image
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Index","GalleryImage")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="alert alert-danger shadow-sm">
+
+        <strong>
+            Warning!
+        </strong>
+
+        This action will permanently delete this gallery image.
+
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-lg-4 mb-4">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+                    {
+                        <img src="@Url.Content(Model.ImagePath)"
+                             class="img-fluid rounded border shadow-sm"
+                             style="width:100%;
+                                    height:400px;
+                                    object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <div class="border rounded d-flex align-items-center justify-content-center"
+                             style="height:400px;background:#f8f9fa;">
+
+                            <span class="text-muted">
+                                No Image Available
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+                <div class="col-lg-8">
+
+                    <table class="table table-bordered align-middle">
+
+                        <tr>
+
+                            <th style="width:220px;">
+                                Gallery Image ID
+                            </th>
+
+                            <td>
+                                @Model.GalleryImageId
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Category ID
+                            </th>
+
+                            <td>
+                                @Model.GalleryCategoryId
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Image Title
+                            </th>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.ImageTitle))
+                                {
+                                    @Model.ImageTitle
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not Available
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Image Caption
+                            </th>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.ImageCaption))
+                                {
+                                    @Model.ImageCaption
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not Available
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Display Order
+                            </th>
+
+                            <td>
+                                @Model.DisplayOrder
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <td>
+
+                                @if (Model.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Created Date
+                            </th>
+
+                            <td>
+                                @Model.CreatedDate.ToString("dd MMM yyyy hh:mm tt")
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer bg-white">
+
+            @using (Html.BeginForm(
+                "Delete",
+                "GalleryImage",
+                FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(x => x.GalleryImageId)
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    <i class="bi bi-trash"></i>
+                    Confirm Delete
+
+                </button>
+
+                <a href="@Url.Action("Details",
+                        "GalleryImage",
+                        new { id = Model.GalleryImageId })"
+                   class="btn btn-outline-secondary">
+
+                    Cancel
+
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</div>

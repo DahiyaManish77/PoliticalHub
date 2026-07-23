@@ -1,0 +1,20 @@
+@{
+    ViewBag.Title = "Access Denied";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-shield-lock text-danger display-4"></i>
+            <h2 class="fw-bold mt-3">Access Denied</h2>
+            <p class="text-muted mb-4">
+                You are not authorised to access this menu or module. Please contact the admin for permission.
+            </p>
+            <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })"
+               class="btn btn-primary">
+                Go To Dashboard
+            </a>
+        </div>
+    </div>
+</div>

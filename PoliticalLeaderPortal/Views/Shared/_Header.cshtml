@@ -1,0 +1,96 @@
+﻿@model PoliticalLeaderPortal.ViewModels.LayoutHeaderVM
+
+<header class="site-header"
+        style="
+        background:@Model.HeaderBackgroundColor;
+        color:@Model.HeaderTextColor;
+        font-family:@Model.HeaderFontFamily;
+        font-size:@Model.HeaderFontSize;">
+
+    <div class="container-fluid">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-2 col-md-2 col-3">
+
+                <div class="header-logo">
+
+                    <a href="@Url.Action("Index","Home")">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
+                        {
+                            <img src="@Url.Content(Model.LogoPath)"
+                                 class="img-fluid"
+                                 alt="Logo" />
+                        }
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-6">
+
+                <div class="header-title">
+
+                    <h1>
+                        @Model.WebsiteName
+                    </h1>
+
+                    <p>
+                        @Model.WebsiteTagline
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-3">
+
+                <div class="header-right">
+
+                    <div class="leader-photo d-none d-md-block">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.LeaderImagePath))
+                        {
+                            <img src="@Url.Content(Model.LeaderImagePath)"
+                                 class="img-fluid rounded-circle"
+                                 alt="Leader" />
+                        }
+
+                    </div>
+
+                    <div class="auth-buttons d-none d-lg-flex">
+
+                        @if (Model.ShowSignIn)
+                        {
+                            <a href="@Url.Action("Login","Account")"
+                               class="btn btn-outline-warning">
+
+                                Sign In
+
+                            </a>
+                        }
+
+                        @if (Model.ShowSignUp)
+                        {
+                            <a href="#"
+                               class="btn btn-warning">
+
+                                Sign Up
+
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>

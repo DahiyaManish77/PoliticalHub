@@ -1,0 +1,79 @@
+@model PoliticalLeaderPortal.ViewModels.AccountRegisterVM
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/css/account.css" rel="stylesheet" />
+}
+
+<section class="account-page">
+    <div class="account-shell">
+        <aside class="account-panel">
+            <small>Citizen Connect</small>
+            <h1>Create your account</h1>
+            <p>Register to connect with the public leadership portal and prepare for personalized citizen services.</p>
+            <ul class="account-list">
+                <li><i class="bi bi-person-check"></i><span>Simple public registration</span></li>
+                <li><i class="bi bi-lock"></i><span>Salted password protection</span></li>
+                <li><i class="bi bi-phone"></i><span>Email and mobile ready profile</span></li>
+            </ul>
+        </aside>
+
+        <div class="account-card">
+            <h2>Register</h2>
+            <p class="account-muted">Fill in your details to create a public user account.</p>
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { area = "" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "account-validation" })
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.FullName, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", autocomplete = "name" })
+                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.EmailAddress, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", type = "email", autocomplete = "email" })
+                    @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", autocomplete = "tel" })
+                    @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", autocomplete = "new-password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", autocomplete = "new-password" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger small" })
+                </div>
+
+                <button type="submit" class="account-action">Create Account</button>
+            }
+
+            <p class="account-switch">
+                Already registered?
+                <a href="@Url.Action("Login", "Account", new { area = "" })">Login</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

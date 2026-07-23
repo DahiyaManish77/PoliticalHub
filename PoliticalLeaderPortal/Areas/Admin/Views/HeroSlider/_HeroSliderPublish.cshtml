@@ -1,0 +1,511 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+
+                <i class="fa-solid fa-rocket text-primary me-2"></i>
+
+                Publish & Review
+
+            </h3>
+
+            <p class="hero-section-description">
+
+                Review your Hero Slider configuration before publishing.
+
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+
+            Final Step
+
+        </span>
+
+    </div>
+
+    <div class="row">
+
+        <!-- ========================================= -->
+        <!-- LEFT -->
+        <!-- ========================================= -->
+
+        <div class="col-lg-8">
+
+            <div class="hero-publish-panel">
+
+                <h4 class="mb-4">
+
+                    Completion Progress
+
+                </h4>
+
+                <div class="hero-publish-progress">
+
+                    <div class="progress">
+
+                        <div class="progress-bar"
+                             style="width:0%;">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <ul class="hero-checklist">
+
+                    <li>
+
+                        <span>
+
+                            Hero Title
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkTitle">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Hero Subtitle
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkSubTitle">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Description
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkDescription">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Background Image
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkBackground">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Leader Image
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkLeader">
+
+                            Optional
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Mobile Image
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkMobile">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            CTA Buttons
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkButtons">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Appearance
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkAppearance">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Animation
+
+                        </span>
+
+                        <span class="hero-check-warning"
+                              id="checkAnimation">
+
+                            Pending
+
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="hero-publish-panel mt-4">
+
+                <h4 class="mb-4">
+
+                    Publishing Summary
+
+                </h4>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Hero Title
+
+                    </span>
+
+                    <span class="hero-summary-value"
+                          id="summaryTitle">
+
+                        --
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Template
+
+                    </span>
+
+                    <span class="hero-summary-value"
+                          id="summaryTemplate">
+
+                        --
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Display Order
+
+                    </span>
+
+                    <span class="hero-summary-value"
+                          id="summaryOrder">
+
+                        @Model.DisplayOrder
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Status
+
+                    </span>
+
+                    <span class="hero-summary-value"
+                          id="summaryStatus">
+
+                        @(Model.IsActive ? "Active" : "Draft")
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Buttons
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(Model.ShowButtons ? "Enabled" : "Disabled")
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- RIGHT -->
+        <!-- ========================================= -->
+
+        <div class="col-lg-4">
+
+            <div class="hero-quality-card mb-4">
+
+                <div class="hero-quality-header">
+
+                    <div class="hero-quality-title">
+
+                        Publish Score
+
+                    </div>
+
+                    <div class="hero-quality-score"
+                         id="publishScore">
+
+                        0%
+
+                    </div>
+
+                </div>
+
+                <ul class="hero-quality-list">
+
+                    <li>
+
+                        <span>
+
+                            Content
+
+                        </span>
+
+                        <span class="hero-stars">
+
+                            ★★★★★
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Images
+
+                        </span>
+
+                        <span class="hero-stars">
+
+                            ★★★★★
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Design
+
+                        </span>
+
+                        <span class="hero-stars">
+
+                            ★★★★★
+
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <span>
+
+                            Animation
+
+                        </span>
+
+                        <span class="hero-stars">
+
+                            ★★★★★
+
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="hero-info-card mb-4">
+
+                <h5>
+
+                    Recommended Before Publishing
+
+                </h5>
+
+                <ul class="hero-tip-list">
+
+                    <li>
+
+                        Review spelling mistakes.
+
+                    </li>
+
+                    <li>
+
+                        Verify image quality.
+
+                    </li>
+
+                    <li>
+
+                        Check button links.
+
+                    </li>
+
+                    <li>
+
+                        Preview on mobile.
+
+                    </li>
+
+                    <li>
+
+                        Verify animations.
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="hero-info-card">
+
+                <h5>
+
+                    Publish Actions
+
+                </h5>
+
+                <div class="d-grid gap-3">
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk me-2"></i>
+
+                        Save Hero Slider
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-success btn-lg">
+
+                        <i class="fa-solid fa-eye me-2"></i>
+
+                        Preview Website
+
+                    </button>
+
+                    <button type="reset"
+                            class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-rotate-left me-2"></i>
+
+                        Reset Form
+
+                    </button>
+
+                    <a href="@Url.Action("Index")"
+                       class="btn btn-outline-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left me-2"></i>
+
+                        Back to List
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,223 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadCategoryVM>
+
+@{
+    ViewBag.Title = "Download Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    int sr = 1;
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+            <h4 class="mb-0">
+                Download Categories
+            </h4>
+
+            <a href="@Url.Action("Create")"
+               class="btn btn-light btn-sm">
+
+                <i class="fa fa-plus"></i>
+
+                Add New Category
+
+            </a>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th style="width:70px;">
+                                #
+                            </th>
+
+                            <th>
+                                Category Name
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th style="width:120px;">
+                                Order
+                            </th>
+
+                            <th style="width:120px;">
+                                Status
+                            </th>
+
+                            <th style="width:170px;">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @(sr++)
+                                    </td>
+
+                                    <td>
+                                        @item.CategoryName
+                                    </td>
+
+                                    <td>
+                                        @item.CategoryDescription
+                                    </td>
+
+                                    <td>
+                                        @item.DisplayOrder
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge bg-success">
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                Inactive
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Edit", new { id = item.DownloadCategoryId })"
+                                           class="btn btn-warning btn-sm">
+
+                                            <i class="fa fa-edit"></i>
+
+                                        </a>
+
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm btnDelete"
+                                                data-id="@item.DownloadCategoryId">
+
+                                            <i class="fa fa-trash"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="6"
+                                    class="text-center text-muted">
+
+                                    No categories found.
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+    $(function () {
+
+        $(".btnDelete").click(function () {
+
+            var id = $(this).data("id");
+
+            Swal.fire({
+
+                title: "Delete Category?",
+
+                text: "This action cannot be undone.",
+
+                icon: "warning",
+
+                showCancelButton: true,
+
+                confirmButtonColor: "#d33",
+
+                confirmButtonText: "Delete"
+
+            })
+            .then(function (result) {
+
+                if (result.isConfirmed) {
+
+                    $.post('@Url.Action("Delete")',
+                    {
+                        id: id
+                    },
+                    function (response) {
+
+                        if (response.success) {
+
+                            Swal.fire(
+                                "Deleted!",
+                                response.message,
+                                "success");
+
+                            location.reload();
+
+                        }
+                        else {
+
+                            Swal.fire(
+                                "Warning",
+                                response.message,
+                                "warning");
+                        }
+
+                    });
+
+                }
+
+            });
+
+        });
+
+    });
+
+    </script>
+
+}

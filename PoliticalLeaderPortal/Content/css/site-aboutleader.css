@@ -1,0 +1,623 @@
+﻿/*=====================================================
+    ABOUT LEADER SIDEBAR
+=====================================================*/
+
+.about-sidebar {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+    margin-bottom: 30px;
+    position: sticky;
+    top: 110px;
+}
+
+.about-sidebar-header {
+    background: linear-gradient(135deg,#ff7a18,#ff9933);
+    color: #ffffff;
+    padding: 25px;
+}
+
+    .about-sidebar-header h4 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+
+    .about-sidebar-header p {
+        margin: 8px 0 0;
+        opacity: .9;
+        font-size: .95rem;
+    }
+
+.about-sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .about-sidebar-menu li {
+        border-bottom: 1px solid #eef2f7;
+    }
+
+        .about-sidebar-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .about-sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+            .about-sidebar-menu li a i {
+                width: 22px;
+                text-align: center;
+                color: #ff7a18;
+            }
+
+        .about-sidebar-menu li:hover a {
+            background: #fff7ef;
+            color: #ff7a18;
+        }
+
+        .about-sidebar-menu li.active a {
+            background: #ff7a18;
+            color: #ffffff;
+        }
+
+            .about-sidebar-menu li.active a i {
+                color: #ffffff;
+            }
+
+@media(max-width:991px) {
+
+    .about-sidebar {
+        position: static;
+        margin-bottom: 30px;
+    }
+}
+/*=====================================================
+        ABOUT LEADER PAGES
+=====================================================*/
+
+.about-page-section {
+    padding: 8px 0;
+    background: #f8fafc;
+}
+
+/*=========================================
+    CONTENT CARD
+=========================================*/
+
+.about-content-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 30px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+    border-top: 5px solid #ff9933;
+    transition: .3s;
+}
+
+    .about-content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 45px rgba(0,0,0,.12);
+    }
+
+.about-page-badge {
+    display: inline-block;
+    background: #ff9933;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.about-page-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+.about-page-text {
+    color: #64748b;
+    line-height: 1.9;
+    margin-bottom: 18px;
+    text-align: justify;
+}
+
+/*=========================================
+    IMAGE
+=========================================*/
+
+.about-leader-image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 5px solid #ffffff;
+    box-shadow: 0 12px 30px rgba(0,0,0,.15);
+}
+
+/*=========================================
+    SECTION TITLE
+=========================================*/
+
+.about-content-card h3 {
+    color: #0f172a;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+    .about-content-card h3:after {
+        content: "";
+        width: 70px;
+        height: 4px;
+        background: #ff9933;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-radius: 30px;
+    }
+
+/*=========================================
+    QUOTE
+=========================================*/
+
+.about-quote-box {
+    background: linear-gradient(135deg,#ff7a18,#ff9933);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,.15);
+}
+
+    .about-quote-box i {
+        font-size: 45px;
+        margin-bottom: 20px;
+        opacity: .25;
+    }
+
+    .about-quote-box h4 {
+        font-size: 1.5rem;
+        line-height: 1.8;
+        font-weight: 600;
+        margin: 0;
+    }
+
+/*=========================================
+    RESPONSIVE
+=========================================*/
+
+@media (max-width:991px) {
+
+    .about-page-section {
+        padding: 70px 0;
+    }
+
+    .about-content-card {
+        padding: 30px;
+    }
+
+    .about-page-title {
+        margin-top: 30px;
+        font-size: 2rem;
+    }
+
+    .about-leader-image {
+        height: 360px;
+    }
+}
+
+@media (max-width:767px) {
+
+    .about-page-section {
+        padding: 60px 0;
+    }
+
+    .about-content-card {
+        padding: 25px;
+    }
+
+    .about-page-title {
+        font-size: 1.7rem;
+    }
+
+    .about-content-card h3 {
+        font-size: 1.35rem;
+    }
+
+    .about-leader-image {
+        height: 300px;
+        margin-bottom: 25px;
+    }
+
+    .about-quote-box {
+        padding: 25px;
+    }
+
+        .about-quote-box h4 {
+            font-size: 1.15rem;
+        }
+}
+/*=====================================================
+        PAGE BANNER
+=====================================================*/
+
+.page-banner-section {
+    position: relative;
+    padding: 12px 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.page-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(15,23,42,.82),rgba(15,23,42,.82));
+}
+
+.page-banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.page-banner-subtitle {
+    display: inline-block;
+    padding: 8px 18px;
+    background: #ff9933;
+    color: #ffffff;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-banner-title {
+    color: #ffffff;
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.page-banner-description {
+    color: rgba(255,255,255,.92);
+    font-size: 1.08rem;
+    line-height: 1.9;
+    max-width: 760px;
+    margin: auto auto 30px;
+}
+
+.page-banner-section .breadcrumb {
+    margin: 0;
+    background: transparent;
+}
+
+.page-banner-section .breadcrumb-item,
+.page-banner-section .breadcrumb-item a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    .page-banner-section .breadcrumb-item + .breadcrumb-item::before {
+        color: rgba(255,255,255,.75);
+    }
+
+    .page-banner-section .breadcrumb-item.active {
+        color: #ff9933;
+    }
+
+@media(max-width:991px) {
+
+    .page-banner-section {
+        padding: 90px 0;
+    }
+
+    .page-banner-title {
+        font-size: 2.4rem;
+    }
+}
+
+@media(max-width:767px) {
+
+    .page-banner-section {
+        padding: 70px 0;
+    }
+
+    .page-banner-title {
+        font-size: 1.9rem;
+    }
+
+    .page-banner-description {
+        font-size: .95rem;
+    }
+}
+/*=====================================================
+            PROFESSIONAL TIMELINE
+=====================================================*/
+
+.leader-timeline-wrapper {
+    position: relative;
+    margin: 60px 0;
+    padding-left: 50px;
+}
+
+    .leader-timeline-wrapper:before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #ff9933;
+        border-radius: 50px;
+    }
+
+.leader-timeline-item {
+    position: relative;
+    margin-bottom: 45px;
+}
+
+    .leader-timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .leader-timeline-item:before {
+        content: '';
+        position: absolute;
+        left: -40px;
+        top: 18px;
+        width: 20px;
+        height: 20px;
+        background: #ff9933;
+        border: 5px solid #ffffff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(255,153,51,.20);
+    }
+
+.leader-timeline-year {
+    display: inline-block;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.leader-timeline-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.timeline-badge {
+    display: inline-block;
+    background: #fff4e8;
+    color: #ff9933;
+    padding: 6px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.leader-timeline-content h4 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+.leader-timeline-content p {
+    color: #64748b;
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+@media(max-width:767px) {
+
+    .leader-timeline-wrapper {
+        padding-left: 30px;
+    }
+
+        .leader-timeline-wrapper:before {
+            left: 10px;
+        }
+
+    .leader-timeline-item:before {
+        left: -20px;
+    }
+
+    .leader-timeline-content {
+        padding: 22px;
+    }
+}
+/*=====================================================
+        REFERENCES
+=====================================================*/
+
+.reference-list {
+    margin: 20px 0 0;
+    padding-left: 20px;
+}
+
+    .reference-list li {
+        color: #475569;
+        margin-bottom: 12px;
+        line-height: 1.8;
+    }
+
+/*=====================================================
+        PAGE NAVIGATION
+=====================================================*/
+
+.about-navigation {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.about-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 28px;
+    background: #0f172a;
+    color: #ffffff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+    .about-nav-btn:hover {
+        background: #ff9933;
+        color: #ffffff;
+    }
+
+@media(max-width:767px) {
+
+    .about-navigation {
+        flex-direction: column;
+    }
+
+    .about-nav-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
+/*=====================================================
+        FEATURED AWARD
+=====================================================*/
+
+.featured-award-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 35px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+    border-top: 5px solid #ff9933;
+}
+
+    .featured-award-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+.award-year {
+    display: inline-block;
+    background: #ff9933;
+    color: #fff;
+    padding: 7px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.featured-award-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #0f172a;
+}
+
+.featured-award-card p {
+    color: #64748b;
+    line-height: 1.9;
+}
+
+.award-meta {
+    list-style: none;
+    margin-top: 25px;
+    padding: 0;
+}
+
+    .award-meta li {
+        margin-bottom: 12px;
+        color: #475569;
+    }
+
+    .award-meta i {
+        width: 25px;
+        color: #ff9933;
+    }
+/*=====================================================
+            AWARD GRID
+=====================================================*/
+
+.award-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+    transition: .35s;
+    height: 100%;
+}
+
+    .award-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 45px rgba(0,0,0,.12);
+    }
+
+.award-icon {
+    width: 80px;
+    height: 80px;
+    margin: auto auto 20px;
+    background: #fff4e8;
+    color: #ff9933;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.award-card h4 {
+    color: #0f172a;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.award-card span {
+    display: block;
+    color: #ff9933;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.award-card p {
+    color: #64748b;
+    line-height: 1.8;
+    margin: 0;
+}

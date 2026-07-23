@@ -1,0 +1,118 @@
+@{
+    ViewBag.Title = "Som App";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="som-app-hero">
+    <div class="som-app-hero__copy">
+        <span class="som-app-kicker">Download App</span>
+        <h1>Som App</h1>
+        <p>
+            A mobile-first public connect app for Sardhana: updates, Mera Kshetra,
+            events, gallery, videos, volunteer support, suggestions and contact office.
+        </p>
+        <div class="som-app-actions">
+            <button type="button" class="som-app-btn som-app-btn--primary" id="somInstallButton">
+                <i class="bi bi-download"></i>
+                Install Som App
+            </button>
+            <a class="som-app-btn som-app-btn--ghost" href="@Url.Action("Index", "MeraKshetra", new { area = "" })">
+                <i class="bi bi-geo-alt"></i>
+                Explore Mera Kshetra
+            </a>
+        </div>
+        <small id="somInstallHelp">On Android Chrome/Edge, tap Install. On iPhone, use Share then Add to Home Screen.</small>
+    </div>
+
+    <div class="som-phone-frame" aria-label="Som App preview">
+        <div class="som-phone-top"></div>
+        <div class="som-phone-screen">
+            <div class="som-appbar">
+                <img src="@Url.Content("~/Content/images/logo.png")" alt="Som App" />
+                <span>Som App</span>
+                <i class="bi bi-bell"></i>
+            </div>
+            <div class="som-card som-card--leader">
+                <span>Public Connect</span>
+                <strong>Sardhana Updates</strong>
+                <p>News, meetings, services and local modules in one place.</p>
+            </div>
+            <div class="som-mini-grid">
+                <span><i class="bi bi-newspaper"></i>News</span>
+                <span><i class="bi bi-calendar-event"></i>Events</span>
+                <span><i class="bi bi-images"></i>Gallery</span>
+                <span><i class="bi bi-people"></i>Volunteer</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="som-app-page">
+    <div class="som-section-title">
+        <span>What You Get</span>
+        <h2>Complete app modules connected with your website</h2>
+    </div>
+
+    <div class="som-feature-grid">
+        <a href="@Url.Action("Index", "News", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-newspaper"></i>
+            <h3>News & Announcements</h3>
+            <p>Latest updates from the website admin panel.</p>
+        </a>
+        <a href="@Url.Action("Index", "Event", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-calendar2-event"></i>
+            <h3>Events & Meetings</h3>
+            <p>Public meetings, programs and upcoming schedules.</p>
+        </a>
+        <a href="@Url.Action("Index", "MeraKshetra", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-geo-alt"></i>
+            <h3>Mera Kshetra</h3>
+            <p>Sardhana information, nearby places and development modules.</p>
+        </a>
+        <a href="@Url.Action("Index", "Gallery", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-images"></i>
+            <h3>Photo Gallery</h3>
+            <p>Photos with public viewing and sharing flow.</p>
+        </a>
+        <a href="@Url.Action("Index", "Video", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-play-btn"></i>
+            <h3>Videos</h3>
+            <p>YouTube and uploaded videos in one mobile-friendly place.</p>
+        </a>
+        <a href="@Url.Action("Volunteer", "CitizenConnect", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-person-plus"></i>
+            <h3>Become Volunteer</h3>
+            <p>Citizens can join and support local public work.</p>
+        </a>
+        <a href="@Url.Action("Suggestion", "CitizenConnect", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-chat-square-text"></i>
+            <h3>Send Suggestion</h3>
+            <p>Collect useful feedback, requests and public suggestions.</p>
+        </a>
+        <a href="@Url.Action("ContactUs", "CitizenConnect", new { area = "" })" class="som-feature-card">
+            <i class="bi bi-headset"></i>
+            <h3>Contact Office</h3>
+            <p>Office contact and citizen support access.</p>
+        </a>
+    </div>
+
+    <div class="som-install-panel">
+        <div>
+            <span class="som-app-kicker">Install Now</span>
+            <h2>Use it like a real mobile app</h2>
+            <p>
+                Som App is prepared as a Progressive Web App. It can be installed on supported
+                Android browsers and added to the home screen on iPhone. Later the same app shell
+                can be packaged as APK for Play Store.
+            </p>
+        </div>
+        <button type="button" class="som-app-btn som-app-btn--primary" id="somInstallButtonBottom">
+            <i class="bi bi-phone"></i>
+            Download Som App
+        </button>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/Scripts/som-app.js?v=20260713-1"></script>
+}

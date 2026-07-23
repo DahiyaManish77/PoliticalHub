@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48ca987e43f74f368e648958d6c7d34c" Name="Diagram1">
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ApplicationRole" Width="1.5" PointX="2.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ApplicationUser" Width="1.5" PointX="5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.HeroSlider" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.HomePageStatistic" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.NavigationMenu" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.WebsiteFooterSetting" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.WebsiteHeaderSetting" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.WebsiteSetting" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_ApplicationUser_ApplicationRole" ManuallyRouted="false" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_NavigationMenu_Parent" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.LatestNew" Width="1.5" PointX="9.375" PointY="5.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.UpcomingEvent" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.GalleryCategory" Width="1.5" PointX="10.375" PointY="1.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.GalleryImage" Width="1.5" PointX="12.625" PointY="1" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_GalleryImage_GalleryCategory" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.VideoCategory" Width="1.5" PointX="11.375" PointY="5.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.VideoGallery" Width="1.5" PointX="13.625" PointY="5" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_VideoGallery_VideoCategory" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.MediaCoverage" Width="1.5" PointX="3.375" PointY="11.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.DownloadCategory" Width="1.5" PointX="11.375" PointY="11" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.DownloadDocument" Width="1.5" PointX="13.625" PointY="10" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_DownloadDocument_DownloadCategory" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CampaignAlert" Width="1.5" PointX="5.75" PointY="12.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionBooth" Width="1.5" PointX="5.75" PointY="41.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionBoothVisit" Width="1.5" PointX="8" PointY="20.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionCampaign" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventArrangement" Width="1.5" PointX="8" PointY="28.625" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventAttendance" Width="1.5" PointX="8" PointY="35.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventExpense" Width="1.5" PointX="8" PointY="85.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventGuest" Width="1.5" PointX="8" PointY="71.625" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventMaster" Width="1.5" PointX="5.75" PointY="50.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventMedia" Width="1.5" PointX="8" PointY="79.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventPoll" Width="1.5" PointX="8" PointY="42.5" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventPollOption" Width="1.5" PointX="10.25" PointY="43.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventPollResponse" Width="1.5" PointX="12.5" PointY="41.875" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventTask" Width="1.5" PointX="10.25" PointY="56.875" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventTaskActivity" Width="1.5" PointX="12.5" PointY="58.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventTeam" Width="1.5" PointX="8" PointY="65.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventTeamMember" Width="1.5" PointX="10.25" PointY="65.625" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventVehicle" Width="1.5" PointX="8" PointY="92.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.JanSampark" Width="1.5" PointX="8" PointY="51.25" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_ElectionBoothVisit_ElectionBooth" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_JanSampark_ElectionBooth" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventArrangement_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventAttendance_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventExpense_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventGuest_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventMedia_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventPoll_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTask_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTeam_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventVehicle_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_JanSampark_EventMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventPollOption_EventPoll" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventPollResponse_EventPoll" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventPollResponse_EventPollOption" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTask_EventTeam" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTask_ParentTask" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTaskActivity_EventTask" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_EventTeamMember_EventTeam" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_CampaignAlert_ElectionCampaign" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.MenuMaster" Width="1.5" PointX="10.375" PointY="14.75" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_MenuMaster_ParentMenu" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

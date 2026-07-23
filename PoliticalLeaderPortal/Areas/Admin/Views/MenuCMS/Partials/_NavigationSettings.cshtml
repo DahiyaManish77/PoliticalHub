@@ -1,0 +1,231 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+<div class="menu-card menu-shadow menu-rounded">
+
+    <!-- Card Header -->
+
+    <div class="menu-card-header">
+
+        <div class="menu-card-header-left">
+
+            <div class="menu-card-header-icon">
+
+                <i class="fas fa-route"></i>
+
+            </div>
+
+            <div class="menu-card-header-content">
+
+                <h5 class="menu-card-title">
+
+                    Navigation & Routing
+
+                </h5>
+
+                <div class="menu-card-subtitle">
+
+                    Configure routing, URL, display order and menu icon.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Card Body -->
+
+    <div class="menu-card-body">
+
+        <!-- ========================================= -->
+        <!-- ROW 1                                     -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-form-row">
+
+                <!-- Area -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Area
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.AreaName,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "Admin"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.AreaName,
+                        "",
+                        new
+                        {
+                            @class = "menu-validation-message"
+                        })
+
+                </div>
+
+                <!-- Controller -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Controller
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.ControllerName,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "Dashboard"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.ControllerName,
+                        "",
+                        new
+                        {
+                            @class = "menu-validation-message"
+                        })
+
+                </div>
+
+                <!-- Action -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Action
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.ActionName,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "Index"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.ActionName,
+                        "",
+                        new
+                        {
+                            @class = "menu-validation-message"
+                        })
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ========================================= -->
+        <!-- ROW 2                                     -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-form-row">
+
+                <!-- Custom URL -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Custom URL
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.CustomUrl,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "https://example.com"
+                        })
+
+                </div>
+
+                <!-- Display Order -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Display Order
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.DisplayOrder,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            type = "number",
+                            min = "0"
+                        })
+
+                </div>
+
+                <!-- Font Awesome Icon -->
+
+                <div class="menu-form-column">
+
+                    <label class="menu-form-label">
+
+                        Font Awesome Icon
+
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.IconClass,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            id = "IconClass",
+                            placeholder = "fas fa-home"
+                        })
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ICON PREVIEW                              -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="text-center">
+
+                <div class="menu-icon-preview">
+
+                    <i id="menuIconPreview"
+                       class="fas fa-home"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

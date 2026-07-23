@@ -1,0 +1,20 @@
+@using PoliticalLeaderPortal.Areas.Admin.Services
+@using PoliticalLeaderPortal.Areas.Admin.ViewModels
+@{
+    var sectionService = new HomePageSectionService();
+    var sections = sectionService.GetVisibleSectionsForHome();
+}
+
+<div class="site-home-page">
+    @foreach (HomePageSectionVM section in sections)
+    {
+        if (String.Equals(section.RenderType, "Action", StringComparison.OrdinalIgnoreCase))
+        {
+            @Html.Action(section.ActionName, section.ControllerName)
+        }
+        else if (!String.IsNullOrWhiteSpace(section.PartialViewPath))
+        {
+            @Html.Partial(section.PartialViewPath)
+        }
+    }
+</div>

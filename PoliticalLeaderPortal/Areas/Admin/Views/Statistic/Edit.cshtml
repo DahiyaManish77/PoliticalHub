@@ -1,0 +1,16 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.StatisticVM
+
+@{
+    ViewBag.Title = "Edit Statistic";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm(
+"Edit",
+"Statistic",
+FormMethod.Post))
+{
+    @Html.Partial(
+    "_StatisticForm",
+    Model)
+}

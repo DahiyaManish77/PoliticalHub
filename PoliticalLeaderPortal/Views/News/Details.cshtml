@@ -1,0 +1,130 @@
+﻿@model PoliticalLeaderPortal.ViewModels.NewsDetailsVM
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="news-details-page">
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- ARTICLE -->
+
+            <div class="col-lg-8">
+
+                <article class="news-details-card">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+                    {
+                        <div class="news-main-image">
+
+                            <img src="@Url.Content(Model.ImagePath)"
+                                 alt="@Model.Title"
+                                 class="img-fluid" />
+
+                        </div>
+                    }
+
+                    <div class="news-details-content">
+
+                        <div class="news-date-badge">
+
+                            <i class="bi bi-calendar-event"></i>
+
+                            @Model.PublishDate.ToString("dd MMM yyyy")
+
+                        </div>
+
+                        <h1 class="news-main-title">
+
+                            @Model.Title
+
+                        </h1>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ShortDescription))
+                        {
+                            <div class="news-summary-box">
+
+                                @Model.ShortDescription
+
+                            </div>
+                        }
+
+                        <div class="news-article-body">
+
+                            @Html.Raw(
+                                (Model.FullDescription ?? "")
+                                .Replace("\r\n", "<br/><br/>")
+                                .Replace("\n", "<br/><br/>")
+                            )
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+            <!-- RELATED NEWS -->
+
+            <div class="col-lg-4">
+
+                @if (Model.RelatedNews != null && Model.RelatedNews.Any())
+                {
+                    <div class="related-news-sidebar">
+
+                        <div class="related-sidebar-title">
+
+                            Related News
+
+                        </div>
+
+                        @foreach (var item in Model.RelatedNews)
+                        {
+                            <div class="sidebar-news-card">
+
+                                <a href="@Url.Action("Details", "News",
+                                    new { id = item.NewsId })">
+
+                                    @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                                    {
+                                        <img src="@Url.Content(item.ImagePath)"
+                                             class="sidebar-news-image"
+                                             alt="@item.Title" />
+                                    }
+
+                                    <div class="sidebar-news-content">
+
+                                        <div class="sidebar-news-date">
+
+                                            @item.PublishDate.ToString("dd MMM yyyy")
+
+                                        </div>
+
+                                        <h6>
+
+                                            @item.Title
+
+                                        </h6>
+
+                                    </div>
+
+                                </a>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

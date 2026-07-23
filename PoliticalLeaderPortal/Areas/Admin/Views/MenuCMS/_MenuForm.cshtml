@@ -1,0 +1,172 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.MenuId)
+
+<div class="menu-builder">
+
+    <!-- ========================================= -->
+    <!-- BASIC INFORMATION                         -->
+    <!-- ========================================= -->
+
+    <div class="menu-panel mb-4">
+
+        <button class="menu-panel-header"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#basicInformationPanel"
+                aria-expanded="true">
+
+            <span>
+
+                <i class="fas fa-circle-info"></i>
+
+                Basic Information
+
+            </span>
+
+            <i class="fas fa-chevron-down"></i>
+
+        </button>
+
+        <div id="basicInformationPanel"
+             class="collapse show">
+
+            <div class="menu-panel-body">
+
+                @Html.Partial("Partials/_BasicInformation", Model)
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- NAVIGATION & ROUTING                      -->
+    <!-- ========================================= -->
+
+    <div class="menu-panel mb-4">
+
+        <button class="menu-panel-header"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navigationPanel"
+                aria-expanded="true">
+
+            <span>
+
+                <i class="fas fa-route"></i>
+
+                Navigation & Routing
+
+            </span>
+
+            <i class="fas fa-chevron-down"></i>
+
+        </button>
+
+        <div id="navigationPanel"
+             class="collapse show">
+
+            <div class="menu-panel-body">
+
+                @Html.Partial("Partials/_NavigationSettings", Model)
+
+               
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- VISIBILITY SETTINGS                       -->
+    <!-- ========================================= -->
+
+    <div class="menu-panel mb-4">
+
+        <button class="menu-panel-header"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#visibilityPanel"
+                aria-expanded="true">
+
+            <span>
+
+                <i class="fas fa-eye"></i>
+
+                Visibility Settings
+
+            </span>
+
+            <i class="fas fa-chevron-down"></i>
+
+        </button>
+
+        <div id="visibilityPanel"
+             class="collapse show">
+
+            <div class="menu-panel-body">
+
+                @Html.Partial("Partials/_PublishingSettings", Model)
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SEO                                       -->
+    <!-- ========================================= -->
+
+    <div class="menu-panel mb-4">
+
+        <button class="menu-panel-header collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#seoPanel"
+                aria-expanded="false">
+
+            <span>
+
+                <i class="fas fa-search"></i>
+
+                SEO & Page Metadata
+
+            </span>
+
+            <i class="fas fa-chevron-down"></i>
+
+        </button>
+
+        <div id="seoPanel"
+             class="collapse">
+
+            <div class="menu-panel-body">
+
+                @Html.Partial("Partials/_SeoSettings", Model)
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- ACTION BAR                                -->
+    <!-- ========================================= -->
+
+    <div class="menu-panel">
+
+        <div class="menu-panel-body">
+
+            @Html.Partial("Partials/_SavePanel", Model)
+
+        </div>
+
+    </div>
+
+</div>

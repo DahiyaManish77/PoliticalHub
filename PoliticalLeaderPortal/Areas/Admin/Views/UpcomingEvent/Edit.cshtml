@@ -1,0 +1,224 @@
+﻿@model PoliticalLeaderPortal.ViewModels.UpcomingEventVM
+
+@{
+    ViewBag.Title = "Edit Event";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-warning">
+
+            <h4 class="mb-0">
+                Edit Upcoming Event
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            @using (Html.BeginForm("Edit",
+                                   "UpcomingEvent",
+                                   FormMethod.Post,
+                                   new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(m => m.EventId)
+                @Html.HiddenFor(m => m.EventImagePath)
+
+                <div class="row">
+
+                    <div class="col-md-8 mb-3">
+
+                        <label class="form-label">
+                            Event Title
+                        </label>
+
+                        @Html.TextBoxFor(m => m.Title,
+                            new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(m => m.Title)
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Display Order
+                        </label>
+
+                        @Html.TextBoxFor(m => m.DisplayOrder,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "number"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Event Date
+                        </label>
+
+                        @Html.TextBoxFor(m => m.EventDate,
+                            "{0:yyyy-MM-dd}",
+                            new
+                            {
+                                @class = "form-control",
+                                type = "date"
+                            })
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Event Time
+                        </label>
+
+                        @Html.TextBoxFor(m => m.EventTime,
+                            new
+                            {
+                                @class = "form-control"
+                            })
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Event Location
+                        </label>
+
+                        @Html.TextBoxFor(m => m.EventLocation,
+                            new
+                            {
+                                @class = "form-control"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Short Description
+                    </label>
+
+                    @Html.TextAreaFor(m => m.ShortDescription,
+                        new
+                        {
+                            @class = "form-control",
+                            rows = 3
+                        })
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Description
+                    </label>
+
+                    @Html.TextAreaFor(m => m.FullDescription,
+                        new
+                        {
+                            @class = "form-control summernote"
+                        })
+
+                </div>
+
+                if (!string.IsNullOrWhiteSpace(Model.EventImagePath))
+                {
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Current Image
+                        </label>
+
+                        <br />
+
+                        <img src="@Url.Content(Model.EventImagePath)"
+                             class="img-thumbnail"
+                             style="max-width:300px;" />
+
+                    </div>
+                }
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Change Image
+                    </label>
+
+                    @Html.TextBoxFor(m => m.EventImageFile,
+                        new
+                        {
+                            type = "file",
+                            @class = "form-control"
+                        })
+
+                </div>
+
+                <div class="form-check mb-4">
+
+                    @Html.CheckBoxFor(m => m.IsActive,
+                        new
+                        {
+                            @class = "form-check-input"
+                        })
+
+                    <label class="form-check-label">
+
+                        Active Event
+
+                    </label>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    Update Event
+
+                </button>
+
+                <a href="@Url.Action("Index")"
+                   class="btn btn-secondary">
+
+                    Back
+
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('.summernote').summernote({
+                height: 250
+            });
+
+        });
+
+    </script>
+
+}

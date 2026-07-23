@@ -1,0 +1,161 @@
+@model IEnumerable<PoliticalLeaderPortal.ViewModels.HomeVideoGalleryVM>
+
+@{
+    Layout = null;
+    var videos = Model == null ? new List<PoliticalLeaderPortal.ViewModels.HomeVideoGalleryVM>() : Model.ToList();
+    var featuredVideo = videos.FirstOrDefault(x => x.IsFeatured) ?? videos.FirstOrDefault();
+    var otherVideos = videos.Where(x => featuredVideo == null || x.VideoId != featuredVideo.VideoId).Take(4).ToList();
+}
+
+@functions
+{
+    private string GetYouTubeId(string url)
+    {
+        if (String.IsNullOrWhiteSpace(url)) return "";
+        var value = url.Trim();
+
+        if (value.Contains("watch?v="))
+        {
+            var id = value.Substring(value.IndexOf("watch?v=") + 8);
+            var amp = id.IndexOf("&");
+            return amp >= 0 ? id.Substring(0, amp) : id;
+        }
+
+        if (value.Contains("youtu.be/"))
+        {
+            var id = value.Substring(value.LastIndexOf("/") + 1);
+            var query = id.IndexOf("?");
+            return query >= 0 ? id.Substring(0, query) : id;
+        }
+
+        if (value.Contains("/shorts/"))
+        {
+            var id = value.Substring(value.IndexOf("/shorts/") + 8);
+            var query = id.IndexOf("?");
+            return query >= 0 ? id.Substring(0, query) : id;
+        }
+
+        return "";
+    }
+
+    private string GetVideoThumbnail(PoliticalLeaderPortal.ViewModels.HomeVideoGalleryVM item)
+    {
+        if (item == null) return "/Content/images/logo.png";
+        if (!String.IsNullOrWhiteSpace(item.ThumbnailImagePath)) return item.ThumbnailImagePath;
+
+        var youtubeId = GetYouTubeId(item.YoutubeUrl);
+        return String.IsNullOrWhiteSpace(youtubeId)
+            ? "/Content/images/logo.png"
+            : "https://img.youtube.com/vi/" + youtubeId + "/hqdefault.jpg";
+    }
+
+    private string TrimText(string text, int max)
+    {
+        if (String.IsNullOrWhiteSpace(text)) return "";
+        return text.Length <= max ? text : text.Substring(0, max).Trim() + "...";
+    }
+}
+
+<section class="home-video-gallery">
+    <div class="container">
+        <div class="home-video-head">
+            <div>
+                <span class="home-video-kicker">Video Gallery</span>
+                <h2>Speeches, Meetings & Public Activities</h2>
+                <p>Watch public meetings, development activities, social programs, interviews and important events.</p>
+            </div>
+            <a href="@Url.Action("Index", "Video")" class="home-video-link">View All Videos</a>
+        </div>
+
+        @if (!videos.Any())
+        {
+            <div class="home-video-empty">
+                <i class="bi bi-youtube"></i>
+                <span>No videos available yet.</span>
+            </div>
+        }
+        else
+        {
+            <div class="home-video-grid">
+                @if (featuredVideo != null)
+                {
+                    <article class="home-video-featured">
+                        <a class="home-video-media" href="@Url.Action("Details", "Video", new { id = featuredVideo.VideoId })">
+                            <img src="@Url.Content(GetVideoThumbnail(featuredVideo))" alt="@featuredVideo.VideoTitle" />
+                            <span class="home-video-play"><i class="bi bi-play-fill"></i></span>
+                        </a>
+                        <div class="home-video-copy">
+                            <span class="home-video-chip">@featuredVideo.CategoryName</span>
+                            <h3>@featuredVideo.VideoTitle</h3>
+                            <p>@TrimText(featuredVideo.VideoDescription, 150)</p>
+                            <div class="video-social-actions"
+                                 data-public-actions
+                                 data-item-type="video"
+                                 data-item-id="@featuredVideo.VideoId"
+                                 data-title="@featuredVideo.VideoTitle"
+                                 data-url="@Url.Action("Details", "Video", new { id = featuredVideo.VideoId }, Request.Url.Scheme)">
+                                <button type="button" data-action="like"><i class="bi bi-hand-thumbs-up"></i><span>Like</span><small data-like-count>0</small></button>
+                                <button type="button" data-action="comment"><i class="bi bi-chat-dots"></i><span>Comment</span></button>
+                                <button type="button" data-action="share"><i class="bi bi-share"></i><span>Share</span></button>
+                            </div>
+                        </div>
+                    </article>
+                }
+
+                <div class="home-video-list">
+                    @foreach (var item in otherVideos)
+                    {
+                        <article class="home-video-mini">
+                            <a class="home-video-mini-thumb" href="@Url.Action("Details", "Video", new { id = item.VideoId })">
+                                <img src="@Url.Content(GetVideoThumbnail(item))" alt="@item.VideoTitle" />
+                                <span><i class="bi bi-play-fill"></i></span>
+                            </a>
+                            <div>
+                                <span>@item.CategoryName</span>
+                                <h3>@item.VideoTitle</h3>
+                                <div class="video-social-actions video-social-actions-sm"
+                                     data-public-actions
+                                     data-item-type="video"
+                                     data-item-id="@item.VideoId"
+                                     data-title="@item.VideoTitle"
+                                     data-url="@Url.Action("Details", "Video", new { id = item.VideoId }, Request.Url.Scheme)">
+                                    <button type="button" data-action="like" aria-label="Like video"><i class="bi bi-hand-thumbs-up"></i><small data-like-count>0</small></button>
+                                    <button type="button" data-action="comment" aria-label="Comment on video"><i class="bi bi-chat-dots"></i></button>
+                                    <button type="button" data-action="share" aria-label="Share video"><i class="bi bi-share"></i></button>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .home-video-gallery { padding: 34px 0; background: #f6f8fb; }
+    .home-video-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .home-video-kicker { display: inline-flex; color: #e85d04; font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0; margin-bottom: 5px; }
+    .home-video-head h2 { margin: 0; font-size: clamp(1.35rem, 2vw, 2rem); line-height: 1.15; color: #111827; font-weight: 800; }
+    .home-video-head p { margin: 6px 0 0; color: #64748b; max-width: 670px; font-size: .95rem; }
+    .home-video-link { color: #fff; background: #111827; text-decoration: none; border-radius: 6px; padding: 9px 14px; font-size: .86rem; font-weight: 700; white-space: nowrap; }
+    .home-video-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(310px, .8fr); gap: 18px; }
+    .home-video-featured, .home-video-mini, .home-video-empty { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 12px 28px rgba(15, 23, 42, .06); overflow: hidden; }
+    .home-video-media { position: relative; display: block; aspect-ratio: 16 / 9; background: #111827; overflow: hidden; }
+    .home-video-media img, .home-video-mini-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+    .home-video-featured:hover img, .home-video-mini:hover img { transform: scale(1.035); }
+    .home-video-play, .home-video-mini-thumb span { position: absolute; inset: 0; margin: auto; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: rgba(232, 93, 4, .95); color: #fff; font-size: 1.55rem; box-shadow: 0 12px 24px rgba(232, 93, 4, .28); }
+    .home-video-copy { padding: 16px; }
+    .home-video-chip { display: inline-flex; align-items: center; border-radius: 999px; background: #fff3e7; color: #c2410c; padding: 4px 9px; font-size: .72rem; font-weight: 800; margin-bottom: 8px; }
+    .home-video-copy h3 { font-size: 1.18rem; line-height: 1.25; margin: 0 0 7px; color: #111827; font-weight: 800; }
+    .home-video-copy p { margin: 0 0 12px; color: #64748b; font-size: .9rem; line-height: 1.55; }
+    .home-video-list { display: grid; gap: 12px; }
+    .home-video-mini { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 12px; padding: 10px; }
+    .home-video-mini-thumb { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 6px; overflow: hidden; background: #111827; }
+    .home-video-mini-thumb span { width: 36px; height: 36px; font-size: 1rem; }
+    .home-video-mini h3 { margin: 3px 0 8px; color: #111827; font-size: .94rem; line-height: 1.3; font-weight: 800; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .home-video-mini div > span { color: #e85d04; font-size: .72rem; font-weight: 800; }
+    .home-video-empty { padding: 28px; color: #64748b; display: flex; gap: 10px; align-items: center; justify-content: center; }
+    @@media (max-width: 991px) { .home-video-grid { grid-template-columns: 1fr; } .home-video-head { align-items: flex-start; flex-direction: column; } }
+    @@media (max-width: 575px) { .home-video-gallery { padding: 26px 0; } .home-video-mini { grid-template-columns: 112px minmax(0, 1fr); } .home-video-link { width: 100%; text-align: center; } }
+</style>

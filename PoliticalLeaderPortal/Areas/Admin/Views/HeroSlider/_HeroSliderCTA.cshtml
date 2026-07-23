@@ -1,0 +1,374 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+
+                <i class="fa-solid fa-link text-primary me-2"></i>
+
+                Premium CTA Button Designer
+
+            </h3>
+
+            <p class="hero-section-description">
+
+                Configure primary and secondary call-to-action buttons.
+
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+
+            Step 3 of 6
+
+        </span>
+
+    </div>
+
+    <div class="hero-toggle-card">
+
+        <div>
+
+            <div class="hero-toggle-title">
+
+                Enable CTA Buttons
+
+            </div>
+
+            <div class="hero-toggle-desc">
+
+                Show or hide action buttons on this hero slide.
+
+            </div>
+
+        </div>
+
+        <label class="hero-switch">
+
+            @Html.CheckBoxFor(m => m.ShowButtons)
+
+            <span class="hero-switch-slider"></span>
+
+        </label>
+
+    </div>
+
+    <div class="hero-cta-grid">
+
+        <!-- PRIMARY BUTTON -->
+
+        <div class="hero-cta-card">
+
+            <div class="hero-cta-header">
+
+                <div>
+
+                    <h4 class="hero-cta-title">
+
+                        Primary Button
+
+                    </h4>
+
+                    <div class="hero-cta-subtitle">
+
+                        Main Action
+
+                    </div>
+
+                </div>
+
+                <div class="hero-cta-icon">
+
+                    <i class="fa-solid fa-circle-play"></i>
+
+                </div>
+
+            </div>
+
+            <div class="hero-cta-body">
+
+                <div class="hero-floating-group">
+
+                    @Html.TextBoxFor(m => m.ButtonText,
+                        new
+                        {
+                            @class = "hero-input",
+                            placeholder = " "
+                        })
+
+                    <label class="hero-floating-label">
+
+                        Button Text
+
+                    </label>
+
+                </div>
+
+                <div class="hero-floating-group">
+
+                    <div class="hero-url-group">
+
+                        <i class="fa-solid fa-link"></i>
+
+                        @Html.TextBoxFor(m => m.ButtonUrl,
+                            new
+                            {
+                                @class = "hero-url-input",
+                                placeholder = "https://"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="hero-chip-title">
+
+                    Quick Links
+
+                </div>
+
+                <div class="hero-chip-group">
+
+                    <span class="hero-action-chip">
+                        /
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /about
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /gallery
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /contact
+                    </span>
+
+                </div>
+
+                <div class="hero-url-status info">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    URL validation available after JavaScript integration.
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SECONDARY BUTTON -->
+
+        <div class="hero-cta-card">
+
+            <div class="hero-cta-header">
+
+                <div>
+
+                    <h4 class="hero-cta-title">
+
+                        Secondary Button
+
+                    </h4>
+
+                    <div class="hero-cta-subtitle">
+
+                        Optional Action
+
+                    </div>
+
+                </div>
+
+                <div class="hero-cta-icon">
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </div>
+
+            </div>
+
+            <div class="hero-cta-body">
+
+                <div class="hero-floating-group">
+
+                    @Html.TextBoxFor(m => m.ButtonText2,
+                        new
+                        {
+                            @class = "hero-input",
+                            placeholder = " "
+                        })
+
+                    <label class="hero-floating-label">
+
+                        Button Text
+
+                    </label>
+
+                </div>
+
+                <div class="hero-floating-group">
+
+                    <div class="hero-url-group">
+
+                        <i class="fa-solid fa-link"></i>
+
+                        @Html.TextBoxFor(m => m.ButtonUrl2,
+                            new
+                            {
+                                @class = "hero-url-input",
+                                placeholder = "https://"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="hero-chip-title">
+
+                    Quick Links
+
+                </div>
+
+                <div class="hero-chip-group">
+
+                    <span class="hero-action-chip">
+                        /join
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /events
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /downloads
+                    </span>
+
+                    <span class="hero-action-chip">
+                        /news
+                    </span>
+
+                </div>
+
+                <div class="hero-url-status info">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    URL validation available after JavaScript integration.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hero-divider"></div>
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="hero-cta-preview">
+
+                <div class="hero-cta-preview-title">
+
+                    Live CTA Preview
+
+                </div>
+
+                <div class="hero-preview-buttons">
+
+                    <button type="button" class="hero-btn-primary-preview">
+
+                        @(string.IsNullOrWhiteSpace(Model.ButtonText)
+                            ? "Primary Button"
+                            : Model.ButtonText)
+
+                    </button>
+
+                    <button type="button" class="hero-btn-secondary-preview">
+
+                        @(string.IsNullOrWhiteSpace(Model.ButtonText2)
+                            ? "Secondary Button"
+                            : Model.ButtonText2)
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="hero-quality-card">
+
+                <div class="hero-quality-header">
+
+                    <div class="hero-quality-title">
+
+                        CTA Quality
+
+                    </div>
+
+                    <div class="hero-quality-score">
+
+                        0%
+
+                    </div>
+
+                </div>
+
+                <ul class="hero-quality-list">
+
+                    <li>
+
+                        <span>Primary Text</span>
+
+                        <span>☆☆☆☆☆</span>
+
+                    </li>
+
+                    <li>
+
+                        <span>Primary URL</span>
+
+                        <span>☆☆☆☆☆</span>
+
+                    </li>
+
+                    <li>
+
+                        <span>Secondary Text</span>
+
+                        <span>☆☆☆☆☆</span>
+
+                    </li>
+
+                    <li>
+
+                        <span>Secondary URL</span>
+
+                        <span>☆☆☆☆☆</span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

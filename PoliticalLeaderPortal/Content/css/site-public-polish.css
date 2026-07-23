@@ -1,0 +1,815 @@
+/* =====================================================
+   Public Portal Polish
+   Tightens the user layout rhythm while preserving CMS partials.
+===================================================== */
+
+:root {
+    --public-section-y: clamp(20px, 2.35vw, 34px);
+    --public-section-y-compact: clamp(16px, 1.9vw, 26px);
+    --public-card-radius: 14px;
+    --public-soft-border: 1px solid rgba(15, 23, 42, .08);
+    --public-soft-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    --public-hover-shadow: 0 18px 44px rgba(15, 23, 42, .12);
+}
+
+body.public-home-layout {
+    background: #f8fafc;
+}
+
+body.public-home-layout .main-content {
+    min-height: 0;
+    background:
+        linear-gradient(180deg, #ffffff 0, #ffffff 430px, #f8fafc 430px, #f8fafc 100%);
+}
+
+body.public-inner-layout .main-content {
+    min-height: 300px;
+}
+
+body.public-inner-layout .page-banner-section {
+    padding: 46px 0 !important;
+}
+
+body.public-inner-layout .page-banner-subtitle {
+    padding: 6px 14px !important;
+    margin-bottom: 10px !important;
+    font-size: 12px !important;
+}
+
+body.public-inner-layout .page-banner-title {
+    margin-bottom: 8px !important;
+    font-size: clamp(28px, 3vw, 44px) !important;
+    line-height: 1.08 !important;
+}
+
+body.public-inner-layout .page-banner-description {
+    max-width: 720px !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+}
+
+body.public-inner-layout .about-page-section,
+body.public-inner-layout .news-details-page,
+body.public-inner-layout .events-page,
+body.public-inner-layout .downloads-section,
+body.public-inner-layout .gallery-page-section {
+    padding-top: 24px !important;
+    padding-bottom: 34px !important;
+}
+
+body.public-inner-layout .about-sidebar {
+    top: 82px !important;
+    margin-bottom: 18px !important;
+    border-radius: 14px !important;
+}
+
+body.public-inner-layout .about-sidebar-header {
+    padding: 18px !important;
+}
+
+body.public-inner-layout .about-sidebar-menu li a {
+    padding: 12px 18px !important;
+    gap: 10px !important;
+    font-size: 14px !important;
+}
+
+body.public-inner-layout .about-content-card,
+body.public-inner-layout .news-details-card,
+body.public-inner-layout .download-card,
+body.public-inner-layout .gallery-card {
+    border-radius: 14px !important;
+    padding: 22px !important;
+    margin-bottom: 18px !important;
+    box-shadow: var(--public-soft-shadow) !important;
+}
+
+body.public-inner-layout .about-content-card h3 {
+    margin-bottom: 14px !important;
+    padding-bottom: 9px !important;
+    font-size: 22px !important;
+}
+
+body.public-inner-layout .about-page-text {
+    margin-bottom: 12px !important;
+    line-height: 1.65 !important;
+    font-size: 14px !important;
+}
+
+body.public-inner-layout .about-leader-image {
+    height: clamp(280px, 32vw, 360px) !important;
+    border-radius: 14px !important;
+}
+
+body.public-inner-layout .about-page-badge {
+    margin-bottom: 10px !important;
+    padding: 6px 14px !important;
+    font-size: 12px !important;
+}
+
+body.public-inner-layout .about-page-title {
+    margin-bottom: 12px !important;
+    font-size: clamp(26px, 2.4vw, 36px) !important;
+}
+
+body.public-inner-layout .about-quote-box {
+    padding: 24px !important;
+    border-radius: 14px !important;
+}
+
+body.public-inner-layout .about-navigation {
+    margin-top: 4px !important;
+}
+
+body.public-home-layout .site-mega-nav {
+    border-bottom-width: 2px;
+}
+
+body.public-home-layout .site-menu-topbar {
+    min-height: 64px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    grid-template-columns: 42px minmax(210px, 1fr) auto !important;
+    gap: 14px !important;
+}
+
+body.public-home-layout .site-menu-close {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 30px !important;
+}
+
+body.public-home-layout .site-brand-copy strong {
+    font-size: clamp(30px, 3.2vw, 46px) !important;
+    line-height: .98 !important;
+}
+
+body.public-home-layout .site-menu-actions {
+    font-size: clamp(13px, 1vw, 17px) !important;
+}
+
+body.public-home-layout .site-menu-actions a,
+body.public-home-layout .site-menu-actions span.site-menu-text-link,
+body.public-home-layout .site-language-btn,
+body.public-home-layout .site-search-button {
+    min-height: 34px !important;
+    padding: 0 11px !important;
+}
+
+body.public-home-layout .site-search-button i,
+body.public-home-layout .site-language-btn i,
+body.public-home-layout .site-menu-actions i {
+    font-size: 22px !important;
+}
+
+body.public-home-layout .site-mega-panel {
+    padding-top: 28px !important;
+    padding-bottom: 22px !important;
+}
+
+body.public-home-layout .site-mega-column {
+    min-height: 150px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+body.public-home-layout .site-mega-heading {
+    margin-bottom: 6px !important;
+    font-size: clamp(15px, 1.05vw, 19px) !important;
+}
+
+body.public-home-layout .site-mega-links a,
+body.public-home-layout .site-mega-sub-links a {
+    padding: 3px 0 !important;
+    font-size: clamp(13px, .95vw, 16px) !important;
+    line-height: 1.25 !important;
+}
+
+body.public-home-layout .site-menu-social {
+    margin-top: 16px !important;
+}
+
+body.public-home-layout .site-menu-social a {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 18px !important;
+}
+
+body.public-home-layout .hero-slider-section,
+body.public-home-layout .hero-slide,
+body.public-home-layout .hero-row {
+    height: clamp(500px, 43vw, 560px) !important;
+    max-height: none !important;
+    min-height: 500px !important;
+}
+
+body.public-home-layout .hero-content {
+    padding-top: 22px !important;
+    padding-bottom: 30px !important;
+}
+
+body.public-home-layout .hero-title {
+    font-size: clamp(30px, 4.3vw, 64px) !important;
+    line-height: .96 !important;
+    max-width: 820px;
+}
+
+body.public-home-layout .hero-subtitle {
+    font-size: clamp(13px, 1.25vw, 20px) !important;
+    margin-bottom: 6px !important;
+}
+
+body.public-home-layout .hero-description {
+    font-size: clamp(12px, .92vw, 15px) !important;
+    max-width: 520px !important;
+}
+
+body.public-home-layout .hero-social-dock a {
+    width: 48px !important;
+    height: 52px !important;
+    font-size: 21px !important;
+}
+
+body.public-home-layout .hero-swiper-pagination {
+    bottom: 8px !important;
+}
+
+body.public-home-layout .site-home-page {
+    overflow: hidden;
+}
+
+body.public-home-layout .site-home-page > section,
+body.public-home-layout .site-home-page .leader-introduction-section,
+body.public-home-layout .site-home-page .home-statistics-section,
+body.public-home-layout .site-home-page .latest-news-section,
+body.public-home-layout .site-home-page .upcoming-events-section,
+body.public-home-layout .site-home-page .media-coverage-section,
+body.public-home-layout .site-home-page .video-gallery-section,
+body.public-home-layout .site-home-page .image-gallery-section,
+body.public-home-layout .site-home-page .downloads-section,
+body.public-home-layout .site-home-page .joinus-cta-section,
+body.public-home-layout .site-home-page .contact-cta-section {
+    padding-top: var(--public-section-y) !important;
+    padding-bottom: var(--public-section-y) !important;
+}
+
+body.public-home-layout .site-home-page .leader-introduction-section,
+body.public-home-layout .site-home-page .home-statistics-section {
+    padding-top: var(--public-section-y-compact) !important;
+    padding-bottom: var(--public-section-y-compact) !important;
+}
+
+body.public-home-layout .section-subtitle,
+body.public-home-layout .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px !important;
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+}
+
+body.public-home-layout .section-title,
+body.public-home-layout .site-home-page h2 {
+    margin: 0 0 8px !important;
+    font-size: clamp(24px, 2.3vw, 34px) !important;
+    line-height: 1.15 !important;
+}
+
+body.public-home-layout .section-description,
+body.public-home-layout .section-subtitle + p {
+    max-width: 680px !important;
+    margin-bottom: 14px !important;
+    line-height: 1.55 !important;
+    font-size: 13px !important;
+}
+
+body.public-home-layout .container {
+    max-width: 1180px;
+}
+
+body.public-home-layout .featured-news-card,
+body.public-home-layout .featured-event-card,
+body.public-home-layout .download-card,
+body.public-home-layout .media-card,
+body.public-home-layout .gallery-card,
+body.public-home-layout .video-card,
+body.public-home-layout .leader-fact-card,
+body.public-home-layout .leader-service-card,
+body.public-home-layout .vision-mission-card,
+body.public-home-layout .side-news-card,
+body.public-home-layout .mini-event-card {
+    border-radius: var(--public-card-radius) !important;
+    border: var(--public-soft-border);
+    box-shadow: var(--public-soft-shadow) !important;
+}
+
+body.public-home-layout .featured-news-card:hover,
+body.public-home-layout .featured-event-card:hover,
+body.public-home-layout .download-card:hover,
+body.public-home-layout .media-card:hover,
+body.public-home-layout .gallery-card:hover,
+body.public-home-layout .video-card:hover,
+body.public-home-layout .leader-fact-card:hover,
+body.public-home-layout .leader-service-card:hover,
+body.public-home-layout .vision-mission-card:hover,
+body.public-home-layout .side-news-card:hover,
+body.public-home-layout .mini-event-card:hover {
+    box-shadow: var(--public-hover-shadow) !important;
+}
+
+body.public-home-layout .news-image img,
+body.public-home-layout .event-banner img {
+    height: clamp(230px, 27vw, 315px) !important;
+}
+
+body.public-home-layout .news-content,
+body.public-home-layout .event-content {
+    padding: 18px !important;
+}
+
+body.public-home-layout .news-content h3,
+body.public-home-layout .event-content h3 {
+    font-size: clamp(20px, 2vw, 27px) !important;
+    line-height: 1.28 !important;
+    margin-bottom: 10px !important;
+}
+
+body.public-home-layout .news-content p,
+body.public-home-layout .event-content p {
+    line-height: 1.55 !important;
+    margin-bottom: 12px !important;
+}
+
+body.public-home-layout .home-statistics-section .row,
+body.public-home-layout .latest-news-section .row,
+body.public-home-layout .upcoming-events-section .row,
+body.public-home-layout .image-gallery-section .row,
+body.public-home-layout .downloads-section .row {
+    --bs-gutter-y: 1rem;
+}
+
+body.public-home-layout .side-news-card,
+body.public-home-layout .mini-event-card {
+    margin-bottom: 12px !important;
+    padding: 12px !important;
+}
+
+body.public-home-layout .side-news-card img {
+    width: 112px !important;
+    height: 82px !important;
+}
+
+body.public-home-layout .mini-date {
+    width: 58px !important;
+    min-width: 58px !important;
+    height: 66px !important;
+    border-radius: 10px !important;
+}
+
+body.public-home-layout .btn-read-more,
+body.public-home-layout .btn-view-all-news,
+body.public-home-layout .btn-register-event,
+body.public-home-layout .btn-view-events {
+    padding: 10px 22px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+}
+
+body.public-home-layout .joinus-cta-section,
+body.public-home-layout .contact-cta-section {
+    margin-top: 0 !important;
+}
+
+body.public-home-layout .site-footer .footer-top {
+    padding-top: 28px;
+    padding-bottom: 20px;
+}
+
+body.public-home-layout .site-footer .footer-title {
+    margin-bottom: 12px;
+}
+
+body.public-home-layout .site-footer p,
+body.public-home-layout .site-footer li {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 991px) {
+    body.public-home-layout .site-home-page > section,
+    body.public-home-layout .site-home-page .leader-introduction-section,
+    body.public-home-layout .site-home-page .home-statistics-section,
+    body.public-home-layout .site-home-page .latest-news-section,
+    body.public-home-layout .site-home-page .upcoming-events-section,
+    body.public-home-layout .site-home-page .media-coverage-section,
+    body.public-home-layout .site-home-page .video-gallery-section,
+    body.public-home-layout .site-home-page .image-gallery-section,
+    body.public-home-layout .site-home-page .downloads-section,
+    body.public-home-layout .site-home-page .joinus-cta-section,
+    body.public-home-layout .site-home-page .contact-cta-section {
+        padding-top: 22px !important;
+        padding-bottom: 22px !important;
+    }
+
+    body.public-home-layout .site-menu-topbar {
+        min-height: 58px !important;
+        grid-template-columns: 40px 1fr !important;
+    }
+
+    body.public-home-layout .site-menu-actions {
+        padding-top: 2px !important;
+        padding-bottom: 4px !important;
+    }
+
+    body.public-home-layout .hero-slider-section,
+    body.public-home-layout .hero-slide,
+    body.public-home-layout .hero-row {
+        height: clamp(320px, 56vw, 400px) !important;
+        max-height: 400px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    body.public-home-layout .site-home-page > section,
+    body.public-home-layout .site-home-page .leader-introduction-section,
+    body.public-home-layout .site-home-page .home-statistics-section,
+    body.public-home-layout .site-home-page .latest-news-section,
+    body.public-home-layout .site-home-page .upcoming-events-section,
+    body.public-home-layout .site-home-page .media-coverage-section,
+    body.public-home-layout .site-home-page .video-gallery-section,
+    body.public-home-layout .site-home-page .image-gallery-section,
+    body.public-home-layout .site-home-page .downloads-section,
+    body.public-home-layout .site-home-page .joinus-cta-section,
+    body.public-home-layout .site-home-page .contact-cta-section {
+        padding-top: 18px !important;
+        padding-bottom: 18px !important;
+    }
+
+    body.public-home-layout .site-brand-copy strong {
+        font-size: 28px !important;
+    }
+
+    body.public-home-layout .hero-slider-section,
+    body.public-home-layout .hero-slide,
+    body.public-home-layout .hero-row {
+        height: clamp(300px, 84vw, 365px) !important;
+        max-height: 365px !important;
+    }
+
+    body.public-home-layout .hero-content {
+        padding-top: 74px !important;
+        padding-bottom: 26px !important;
+    }
+
+    body.public-home-layout .hero-title {
+        font-size: 28px !important;
+    }
+
+    body.public-home-layout .hero-social-dock a {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 16px !important;
+    }
+
+    body.public-home-layout .news-content,
+    body.public-home-layout .event-content {
+        padding: 16px !important;
+    }
+
+    body.public-home-layout .side-news-card img {
+        width: 92px !important;
+        height: 72px !important;
+    }
+}
+
+/* Final executive homepage design pass */
+body.public-home-layout .hero-slider-section,
+body.public-home-layout .hero-slide,
+body.public-home-layout .hero-row {
+    height: clamp(500px, 43vw, 560px) !important;
+    min-height: 500px !important;
+    max-height: none !important;
+}
+
+body.public-home-layout .hero-slider-section {
+    width: min(100% - 28px, 1860px) !important;
+    margin: 16px auto 0 !important;
+    border-radius: 0;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+}
+
+body.public-home-layout .hero-content {
+    padding-top: 16px !important;
+    padding-bottom: 22px !important;
+}
+
+body.public-home-layout .site-home-page > section {
+    position: relative;
+}
+
+body.public-home-layout .home-image-gallery,
+body.public-home-layout .home-video-gallery,
+body.public-home-layout .press-desk-section,
+body.public-home-layout .newsroom-section,
+body.public-home-layout .latest-news-section,
+body.public-home-layout .upcoming-events-section,
+body.public-home-layout .downloads-section {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
+body.public-home-layout .home-image-gallery,
+body.public-home-layout .press-desk-section,
+body.public-home-layout .downloads-section {
+    background: #f6f8fb !important;
+}
+
+body.public-home-layout .home-video-gallery,
+body.public-home-layout .newsroom-section,
+body.public-home-layout .latest-news-section,
+body.public-home-layout .upcoming-events-section {
+    background: #ffffff !important;
+}
+
+body.public-home-layout .home-image-head,
+body.public-home-layout .home-video-head,
+body.public-home-layout .press-desk-head,
+body.public-home-layout .newsroom-head {
+    margin-bottom: 14px !important;
+}
+
+body.public-home-layout .home-image-head h2,
+body.public-home-layout .home-video-head h2,
+body.public-home-layout .press-desk-head h2,
+body.public-home-layout .newsroom-head h2 {
+    font-size: clamp(21px, 1.8vw, 28px) !important;
+}
+
+body.public-home-layout .home-image-head p,
+body.public-home-layout .home-video-head p,
+body.public-home-layout .press-feature-copy p {
+    font-size: 12.5px !important;
+}
+
+body.public-home-layout .home-image-gallery .featured-gallery-card,
+body.public-home-layout .home-video-featured,
+body.public-home-layout .press-feature,
+body.public-home-layout .newsroom-lead,
+body.public-home-layout .featured-news-card,
+body.public-home-layout .featured-event-card {
+    border-radius: 10px !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, .075) !important;
+}
+
+body.public-home-layout .home-members-section {
+    margin: 0 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -1px 0 rgba(15,23,42,.08);
+}
+
+body.public-home-layout .home-member-card {
+    min-height: clamp(390px, 38vw, 500px) !important;
+}
+
+body.public-home-layout .latest-news-section .row.mb-5,
+body.public-home-layout .newsroom-section .row.mb-5,
+body.public-home-layout .upcoming-events-section .row.mb-5,
+body.public-home-layout .downloads-section .row.mb-5 {
+    margin-bottom: 18px !important;
+}
+
+body.public-home-layout .latest-news-section .section-title,
+body.public-home-layout .upcoming-events-section .section-title,
+body.public-home-layout .downloads-section .section-title {
+    font-size: clamp(22px, 1.9vw, 30px) !important;
+}
+
+body.public-home-layout .latest-news-section .section-description,
+body.public-home-layout .upcoming-events-section .section-description,
+body.public-home-layout .downloads-section .section-description {
+    max-width: 760px !important;
+    font-size: 12.5px !important;
+}
+
+body.public-home-layout .side-news-card {
+    min-height: 118px;
+}
+
+body.public-home-layout .event-banner img,
+body.public-home-layout .news-image img {
+    height: clamp(240px, 24vw, 300px) !important;
+}
+
+body.public-home-layout .downloads-section .download-card {
+    max-width: 260px;
+}
+
+body.public-home-layout .bjp-app-download-section {
+    min-height: clamp(360px, 35vw, 460px) !important;
+}
+
+body.public-home-layout .bjp-app-copy {
+    padding-top: 34px !important;
+    padding-bottom: 34px !important;
+}
+
+body.public-home-layout .bjp-app-copy h2 {
+    font-size: clamp(2rem, 4.2vw, 4.7rem) !important;
+}
+
+@media (max-width: 991px) {
+    body.public-home-layout .hero-slider-section,
+    body.public-home-layout .hero-slide,
+    body.public-home-layout .hero-row {
+        height: clamp(380px, 58vw, 480px) !important;
+        min-height: 380px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    body.public-home-layout .hero-slider-section,
+    body.public-home-layout .hero-slide,
+    body.public-home-layout .hero-row {
+        height: clamp(340px, 88vw, 420px) !important;
+        min-height: 340px !important;
+    }
+
+    body.public-home-layout .home-image-gallery,
+    body.public-home-layout .home-video-gallery,
+    body.public-home-layout .press-desk-section,
+    body.public-home-layout .newsroom-section,
+    body.public-home-layout .latest-news-section,
+    body.public-home-layout .upcoming-events-section,
+    body.public-home-layout .downloads-section {
+        padding-top: 22px !important;
+        padding-bottom: 22px !important;
+    }
+}
+
+/* Compact homepage pass */
+body.public-home-layout .site-home-page > section,
+body.public-home-layout .site-home-page .leader-introduction-section,
+body.public-home-layout .site-home-page .home-statistics-section,
+body.public-home-layout .site-home-page .latest-news-section,
+body.public-home-layout .site-home-page .upcoming-events-section,
+body.public-home-layout .site-home-page .media-coverage-section,
+body.public-home-layout .site-home-page .video-gallery-section,
+body.public-home-layout .site-home-page .image-gallery-section,
+body.public-home-layout .site-home-page .downloads-section,
+body.public-home-layout .site-home-page .joinus-cta-section,
+body.public-home-layout .site-home-page .contact-cta-section {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+}
+
+body.public-home-layout .site-home-page .row.mb-5,
+body.public-home-layout .site-home-page .row.mb-4,
+body.public-home-layout .site-home-page .text-center.mt-5 {
+    margin-bottom: 18px !important;
+    margin-top: 18px !important;
+}
+
+body.public-home-layout .site-home-page .section-title,
+body.public-home-layout .site-home-page h2 {
+    font-size: clamp(21px, 2vw, 30px) !important;
+    margin-bottom: 6px !important;
+}
+
+body.public-home-layout .site-home-page .section-description {
+    margin-bottom: 12px !important;
+    font-size: 12.5px !important;
+}
+
+body.public-home-layout .video-gallery-section .featured-video-card,
+body.public-home-layout .latest-news-section .featured-news-card,
+body.public-home-layout .upcoming-events-section .featured-event-card {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.public-home-layout .video-content,
+body.public-home-layout .video-card-content,
+body.public-home-layout .gallery-featured-content,
+body.public-home-layout .download-card {
+    padding: 14px !important;
+}
+
+body.public-home-layout .video-thumbnail img {
+    max-height: 330px !important;
+    object-fit: cover !important;
+}
+
+body.public-home-layout .video-card-image img,
+body.public-home-layout .gallery-card img {
+    height: 150px !important;
+    object-fit: cover !important;
+}
+
+body.public-home-layout .btn-view-videos,
+body.public-home-layout .btn-view-gallery,
+body.public-home-layout .btn-view-documents {
+    padding: 9px 18px !important;
+    font-size: 12px !important;
+}
+
+@media (max-width: 991px) {
+    body.public-home-layout .site-home-page > section,
+    body.public-home-layout .site-home-page .leader-introduction-section,
+    body.public-home-layout .site-home-page .home-statistics-section,
+    body.public-home-layout .site-home-page .latest-news-section,
+    body.public-home-layout .site-home-page .upcoming-events-section,
+    body.public-home-layout .site-home-page .media-coverage-section,
+    body.public-home-layout .site-home-page .video-gallery-section,
+    body.public-home-layout .site-home-page .image-gallery-section,
+    body.public-home-layout .site-home-page .downloads-section,
+    body.public-home-layout .site-home-page .joinus-cta-section,
+    body.public-home-layout .site-home-page .contact-cta-section {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    body.public-home-layout .site-home-page > section,
+    body.public-home-layout .site-home-page .leader-introduction-section,
+    body.public-home-layout .site-home-page .home-statistics-section,
+    body.public-home-layout .site-home-page .latest-news-section,
+    body.public-home-layout .site-home-page .upcoming-events-section,
+    body.public-home-layout .site-home-page .media-coverage-section,
+    body.public-home-layout .site-home-page .video-gallery-section,
+    body.public-home-layout .site-home-page .image-gallery-section,
+    body.public-home-layout .site-home-page .downloads-section,
+    body.public-home-layout .site-home-page .joinus-cta-section,
+    body.public-home-layout .site-home-page .contact-cta-section {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+}
+
+/* Bhagwa public meetings / upcoming programs */
+body.public-home-layout .site-home-page .bhagwa-program-section {
+    padding-top: 22px !important;
+    padding-bottom: 22px !important;
+    background: linear-gradient(180deg, #fff7ed 0%, #ffffff 74%) !important;
+}
+
+body.public-home-layout .bhagwa-program-section .container {
+    max-width: 1180px;
+}
+
+body.public-home-layout .bhagwa-program-shell {
+    border-radius: 10px !important;
+    padding: 14px !important;
+    box-shadow: 0 12px 28px rgba(154, 52, 18, .07) !important;
+}
+
+body.public-home-layout .bhagwa-program-head {
+    margin-bottom: 12px !important;
+}
+
+body.public-home-layout .bhagwa-program-head h2 {
+    color: #111827 !important;
+    font-size: clamp(20px, 2vw, 28px) !important;
+}
+
+body.public-home-layout .bhagwa-program-head p {
+    max-width: 680px !important;
+    font-size: 12.5px !important;
+}
+
+body.public-home-layout .bhagwa-feature-image {
+    height: clamp(210px, 22vw, 290px) !important;
+}
+
+body.public-home-layout .bhagwa-feature-info {
+    padding: 12px !important;
+}
+
+body.public-home-layout .bhagwa-feature-copy h3 {
+    font-size: clamp(18px, 1.55vw, 23px) !important;
+}
+
+body.public-home-layout .bhagwa-feature-copy p {
+    font-size: 12.5px !important;
+}
+
+body.public-home-layout .bhagwa-agenda-item {
+    min-height: 82px !important;
+    padding: 9px !important;
+}
+
+@media (max-width: 575px) {
+    body.public-home-layout .site-home-page .bhagwa-program-section {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+
+    body.public-home-layout .bhagwa-program-shell {
+        padding: 12px !important;
+    }
+
+    body.public-home-layout .bhagwa-feature-image {
+        height: 210px !important;
+    }
+}

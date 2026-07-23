@@ -1,0 +1,263 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var relatedMedia =
+        ViewBag.RelatedMediaCoverage
+        as List<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>;
+}
+
+<section class="media-details-section py-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Main Content -->
+
+            <div class="col-lg-8">
+
+                <div class="media-details-card">
+
+                    @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+                    {
+                        <img src="@Model.CoverImagePath"
+                             class="img-fluid media-cover-image mb-4"
+                             alt="@Model.Title" />
+                    }
+
+                    <div class="media-meta mb-4">
+
+                        <div class="d-flex align-items-center flex-wrap">
+
+                            @if (!string.IsNullOrEmpty(Model.SourceLogoPath))
+                            {
+                                <img src="@Model.SourceLogoPath"
+                                     class="source-logo me-3"
+                                     alt="@Model.SourceName" />
+                            }
+
+                            <div>
+
+                                <h6 class="mb-1">
+                                    @Model.SourceName
+                                </h6>
+
+                                <small class="text-muted">
+
+                                    @(Model.CoverageDate.HasValue
+                                        ? Model.CoverageDate.Value.ToString("dd MMM yyyy")
+                                        : "")
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <h1 class="media-title">
+
+                        @Model.Title
+
+                    </h1>
+
+                    <div class="view-counter mb-4">
+
+                        <i class="fa fa-eye"></i>
+
+                        @Model.ViewCount Views
+
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ShortDescription))
+                    {
+                        <div class="short-description">
+
+                            @Model.ShortDescription
+
+                        </div>
+                    }
+
+                    <div class="full-description">
+
+                        @Html.Raw(Model.FullDescription)
+
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ExternalUrl))
+                    {
+                        <div class="mt-4">
+
+                            <a href="@Model.ExternalUrl"
+                               target="_blank"
+                               class="btn btn-primary">
+
+                                View Original News
+
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+
+            <div class="col-lg-4">
+
+                <div class="related-media-card">
+
+                    <h4 class="sidebar-title">
+
+                        Related Coverage
+
+                    </h4>
+
+                    @if (relatedMedia != null && relatedMedia.Any())
+                    {
+                        foreach (var item in relatedMedia)
+                        {
+                            <div class="related-item">
+
+                                <a href="@Url.Action(
+                                    "Details",
+                                    "PublicMediaCoverage",
+                                    new
+                                    {
+                                        id = item.MediaCoverageId
+                                    })">
+
+                                    @if (!string.IsNullOrEmpty(item.CoverImagePath))
+                                    {
+                                        <img src="@item.CoverImagePath"
+                                             class="img-fluid related-image mb-2" />
+                                    }
+
+                                    <h6>
+
+                                        @item.Title
+
+                                    </h6>
+
+                                </a>
+
+                                <small class="text-muted">
+
+                                    @(item.CoverageDate.HasValue
+                                        ? item.CoverageDate.Value.ToString("dd MMM yyyy")
+                                        : "")
+
+                                </small>
+
+                            </div>
+                        }
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+
+.media-details-card{
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.media-cover-image{
+    width:100%;
+    border-radius:15px;
+}
+
+.source-logo{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+}
+
+.media-title{
+    font-size:36px;
+    font-weight:700;
+    line-height:1.4;
+    margin-bottom:20px;
+}
+
+.short-description{
+    background:#f8f9fa;
+    padding:20px;
+    border-left:4px solid #0d6efd;
+    margin-bottom:25px;
+    font-size:17px;
+}
+
+.full-description{
+    font-size:16px;
+    line-height:1.9;
+}
+
+.full-description img{
+    max-width:100%;
+    height:auto;
+}
+
+.view-counter{
+    color:#777;
+}
+
+.related-media-card{
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.sidebar-title{
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+.related-item{
+    margin-bottom:25px;
+    padding-bottom:20px;
+    border-bottom:1px solid #eee;
+}
+
+.related-item:last-child{
+    border-bottom:none;
+}
+
+.related-item a{
+    text-decoration:none;
+    color:#222;
+}
+
+.related-image{
+    border-radius:10px;
+}
+
+@@media(max-width:991px){
+
+    .media-title{
+        font-size:28px;
+    }
+
+    .media-details-card{
+        margin-bottom:30px;
+    }
+}
+
+</style>

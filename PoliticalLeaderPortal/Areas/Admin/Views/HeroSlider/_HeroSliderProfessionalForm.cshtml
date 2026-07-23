@@ -1,0 +1,264 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+@{
+    bool isEdit = Model != null && Model.HeroSliderId > 0;
+    var templateTypes = ViewBag.TemplateTypes as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+    var leaderPositions = ViewBag.LeaderPositions as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+}
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.HeroSliderId)
+@Html.HiddenFor(m => m.ImagePath)
+@Html.HiddenFor(m => m.BackgroundImagePath)
+@Html.HiddenFor(m => m.MobileImagePath)
+@Html.HiddenFor(m => m.LeaderImagePath)
+@Html.HiddenFor(m => m.VideoPath)
+
+<div class="hero-pro-page">
+    <div class="hero-pro-header">
+        <div>
+            <div class="hero-pro-eyebrow">Hero Slider</div>
+            <h3>@(isEdit ? "Edit Slide" : "Create Slide")</h3>
+            <p>Keep content, images and video optional. Add only what this slide needs.</p>
+        </div>
+        <div class="hero-pro-actions">
+            <a href="@Url.Action("Index", "HeroSlider")" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> @(isEdit ? "Update Slide" : "Save Slide")
+            </button>
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+    <div class="hero-pro-grid">
+        <main class="hero-pro-main">
+            <section class="hero-pro-card">
+                <div class="hero-pro-card-head">
+                    <div>
+                        <h5>Content</h5>
+                        <span>All text fields are optional.</span>
+                    </div>
+                    <i class="bi bi-type"></i>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.SubTitle, "Small Heading", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", placeholder = "Public Leadership Portal" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Title, "Main Heading", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Development updates in one place" })
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.Description, 3, 40, new { @class = "form-control", placeholder = "Short supporting text for this slide" })
+                    </div>
+                </div>
+            </section>
+
+            <section class="hero-pro-card">
+                <div class="hero-pro-card-head">
+                    <div>
+                        <h5>Media Uploads</h5>
+                        <span>Upload image or video. Every asset is optional.</span>
+                    </div>
+                    <i class="bi bi-images"></i>
+                </div>
+                <div class="hero-upload-grid">
+                    <div class="hero-upload-card">
+                        <div class="hero-upload-label">
+                            <i class="bi bi-image"></i>
+                            <strong>Desktop Background</strong>
+                            <small>JPG, PNG, WEBP. Recommended 1920 x 900.</small>
+                        </div>
+                        <input type="file" name="BackgroundImageFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        @if (!String.IsNullOrWhiteSpace(Model.BackgroundImagePath))
+                        {
+                            <a href="@Url.Content(Model.BackgroundImagePath)" target="_blank" class="hero-current-file">View current background</a>
+                        }
+                    </div>
+
+                    <div class="hero-upload-card">
+                        <div class="hero-upload-label">
+                            <i class="bi bi-phone"></i>
+                            <strong>Mobile Background</strong>
+                            <small>Optional mobile-specific banner.</small>
+                        </div>
+                        <input type="file" name="MobileImageFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        @if (!String.IsNullOrWhiteSpace(Model.MobileImagePath))
+                        {
+                            <a href="@Url.Content(Model.MobileImagePath)" target="_blank" class="hero-current-file">View current mobile image</a>
+                        }
+                    </div>
+
+                    <div class="hero-upload-card">
+                        <div class="hero-upload-label">
+                            <i class="bi bi-person-bounding-box"></i>
+                            <strong>Leader Image</strong>
+                            <small>Optional PNG/WEBP leader cutout.</small>
+                        </div>
+                        <input type="file" name="LeaderImageFile" class="form-control" accept=".png,.webp,.jpg,.jpeg" />
+                        @if (!String.IsNullOrWhiteSpace(Model.LeaderImagePath))
+                        {
+                            <a href="@Url.Content(Model.LeaderImagePath)" target="_blank" class="hero-current-file">View current leader image</a>
+                        }
+                    </div>
+
+                    <div class="hero-upload-card">
+                        <div class="hero-upload-label">
+                            <i class="bi bi-camera-video"></i>
+                            <strong>Video Upload</strong>
+                            <small>Optional MP4, WEBM or MOV background video.</small>
+                        </div>
+                        <input type="file" name="VideoFile" class="form-control" accept=".mp4,.webm,.mov" />
+                        @if (!String.IsNullOrWhiteSpace(Model.VideoPath))
+                        {
+                            <a href="@Url.Content(Model.VideoPath)" target="_blank" class="hero-current-file">View current video</a>
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section class="hero-pro-card">
+                <div class="hero-pro-card-head">
+                    <div>
+                        <h5>Buttons</h5>
+                        <span>Optional call-to-action buttons.</span>
+                    </div>
+                    <i class="bi bi-link-45deg"></i>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="form-check form-switch mt-4">
+                            @Html.CheckBoxFor(m => m.ShowButtons, new { @class = "form-check-input", role = "switch" })
+                            @Html.LabelFor(m => m.ShowButtons, "Show Buttons", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.ButtonText, "Primary Text", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.ButtonText, new { @class = "form-control", placeholder = "Contact Office" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.ButtonUrl, "Primary URL", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.ButtonUrl, new { @class = "form-control", placeholder = "/CitizenConnect/ContactUs" })
+                    </div>
+                    <div class="col-md-3 offset-md-3">
+                        @Html.LabelFor(m => m.ButtonText2, "Secondary Text", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.ButtonText2, new { @class = "form-control", placeholder = "Latest News" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.ButtonUrl2, "Secondary URL", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.ButtonUrl2, new { @class = "form-control", placeholder = "/news" })
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="hero-pro-side">
+            <section class="hero-pro-card">
+                <div class="hero-pro-card-head">
+                    <div>
+                        <h5>Slide Settings</h5>
+                        <span>Layout and publishing controls.</span>
+                    </div>
+                    <i class="bi bi-sliders"></i>
+                </div>
+                <div class="row g-3">
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.TemplateType, "Template", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.TemplateType, templateTypes, "Select Template", new { @class = "form-select" })
+                    </div>
+                    <div class="col-6">
+                        @Html.LabelFor(m => m.DisplayOrder, "Order", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control", type = "number", min = "1" })
+                    </div>
+                    <div class="col-6">
+                        @Html.LabelFor(m => m.HeroHeightCss, "Height", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.HeroHeightCss, new { @class = "form-control", placeholder = "440px" })
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.BackgroundColor, "Fallback Color", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.BackgroundColor, new { @class = "form-control", type = "color" })
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.LeaderImagePosition, "Leader Position", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.LeaderImagePosition, leaderPositions, "Select Position", new { @class = "form-select" })
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.ShowLeaderImage, new { @class = "form-check-input", role = "switch" })
+                            @Html.LabelFor(m => m.ShowLeaderImage, "Show Leader Image", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.ShowOverlay, new { @class = "form-check-input", role = "switch" })
+                            @Html.LabelFor(m => m.ShowOverlay, "Show Overlay", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.OverlayOpacity, "Overlay Opacity", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.OverlayOpacity, new { @class = "form-control", type = "number", step = "0.05", min = "0", max = "1" })
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input", role = "switch" })
+                            @Html.LabelFor(m => m.IsActive, "Active", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hero-pro-card">
+                <div class="hero-pro-card-head">
+                    <div>
+                        <h5>Video Options</h5>
+                        <span>Optional background video.</span>
+                    </div>
+                    <i class="bi bi-play-btn"></i>
+                </div>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.IsVideoSlide, new { @class = "form-check-input", role = "switch" })
+                            @Html.LabelFor(m => m.IsVideoSlide, "Use Video Background", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.VideoSourceType, "Video Source", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.VideoSourceType, new List<SelectListItem>
+                        {
+                            new SelectListItem { Text = "Image Only", Value = "Image" },
+                            new SelectListItem { Text = "Uploaded Video", Value = "Upload" },
+                            new SelectListItem { Text = "External URL", Value = "Url" }
+                        }, new { @class = "form-select" })
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.VideoUrl, "External Video URL", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.VideoUrl, new { @class = "form-control", placeholder = "YouTube, Vimeo, or direct MP4 URL" })
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.VideoAutoplay, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.VideoAutoplay, "Autoplay", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.VideoMuted, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.VideoMuted, "Muted", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.VideoLoop, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.VideoLoop, "Loop", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</div>

@@ -1,0 +1,174 @@
+﻿.home-statistics-section {
+    padding: 80px 0;
+    background: #f8fafc;
+    position: relative;
+}
+
+.section-subtitle {
+    display: inline-block;
+    color: #ff9933;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.section-description {
+    max-width: 800px;
+    margin: auto;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 35px 20px;
+    text-align: center;
+    transition: all .3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,.06);
+    height: 100%;
+    border-bottom: 4px solid #ff9933;
+}
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,.10);
+    }
+
+.stat-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#ff9933,#ff7a00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .stat-icon i {
+        color: #ffffff;
+        font-size: 2rem;
+    }
+
+.counter {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    display: block;
+}
+
+.stat-card h6 {
+    color: #475569;
+    font-weight: 600;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ==========================
+   Tablet
+========================== */
+
+@media (max-width: 991px) {
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .counter {
+        font-size: 2rem;
+    }
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width: 767px) {
+
+    .home-statistics-section {
+        padding: 50px 0;
+    }
+
+    .section-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .section-title {
+        font-size: 1.9rem;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        padding: 0 10px;
+    }
+
+    .section-description {
+        font-size: 0.95rem;
+        padding: 0 20px;
+        line-height: 1.7;
+    }
+
+    .stat-card {
+        padding: 30px 20px;
+        margin-bottom: 15px;
+        border-radius: 16px;
+    }
+
+    .stat-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 15px;
+    }
+
+        .stat-icon i {
+            font-size: 1.7rem;
+        }
+
+    .counter {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+
+    .stat-card h6 {
+        font-size: 1rem;
+    }
+}
+
+/* ==========================
+   Small Mobile
+========================== */
+
+@media (max-width: 480px) {
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .section-description {
+        font-size: 0.9rem;
+    }
+
+    .stat-card {
+        padding: 25px 15px;
+    }
+
+    .counter {
+        font-size: 1.8rem;
+    }
+
+    .stat-card h6 {
+        font-size: 0.95rem;
+    }
+}

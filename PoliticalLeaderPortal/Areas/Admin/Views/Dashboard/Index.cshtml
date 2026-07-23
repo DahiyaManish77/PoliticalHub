@@ -1,0 +1,188 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.AdminDashboardVM
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="campaign-dashboard">
+    <div class="campaign-page-head">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back! Here's what's happening with your campaign.</p>
+        </div>
+        <div class="campaign-page-actions">
+            <a href="@Url.Action("EventForm", "ElectionWarRoom", new { area = "Admin" })" class="campaign-btn campaign-btn-primary">
+                <i class="fas fa-calendar-plus"></i>
+                New Event
+            </a>
+            <a href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom", new { area = "Admin" })" class="campaign-btn campaign-btn-outline">
+                <i class="fas fa-file-lines"></i>
+                Generate Report
+            </a>
+        </div>
+    </div>
+
+    <div class="campaign-metric-grid">
+        @foreach (var item in Model.Metrics)
+        {
+            <a class="campaign-metric-card @item.ToneClass" href="@Url.Action(item.ActionName, item.ControllerName, new { area = "Admin" })">
+                <div class="campaign-metric-icon"><i class="@item.IconClass"></i></div>
+                <div class="campaign-metric-copy">
+                    <span>@item.Label</span>
+                    <strong>@item.Value</strong>
+                    <small><i class="fas @(item.ToneClass == "red" ? "fa-arrow-down" : "fa-arrow-up")"></i> @item.Hint</small>
+                </div>
+                <div class="campaign-sparkline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+            </a>
+        }
+    </div>
+
+    <div class="campaign-dashboard-grid">
+        <div class="campaign-panel">
+            <div class="campaign-panel-head">
+                <h2>Quick Actions</h2>
+            </div>
+            <div class="campaign-quick-actions">
+                @foreach (var item in Model.QuickActions)
+                {
+                    <a href="@Url.Action(item.ActionName, item.ControllerName, new { area = "Admin" })" class="@item.ToneClass">
+                        <i class="@item.IconClass"></i>
+                        <span>@item.Label</span>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="campaign-panel campaign-overview-panel" rowspan="2">
+            <div class="campaign-panel-head">
+                <h2>Campaign Overview</h2>
+                <a href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom", new { area = "Admin" })">View Report</a>
+            </div>
+            <div class="campaign-overview-list">
+                @foreach (var item in Model.OverviewItems)
+                {
+                    <div class="campaign-progress-row @item.ToneClass">
+                        <div class="campaign-progress-icon"><i class="@item.IconClass"></i></div>
+                        <div class="campaign-progress-main">
+                            <div class="campaign-progress-label">
+                                <span>@item.Label</span>
+                                <strong>@item.Percentage%</strong>
+                            </div>
+                            <div class="campaign-progress-track"><span style="width:@item.Percentage%"></span></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="campaign-panel">
+            <div class="campaign-panel-head">
+                <h2>Recent Activity</h2>
+                <a href="@Url.Action("Index", "ElectionWarRoom", new { area = "Admin" })">View All</a>
+            </div>
+            <div class="campaign-activity-list">
+                @foreach (var item in Model.RecentActivities)
+                {
+                    <div class="campaign-activity-item @item.ToneClass">
+                        <div class="campaign-activity-icon"><i class="@item.IconClass"></i></div>
+                        <div>
+                            <strong>@item.Title</strong>
+                            <span>@item.Description</span>
+                        </div>
+                        <time>
+                            @item.TimeText
+                            <small>@item.DateText</small>
+                        </time>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="campaign-table-grid">
+        <div class="campaign-panel">
+            <div class="campaign-panel-head">
+                <h2>Upcoming Events</h2>
+                <a href="@Url.Action("Index", "UpcomingEvent", new { area = "Admin" })">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="campaign-table">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.UpcomingEvents.Any())
+                        {
+                            <tr><td colspan="6" class="text-muted">No upcoming events found.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.UpcomingEvents.Take(4))
+                            {
+                                <tr>
+                                    <td>@item.Title</td>
+                                    <td>@(item.Date.HasValue ? item.Date.Value.ToString("MMM dd, yyyy") : "-")</td>
+                                    <td>@(String.IsNullOrWhiteSpace(item.BadgeText) ? "-" : item.BadgeText)</td>
+                                    <td>@item.Description</td>
+                                    <td>Meeting</td>
+                                    <td><span class="campaign-status">Upcoming</span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="campaign-panel">
+            <div class="campaign-panel-head">
+                <h2>Recent Volunteers</h2>
+                <a href="@Url.Action("Volunteers", "ElectionWarRoom", new { area = "Admin" })">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="campaign-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Constituency</th>
+                            <th>Registered On</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.RecentVolunteers.Any())
+                        {
+                            <tr><td colspan="5" class="text-muted">No volunteers found.</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.RecentVolunteers.Take(4))
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="campaign-person-cell">
+                                            <span>@(String.IsNullOrWhiteSpace(item.Name) ? "A" : item.Name.Substring(0, 1).ToUpper())</span>
+                                            @item.Name
+                                        </span>
+                                    </td>
+                                    <td>@item.Mobile</td>
+                                    <td>@item.Constituency</td>
+                                    <td>@item.RegisteredOn</td>
+                                    <td><span class="campaign-status active">@item.Status</span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

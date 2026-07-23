@@ -1,0 +1,88 @@
+﻿@using System.ComponentModel
+@using System.ComponentModel.DataAnnotations
+@using System.Linq
+@model object
+@{
+    ViewBag.Title = ViewBag.Title ?? "Election War Room Form";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    string postAction = Convert.ToString(ViewBag.PostAction);
+    string backAction = Convert.ToString(ViewBag.BackAction ?? "Index");
+    var properties = TypeDescriptor.GetProperties(Model).Cast<PropertyDescriptor>()
+        .Where(p => p.Name != "CreatedBy" && p.Name != "CreatedByName" && p.Name != "CreatedDate" && p.Name != "UpdatedBy" && p.Name != "UpdatedByName" && p.Name != "UpdatedDate")
+        .Where(p => !p.IsReadOnly)
+        .Where(p => p.PropertyType == typeof(string) || p.PropertyType == typeof(int) || p.PropertyType == typeof(int?) || p.PropertyType == typeof(decimal) || p.PropertyType == typeof(decimal?) || p.PropertyType == typeof(long) || p.PropertyType == typeof(long?) || p.PropertyType == typeof(bool) || p.PropertyType == typeof(bool?) || p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?))
+        .ToList();
+    Func<PropertyDescriptor, string> label = p =>
+    {
+        var attr = p.Attributes.OfType<DisplayAttribute>().FirstOrDefault();
+        return attr != null ? attr.GetName() : p.DisplayName;
+    };
+    Func<PropertyDescriptor, bool> hidden = p => p.Name.EndsWith("Id") && (p.Name.StartsWith("Event") || p.Name.StartsWith("Election") || p.Name.StartsWith("Campaign") || p.Name == "AttendanceId");
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Complete the required operational fields and save.</div>
+            </div>
+            <a href="@Url.Action(backAction, "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+        @using (Html.BeginForm(postAction, "ElectionWarRoom", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+            <div class="card-body">
+                @foreach (var prop in properties.Where(hidden))
+                {
+                    <input type="hidden" name="@prop.Name" value="@prop.GetValue(Model)" />
+                }
+                <div class="row g-3">
+                    @foreach (var prop in properties.Where(p => !hidden(p)))
+                    {
+                        var value = prop.GetValue(Model);
+                        bool isBool = prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?);
+                        bool isDate = prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?);
+                        bool isNumber = prop.PropertyType == typeof(int) || prop.PropertyType == typeof(int?) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(long) || prop.PropertyType == typeof(long?);
+                        bool isLongText = prop.Name.IndexOf("Description", StringComparison.OrdinalIgnoreCase) >= 0 || prop.Name.IndexOf("Remarks", StringComparison.OrdinalIgnoreCase) >= 0 || prop.Name.IndexOf("Message", StringComparison.OrdinalIgnoreCase) >= 0 || prop.Name.IndexOf("Summary", StringComparison.OrdinalIgnoreCase) >= 0 || prop.Name.IndexOf("Instructions", StringComparison.OrdinalIgnoreCase) >= 0;
+                        <div class="@(isLongText ? "col-12" : "col-lg-4")">
+                            @if (isBool)
+                            {
+                                <div class="form-check form-switch pt-4">
+                                    <input type="checkbox" class="form-check-input" name="@prop.Name" value="true" @(value != null && Convert.ToBoolean(value) ? "checked" : "") />
+                                    <input type="hidden" name="@prop.Name" value="false" />
+                                    <label class="form-check-label">@label(prop)</label>
+                                </div>
+                            }
+                            else if (isLongText)
+                            {
+                                <label class="form-label">@label(prop)</label>
+                                <textarea class="form-control" name="@prop.Name" rows="3">@value</textarea>
+                            }
+                            else if (isDate)
+                            {
+                                <label class="form-label">@label(prop)</label>
+                                <input class="form-control" type="date" name="@prop.Name" value="@(value is DateTime ? ((DateTime)value).ToString("yyyy-MM-dd") : "")" />
+                            }
+                            else if (isNumber)
+                            {
+                                <label class="form-label">@label(prop)</label>
+                                <input class="form-control" type="number" step="any" name="@prop.Name" value="@value" />
+                            }
+                            else
+                            {
+                                <label class="form-label">@label(prop)</label>
+                                <input class="form-control" name="@prop.Name" value="@value" />
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action(backAction, "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save</button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,104 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.AppDownloadSettingVM
+
+@{
+    ViewBag.Title = "App Download Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>App Download Section</h1>
+        <p>Control the public homepage mobile app call-to-action banner.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "Home", new { area = "" })" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Home
+        </a>
+    </div>
+</div>
+
+@using (Html.BeginForm("Index", "AppDownloadSetting", FormMethod.Post, new { @class = "leader-cms-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AppDownloadSettingId)
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+    <div class="admin-card leader-cms-card app-download-editor">
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="cms-form-grid">
+                    <div class="form-group">
+                        <label>Top Text</label>
+                        @Html.TextBoxFor(m => m.KickerText, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.KickerText, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Heading</label>
+                        @Html.TextBoxFor(m => m.HeadingText, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.HeadingText, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        <label>Sub Heading</label>
+                        @Html.TextBoxFor(m => m.SubHeadingText, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        <label>Google Play Store URL</label>
+                        @Html.TextBoxFor(m => m.GooglePlayUrl, new { @class = "form-control", placeholder = "https://play.google.com/..." })
+                        @Html.ValidationMessageFor(m => m.GooglePlayUrl, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        <label>Apple App Store URL</label>
+                        @Html.TextBoxFor(m => m.AppleAppStoreUrl, new { @class = "form-control", placeholder = "https://apps.apple.com/..." })
+                        @Html.ValidationMessageFor(m => m.AppleAppStoreUrl, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        <label class="cms-check">
+                            @Html.CheckBoxFor(m => m.IsActive)
+                            <span>Show app download banner on home page</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="app-download-preview">
+                    <span>@Model.KickerText</span>
+                    <h2>@Model.HeadingText</h2>
+                    <p>@Model.SubHeadingText</p>
+                    <div class="app-preview-buttons">
+                        <a href="@Model.GooglePlayUrl" target="_blank"><i class="fab fa-google-play"></i> Google Play</a>
+                        <a href="@Model.AppleAppStoreUrl" target="_blank"><i class="fab fa-apple"></i> App Store</a>
+                    </div>
+                    <small>@(Model.IsActive ? "Visible on homepage" : "Hidden from homepage")</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="cms-editor-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Save Settings
+            </button>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Saved",
+                text: "@TempData["Success"]"
+            });
+        </script>
+    }
+}

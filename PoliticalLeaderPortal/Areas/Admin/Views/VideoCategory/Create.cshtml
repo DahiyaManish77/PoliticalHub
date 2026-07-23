@@ -1,0 +1,156 @@
+﻿@model PoliticalLeaderPortal.ViewModels.VideoCategoryVM
+
+@{
+    ViewBag.Title = "Create Video Category";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Create Video Category
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Index","VideoCategory")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-8">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.CategoryName,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(
+                                x => x.CategoryName,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "Enter category name"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.CategoryName,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.CategoryDescription,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextAreaFor(
+                                x => x.CategoryDescription,
+                                new
+                                {
+                                    @class = "form-control",
+                                    rows = "5",
+                                    placeholder = "Enter category description"
+                                })
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.DisplayOrder,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(
+                                x => x.DisplayOrder,
+                                new
+                                {
+                                    @class = "form-control",
+                                    type = "number"
+                                })
+
+                        </div>
+
+                        <div class="form-check mt-4">
+
+                            @Html.CheckBoxFor(
+                                x => x.IsActive,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            @Html.LabelFor(
+                                x => x.IsActive,
+                                new
+                                {
+                                    @class = "form-check-label"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-footer bg-white">
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+                    Save Category
+
+                </button>
+
+                <a href="@Url.Action("Index","VideoCategory")"
+                   class="btn btn-outline-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@section Scripts{
+
+    Scripts.Render("~/bundles/jqueryval")
+
+}

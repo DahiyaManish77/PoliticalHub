@@ -1,0 +1,77 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.SocialMediaPostVM
+@{
+    bool isEdit = Model != null && Model.SocialMediaPostId > 0;
+    ViewBag.Title = isEdit ? "Edit Social Media Post" : "Create Social Media Post";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Plan, approve, publish and track campaign social media content.</div>
+            </div>
+            <a href="@Url.Action("SocialMediaWarRoom", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditSocialPost" : "CreateSocialPost", "ElectionWarRoom", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.SocialMediaPostId)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#planTab" type="button">Plan</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#contentTab" type="button">Content</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#approvalTab" type="button">Approval</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#performanceTab" type="button">Performance</button></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="planTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.Platform, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Platform, new SelectList(new[] { "Facebook", "Instagram", "X", "YouTube", "WhatsApp", "Telegram", "Threads" }, Model.Platform), new { @class = "form-select" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ContentType, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ContentType, new SelectList(new[] { "Post", "Reel", "Video", "Shorts", "Story", "Poster", "Press Clip" }, Model.ContentType), new { @class = "form-select" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ScheduledOn, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ScheduledOn, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })</div>
+                            <div class="col-lg-8">@Html.LabelFor(m => m.ContentTitle, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ContentTitle, new { @class = "form-control", required = "required" }) @Html.ValidationMessageFor(m => m.ContentTitle, "", new { @class = "text-danger small" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.AssignedTo, new { @class = "form-label" }) @Html.TextBoxFor(m => m.AssignedTo, new { @class = "form-control", placeholder = "Media volunteer / admin" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="contentTab">
+                        <div class="row g-3">
+                            <div class="col-12">@Html.LabelFor(m => m.Caption, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Caption, 5, 40, new { @class = "form-control" })</div>
+                            <div class="col-lg-6">@Html.LabelFor(m => m.MediaUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.MediaUrl, new { @class = "form-control", placeholder = "/Uploads/..." })</div>
+                            <div class="col-lg-6">@Html.LabelFor(m => m.PublicUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PublicUrl, new { @class = "form-control", placeholder = "Published post URL" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="approvalTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ApprovalStatus, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ApprovalStatus, new SelectList(new[] { "Draft", "Under Review", "Approved", "Rejected" }, Model.ApprovalStatus), new { @class = "form-select" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.PublishStatus, new { @class = "form-label" }) @Html.DropDownListFor(m => m.PublishStatus, new SelectList(new[] { "Planned", "Scheduled", "Published", "Cancelled" }, Model.PublishStatus), new { @class = "form-select" })</div>
+                            <div class="col-lg-4 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active record</label></div>
+                            <div class="col-12">@Html.LabelFor(m => m.ReviewRemarks, new { @class = "form-label" }) @Html.TextAreaFor(m => m.ReviewRemarks, 3, 40, new { @class = "form-control" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="performanceTab">
+                        <div class="row g-3">
+                            <div class="col-lg-3">@Html.LabelFor(m => m.ReachCount, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ReachCount, new { @class = "form-control", type = "number", min = "0" })</div>
+                            <div class="col-lg-3">@Html.LabelFor(m => m.EngagementCount, new { @class = "form-label" }) @Html.TextBoxFor(m => m.EngagementCount, new { @class = "form-control", type = "number", min = "0" })</div>
+                            <div class="col-lg-3">@Html.LabelFor(m => m.ShareCount, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ShareCount, new { @class = "form-control", type = "number", min = "0" })</div>
+                            <div class="col-lg-3">@Html.LabelFor(m => m.CommentCount, new { @class = "form-label" }) @Html.TextBoxFor(m => m.CommentCount, new { @class = "form-control", type = "number", min = "0" })</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action("SocialMediaWarRoom", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Post</button>
+            </div>
+        }
+    </div>
+</div>

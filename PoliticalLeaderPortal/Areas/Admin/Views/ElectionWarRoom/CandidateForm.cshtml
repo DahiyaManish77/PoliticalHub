@@ -1,0 +1,83 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CandidateProfileVM
+@{
+    bool isEdit = Model != null && Model.CandidateProfileId > 0;
+    ViewBag.Title = isEdit ? "Edit Candidate Profile" : "Create Candidate Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Maintain candidate public profile, legal references, campaign media and approval status.</div>
+            </div>
+            <a href="@Url.Action("CandidateManagement", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditCandidate" : "CreateCandidate", "ElectionWarRoom", FormMethod.Post, new { @class = "row g-3" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.CandidateProfileId)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profileTab" type="button">Profile</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#legalTab" type="button">Legal</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#mediaTab" type="button">Media</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#approvalTab" type="button">Approval</button></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="profileTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.FullName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", required = "required" }) @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.PartyName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PartyName, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ElectionType, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ElectionType, new SelectList(new[] { "Lok Sabha", "Vidhan Sabha", "Municipal", "Panchayat", "Ward", "Organization" }, Model.ElectionType), "Select", new { @class = "form-select" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ConstituencyName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ConstituencyName, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.District, new { @class = "form-label" }) @Html.TextBoxFor(m => m.District, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.State, new { @class = "form-label" }) @Html.TextBoxFor(m => m.State, new { @class = "form-control" })</div>
+                            <div class="col-lg-6">@Html.LabelFor(m => m.Education, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Education, new { @class = "form-control" })</div>
+                            <div class="col-lg-6">@Html.LabelFor(m => m.Profession, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Profession, new { @class = "form-control" })</div>
+                            <div class="col-12">@Html.LabelFor(m => m.PublicBio, new { @class = "form-label" }) @Html.TextAreaFor(m => m.PublicBio, 4, 40, new { @class = "form-control" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="legalTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.AffidavitUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.AffidavitUrl, new { @class = "form-control", placeholder = "/Uploads/..." })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.DeclaredAssets, new { @class = "form-label" }) @Html.TextBoxFor(m => m.DeclaredAssets, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.DeclaredLiabilities, new { @class = "form-label" }) @Html.TextBoxFor(m => m.DeclaredLiabilities, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                            <div class="col-12">@Html.LabelFor(m => m.CriminalCaseSummary, new { @class = "form-label" }) @Html.TextAreaFor(m => m.CriminalCaseSummary, 4, 40, new { @class = "form-control", placeholder = "Use only verified, legally publishable information." })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="mediaTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.PhotoUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PhotoUrl, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ManifestoUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ManifestoUrl, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.FacebookUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.FacebookUrl, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.TwitterUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.TwitterUrl, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.InstagramUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.InstagramUrl, new { @class = "form-control" })</div>
+                            <div class="col-lg-4">@Html.LabelFor(m => m.YouTubeUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.YouTubeUrl, new { @class = "form-control" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="approvalTab">
+                        <div class="row g-3">
+                            <div class="col-lg-4">@Html.LabelFor(m => m.ApprovalStatus, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ApprovalStatus, new SelectList(new[] { "Draft", "Under Review", "Approved", "Rejected" }, Model.ApprovalStatus), new { @class = "form-select" })</div>
+                            <div class="col-lg-4 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.IsPublished, new { @class = "form-check-input" }) <label class="form-check-label">Published on public website</label></div>
+                            <div class="col-lg-4 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active record</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action("CandidateManagement", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Candidate</button>
+            </div>
+        }
+    </div>
+</div>

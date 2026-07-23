@@ -1,0 +1,227 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+<div class="menu-card menu-shadow menu-rounded">
+
+    <!-- Card Header -->
+    <div class="menu-card-header">
+
+        <div class="menu-card-header-left">
+
+            <div class="menu-card-header-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+
+            <div class="menu-card-header-content">
+
+                <h5 class="menu-card-title">
+                    Appearance & Routing
+                </h5>
+
+                <div class="menu-card-subtitle">
+                    Configure display options, routing behaviour and menu icon.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Card Body -->
+    <div class="menu-card-body">
+
+        <!-- ========================================= -->
+        <!-- APPEARANCE -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-form-row">
+
+                <!-- Menu Type -->
+                <div class="menu-form-column">
+
+                    <label for="MenuType" class="menu-form-label">
+                        Menu Type
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.MenuType,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "Navigation / Sidebar"
+                        })
+
+                    <div class="menu-help-text">
+                        Define where this menu will be used within the application.
+                    </div>
+
+                </div>
+
+                <!-- Display Order -->
+                <div class="menu-form-column">
+
+                    <label for="DisplayOrder" class="menu-form-label">
+                        Display Order
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.DisplayOrder,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            type = "number",
+                            min = "0"
+                        })
+
+                    <div class="menu-help-text">
+                        Lower numbers are displayed before higher numbers.
+                    </div>
+
+                </div>
+
+                <!-- CSS Class -->
+                <div class="menu-form-column">
+
+                    <label for="CssClass" class="menu-form-label">
+                        CSS Class
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.CssClass,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "custom-menu"
+                        })
+
+                    <div class="menu-help-text">
+                        Optional custom CSS class for additional styling.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ROUTING -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-form-row">
+
+                <!-- Route Values -->
+                <div class="menu-form-column">
+
+                    <label for="RouteValues" class="menu-form-label">
+                        Route Values
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.RouteValues,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "id=10"
+                        })
+
+                    <div class="menu-help-text">
+                        Optional MVC route values (example: id=10&category=news).
+                    </div>
+
+                </div>
+
+                <!-- Custom URL -->
+                <div class="menu-form-column">
+
+                    <label for="CustomUrl" class="menu-form-label">
+                        Custom URL
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.CustomUrl,
+                        new
+                        {
+                            @class = "menu-form-control",
+                            placeholder = "https://example.com"
+                        })
+
+                    <div class="menu-help-text">
+                        Leave blank to use MVC routing. Provide a URL only for external or custom links.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ICON PICKER -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-icon-picker">
+
+                <div class="menu-form-row">
+
+                    <!-- Icon Input -->
+                    <div class="menu-form-column">
+
+                        <label for="IconClass" class="menu-form-label">
+                            Font Awesome Icon
+                        </label>
+
+                        <div class="menu-icon-input">
+
+                            @Html.TextBoxFor(
+                                m => m.IconClass,
+                                new
+                                {
+                                    @class = "menu-form-control",
+                                    id = "IconClass",
+                                    placeholder = "fas fa-home"
+                                })
+
+                        </div>
+
+                        <div class="menu-icon-help">
+                            Examples:
+                            <strong>fas fa-home</strong>,
+                            <strong>fas fa-user</strong>,
+                            <strong>fas fa-cog</strong>,
+                            <strong>fas fa-chart-line</strong>
+                        </div>
+
+                    </div>
+
+                    <!-- Live Icon Preview -->
+                    <div class="menu-form-column">
+
+                        <div class="menu-icon-preview">
+
+                            <i id="menuIconPreview"
+                               class="fas fa-home"></i>
+
+                        </div>
+
+                        <div class="menu-help-text menu-mt-10">
+                            Live preview updates automatically as you type the icon class.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

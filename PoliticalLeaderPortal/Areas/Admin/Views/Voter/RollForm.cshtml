@@ -1,0 +1,127 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.VoterRollPdfVM
+
+@{
+    bool isEdit = Model != null && Model.VoterRollPdfId > 0;
+    ViewBag.Title = isEdit ? "Edit Voter Roll PDF" : "Add Voter Roll PDF";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <div class="text-uppercase small fw-semibold text-primary">Official Source Register</div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <small class="text-muted">Save booth-wise official PDF metadata in proper order for Sardhana constituency.</small>
+            </div>
+            <a href="@Url.Action("Rolls", "Voter")" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm(isEdit ? "EditRoll" : "CreateRoll", "Voter", FormMethod.Post, new { area = "Admin", enctype = "multipart/form-data", @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.VoterRollPdfId)
+                @Html.HiddenFor(m => m.PdfFilePath)
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger col-12" })
+
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.State, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.District, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.District, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.District, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.AssemblyConstituency, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.AssemblyConstituency, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AssemblyConstituency, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.ParliamentConstituency, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ParliamentConstituency, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.PartNumber, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.PartNumber, new { @class = "form-control", placeholder = "001" })
+                    @Html.ValidationMessageFor(m => m.PartNumber, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.BoothName, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.BoothName, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Village, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Village, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Ward, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Ward, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.PollingStation, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.PollingStation, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.SourceUrl, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.SourceUrl, new { @class = "form-control", placeholder = "https://voters.eci.gov.in/..." })
+                </div>
+
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.RollYear, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.RollYear, new { @class = "form-control", type = "number", min = "2000", max = "2100" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.RevisionType, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.RevisionType, new SelectList(new[] { "Final Electoral Roll", "Draft Electoral Roll", "Supplement", "Special Summary Revision", "SIR Final Electoral Roll" }, Model.RevisionType), "Select", new { @class = "form-select" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.PublishedDate, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.PublishedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.DownloadDate, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.DownloadDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label">Official PDF File</label>
+                    <input type="file" name="PdfFile" class="form-control" accept="application/pdf,.pdf" />
+                    @if (!String.IsNullOrWhiteSpace(Model.PdfFilePath))
+                    {
+                        <div class="small mt-1">
+                            Current file:
+                            <a href="@Url.Action("DownloadRoll", new { id = Model.VoterRollPdfId })">Download saved PDF</a>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Status</label>
+                    <div class="form-check mt-2">
+                        @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                        <label class="form-check-label">Active roll record</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Notes, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.Notes, 3, 40, new { @class = "form-control", placeholder = "Captcha/manual download note, source page, booth coverage note, import status..." })
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 border-top pt-3">
+                    <a href="@Url.Action("Rolls", "Voter")" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Save Roll PDF
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

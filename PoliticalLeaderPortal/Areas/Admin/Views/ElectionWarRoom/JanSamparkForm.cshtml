@@ -1,0 +1,64 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.JanSamparkVM
+@{
+    bool isEdit = Model != null && Model.JanSamparkId > 0;
+    ViewBag.Title = isEdit ? "Edit Jan Sampark" : "Add Jan Sampark";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Capture voter contact, complaint, assignment and resolution details.</div>
+            </div>
+            <a href="@Url.Action("JanSampark", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm(isEdit ? "EditJanSampark" : "CreateJanSampark", "ElectionWarRoom", FormMethod.Post, new { @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.JanSamparkId)
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <div class="col-md-4">@Html.LabelFor(m => m.CitizenName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.CitizenName, new { @class = "form-control" }) @Html.ValidationMessageFor(m => m.CitizenName, "", new { @class = "text-danger small" })</div>
+                <div class="col-md-4">@Html.LabelFor(m => m.FatherName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control" })</div>
+                <div class="col-md-4">@Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", maxlength = "20" })</div>
+
+                <div class="col-md-3">@Html.LabelFor(m => m.Gender, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Gender, new SelectList(new[] { "Male", "Female", "Other" }, Model.Gender), "Select", new { @class = "form-select" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.Age, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Age, new { @class = "form-control", type = "number", min = "18" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.EventId, new { @class = "form-label" }) @Html.TextBoxFor(m => m.EventId, new { @class = "form-control", type = "number", min = "1" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.ElectionBoothId, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ElectionBoothId, new { @class = "form-control", type = "number", min = "1" })</div>
+
+                <div class="col-md-3">@Html.LabelFor(m => m.State, new { @class = "form-label" }) @Html.TextBoxFor(m => m.State, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.District, new { @class = "form-label" }) @Html.TextBoxFor(m => m.District, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.Block, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Block, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.LabelFor(m => m.Village, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Village, new { @class = "form-control" })</div>
+                <div class="col-12">@Html.LabelFor(m => m.Address, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Address, 2, 40, new { @class = "form-control" })</div>
+
+                <div class="col-md-4">@Html.LabelFor(m => m.Category, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Category, new { @class = "form-control", placeholder = "Complaint, Request, Suggestion..." })</div>
+                <div class="col-md-4">@Html.LabelFor(m => m.Priority, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Priority, new SelectList(new[] { "Low", "Medium", "High", "Critical" }, Model.Priority), "Select", new { @class = "form-select" })</div>
+                <div class="col-md-4">@Html.LabelFor(m => m.Status, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Open", "Assigned", "In Progress", "Resolved", "Closed" }, Model.Status), "Select", new { @class = "form-select" })</div>
+
+                <div class="col-12">@Html.LabelFor(m => m.Subject, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" }) @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small" })</div>
+                <div class="col-12">@Html.LabelFor(m => m.Description, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Description, 4, 40, new { @class = "form-control" })</div>
+
+                <div class="col-md-6">@Html.LabelFor(m => m.AssignedToName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.AssignedToName, new { @class = "form-control" })</div>
+                <div class="col-md-6">@Html.LabelFor(m => m.AssignedToMemberCode, new { @class = "form-label" }) @Html.TextBoxFor(m => m.AssignedToMemberCode, new { @class = "form-control" })</div>
+
+                <div class="col-12">@Html.LabelFor(m => m.Resolution, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Resolution, 3, 40, new { @class = "form-control" })</div>
+                <div class="col-md-4">@Html.LabelFor(m => m.FollowUpDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.FollowUpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                <div class="col-md-8 d-flex align-items-end gap-4">
+                    <div class="form-check">@Html.CheckBoxFor(m => m.FollowUpRequired, new { @class = "form-check-input" }) @Html.LabelFor(m => m.FollowUpRequired, new { @class = "form-check-label" })</div>
+                    <div class="form-check">@Html.CheckBoxFor(m => m.IsResolved, new { @class = "form-check-input" }) @Html.LabelFor(m => m.IsResolved, new { @class = "form-check-label" })</div>
+                    <div class="form-check">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) @Html.LabelFor(m => m.IsActive, new { @class = "form-check-label" })</div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 border-top pt-3">
+                    <a href="@Url.Action("JanSampark", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

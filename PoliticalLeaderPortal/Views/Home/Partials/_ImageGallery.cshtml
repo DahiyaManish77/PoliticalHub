@@ -1,0 +1,470 @@
+﻿@model List<PoliticalLeaderPortal.ViewModels.PublicGalleryImageVM>
+
+@{
+    Layout = null;
+
+    var featuredImage = Model != null && Model.Any()
+        ? Model.FirstOrDefault()
+        : null;
+
+    var galleryImages = Model != null
+        ? Model.Skip(1).Take(6).ToList()
+        : new List<PoliticalLeaderPortal.ViewModels.PublicGalleryImageVM>();
+}
+
+<section class="image-gallery-section home-image-gallery">
+
+    <div class="container">
+
+        <div class="home-image-head">
+
+            <div>
+
+                <span class="home-image-kicker">
+                    Photo Gallery
+                </span>
+
+                <h2>
+                    Moments From Public Life
+                </h2>
+
+                <p>
+                    Explore memorable moments from public meetings,
+                    development projects, social programs and community events.
+                </p>
+
+            </div>
+
+            <a href="@Url.Action("Index","Gallery")"
+               class="home-image-link">
+                View Full Gallery
+            </a>
+
+        </div>
+
+        @if (featuredImage != null)
+        {
+            var featuredPath = !string.IsNullOrWhiteSpace(featuredImage.ImagePath)
+                ? Url.Content(featuredImage.ImagePath)
+                : Url.Content("~/Uploads/Website/fa90b886-210a-4505-9d22-f84c82d7b610.png");
+
+            <div class="home-image-layout">
+
+                <div>
+
+                    <div class="featured-gallery-card js-gallery-lightbox"
+                         role="button"
+                         tabindex="0"
+                         data-image-src="@featuredPath"
+                         data-image-title="@(string.IsNullOrWhiteSpace(featuredImage.ImageTitle) ? "Photo Gallery" : featuredImage.ImageTitle)"
+                         data-image-id="@featuredImage.GalleryImageId">
+
+                        <img src="@featuredPath"
+                             alt="@featuredImage.ImageTitle"
+                             class="img-fluid" />
+
+                        <div class="featured-overlay">
+
+                            <span class="gallery-badge">
+                                Featured Image
+                            </span>
+
+                            <h3>
+
+                                @(string.IsNullOrWhiteSpace(featuredImage.ImageTitle)
+                                    ? "Photo Gallery"
+                                    : featuredImage.ImageTitle)
+
+                            </h3>
+
+                        </div>
+
+                        <div class="gallery-inline-actions"
+                             data-public-actions
+                             data-item-type="gallery"
+                             data-item-id="@featuredImage.GalleryImageId"
+                             data-title="@(string.IsNullOrWhiteSpace(featuredImage.ImageTitle) ? "Photo Gallery" : featuredImage.ImageTitle)"
+                             data-url="@featuredPath">
+                            <button type="button" data-action="like" aria-label="Like image"><i class="bi bi-hand-thumbs-up"></i><small data-like-count>0</small></button>
+                            <button type="button" data-action="comment" aria-label="Comment on image"><i class="bi bi-chat-dots"></i></button>
+                            <button type="button" data-action="share" aria-label="Share image"><i class="bi bi-share"></i></button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="home-image-grid">
+
+                    @if (galleryImages.Any())
+                    {
+                        foreach (var image in galleryImages.Take(4))
+                        {
+                            var imagePath = !string.IsNullOrWhiteSpace(image.ImagePath)
+                                ? Url.Content(image.ImagePath)
+                                : Url.Content("~/Uploads/Website/fa90b886-210a-4505-9d22-f84c82d7b610.png");
+
+                            <div class="gallery-card js-gallery-lightbox"
+                                 role="button"
+                                 tabindex="0"
+                                 data-image-src="@imagePath"
+                                 data-image-title="@(string.IsNullOrWhiteSpace(image.ImageTitle) ? "Gallery" : image.ImageTitle)"
+                                 data-image-id="@image.GalleryImageId">
+
+                                <img src="@imagePath"
+                                     alt="@image.ImageTitle">
+
+                                <span class="category-tag">
+
+                                    @(string.IsNullOrWhiteSpace(image.ImageTitle)
+                                        ? "Gallery"
+                                        : image.ImageTitle)
+
+                                </span>
+
+                                <div class="gallery-inline-actions gallery-inline-actions-sm"
+                                     data-public-actions
+                                     data-item-type="gallery"
+                                     data-item-id="@image.GalleryImageId"
+                                     data-title="@(string.IsNullOrWhiteSpace(image.ImageTitle) ? "Gallery" : image.ImageTitle)"
+                                     data-url="@imagePath">
+                                    <button type="button" data-action="like" aria-label="Like image"><i class="bi bi-hand-thumbs-up"></i><small data-like-count>0</small></button>
+                                    <button type="button" data-action="comment" aria-label="Comment on image"><i class="bi bi-chat-dots"></i></button>
+                                    <button type="button" data-action="share" aria-label="Share image"><i class="bi bi-share"></i></button>
+                                </div>
+
+                            </div>
+                        }
+                    }
+
+                </div>
+
+            </div>
+        }
+
+        @if (featuredImage == null)
+        {
+            if (galleryImages.Any())
+            {
+                <div class="home-image-grid home-image-grid-only">
+
+                    @foreach (var image in galleryImages.Take(6))
+                    {
+                        var imagePath = !string.IsNullOrWhiteSpace(image.ImagePath)
+                            ? Url.Content(image.ImagePath)
+                            : Url.Content("~/Uploads/Website/fa90b886-210a-4505-9d22-f84c82d7b610.png");
+
+                        <div class="gallery-card js-gallery-lightbox"
+                             role="button"
+                             tabindex="0"
+                             data-image-src="@imagePath"
+                             data-image-title="@(string.IsNullOrWhiteSpace(image.ImageTitle) ? "Gallery" : image.ImageTitle)"
+                             data-image-id="@image.GalleryImageId">
+
+                            <img src="@imagePath"
+                                 alt="@image.ImageTitle">
+
+                            <span class="category-tag">
+
+                                @(string.IsNullOrWhiteSpace(image.ImageTitle)
+                                    ? "Gallery"
+                                    : image.ImageTitle)
+
+                            </span>
+
+                            <div class="gallery-inline-actions gallery-inline-actions-sm"
+                                 data-public-actions
+                                 data-item-type="gallery"
+                                 data-item-id="@image.GalleryImageId"
+                                 data-title="@(string.IsNullOrWhiteSpace(image.ImageTitle) ? "Gallery" : image.ImageTitle)"
+                                 data-url="@imagePath">
+                                <button type="button" data-action="like" aria-label="Like image"><i class="bi bi-hand-thumbs-up"></i><small data-like-count>0</small></button>
+                                <button type="button" data-action="comment" aria-label="Comment on image"><i class="bi bi-chat-dots"></i></button>
+                                <button type="button" data-action="share" aria-label="Share image"><i class="bi bi-share"></i></button>
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="home-image-empty">
+
+                    <i class="bi bi-images"></i>
+                    <span>No gallery images available yet.</span>
+
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="gallery-lightbox" data-gallery-lightbox aria-hidden="true">
+        <div class="gallery-lightbox-backdrop" data-gallery-close></div>
+
+        <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Photo preview">
+            <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Close image preview">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            <div class="gallery-lightbox-media">
+                <img src="" alt="" data-gallery-lightbox-img />
+            </div>
+
+            <div class="gallery-lightbox-footer">
+                <h3 data-gallery-lightbox-title>Photo Gallery</h3>
+
+                <div class="gallery-lightbox-actions"
+                     data-public-actions
+                     data-item-type="gallery"
+                     data-item-id=""
+                     data-title=""
+                     data-url="">
+                    <button type="button" data-action="like">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                        <span>Like</span>
+                        <small data-like-count>0</small>
+                    </button>
+                    <button type="button" data-action="share">
+                        <i class="bi bi-share"></i>
+                        <span>Share</span>
+                    </button>
+                    <button type="button" data-action="comment">
+                        <i class="bi bi-chat-dots"></i>
+                        <span>Comment</span>
+                    </button>
+                    <a href="#"
+                       data-gallery-download
+                       download
+                       class="gallery-download-btn">
+                        <i class="bi bi-download"></i>
+                        <span>Download</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .home-image-gallery {
+        padding: 34px 0 !important;
+        background: #f6f8fb;
+        overflow: visible;
+    }
+
+    .home-image-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+    }
+
+    .home-image-kicker {
+        display: inline-flex;
+        color: #e85d04;
+        font-size: .76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0;
+        margin-bottom: 5px;
+    }
+
+    .home-image-head h2 {
+        margin: 0;
+        font-size: clamp(1.35rem, 2vw, 2rem);
+        line-height: 1.15;
+        color: #111827;
+        font-weight: 800;
+    }
+
+    .home-image-head p {
+        margin: 6px 0 0;
+        color: #64748b;
+        max-width: 670px;
+        font-size: .95rem;
+        line-height: 1.5;
+    }
+
+    .home-image-link {
+        color: #fff;
+        background: #111827;
+        text-decoration: none;
+        border-radius: 6px;
+        padding: 9px 14px;
+        font-size: .86rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .home-image-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(310px, .8fr);
+        gap: 18px;
+    }
+
+    .home-image-gallery .featured-gallery-card,
+    .home-image-gallery .gallery-card,
+    .home-image-empty {
+        border-radius: 8px !important;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, .06) !important;
+    }
+
+    .home-image-gallery .featured-gallery-card img {
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+    .home-image-gallery .featured-overlay {
+        padding: 16px !important;
+        background: linear-gradient(to top, rgba(15, 23, 42, .86), rgba(15, 23, 42, .22), transparent);
+    }
+
+    .home-image-gallery .gallery-badge {
+        padding: 4px 9px !important;
+        margin-bottom: 8px !important;
+        font-size: .72rem !important;
+        font-weight: 800;
+        border-radius: 999px;
+    }
+
+    .home-image-gallery .featured-overlay h3 {
+        font-size: 1.18rem !important;
+        line-height: 1.25 !important;
+        font-weight: 800;
+    }
+
+    .home-image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .home-image-grid-only {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .home-image-gallery .gallery-card {
+        min-height: 0;
+    }
+
+    .home-image-gallery .gallery-card img {
+        height: auto !important;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+    }
+
+    .home-image-gallery .category-tag {
+        left: 10px;
+        bottom: 10px;
+        right: auto;
+        max-width: calc(100% - 20px);
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: .7rem;
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .home-image-gallery .gallery-inline-actions {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 3;
+        display: flex;
+        gap: 6px;
+    }
+
+    .home-image-gallery .gallery-inline-actions-sm {
+        right: 8px;
+        top: 8px;
+        gap: 5px;
+    }
+
+    .home-image-gallery .gallery-inline-actions button {
+        display: inline-grid;
+        grid-auto-flow: column;
+        place-items: center;
+        gap: 4px;
+        min-width: 34px;
+        height: 34px;
+        border: 1px solid rgba(255,255,255,.42);
+        border-radius: 999px;
+        color: #fff;
+        background: rgba(15, 23, 42, .72);
+        font-size: .82rem;
+        line-height: 1;
+        backdrop-filter: blur(8px);
+        transition: background .2s ease, transform .2s ease;
+    }
+
+    .home-image-gallery .gallery-inline-actions-sm button {
+        min-width: 30px;
+        height: 30px;
+        font-size: .76rem;
+    }
+
+    .home-image-gallery .gallery-inline-actions button:hover,
+    .home-image-gallery .gallery-inline-actions button.is-liked {
+        background: #ff7a1a;
+        transform: translateY(-1px);
+    }
+
+    .home-image-gallery .gallery-inline-actions small {
+        font-size: .68rem;
+        font-weight: 800;
+    }
+
+    .home-image-empty {
+        padding: 28px;
+        color: #64748b;
+        background: #fff;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @@media (max-width: 991px) {
+        .home-image-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .home-image-head {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .home-image-grid-only {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 575px) {
+        .home-image-gallery {
+            padding: 26px 0 !important;
+        }
+
+        .home-image-link {
+            width: 100%;
+            text-align: center;
+        }
+
+        .home-image-grid {
+            gap: 10px;
+        }
+
+        .home-image-gallery .featured-overlay h3 {
+            font-size: 1rem !important;
+        }
+    }
+</style>

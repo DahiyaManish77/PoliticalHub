@@ -1,0 +1,1379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PoliticalLeaderPortalDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ApplicationRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ApplicationUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="PasswordHash" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="ProfilePhotoPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="LastLoginDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CampaignAlert">
+    <Key>
+      <PropertyRef Name="CampaignAlertId" />
+    </Key>
+    <Property Name="CampaignAlertId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AlertTitle" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="AlertMessage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AlertType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReferenceModule" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReferenceId" Type="int" />
+    <Property Name="Severity" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="AlertStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="AssignedToMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="AssignedToName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ActionTaken" Type="nvarchar(max)" />
+    <Property Name="ActionTakenByMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="ActionTakenDate" Type="datetime" />
+    <Property Name="ExpiryDate" Type="datetime" />
+    <Property Name="IsDashboard" Type="bit" Nullable="false" />
+    <Property Name="IsNotificationSent" Type="bit" Nullable="false" />
+    <Property Name="IsResolved" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="CampaignId" Type="int" />
+    <Property Name="AlertSource" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="ReadDate" Type="datetime" />
+    <Property Name="ReadByMemberCode" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DownloadCategory">
+    <Key>
+      <PropertyRef Name="DownloadCategoryId" />
+    </Key>
+    <Property Name="DownloadCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CategoryDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DownloadDocument">
+    <Key>
+      <PropertyRef Name="DownloadDocumentId" />
+    </Key>
+    <Property Name="DownloadDocumentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DownloadCategoryId" Type="int" Nullable="false" />
+    <Property Name="DocumentNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ShortDescription" Type="nvarchar(max)" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="FileExtension" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="FileSizeKB" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="VersionNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="DownloadsCount" Type="int" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="PublishDate" Type="datetime" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ElectionBooth">
+    <Key>
+      <PropertyRef Name="ElectionBoothId" />
+    </Key>
+    <Property Name="ElectionBoothId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BoothCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="BoothNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BoothName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="AssemblyName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ParliamentName" Type="nvarchar" MaxLength="200" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="Block" Type="nvarchar" MaxLength="100" />
+    <Property Name="Village" Type="nvarchar" MaxLength="150" />
+    <Property Name="PollingStation" Type="nvarchar" MaxLength="300" />
+    <Property Name="BoothInchargeMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="BoothInchargeName" Type="nvarchar" MaxLength="200" />
+    <Property Name="TotalVoters" Type="int" Nullable="false" />
+    <Property Name="MaleVoters" Type="int" Nullable="false" />
+    <Property Name="FemaleVoters" Type="int" Nullable="false" />
+    <Property Name="OtherVoters" Type="int" Nullable="false" />
+    <Property Name="Supporters" Type="int" Nullable="false" />
+    <Property Name="Opponents" Type="int" Nullable="false" />
+    <Property Name="NeutralVoters" Type="int" Nullable="false" />
+    <Property Name="VisitedHouses" Type="int" Nullable="false" />
+    <Property Name="TotalHouses" Type="int" Nullable="false" />
+    <Property Name="CoveragePercentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="BoothStrength" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="LastVisitDate" Type="datetime" />
+    <Property Name="LastMeetingDate" Type="datetime" />
+    <Property Name="LastSurveyDate" Type="datetime" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ElectionBoothVisit">
+    <Key>
+      <PropertyRef Name="ElectionBoothVisitId" />
+    </Key>
+    <Property Name="ElectionBoothVisitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ElectionBoothId" Type="int" Nullable="false" />
+    <Property Name="VisitType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VisitDate" Type="datetime" Nullable="false" />
+    <Property Name="VisitorMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="VisitorName" Type="nvarchar" MaxLength="200" />
+    <Property Name="TeamName" Type="nvarchar" MaxLength="200" />
+    <Property Name="TotalTeamMembers" Type="int" Nullable="false" />
+    <Property Name="HousesVisited" Type="int" Nullable="false" />
+    <Property Name="FamiliesMet" Type="int" Nullable="false" />
+    <Property Name="PersonsMet" Type="int" Nullable="false" />
+    <Property Name="NewSupporters" Type="int" Nullable="false" />
+    <Property Name="OppositionSupporters" Type="int" Nullable="false" />
+    <Property Name="NeutralFamilies" Type="int" Nullable="false" />
+    <Property Name="PamphletsDistributed" Type="int" Nullable="false" />
+    <Property Name="MembershipFormsIssued" Type="int" Nullable="false" />
+    <Property Name="MembershipFormsCollected" Type="int" Nullable="false" />
+    <Property Name="PublicComplaints" Type="int" Nullable="false" />
+    <Property Name="FollowUpRequired" Type="bit" Nullable="false" />
+    <Property Name="NextVisitDate" Type="datetime" />
+    <Property Name="VisitStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="VisitSummary" Type="nvarchar(max)" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ElectionCampaign">
+    <Key>
+      <PropertyRef Name="CampaignId" />
+    </Key>
+    <Property Name="CampaignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CampaignName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ElectionType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+  </EntityType>
+  <EntityType Name="EventArrangement">
+    <Key>
+      <PropertyRef Name="EventArrangementId" />
+    </Key>
+    <Property Name="EventArrangementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="ArrangementType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ArrangementName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ResponsiblePerson" Type="nvarchar" MaxLength="200" />
+    <Property Name="ResponsibleMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="VendorName" Type="nvarchar" MaxLength="200" />
+    <Property Name="VendorMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="EstimatedCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ActualCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsVerified" Type="bit" Nullable="false" />
+    <Property Name="VerifiedBy" Type="int" />
+    <Property Name="VerifiedDate" Type="datetime" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventAttendance">
+    <Key>
+      <PropertyRef Name="AttendanceId" />
+    </Key>
+    <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="AttendanceType" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="PersonName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="FatherName" Type="nvarchar" MaxLength="200" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="Age" Type="int" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="Block" Type="nvarchar" MaxLength="100" />
+    <Property Name="Village" Type="nvarchar" MaxLength="150" />
+    <Property Name="Booth" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkerName" Type="nvarchar" MaxLength="200" />
+    <Property Name="WorkerCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="MemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="AttendanceMode" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="CheckInTime" Type="datetime" Nullable="false" />
+    <Property Name="CheckOutTime" Type="datetime" />
+    <Property Name="IsVIP" Type="bit" Nullable="false" />
+    <Property Name="IsVolunteer" Type="bit" Nullable="false" />
+    <Property Name="IsWorker" Type="bit" Nullable="false" />
+    <Property Name="IsVerified" Type="bit" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventExpense">
+    <Key>
+      <PropertyRef Name="EventExpenseId" />
+    </Key>
+    <Property Name="EventExpenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="ExpenseCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExpenseHead" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="VendorName" Type="nvarchar" MaxLength="200" />
+    <Property Name="VendorMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="BillNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="BillDate" Type="date" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="30" />
+    <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="PaymentMode" Type="nvarchar" MaxLength="30" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="PaidTo" Type="nvarchar" MaxLength="200" />
+    <Property Name="PaidBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="TransactionReference" Type="nvarchar" MaxLength="100" />
+    <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
+    <Property Name="ApprovedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="ExpenseStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="VerifiedBy" Type="int" />
+    <Property Name="VerifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventGuest">
+    <Key>
+      <PropertyRef Name="EventGuestId" />
+    </Key>
+    <Property Name="EventGuestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="GuestName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="150" />
+    <Property Name="Organization" Type="nvarchar" MaxLength="200" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="GuestCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="InvitationStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ConfirmationStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ArrivalTime" Type="datetime" />
+    <Property Name="DepartureTime" Type="datetime" />
+    <Property Name="VehicleRequired" Type="bit" Nullable="false" />
+    <Property Name="VehicleDetails" Type="nvarchar" MaxLength="300" />
+    <Property Name="DriverName" Type="nvarchar" MaxLength="150" />
+    <Property Name="DriverMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="HotelRequired" Type="bit" Nullable="false" />
+    <Property Name="HotelName" Type="nvarchar" MaxLength="200" />
+    <Property Name="RoomNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="SecurityRequired" Type="bit" Nullable="false" />
+    <Property Name="SecurityLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="StageSeatNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProtocolOfficer" Type="nvarchar" MaxLength="200" />
+    <Property Name="EscortOfficer" Type="nvarchar" MaxLength="200" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventMaster">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="EventTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="EventType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="EventDate" Type="date" Nullable="false" />
+    <Property Name="StartTime" Type="time" Precision="7" />
+    <Property Name="EndTime" Type="time" Precision="7" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="Block" Type="nvarchar" MaxLength="100" />
+    <Property Name="Village" Type="nvarchar" MaxLength="150" />
+    <Property Name="Booth" Type="nvarchar" MaxLength="100" />
+    <Property Name="Venue" Type="nvarchar" MaxLength="500" />
+    <Property Name="Landmark" Type="nvarchar" MaxLength="300" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="ExpectedCrowd" Type="int" Nullable="false" />
+    <Property Name="ActualCrowd" Type="int" Nullable="false" />
+    <Property Name="OrganizerName" Type="nvarchar" MaxLength="200" />
+    <Property Name="OrganizerMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="ChiefGuest" Type="nvarchar" MaxLength="200" />
+    <Property Name="ChiefGuestMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Budget" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ActualExpense" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsPublished" Type="bit" Nullable="false" />
+    <Property Name="IsCompleted" Type="bit" Nullable="false" />
+    <Property Name="IsCancelled" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventMedia">
+    <Key>
+      <PropertyRef Name="EventMediaId" />
+    </Key>
+    <Property Name="EventMediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="MediaType" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="MediaCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="OriginalFileName" Type="nvarchar" MaxLength="300" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="FileExtension" Type="nvarchar" MaxLength="20" />
+    <Property Name="FileSize" Type="bigint" />
+    <Property Name="ThumbnailPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="Caption" Type="nvarchar" MaxLength="500" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="UploadedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="UploadedDate" Type="datetime" Nullable="false" />
+    <Property Name="IsPrimary" Type="bit" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="MediaStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="VerifiedBy" Type="int" />
+    <Property Name="VerifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventPoll">
+    <Key>
+      <PropertyRef Name="EventPollId" />
+    </Key>
+    <Property Name="EventPollId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" />
+    <Property Name="PollTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="PollDescription" Type="nvarchar(max)" />
+    <Property Name="PollType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="QuestionType" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+    <Property Name="AllowMultipleSelection" Type="bit" Nullable="false" />
+    <Property Name="MaximumSelection" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventPollOption">
+    <Key>
+      <PropertyRef Name="EventPollOptionId" />
+    </Key>
+    <Property Name="EventPollOptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventPollId" Type="int" Nullable="false" />
+    <Property Name="OptionText" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="VoteCount" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventPollResponse">
+    <Key>
+      <PropertyRef Name="EventPollResponseId" />
+    </Key>
+    <Property Name="EventPollResponseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventPollId" Type="int" Nullable="false" />
+    <Property Name="EventPollOptionId" Type="int" />
+    <Property Name="SurveyPersonMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="SurveyPersonName" Type="nvarchar" MaxLength="200" />
+    <Property Name="RespondentName" Type="nvarchar" MaxLength="200" />
+    <Property Name="RespondentMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="Age" Type="int" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="Block" Type="nvarchar" MaxLength="100" />
+    <Property Name="Village" Type="nvarchar" MaxLength="150" />
+    <Property Name="Booth" Type="nvarchar" MaxLength="100" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="ResponseText" Type="nvarchar(max)" />
+    <Property Name="DeviceId" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsVerified" Type="bit" Nullable="false" />
+    <Property Name="ResponseDate" Type="datetime" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventTask">
+    <Key>
+      <PropertyRef Name="EventTaskId" />
+    </Key>
+    <Property Name="EventTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="ParentTaskId" Type="int" />
+    <Property Name="TaskTitle" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="TaskDescription" Type="nvarchar(max)" />
+    <Property Name="TaskCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AssignedToMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="AssignedToName" Type="nvarchar" MaxLength="200" />
+    <Property Name="AssignedTeamId" Type="int" />
+    <Property Name="AssignedByMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="AssignedDate" Type="datetime" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="CompletedDate" Type="datetime" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProgressPercentage" Type="int" Nullable="false" />
+    <Property Name="EstimatedHours" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="ActualHours" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IsMilestone" Type="bit" Nullable="false" />
+    <Property Name="RequiresApproval" Type="bit" Nullable="false" />
+    <Property Name="ApprovedByMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="ApprovedDate" Type="datetime" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventTaskActivity">
+    <Key>
+      <PropertyRef Name="EventTaskActivityId" />
+    </Key>
+    <Property Name="EventTaskActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventTaskId" Type="int" Nullable="false" />
+    <Property Name="ActivityType" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="OldStatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="NewStatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="ProgressPercentage" Type="int" />
+    <Property Name="ActivityRemarks" Type="nvarchar(max)" />
+    <Property Name="AttachmentPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="ActivityByMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="ActivityByName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ActivityDate" Type="datetime" Nullable="false" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventTeam">
+    <Key>
+      <PropertyRef Name="EventTeamId" />
+    </Key>
+    <Property Name="EventTeamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="TeamName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TeamLeaderName" Type="nvarchar" MaxLength="200" />
+    <Property Name="TeamLeaderMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="TotalMembers" Type="int" Nullable="false" />
+    <Property Name="RequiredMembers" Type="int" Nullable="false" />
+    <Property Name="AssignedArea" Type="nvarchar" MaxLength="200" />
+    <Property Name="DutyStartTime" Type="datetime" />
+    <Property Name="DutyEndTime" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Instructions" Type="nvarchar(max)" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsCompleted" Type="bit" Nullable="false" />
+    <Property Name="CompletedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EventTeamMember">
+    <Key>
+      <PropertyRef Name="EventTeamMemberId" />
+    </Key>
+    <Property Name="EventTeamMemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventTeamId" Type="int" Nullable="false" />
+    <Property Name="MemberName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="100" />
+    <Property Name="Responsibility" Type="nvarchar" MaxLength="200" />
+    <Property Name="AttendanceStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="CheckInTime" Type="datetime" />
+    <Property Name="CheckOutTime" Type="datetime" />
+    <Property Name="IsLeader" Type="bit" Nullable="false" />
+    <Property Name="IsPresent" Type="bit" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="ReportingMemberCode" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="EventVehicle">
+    <Key>
+      <PropertyRef Name="EventVehicleId" />
+    </Key>
+    <Property Name="EventVehicleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="VillageName" Type="nvarchar" MaxLength="150" />
+    <Property Name="BoothName" Type="nvarchar" MaxLength="100" />
+    <Property Name="WorkerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="WorkerMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Responsibility" Type="nvarchar" MaxLength="150" />
+    <Property Name="VehicleType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VehicleCount" Type="int" Nullable="false" />
+    <Property Name="EstimatedPersons" Type="int" Nullable="false" />
+    <Property Name="ActualPersons" Type="int" Nullable="false" />
+    <Property Name="DriverName" Type="nvarchar" MaxLength="200" />
+    <Property Name="DriverMobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="VehicleNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ArrivalTime" Type="datetime" />
+    <Property Name="DepartureTime" Type="datetime" />
+    <Property Name="ParkingZone" Type="nvarchar" MaxLength="100" />
+    <Property Name="FuelExpense" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsVerified" Type="bit" Nullable="false" />
+    <Property Name="VerifiedBy" Type="int" />
+    <Property Name="VerifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="WorkerCode" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="GalleryCategory">
+    <Key>
+      <PropertyRef Name="GalleryCategoryId" />
+    </Key>
+    <Property Name="GalleryCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="CategoryDescription" Type="nvarchar(max)" />
+    <Property Name="CoverImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GalleryImage">
+    <Key>
+      <PropertyRef Name="GalleryImageId" />
+    </Key>
+    <Property Name="GalleryImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GalleryCategoryId" Type="int" Nullable="false" />
+    <Property Name="ImageTitle" Type="nvarchar" MaxLength="250" />
+    <Property Name="ImageCaption" Type="nvarchar(max)" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HeroSlider">
+    <Key>
+      <PropertyRef Name="HeroSliderId" />
+    </Key>
+    <Property Name="HeroSliderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="500" />
+    <Property Name="SubTitle" Type="nvarchar" MaxLength="500" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ButtonText" Type="nvarchar" MaxLength="100" />
+    <Property Name="ButtonUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ButtonText2" Type="nvarchar" MaxLength="100" />
+    <Property Name="ButtonUrl2" Type="nvarchar" MaxLength="500" />
+    <Property Name="MobileImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="TemplateType" Type="nvarchar" MaxLength="50" />
+    <Property Name="OverlayType" Type="nvarchar" MaxLength="50" />
+    <Property Name="SliderTransition" Type="nvarchar" MaxLength="50" />
+    <Property Name="TitleAnimation" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubTitleAnimation" Type="nvarchar" MaxLength="50" />
+    <Property Name="DescriptionAnimation" Type="nvarchar" MaxLength="50" />
+    <Property Name="ButtonAnimation" Type="nvarchar" MaxLength="50" />
+    <Property Name="TextAlignment" Type="nvarchar" MaxLength="20" />
+    <Property Name="OverlayOpacity" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="BackgroundImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="LeaderImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="BackgroundColor" Type="nvarchar" MaxLength="20" />
+    <Property Name="LeaderImagePosition" Type="nvarchar" MaxLength="20" />
+    <Property Name="ShowLeaderImage" Type="bit" Nullable="false" />
+    <Property Name="ShowOverlay" Type="bit" Nullable="false" />
+    <Property Name="ShowButtons" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HomePageStatistic">
+    <Key>
+      <PropertyRef Name="StatisticId" />
+    </Key>
+    <Property Name="StatisticId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="StatisticValue" Type="bigint" Nullable="false" />
+    <Property Name="IconClass" Type="nvarchar" MaxLength="100" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JanSampark">
+    <Key>
+      <PropertyRef Name="JanSamparkId" />
+    </Key>
+    <Property Name="JanSamparkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventId" Type="int" />
+    <Property Name="ElectionBoothId" Type="int" />
+    <Property Name="CitizenName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="FatherName" Type="nvarchar" MaxLength="200" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="Age" Type="int" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="Block" Type="nvarchar" MaxLength="100" />
+    <Property Name="Village" Type="nvarchar" MaxLength="150" />
+    <Property Name="Booth" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" MaxLength="500" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="AssignedToMemberCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="AssignedToName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Resolution" Type="nvarchar(max)" />
+    <Property Name="ResolutionDate" Type="datetime" />
+    <Property Name="FollowUpRequired" Type="bit" Nullable="false" />
+    <Property Name="FollowUpDate" Type="datetime" />
+    <Property Name="AttachmentPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="7" />
+    <Property Name="IsResolved" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LatestNews">
+    <Key>
+      <PropertyRef Name="NewsId" />
+    </Key>
+    <Property Name="NewsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="500" />
+    <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
+    <Property Name="FullDescription" Type="nvarchar(max)" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="PublishDate" Type="datetime" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MediaCoverage">
+    <Key>
+      <PropertyRef Name="MediaCoverageId" />
+    </Key>
+    <Property Name="MediaCoverageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SourceName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="SourceLogoPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="Title" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
+    <Property Name="FullDescription" Type="nvarchar(max)" />
+    <Property Name="CoverImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="CoverageDate" Type="datetime" />
+    <Property Name="ExternalUrl" Type="nvarchar" MaxLength="1000" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="ViewCount" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MenuMaster">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentMenuId" Type="int" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="MenuDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="AreaName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ControllerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ActionName" Type="nvarchar" MaxLength="100" />
+    <Property Name="RouteValues" Type="nvarchar" MaxLength="500" />
+    <Property Name="CustomUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="MenuType" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="IconClass" Type="nvarchar" MaxLength="200" />
+    <Property Name="CssClass" Type="nvarchar" MaxLength="200" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ShowOnHome" Type="bit" Nullable="false" />
+    <Property Name="ShowInAdminSidebar" Type="bit" Nullable="false" />
+    <Property Name="OpenInNewTab" Type="bit" Nullable="false" />
+    <Property Name="IsClickable" Type="bit" Nullable="false" />
+    <Property Name="HasMegaMenu" Type="bit" Nullable="false" />
+    <Property Name="PageTitle" Type="nvarchar" MaxLength="250" />
+    <Property Name="MetaDescription" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="MenuLevel" Type="int" Nullable="false" />
+    <Property Name="ShowInFooter" Type="bit" Nullable="false" />
+    <Property Name="ShowInQuickLinks" Type="bit" Nullable="false" />
+    <Property Name="IsSystemMenu" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NavigationMenu">
+    <Key>
+      <PropertyRef Name="NavigationMenuId" />
+    </Key>
+    <Property Name="NavigationMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentMenuId" Type="int" />
+    <Property Name="MenuTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MenuUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="MenuIcon" Type="nvarchar" MaxLength="100" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="OpenInNewTab" Type="bit" Nullable="false" />
+    <Property Name="IsVisible" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UpcomingEvent">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ShortDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="FullDescription" Type="nvarchar(max)" />
+    <Property Name="EventDate" Type="date" Nullable="false" />
+    <Property Name="EventTime" Type="nvarchar" MaxLength="50" />
+    <Property Name="EventLocation" Type="nvarchar" MaxLength="300" />
+    <Property Name="EventImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="VideoCategory">
+    <Key>
+      <PropertyRef Name="VideoCategoryId" />
+    </Key>
+    <Property Name="VideoCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="CategoryDescription" Type="nvarchar(max)" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="VideoGallery">
+    <Key>
+      <PropertyRef Name="VideoId" />
+    </Key>
+    <Property Name="VideoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VideoCategoryId" Type="int" Nullable="false" />
+    <Property Name="VideoTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="VideoDescription" Type="nvarchar(max)" />
+    <Property Name="YoutubeUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="ThumbnailImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WebsiteFooterSetting">
+    <Key>
+      <PropertyRef Name="WebsiteFooterSettingId" />
+    </Key>
+    <Property Name="WebsiteFooterSettingId" Type="int" Nullable="false" />
+    <Property Name="AboutText" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar" MaxLength="1000" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="CopyrightText" Type="nvarchar" MaxLength="500" />
+    <Property Name="FacebookUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="InstagramUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="TwitterUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="YoutubeUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="WhatsappUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="FooterLogoPath" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="WebsiteHeaderSetting">
+    <Key>
+      <PropertyRef Name="WebsiteHeaderSettingId" />
+    </Key>
+    <Property Name="WebsiteHeaderSettingId" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="Address" Type="nvarchar" MaxLength="1000" />
+    <Property Name="FacebookUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="InstagramUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="TwitterUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="YoutubeUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="WhatsappUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="ShowTopBar" Type="bit" Nullable="false" />
+    <Property Name="ShowLanguageSwitcher" Type="bit" Nullable="false" />
+    <Property Name="ShowSignIn" Type="bit" Nullable="false" />
+    <Property Name="ShowSignUp" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="LogoPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="LeaderImagePath" Type="nvarchar" MaxLength="500" />
+    <Property Name="HeaderBackgroundColor" Type="nvarchar" MaxLength="50" />
+    <Property Name="HeaderTextColor" Type="nvarchar" MaxLength="50" />
+    <Property Name="HeaderFontFamily" Type="nvarchar" MaxLength="100" />
+    <Property Name="HeaderFontSize" Type="nvarchar" MaxLength="20" />
+    <Property Name="LogoAnimationClass" Type="nvarchar" MaxLength="100" />
+    <Property Name="TextAnimationClass" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="WebsiteSetting">
+    <Key>
+      <PropertyRef Name="WebsiteSettingId" />
+    </Key>
+    <Property Name="WebsiteSettingId" Type="int" Nullable="false" />
+    <Property Name="WebsiteName" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="WebsiteTagline" Type="nvarchar" MaxLength="500" />
+    <Property Name="WebsiteLogoPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="FaviconPath" Type="nvarchar" MaxLength="500" />
+    <Property Name="DefaultMetaTitle" Type="nvarchar" MaxLength="500" />
+    <Property Name="DefaultMetaDescription" Type="nvarchar" MaxLength="1000" />
+    <Property Name="DefaultMetaKeywords" Type="nvarchar" MaxLength="1000" />
+    <Property Name="GoogleAnalyticsCode" Type="nvarchar(max)" />
+    <Property Name="GoogleSearchConsoleCode" Type="nvarchar(max)" />
+    <Property Name="DefaultLanguage" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ApplicationUser_ApplicationRole">
+    <End Role="ApplicationRole" Type="Self.ApplicationRole" Multiplicity="1" />
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="ApplicationUser">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CampaignAlert_ElectionCampaign">
+    <End Role="ElectionCampaign" Type="Self.ElectionCampaign" Multiplicity="0..1" />
+    <End Role="CampaignAlert" Type="Self.CampaignAlert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ElectionCampaign">
+        <PropertyRef Name="CampaignId" />
+      </Principal>
+      <Dependent Role="CampaignAlert">
+        <PropertyRef Name="CampaignId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownloadDocument_DownloadCategory">
+    <End Role="DownloadCategory" Type="Self.DownloadCategory" Multiplicity="1" />
+    <End Role="DownloadDocument" Type="Self.DownloadDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DownloadCategory">
+        <PropertyRef Name="DownloadCategoryId" />
+      </Principal>
+      <Dependent Role="DownloadDocument">
+        <PropertyRef Name="DownloadCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ElectionBoothVisit_ElectionBooth">
+    <End Role="ElectionBooth" Type="Self.ElectionBooth" Multiplicity="1" />
+    <End Role="ElectionBoothVisit" Type="Self.ElectionBoothVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ElectionBooth">
+        <PropertyRef Name="ElectionBoothId" />
+      </Principal>
+      <Dependent Role="ElectionBoothVisit">
+        <PropertyRef Name="ElectionBoothId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventArrangement_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventArrangement" Type="Self.EventArrangement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventArrangement">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventAttendance_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventAttendance" Type="Self.EventAttendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventAttendance">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventExpense_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventExpense" Type="Self.EventExpense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventExpense">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventGuest_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventGuest" Type="Self.EventGuest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventGuest">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventMedia_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventMedia" Type="Self.EventMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventMedia">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPoll_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="0..1" />
+    <End Role="EventPoll" Type="Self.EventPoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventPoll">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPollOption_EventPoll">
+    <End Role="EventPoll" Type="Self.EventPoll" Multiplicity="1" />
+    <End Role="EventPollOption" Type="Self.EventPollOption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPoll">
+        <PropertyRef Name="EventPollId" />
+      </Principal>
+      <Dependent Role="EventPollOption">
+        <PropertyRef Name="EventPollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPollResponse_EventPoll">
+    <End Role="EventPoll" Type="Self.EventPoll" Multiplicity="1" />
+    <End Role="EventPollResponse" Type="Self.EventPollResponse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPoll">
+        <PropertyRef Name="EventPollId" />
+      </Principal>
+      <Dependent Role="EventPollResponse">
+        <PropertyRef Name="EventPollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPollResponse_EventPollOption">
+    <End Role="EventPollOption" Type="Self.EventPollOption" Multiplicity="0..1" />
+    <End Role="EventPollResponse" Type="Self.EventPollResponse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventPollOption">
+        <PropertyRef Name="EventPollOptionId" />
+      </Principal>
+      <Dependent Role="EventPollResponse">
+        <PropertyRef Name="EventPollOptionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTask_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventTask" Type="Self.EventTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventTask">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTask_EventTeam">
+    <End Role="EventTeam" Type="Self.EventTeam" Multiplicity="0..1" />
+    <End Role="EventTask" Type="Self.EventTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTeam">
+        <PropertyRef Name="EventTeamId" />
+      </Principal>
+      <Dependent Role="EventTask">
+        <PropertyRef Name="AssignedTeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTask_ParentTask">
+    <End Role="EventTask" Type="Self.EventTask" Multiplicity="0..1" />
+    <End Role="EventTask1" Type="Self.EventTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTask">
+        <PropertyRef Name="EventTaskId" />
+      </Principal>
+      <Dependent Role="EventTask1">
+        <PropertyRef Name="ParentTaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTaskActivity_EventTask">
+    <End Role="EventTask" Type="Self.EventTask" Multiplicity="1" />
+    <End Role="EventTaskActivity" Type="Self.EventTaskActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTask">
+        <PropertyRef Name="EventTaskId" />
+      </Principal>
+      <Dependent Role="EventTaskActivity">
+        <PropertyRef Name="EventTaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTeam_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventTeam" Type="Self.EventTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventTeam">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTeamMember_EventTeam">
+    <End Role="EventTeam" Type="Self.EventTeam" Multiplicity="1" />
+    <End Role="EventTeamMember" Type="Self.EventTeamMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTeam">
+        <PropertyRef Name="EventTeamId" />
+      </Principal>
+      <Dependent Role="EventTeamMember">
+        <PropertyRef Name="EventTeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventVehicle_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="1" />
+    <End Role="EventVehicle" Type="Self.EventVehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="EventVehicle">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GalleryImage_GalleryCategory">
+    <End Role="GalleryCategory" Type="Self.GalleryCategory" Multiplicity="1" />
+    <End Role="GalleryImage" Type="Self.GalleryImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GalleryCategory">
+        <PropertyRef Name="GalleryCategoryId" />
+      </Principal>
+      <Dependent Role="GalleryImage">
+        <PropertyRef Name="GalleryCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JanSampark_ElectionBooth">
+    <End Role="ElectionBooth" Type="Self.ElectionBooth" Multiplicity="0..1" />
+    <End Role="JanSampark" Type="Self.JanSampark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ElectionBooth">
+        <PropertyRef Name="ElectionBoothId" />
+      </Principal>
+      <Dependent Role="JanSampark">
+        <PropertyRef Name="ElectionBoothId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JanSampark_EventMaster">
+    <End Role="EventMaster" Type="Self.EventMaster" Multiplicity="0..1" />
+    <End Role="JanSampark" Type="Self.JanSampark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventMaster">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="JanSampark">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuMaster_ParentMenu">
+    <End Role="MenuMaster" Type="Self.MenuMaster" Multiplicity="0..1" />
+    <End Role="MenuMaster1" Type="Self.MenuMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MenuMaster">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="MenuMaster1">
+        <PropertyRef Name="ParentMenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NavigationMenu_Parent">
+    <End Role="NavigationMenu" Type="Self.NavigationMenu" Multiplicity="0..1" />
+    <End Role="NavigationMenu1" Type="Self.NavigationMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NavigationMenu">
+        <PropertyRef Name="NavigationMenuId" />
+      </Principal>
+      <Dependent Role="NavigationMenu1">
+        <PropertyRef Name="ParentMenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoGallery_VideoCategory">
+    <End Role="VideoCategory" Type="Self.VideoCategory" Multiplicity="1" />
+    <End Role="VideoGallery" Type="Self.VideoGallery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VideoCategory">
+        <PropertyRef Name="VideoCategoryId" />
+      </Principal>
+      <Dependent Role="VideoGallery">
+        <PropertyRef Name="VideoCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PoliticalLeaderPortalDbModelStoreContainer">
+    <EntitySet Name="ApplicationRole" EntityType="Self.ApplicationRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApplicationUser" EntityType="Self.ApplicationUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CampaignAlert" EntityType="Self.CampaignAlert" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DownloadCategory" EntityType="Self.DownloadCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DownloadDocument" EntityType="Self.DownloadDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ElectionBooth" EntityType="Self.ElectionBooth" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ElectionBoothVisit" EntityType="Self.ElectionBoothVisit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ElectionCampaign" EntityType="Self.ElectionCampaign" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventArrangement" EntityType="Self.EventArrangement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventAttendance" EntityType="Self.EventAttendance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventExpense" EntityType="Self.EventExpense" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventGuest" EntityType="Self.EventGuest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventMaster" EntityType="Self.EventMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventMedia" EntityType="Self.EventMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPoll" EntityType="Self.EventPoll" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPollOption" EntityType="Self.EventPollOption" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPollResponse" EntityType="Self.EventPollResponse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTask" EntityType="Self.EventTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTaskActivity" EntityType="Self.EventTaskActivity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTeam" EntityType="Self.EventTeam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTeamMember" EntityType="Self.EventTeamMember" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventVehicle" EntityType="Self.EventVehicle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GalleryCategory" EntityType="Self.GalleryCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GalleryImage" EntityType="Self.GalleryImage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HeroSlider" EntityType="Self.HeroSlider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HomePageStatistic" EntityType="Self.HomePageStatistic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JanSampark" EntityType="Self.JanSampark" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LatestNews" EntityType="Self.LatestNews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MediaCoverage" EntityType="Self.MediaCoverage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MenuMaster" EntityType="Self.MenuMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NavigationMenu" EntityType="Self.NavigationMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UpcomingEvent" EntityType="Self.UpcomingEvent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VideoCategory" EntityType="Self.VideoCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VideoGallery" EntityType="Self.VideoGallery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebsiteFooterSetting" EntityType="Self.WebsiteFooterSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebsiteHeaderSetting" EntityType="Self.WebsiteHeaderSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebsiteSetting" EntityType="Self.WebsiteSetting" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ApplicationUser_ApplicationRole" Association="Self.FK_ApplicationUser_ApplicationRole">
+      <End Role="ApplicationRole" EntitySet="ApplicationRole" />
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CampaignAlert_ElectionCampaign" Association="Self.FK_CampaignAlert_ElectionCampaign">
+      <End Role="ElectionCampaign" EntitySet="ElectionCampaign" />
+      <End Role="CampaignAlert" EntitySet="CampaignAlert" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownloadDocument_DownloadCategory" Association="Self.FK_DownloadDocument_DownloadCategory">
+      <End Role="DownloadCategory" EntitySet="DownloadCategory" />
+      <End Role="DownloadDocument" EntitySet="DownloadDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ElectionBoothVisit_ElectionBooth" Association="Self.FK_ElectionBoothVisit_ElectionBooth">
+      <End Role="ElectionBooth" EntitySet="ElectionBooth" />
+      <End Role="ElectionBoothVisit" EntitySet="ElectionBoothVisit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventArrangement_EventMaster" Association="Self.FK_EventArrangement_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventArrangement" EntitySet="EventArrangement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventAttendance_EventMaster" Association="Self.FK_EventAttendance_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventAttendance" EntitySet="EventAttendance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventExpense_EventMaster" Association="Self.FK_EventExpense_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventExpense" EntitySet="EventExpense" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventGuest_EventMaster" Association="Self.FK_EventGuest_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventGuest" EntitySet="EventGuest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventMedia_EventMaster" Association="Self.FK_EventMedia_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventMedia" EntitySet="EventMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPoll_EventMaster" Association="Self.FK_EventPoll_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventPoll" EntitySet="EventPoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPollOption_EventPoll" Association="Self.FK_EventPollOption_EventPoll">
+      <End Role="EventPoll" EntitySet="EventPoll" />
+      <End Role="EventPollOption" EntitySet="EventPollOption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPollResponse_EventPoll" Association="Self.FK_EventPollResponse_EventPoll">
+      <End Role="EventPoll" EntitySet="EventPoll" />
+      <End Role="EventPollResponse" EntitySet="EventPollResponse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPollResponse_EventPollOption" Association="Self.FK_EventPollResponse_EventPollOption">
+      <End Role="EventPollOption" EntitySet="EventPollOption" />
+      <End Role="EventPollResponse" EntitySet="EventPollResponse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTask_EventMaster" Association="Self.FK_EventTask_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventTask" EntitySet="EventTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTask_EventTeam" Association="Self.FK_EventTask_EventTeam">
+      <End Role="EventTeam" EntitySet="EventTeam" />
+      <End Role="EventTask" EntitySet="EventTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTask_ParentTask" Association="Self.FK_EventTask_ParentTask">
+      <End Role="EventTask" EntitySet="EventTask" />
+      <End Role="EventTask1" EntitySet="EventTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTaskActivity_EventTask" Association="Self.FK_EventTaskActivity_EventTask">
+      <End Role="EventTask" EntitySet="EventTask" />
+      <End Role="EventTaskActivity" EntitySet="EventTaskActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTeam_EventMaster" Association="Self.FK_EventTeam_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventTeam" EntitySet="EventTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTeamMember_EventTeam" Association="Self.FK_EventTeamMember_EventTeam">
+      <End Role="EventTeam" EntitySet="EventTeam" />
+      <End Role="EventTeamMember" EntitySet="EventTeamMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventVehicle_EventMaster" Association="Self.FK_EventVehicle_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="EventVehicle" EntitySet="EventVehicle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GalleryImage_GalleryCategory" Association="Self.FK_GalleryImage_GalleryCategory">
+      <End Role="GalleryCategory" EntitySet="GalleryCategory" />
+      <End Role="GalleryImage" EntitySet="GalleryImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JanSampark_ElectionBooth" Association="Self.FK_JanSampark_ElectionBooth">
+      <End Role="ElectionBooth" EntitySet="ElectionBooth" />
+      <End Role="JanSampark" EntitySet="JanSampark" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JanSampark_EventMaster" Association="Self.FK_JanSampark_EventMaster">
+      <End Role="EventMaster" EntitySet="EventMaster" />
+      <End Role="JanSampark" EntitySet="JanSampark" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuMaster_ParentMenu" Association="Self.FK_MenuMaster_ParentMenu">
+      <End Role="MenuMaster" EntitySet="MenuMaster" />
+      <End Role="MenuMaster1" EntitySet="MenuMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NavigationMenu_Parent" Association="Self.FK_NavigationMenu_Parent">
+      <End Role="NavigationMenu" EntitySet="NavigationMenu" />
+      <End Role="NavigationMenu1" EntitySet="NavigationMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoGallery_VideoCategory" Association="Self.FK_VideoGallery_VideoCategory">
+      <End Role="VideoCategory" EntitySet="VideoCategory" />
+      <End Role="VideoGallery" EntitySet="VideoGallery" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

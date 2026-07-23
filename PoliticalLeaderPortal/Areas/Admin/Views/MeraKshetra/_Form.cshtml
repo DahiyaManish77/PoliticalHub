@@ -1,0 +1,128 @@
+@model PoliticalLeaderPortal.ViewModels.MeraKshetraItemVM
+
+@Html.AntiForgeryToken()
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0 admin-pro-card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">@ViewBag.Title</h4>
+                <small>Image, source and display settings are optional but recommended.</small>
+            </div>
+            <a href="@Url.Action("Index")" class="btn btn-light">
+                <i class="bi bi-arrow-left"></i>
+                Back
+            </a>
+        </div>
+
+        <div class="card-body">
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <div class="row g-3">
+                <div class="col-lg-4">
+                    <label class="form-label">Module Type</label>
+                    @Html.DropDownListFor(x => x.ModuleType, (IEnumerable<SelectListItem>)ViewBag.ModuleTypes, new { @class = "form-select" })
+                    @Html.ValidationMessageFor(x => x.ModuleType, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-lg-5">
+                    <label class="form-label">Title</label>
+                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control", placeholder = "Example: Basilica of Our Lady of Graces" })
+                    @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-lg-3">
+                    <label class="form-label">Icon Class</label>
+                    @Html.TextBoxFor(x => x.IconClass, new { @class = "form-control", placeholder = "bi bi-geo-alt" })
+                </div>
+
+                <div class="col-lg-6">
+                    <label class="form-label">Short Title</label>
+                    @Html.TextBoxFor(x => x.ShortTitle, new { @class = "form-control", placeholder = "Small subtitle shown on cards" })
+                </div>
+                <div class="col-lg-3">
+                    <label class="form-label">Location</label>
+                    @Html.TextBoxFor(x => x.LocationName, new { @class = "form-control", placeholder = "Sardhana" })
+                </div>
+                <div class="col-lg-3">
+                    <label class="form-label">Distance / Range</label>
+                    @Html.TextBoxFor(x => x.DistanceText, new { @class = "form-control", placeholder = "About 20 km" })
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    @Html.TextAreaFor(x => x.Description, 5, 20, new { @class = "form-control", placeholder = "Write useful information for citizens and visitors..." })
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="ImageFile" class="form-control" accept=".jpg,.jpeg,.png,.webp,.gif" />
+                    @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+                    {
+                        <img src="@Url.Content(Model.ImagePath)" class="admin-kshetra-preview mt-2" alt="@Model.Title" />
+                    }
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Source Name</label>
+                    @Html.TextBoxFor(x => x.SourceName, new { @class = "form-control", placeholder = "Wikipedia, District portal, News source" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Source URL</label>
+                    @Html.TextBoxFor(x => x.SourceUrl, new { @class = "form-control", placeholder = "https://..." })
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="form-label">Display Order</label>
+                    @Html.TextBoxFor(x => x.DisplayOrder, new { @class = "form-control", type = "number", min = "1" })
+                </div>
+                <div class="col-lg-3 d-flex align-items-end">
+                    <div class="form-check form-switch">
+                        @Html.CheckBoxFor(x => x.IsFeatured, new { @class = "form-check-input" })
+                        <label class="form-check-label">Featured on top</label>
+                    </div>
+                </div>
+                <div class="col-lg-3 d-flex align-items-end">
+                    <div class="form-check form-switch">
+                        @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-check-input" })
+                        <label class="form-check-label">Show on public page</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-white d-flex justify-content-end gap-2">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i>
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-kshetra-thumb {
+        width: 72px;
+        height: 52px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e7edf5;
+    }
+
+    .admin-kshetra-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        background: #eef7fa;
+        color: #0b8fa6;
+        font-size: 22px;
+    }
+
+    .admin-kshetra-preview {
+        width: 100%;
+        max-height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e7edf5;
+    }
+</style>

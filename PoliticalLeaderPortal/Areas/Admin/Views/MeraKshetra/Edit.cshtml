@@ -1,0 +1,12 @@
+@model PoliticalLeaderPortal.ViewModels.MeraKshetraItemVM
+
+@{
+    ViewBag.Title = "Edit Mera Kshetra Record";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "MeraKshetra", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.MeraKshetraItemId)
+    @Html.Partial("_Form", Model)
+}

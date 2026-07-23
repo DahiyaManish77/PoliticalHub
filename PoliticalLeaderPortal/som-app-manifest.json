@@ -1,0 +1,25 @@
+{
+  "name": "Som App",
+  "short_name": "Som App",
+  "description": "Public connect app for Sardhana updates, Mera Kshetra, events, gallery, videos and citizen services.",
+  "start_url": "/SomApp",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#10213f",
+  "theme_color": "#ff8a1c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/Content/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Content/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

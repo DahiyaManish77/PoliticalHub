@@ -1,0 +1,97 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.HomeMemberVM>
+
+@{
+    ViewBag.Title = "Home Members";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Home Members</h4>
+            <a href="@Url.Action("Create")" class="btn btn-light btn-sm">
+                <i class="fas fa-plus me-1"></i>
+                Add Member
+            </a>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            <th>Tenure</th>
+                            <th>Order</th>
+                            <th>Home</th>
+                            <th>Active</th>
+                            <th width="170">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(item.PhotoPath))
+                                    {
+                                        <img src="@Url.Content(item.PhotoPath)"
+                                             alt="@item.MemberName"
+                                             style="width:56px;height:56px;object-fit:cover;border-radius:8px;" />
+                                    }
+                                </td>
+                                <td class="fw-semibold">@item.MemberName</td>
+                                <td>@item.Designation</td>
+                                <td>@item.Tenure</td>
+                                <td>@item.DisplayOrder</td>
+                                <td>@(item.ShowOnHome ? "Yes" : "No")</td>
+                                <td>@(item.IsActive ? "Yes" : "No")</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.HomeMemberId })"
+                                       class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm btnDelete"
+                                            data-id="@item.HomeMemberId">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(".btnDelete").click(function () {
+            var id = $(this).data("id");
+
+            Swal.fire({
+                title: "Delete member?",
+                text: "This member will be removed from the home page section.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Delete"
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.post("@Url.Action("Delete")", { id: id }, function () {
+                        Swal.fire("Deleted", "Member deleted successfully.", "success")
+                            .then(function () { location.reload(); });
+                    });
+                }
+            });
+        });
+    </script>
+}

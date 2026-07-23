@@ -1,0 +1,47 @@
+@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+@{
+    ViewBag.Title = "Citizen Request";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <span class="badge text-bg-info mb-2">@Model.RequestType</span>
+                    <h4 class="fw-bold mb-1">@Model.Subject</h4>
+                    <div class="text-muted small">@Model.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</div>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.FullName</dd>
+                        <dt class="col-sm-3">Mobile</dt><dd class="col-sm-9">@Model.MobileNumber</dd>
+                        <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.Email</dd>
+                        <dt class="col-sm-3">District</dt><dd class="col-sm-9">@Model.District</dd>
+                        <dt class="col-sm-3">Assembly</dt><dd class="col-sm-9">@Model.Assembly</dd>
+                        <dt class="col-sm-3">Message</dt><dd class="col-sm-9">@Model.Message</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white fw-bold">Office Action</div>
+                <div class="card-body">
+                    @using (Html.BeginForm("UpdateStatus", "CitizenConnect", FormMethod.Post, new { area = "Admin" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("id", Model.CitizenConnectId)
+                        <label class="form-label">Status</label>
+                        @Html.DropDownList("status", new SelectList(new[] { "New", "In Review", "Resolved", "Closed" }, Model.Status), new { @class = "form-select mb-3" })
+                        <label class="form-label">Admin Remarks</label>
+                        <textarea name="adminRemarks" class="form-control mb-3" rows="5">@Model.AdminRemarks</textarea>
+                        <button class="btn btn-primary w-100" type="submit">Update Status</button>
+                    }
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary w-100 mt-2">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,200 @@
+﻿/* ==========================================================
+   TOP BAR
+========================================================== */
+
+.top-bar {
+    background: #FF671F;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 0;
+    position: relative;
+    z-index: 999999;
+}
+
+    .top-bar .container-fluid {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+/* ==========================================================
+   LEFT
+========================================================== */
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+    .top-bar-left a {
+        color: #ffffff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: .3s;
+    }
+
+        .top-bar-left a:hover {
+            color: #FFF4CC;
+        }
+
+    .top-bar-left i {
+        font-size: 15px;
+    }
+
+/* ==========================================================
+   RIGHT
+========================================================== */
+
+.top-bar-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* ==========================================================
+   LANGUAGE BUTTON
+========================================================== */
+
+.custom-language-dropdown {
+    position: relative;
+}
+
+.language-btn {
+    background: #ffffff;
+    border: none;
+    color: #333;
+    border-radius: 6px;
+    height: 36px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+    transition: .3s;
+}
+
+    .language-btn:hover {
+        background: #f8f9fa;
+    }
+
+.language-menu {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    width: 180px;
+    background: #fff;
+    border-radius: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+    box-shadow: 0 15px 35px rgba(0,0,0,.12);
+    display: none;
+    z-index: 9999;
+}
+
+    .language-menu li {
+        padding: 12px 18px;
+        cursor: pointer;
+        transition: .25s;
+        font-size: 14px;
+        color: #333;
+    }
+
+        .language-menu li:hover {
+            background: #FF671F;
+            color: #ffffff;
+        }
+
+/* THIS IS IMPORTANT */
+
+#bkkuLangWrapper.open .language-menu {
+    display: block;
+}
+
+/* ==========================================================
+   GOOGLE TRANSLATE
+========================================================== */
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+
+    body > .skiptranslate {
+        display: none !important;
+    }
+
+.goog-tooltip {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.goog-logo-link {
+    display: none !important;
+}
+
+.goog-te-gadget {
+    font-size: 0 !important;
+    color: transparent !important;
+}
+
+    .goog-te-gadget span {
+        display: none !important;
+    }
+
+    .goog-te-gadget img {
+        display: none !important;
+    }
+
+/* Hide only the combo */
+
+.goog-te-combo {
+    display: none !important;
+}
+
+/* DO NOT HIDE THE CONTAINER */
+
+#google_translate_element {
+    display: none;
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:991px) {
+
+    .top-bar {
+        padding: 10px 15px;
+    }
+
+    .top-bar-left {
+        display: none;
+    }
+
+    .top-bar-right {
+        justify-content: center;
+    }
+}
+
+@media(max-width:576px) {
+
+    .language-btn {
+        min-width: 160px;
+        justify-content: center;
+    }
+}

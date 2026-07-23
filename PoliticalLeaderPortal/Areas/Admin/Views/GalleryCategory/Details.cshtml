@@ -1,0 +1,192 @@
+﻿@model PoliticalLeaderPortal.ViewModels.GalleryCategoryVM
+
+@{
+    ViewBag.Title = "Gallery Category Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Gallery Category Details
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Edit", "GalleryCategory",
+                new { id = Model.GalleryCategoryId })"
+               class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+                Edit
+
+            </a>
+
+            <a href="@Url.Action("Index", "GalleryCategory")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.CoverImagePath))
+                    {
+                        <img src="@Url.Content(Model.CoverImagePath)"
+                             class="img-fluid rounded border"
+                             style="width:100%;height:300px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <div class="border rounded d-flex align-items-center justify-content-center"
+                             style="height:300px;background:#f8f9fa;">
+
+                            <span class="text-muted">
+                                No Cover Image
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+                <div class="col-md-8">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+
+                            <th style="width:220px;">
+                                Category Name
+                            </th>
+
+                            <td>
+                                @Model.CategoryName
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.CategoryDescription))
+                                {
+                                    @Model.CategoryDescription
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        No Description Available
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Display Order
+                            </th>
+
+                            <td>
+                                @Model.DisplayOrder
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <td>
+
+                                @if (Model.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Created Date
+                            </th>
+
+                            <td>
+                                @Model.CreatedDate.ToString("dd MMM yyyy hh:mm tt")
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+                                Last Updated
+                            </th>
+
+                            <td>
+
+                                @if (Model.UpdatedDate.HasValue)
+                                {
+                                    @Model.UpdatedDate.Value.ToString("dd MMM yyyy hh:mm tt")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not Updated Yet
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

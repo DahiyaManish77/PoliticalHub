@@ -1,0 +1,11 @@
+@model PoliticalLeaderPortal.ViewModels.MeraKshetraItemVM
+
+@{
+    ViewBag.Title = "Add Mera Kshetra Record";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "MeraKshetra", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Partial("_Form", Model)
+}

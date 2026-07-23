@@ -1,0 +1,200 @@
+﻿@model PoliticalLeaderPortal.ViewModels.VideoCategoryVM
+
+@{
+    ViewBag.Title = "Video Category Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Video Category Details
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Edit",
+                    "VideoCategory",
+                    new { id = Model.VideoCategoryId })"
+               class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+                Edit
+
+            </a>
+
+            <a href="@Url.Action("Index",
+                    "VideoCategory")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <table class="table table-bordered align-middle">
+
+                <tr>
+
+                    <th style="width:250px;">
+                        Category ID
+                    </th>
+
+                    <td>
+                        @Model.VideoCategoryId
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Category Name
+                    </th>
+
+                    <td>
+                        @Model.CategoryName
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Category Description
+                    </th>
+
+                    <td>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.CategoryDescription))
+                        {
+                            @Model.CategoryDescription
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Not Available
+                            </span>
+                        }
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Display Order
+                    </th>
+
+                    <td>
+                        @Model.DisplayOrder
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <td>
+
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Inactive
+                            </span>
+                        }
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Created Date
+                    </th>
+
+                    <td>
+                        @Model.CreatedDate.ToString("dd MMM yyyy hh:mm tt")
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Updated Date
+                    </th>
+
+                    <td>
+
+                        @if (Model.UpdatedDate.HasValue)
+                        {
+                            @Model.UpdatedDate.Value.ToString("dd MMM yyyy hh:mm tt")
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Never Updated
+                            </span>
+                        }
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer bg-white">
+
+            <a href="@Url.Action("Edit",
+                    "VideoCategory",
+                    new { id = Model.VideoCategoryId })"
+               class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+                Edit Category
+
+            </a>
+
+            <a href="@Url.Action("Delete",
+                    "VideoCategory",
+                    new { id = Model.VideoCategoryId })"
+               class="btn btn-danger">
+
+                <i class="bi bi-trash"></i>
+                Delete Category
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

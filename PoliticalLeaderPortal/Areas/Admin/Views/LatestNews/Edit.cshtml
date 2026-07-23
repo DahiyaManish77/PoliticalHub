@@ -1,0 +1,20 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.LatestNewsVM
+
+@{
+    ViewBag.Title = "Edit News";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm(
+"Edit",
+"LatestNews",
+FormMethod.Post,
+new
+{
+    enctype = "multipart/form-data"
+}))
+{
+    @Html.Partial(
+    "_LatestNewsForm",
+    Model)
+}

@@ -1,0 +1,140 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.StatisticVM
+
+@Html.AntiForgeryToken()
+
+@Html.HiddenFor(m => m.StatisticId)
+
+<div class="container-fluid">
+
+    
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                Home Page Statistic
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Title
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.Title,
+                        new
+                        {
+                            @class = "form-control"
+                        })
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Statistic Value
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.StatisticValue,
+                        new
+                        {
+                            @class = "form-control",
+                            type = "number"
+                        })
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Bootstrap Icon Class
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.IconClass,
+                        new
+                        {
+                            @class = "form-control",
+                            placeholder = "bi bi-people"
+                        })
+
+                    <small class="text-muted">
+                        Example:
+                        bi bi-people,
+                        bi bi-building,
+                        bi bi-award,
+                        bi bi-heart
+                    </small>
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        Display Order
+                    </label>
+
+                    @Html.TextBoxFor(
+                        m => m.DisplayOrder,
+                        new
+                        {
+                            @class = "form-control",
+                            type = "number"
+                        })
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <div class="form-check mt-4">
+
+                        @Html.CheckBoxFor(
+                            m => m.IsActive,
+                            new
+                            {
+                                @class = "form-check-input"
+                            })
+
+                        <label class="form-check-label">
+                            Active
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        Save
+
+                    </button>
+
+                    <a href="@Url.Action("Index")"
+                       class="btn btn-secondary">
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+
+</div>

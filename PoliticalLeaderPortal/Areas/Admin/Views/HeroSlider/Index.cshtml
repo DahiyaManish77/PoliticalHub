@@ -1,0 +1,198 @@
+﻿@model List<PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM>
+
+@{
+    ViewBag.Title = "Hero Sliders";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+            <h4 class="mb-0">
+                Hero Slider Management
+            </h4>
+
+            <a href="@Url.Action("Create")"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+                Add Slider
+
+            </a>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Media</th>
+                            <th>Order</th>
+                            <th>Status</th>
+                            <th width="180">Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @{
+                                            var previewImage = !String.IsNullOrWhiteSpace(item.BackgroundImagePath)
+                                                ? item.BackgroundImagePath
+                                                : item.ImagePath;
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(previewImage))
+                                        {
+                                            <img src="@Url.Content(previewImage)"
+                                                 style="height:60px;"
+                                                 class="img-thumbnail" />
+                                        }
+
+                                    </td>
+
+                                    <td>
+                                        @(String.IsNullOrWhiteSpace(item.Title) ? "(No title)" : item.Title)
+                                    </td>
+
+                                    <td>
+                                        @if (item.IsVideoSlide)
+                                        {
+                                            <span class="badge bg-info text-dark">
+                                                Video
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                Image
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @item.DisplayOrder
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge bg-success">
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                Inactive
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Edit",
+                                                new { id = item.HeroSliderId })"
+                                           class="btn btn-warning btn-sm">
+
+                                            Edit
+
+                                        </a>
+
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm btn-delete"
+                                                data-id="@item.HeroSliderId">
+
+                                            Delete
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="6"
+                                    class="text-center">
+
+                                    No Slider Found
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script>
+
+        $(".btn-delete").click(function () {
+
+            var id =
+                $(this).data("id");
+
+            Swal.fire({
+
+                title: 'Delete Slider?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes'
+
+            }).then(function (result) {
+
+                if (result.isConfirmed) {
+
+                    $.post(
+                        '@Url.Action("Delete")',
+                        { id: id },
+                        function () {
+
+                            location.reload();
+
+                        });
+
+                }
+
+            });
+
+        });
+
+    </script>
+}

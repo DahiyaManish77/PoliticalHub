@@ -1,0 +1,90 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignErpModuleVM
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .erp-module { color: #17202a; }
+        .module-hero, .module-panel, .module-section { background: #fff; border: 1px solid #e9ecef; border-radius: 8px; }
+        .module-hero { padding: 22px; }
+        .module-panel { padding: 18px; }
+        .module-section { padding: 16px; height: 100%; }
+        .field-chip { display: inline-flex; align-items: center; border: 1px solid #e9ecef; border-radius: 999px; padding: 5px 10px; background: #f8f9fa; color: #495057; font-size: .8rem; margin: 0 5px 6px 0; }
+        .rule-item { border: 1px solid #e9ecef; border-radius: 8px; padding: 10px 12px; background: #f8fbff; }
+    </style>
+}
+
+<div class="container-fluid erp-module">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+        <div>
+            <h2 class="fw-bold mb-1">@Model.Name</h2>
+            <p class="text-muted mb-0">@Model.Purpose</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary" href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom")"><i class="bi bi-diagram-3 me-1"></i>Blueprint</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", "ElectionWarRoom")"><i class="bi bi-speedometer2 me-1"></i>War Room</a>
+        </div>
+    </div>
+
+    <div class="module-hero mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="small text-muted">Status</div>
+                <div class="fw-bold">@Model.Status</div>
+            </div>
+            <div class="col-md-4">
+                <div class="small text-muted">Owner Role</div>
+                <div class="fw-bold">@Model.OwnerRole</div>
+            </div>
+            <div class="col-md-4">
+                <div class="small text-muted">Build Pattern</div>
+                <div class="fw-bold">Controller -> Service -> ViewModel</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        @foreach (var section in Model.Sections)
+        {
+            <div class="col-lg-4">
+                <div class="module-section">
+                    <h5 class="fw-bold mb-1">@section.Title</h5>
+                    <p class="text-muted small mb-3">@section.Description</p>
+                    <div>
+                        @foreach (var field in section.Fields)
+                        {
+                            <span class="field-chip">@field</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="module-panel h-100">
+                <h5 class="fw-bold mb-3">Security Rules</h5>
+                <div class="d-grid gap-2">
+                    @foreach (var rule in Model.SecurityRules)
+                    {
+                        <div class="rule-item small"><i class="bi bi-shield-check text-primary me-2"></i>@rule</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="module-panel h-100">
+                <h5 class="fw-bold mb-3">Integration Notes</h5>
+                <div class="d-grid gap-2">
+                    @foreach (var note in Model.IntegrationNotes)
+                    {
+                        <div class="rule-item small"><i class="bi bi-check2-circle text-success me-2"></i>@note</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

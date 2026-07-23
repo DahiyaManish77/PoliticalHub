@@ -1,0 +1,317 @@
+﻿@model PoliticalLeaderPortal.ViewModels.VideoGalleryVM
+
+@{
+    ViewBag.Title = "Create Video";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Create Video
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Index","VideoGallery")"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back To List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    @using (Html.BeginForm(
+        "Create",
+        "VideoGallery",
+        FormMethod.Post,
+        new
+        {
+            enctype = "multipart/form-data"
+        }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-8">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.VideoCategoryId,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.DropDownListFor(
+                                x => x.VideoCategoryId,
+                                Model.Categories,
+                                "-- Select Category --",
+                                new
+                                {
+                                    @class = "form-select"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.VideoCategoryId,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.VideoTitle,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(
+                                x => x.VideoTitle,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "Enter video title"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.VideoTitle,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.VideoDescription,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextAreaFor(
+                                x => x.VideoDescription,
+                                new
+                                {
+                                    @class = "form-control",
+                                    rows = "6",
+                                    placeholder = "Enter video description"
+                                })
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.YoutubeUrl,
+                                "Video URL / Source Page",
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(
+                                x => x.YoutubeUrl,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "YouTube URL, Vimeo URL, or any source page URL"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.YoutubeUrl,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Upload Video From Computer
+                            </label>
+
+                            <input type="file"
+                                   id="VideoFile"
+                                   name="VideoFile"
+                                   class="form-control"
+                                   accept=".mp4,.webm,.mov" />
+
+                            <div class="form-text">
+                                Optional. Use MP4, WEBM or MOV. You may use this instead of a URL.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Thumbnail Image
+
+                            </label>
+
+                            <input type="file"
+                                   id="ThumbnailImageFile"
+                                   name="ThumbnailImageFile"
+                                   class="form-control"
+                                   accept=".jpg,.jpeg,.png,.webp" />
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <img id="thumbnailPreview"
+                                 src="https://placehold.co/400x250?text=Thumbnail"
+                                 class="img-fluid img-thumbnail"
+                                 style="width:100%;
+                                        height:250px;
+                                        object-fit:cover;" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="row">
+
+                    <div class="col-md-3">
+
+                        <div class="mb-3">
+
+                            @Html.LabelFor(
+                                x => x.DisplayOrder,
+                                new { @class = "form-label fw-semibold" })
+
+                            @Html.TextBoxFor(
+                                x => x.DisplayOrder,
+                                new
+                                {
+                                    @class = "form-control",
+                                    type = "number"
+                                })
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="form-check mt-4">
+
+                            @Html.CheckBoxFor(
+                                x => x.IsFeatured,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            @Html.LabelFor(
+                                x => x.IsFeatured,
+                                new
+                                {
+                                    @class = "form-check-label"
+                                })
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="form-check mt-4">
+
+                            @Html.CheckBoxFor(
+                                x => x.IsActive,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            @Html.LabelFor(
+                                x => x.IsActive,
+                                new
+                                {
+                                    @class = "form-check-label"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-footer bg-white">
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+                    Save Video
+
+                </button>
+
+                <a href="@Url.Action("Index","VideoGallery")"
+                   class="btn btn-outline-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@section Scripts{
+
+    Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#ThumbnailImageFile").change(function () {
+
+                var input = this;
+
+                if (input.files && input.files[0]) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+
+                        $("#thumbnailPreview")
+                            .attr("src", e.target.result);
+
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,123 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.EventVehicleVM
+@{
+    bool isEdit = Model != null && Model.EventVehicleId > 0;
+    ViewBag.Title = isEdit ? "Edit Vehicle" : "Add Vehicle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var eventList = ViewBag.EventList as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Track event vehicles, owners, driver contact, village turnout, passengers and movement details.</div>
+            </div>
+            <a href="@Url.Action("Vehicles", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm(isEdit ? "EditVehicle" : "CreateVehicle", "ElectionWarRoom", FormMethod.Post, new { @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.EventVehicleId)
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger col-12" })
+
+                <div class="col-lg-4">
+                    <label class="form-label">Event</label>
+                    @Html.DropDownListFor(m => m.EventId, eventList, "Select event", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.EventId, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Vehicle Type</label>
+                    @Html.DropDownListFor(m => m.VehicleType, new SelectList(new[] { "Bus", "Mini Bus", "Car", "SUV", "Jeep", "Bolero", "Tractor Trolley", "Tempo", "Auto", "E-Rickshaw", "Bike", "Other" }, Model.VehicleType), "Select type", new { @class = "form-select" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Vehicle Number</label>
+                    @Html.TextBoxFor(m => m.VehicleNumber, new { @class = "form-control", placeholder = "UP 15 AB 1234" })
+                    @Html.ValidationMessageFor(m => m.VehicleNumber, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="form-label">Vehicle Name / Model</label>
+                    @Html.TextBoxFor(m => m.Responsibility, new { @class = "form-control", placeholder = "Bolero, Scorpio, bus name..." })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Owner Name</label>
+                    @Html.TextBoxFor(m => m.WorkerName, new { @class = "form-control", placeholder = "Vehicle owner name" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Owner Phone Number</label>
+                    @Html.TextBoxFor(m => m.WorkerMobile, new { @class = "form-control", placeholder = "10 digit mobile" })
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="form-label">Village Name</label>
+                    @Html.TextBoxFor(m => m.VillageName, new { @class = "form-control", placeholder = "Village / locality" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Booth / Ward</label>
+                    @Html.TextBoxFor(m => m.BoothName, new { @class = "form-control", placeholder = "Booth, ward or pickup area" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Parking Zone</label>
+                    @Html.TextBoxFor(m => m.ParkingZone, new { @class = "form-control", placeholder = "Gate A, school ground..." })
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="form-label">Driver Name</label>
+                    @Html.TextBoxFor(m => m.DriverName, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Driver Mobile</label>
+                    @Html.TextBoxFor(m => m.DriverMobile, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Coordinator Code</label>
+                    @Html.TextBoxFor(m => m.WorkerCode, new { @class = "form-control", placeholder = "Optional member/worker code" })
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Vehicle Count</label>
+                    @Html.TextBoxFor(m => m.VehicleCount, new { @class = "form-control", type = "number", min = "1" })
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Expected People</label>
+                    @Html.TextBoxFor(m => m.EstimatedPersons, new { @class = "form-control", type = "number", min = "0" })
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Actual People</label>
+                    @Html.TextBoxFor(m => m.ActualPersons, new { @class = "form-control", type = "number", min = "0" })
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Fuel / Hire Expense</label>
+                    @Html.TextBoxFor(m => m.FuelExpense, new { @class = "form-control", type = "number", min = "0", step = "0.01" })
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Arrival Time</label>
+                    @Html.TextBoxFor(m => m.ArrivalTime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Departure Time</label>
+                    @Html.TextBoxFor(m => m.DepartureTime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(m => m.IsVerified, new { @class = "form-check-input", disabled = "disabled" })
+                        <label class="form-check-label">Verified by admin</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Remarks / Route / Pickup Points</label>
+                    @Html.TextAreaFor(m => m.Remarks, 4, 40, new { @class = "form-control", placeholder = "Route, pickup points, promised support, fuel notes, post-event follow-up..." })
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 border-top pt-3">
+                    <a href="@Url.Action("Vehicles", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Vehicle</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

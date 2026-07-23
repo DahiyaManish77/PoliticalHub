@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Election Campaign Management UI Mockups</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff671f;
+      --primary-dark: #e85d0c;
+      --green: #138808;
+      --blue: #0d6efd;
+      --cyan: #18b8c8;
+      --ink: #111827;
+      --text: #374151;
+      --muted: #64748b;
+      --soft: #f5f7fb;
+      --line: #e5e7eb;
+      --white: #ffffff;
+      --navy: #172033;
+      --shadow: 0 16px 42px rgba(15, 23, 42, .10);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #e9edf4;
+      color: var(--text);
+      font-family: Poppins, Roboto, Arial, sans-serif;
+    }
+
+    .page {
+      width: 1440px;
+      margin: 0 auto 36px;
+      background: var(--soft);
+      box-shadow: 0 26px 80px rgba(15, 23, 42, .18);
+    }
+
+    .mock-label {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      min-height: 54px;
+      padding: 14px 28px;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .mock-label span {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border: 1px solid rgba(255, 103, 31, .28);
+      border-radius: 6px;
+      background: #fff7f0;
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .public-top {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top-strip {
+      height: 38px;
+      padding: 0 72px;
+      background: #111827;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .public-nav {
+      height: 82px;
+      padding: 0 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .brand strong,
+    .brand small {
+      display: block;
+      line-height: 1.12;
+    }
+
+    .brand strong {
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 900;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-outline { background: #fff; color: var(--primary-dark); border: 1px solid #ffd1b8; }
+    .icon-btn { width: 42px; padding: 0; background: #f8fafc; color: var(--ink); border: 1px solid var(--line); }
+
+    .hero {
+      min-height: 626px;
+      padding: 42px 72px 36px;
+      background:
+        linear-gradient(110deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .92) 44%, rgba(255, 247, 240, .82) 100%),
+        linear-gradient(135deg, rgba(255, 103, 31, .18), rgba(19, 136, 8, .10));
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 18px;
+      color: var(--ink);
+      font-size: 62px;
+      line-height: 1.03;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    .hero-copy p {
+      max-width: 590px;
+      margin: 0 0 24px;
+      color: #4b5563;
+      font-size: 17px;
+      line-height: 1.82;
+      font-family: Roboto, Arial, sans-serif;
+    }
+
+    .hero-actions { display: flex; gap: 12px; margin-bottom: 28px; }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 610px;
+    }
+
+    .stat-card,
+    .content-card,
+    .metric,
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card { padding: 16px; }
+    .stat-card strong { display: block; color: var(--ink); font-size: 25px; font-weight: 900; }
+    .stat-card span { color: var(--muted); font-size: 12px; font-weight: 800; }
+
+    .leader-stage {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      align-items: end;
+    }
+
+    .leader-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 488px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ffefe5, #ecfdf3);
+      border: 1px solid #ffe2cf;
+      display: grid;
+      align-items: end;
+      justify-items: center;
+    }
+
+    .leader-card img {
+      max-height: 476px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 34px rgba(15, 23, 42, .24));
+    }
+
+    .floating-note {
+      position: absolute;
+      left: -20px;
+      bottom: 44px;
+      width: 228px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      border-left: 5px solid var(--green);
+    }
+
+    .floating-note strong,
+    .floating-note span { display: block; }
+    .floating-note strong { color: var(--ink); font-size: 18px; }
+    .floating-note span { color: var(--muted); font-size: 12px; font-weight: 700; }
+
+    .marquee {
+      height: 52px;
+      padding: 0 72px;
+      background: #fff;
+      border-block: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-weight: 800;
+    }
+
+    .marquee strong { color: var(--primary-dark); }
+    .marquee span { color: var(--muted); font-size: 13px; }
+
+    .public-section {
+      padding: 52px 72px;
+      background: #fff;
+    }
+
+    .public-section.alt { background: #f8fafc; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 10px 0 0;
+      color: var(--ink);
+      font-size: 34px;
+      line-height: 1.16;
+      font-weight: 900;
+    }
+
+    .section-head p {
+      max-width: 530px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-family: Roboto, Arial, sans-serif;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .content-card { min-height: 180px; padding: 22px; }
+    .content-card h3 { margin: 12px 0 8px; color: var(--ink); font-size: 18px; }
+    .content-card p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 13px; }
+    .card-icon { width: 42px; height: 42px; border-radius: 8px; background: #eefaf0; color: var(--green); display: grid; place-items: center; font-weight: 900; }
+
+    .campaign-grid {
+      display: grid;
+      grid-template-columns: 1.18fr .82fr;
+      gap: 20px;
+    }
+
+    .event-list { display: grid; gap: 12px; }
+    .event-row {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .date-box {
+      min-height: 64px;
+      border-radius: 8px;
+      background: #fff7f0;
+      color: var(--primary-dark);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .event-row h3 { margin: 0 0 4px; color: var(--ink); font-size: 16px; }
+    .event-row p { margin: 0; color: var(--muted); font-size: 12px; font-weight: 700; }
+
+    .poll-card { padding: 20px; border-left: 5px solid var(--green); }
+    .poll-card h3 { margin: 12px 0 14px; color: var(--ink); font-size: 21px; }
+    .poll-option { height: 38px; margin-top: 10px; padding: 0 12px; border-radius: 6px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; font-weight: 800; color: #334155; }
+    .poll-option.active { border-color: #c9f0cf; background: #effdf3; color: var(--green); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .photo-tile {
+      min-height: 142px;
+      border-radius: 8px;
+      padding: 14px;
+      color: #fff;
+      display: flex;
+      align-items: end;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff671f, #0d6efd);
+    }
+
+    .photo-tile:nth-child(2) { background: linear-gradient(135deg, #138808, #18b8c8); }
+    .photo-tile:nth-child(3) { background: linear-gradient(135deg, #0d6efd, #172033); }
+    .photo-tile:nth-child(4) { background: linear-gradient(135deg, #f5b301, #ff671f); }
+
+    .cta-band {
+      margin-top: 26px;
+      padding: 28px;
+      border-radius: 8px;
+      background: #111827;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .cta-band h2 { margin: 0 0 8px; font-size: 28px; }
+    .cta-band p { margin: 0; color: #cbd5e1; }
+
+    .footer {
+      padding: 34px 72px;
+      background: #111827;
+      color: #cbd5e1;
+      display: grid;
+      grid-template-columns: 1.1fr repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .footer h3 { margin: 0 0 12px; color: #fff; font-size: 16px; }
+    .footer p, .footer li { margin: 0 0 9px; font-size: 13px; line-height: 1.6; }
+    .footer ul { padding: 0; margin: 0; list-style: none; }
+
+    .admin-app {
+      min-height: 900px;
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      background: #f4f6f9;
+    }
+
+    .sidebar {
+      background: #343a40;
+      color: #c2c7d0;
+      padding-bottom: 18px;
+    }
+
+    .side-brand {
+      height: 64px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .side-brand img { width: 38px; height: 38px; object-fit: contain; background: #fff; border-radius: 8px; padding: 4px; }
+    .side-brand strong, .side-brand small { display: block; line-height: 1.16; }
+    .side-brand strong { font-size: 14px; }
+    .side-brand small { color: #adb5bd; font-size: 11px; }
+
+    .side-user {
+      margin: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #17a2b8;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .side-user strong, .side-user span { display: block; line-height: 1.2; }
+    .side-user strong { color: #fff; font-size: 13px; }
+    .side-user span { color: #adb5bd; font-size: 11px; }
+
+    .side-search {
+      height: 40px;
+      margin: 0 12px 10px;
+      padding: 0 12px;
+      border-radius: 6px;
+      background: #3f474e;
+      display: flex;
+      align-items: center;
+      color: #adb5bd;
+      font-size: 13px;
+    }
+
+    .menu-title {
+      padding: 14px 20px 6px;
+      color: #94a3b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .menu-item {
+      min-height: 42px;
+      margin: 2px 8px;
+      padding: 0 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #c2c7d0;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .menu-item.active { background: var(--blue); color: #fff; }
+    .menu-item.orange { color: #ffbe99; }
+    .menu-icon { width: 22px; text-align: center; }
+
+    .admin-main { min-width: 0; }
+
+    .admin-bar {
+      height: 64px;
+      padding: 0 22px;
+      background: #fff;
+      border-bottom: 1px solid #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-bar-left,
+    .admin-bar-right { display: flex; align-items: center; gap: 12px; }
+
+    .admin-welcome span,
+    .admin-welcome strong { display: block; line-height: 1.16; }
+    .admin-welcome span { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }
+    .admin-welcome strong { color: #212529; font-size: 16px; font-weight: 900; }
+
+    .admin-content { padding: 28px; }
+
+    .page-title {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .page-title h1 { margin: 6px 0 4px; color: #212529; font-size: 30px; line-height: 1.1; }
+    .page-title p { margin: 0; color: var(--muted); font-family: Roboto, Arial, sans-serif; }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .metric { min-height: 138px; padding: 18px; box-shadow: 0 12px 28px rgba(15, 23, 42, .07); }
+    .metric-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .metric-icon { width: 44px; height: 44px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-weight: 900; }
+    .metric h3 { margin: 0; color: #212529; font-size: 28px; }
+    .metric p { margin: 4px 0 0; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .trend { color: var(--green); font-size: 12px; font-weight: 900; }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1.36fr .64fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .panel { padding: 18px; box-shadow: 0 12px 28px rgba(15, 23, 42, .07); }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .panel-head h2 { margin: 6px 0 0; color: #212529; font-size: 20px; }
+    .panel-head p { margin: 0; color: var(--muted); font-size: 12px; font-weight: 700; }
+
+    .chart {
+      height: 260px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(#fff, #f8fbff);
+      display: flex;
+      align-items: end;
+      gap: 15px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, #0d6efd, #18b8c8);
+      position: relative;
+    }
+
+    .bar span {
+      position: absolute;
+      left: 50%;
+      bottom: -26px;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .quick {
+      min-height: 84px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      color: #212529;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .quick span { color: var(--blue); font-size: 22px; }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .table th {
+      padding: 11px;
+      background: #eef3fb;
+      color: #263349;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .table td {
+      padding: 12px 11px;
+      border-bottom: 1px solid var(--line);
+      color: #334155;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      min-height: 24px;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .badge.green { background: #eaf9ee; color: var(--green); }
+    .badge.orange { background: #fff3e9; color: var(--primary-dark); }
+    .badge.blue { background: #edf5ff; color: var(--blue); }
+
+    .annotation {
+      outline: 2px dashed rgba(255, 103, 31, .72);
+      outline-offset: 4px;
+      position: relative;
+    }
+
+    .annotation::after {
+      content: attr(data-note);
+      position: absolute;
+      top: -16px;
+      right: 8px;
+      min-height: 22px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      z-index: 4;
+      white-space: nowrap;
+    }
+
+    .mobile-frame {
+      width: 430px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 1100px;
+      box-shadow: 0 26px 80px rgba(15, 23, 42, .18);
+    }
+
+    .mobile-frame .top-strip { height: 34px; padding: 0 16px; font-size: 10px; }
+    .mobile-frame .public-nav { height: 70px; padding: 0 16px; }
+    .mobile-frame .brand { min-width: 0; }
+    .mobile-frame .brand img { width: 40px; height: 40px; }
+    .mobile-frame .brand strong { font-size: 13px; }
+    .mobile-frame .brand small { font-size: 9px; }
+    .mobile-frame .nav-links, .mobile-frame .nav-actions .btn { display: none; }
+    .mobile-frame .hero {
+      min-height: auto;
+      padding: 24px 16px;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .mobile-frame .hero-copy h1 { font-size: 36px; }
+    .mobile-frame .hero-copy p { font-size: 14px; line-height: 1.65; }
+    .mobile-frame .hero-actions { flex-direction: column; }
+    .mobile-frame .hero-stats { grid-template-columns: 1fr 1fr; }
+    .mobile-frame .leader-stage { min-height: 318px; }
+    .mobile-frame .leader-card { min-height: 300px; }
+    .mobile-frame .leader-card img { max-height: 292px; }
+    .mobile-frame .floating-note { left: 12px; bottom: 14px; width: 190px; }
+    .mobile-frame .marquee { height: auto; padding: 12px 16px; align-items: flex-start; }
+    .mobile-frame .public-section { padding: 30px 16px; }
+    .mobile-frame .section-head { display: block; }
+    .mobile-frame .section-head h2 { font-size: 25px; }
+    .mobile-frame .intro-grid,
+    .mobile-frame .campaign-grid,
+    .mobile-frame .gallery-grid,
+    .mobile-frame .footer { grid-template-columns: 1fr; }
+    .mobile-frame .event-row { grid-template-columns: 58px 1fr; }
+    .mobile-frame .event-row .btn { grid-column: 1 / -1; }
+    .mobile-frame .cta-band { display: block; }
+
+    .admin-mobile-frame {
+      width: 430px;
+      margin: 0 auto 40px;
+      background: #f4f6f9;
+      box-shadow: 0 26px 80px rgba(15, 23, 42, .18);
+    }
+
+    .admin-mobile-frame .admin-bar { height: auto; padding: 10px; flex-wrap: wrap; gap: 10px; }
+    .admin-mobile-frame .admin-bar-left,
+    .admin-mobile-frame .admin-bar-right { width: 100%; justify-content: space-between; }
+    .admin-mobile-frame .admin-welcome { display: none; }
+    .admin-mobile-frame .admin-content { padding: 14px; }
+    .admin-mobile-frame .page-title { display: block; }
+    .admin-mobile-frame .page-title h1 { font-size: 24px; }
+    .admin-mobile-frame .metrics-grid,
+    .admin-mobile-frame .admin-grid,
+    .admin-mobile-frame .lower-grid,
+    .admin-mobile-frame .quick-grid { grid-template-columns: 1fr; }
+    .mobile-drawer {
+      padding: 12px 14px;
+      background: #343a40;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page, .mobile-frame, .admin-mobile-frame { box-shadow: none; break-after: page; }
+      .mock-label { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="mock-label">Public Website Homepage - Desktop <span>Responsive high-fidelity annotated visual, 1440px</span></div>
+    <header class="public-top annotation" data-note="Header + navbar">
+      <div class="top-strip">
+        <div>Helpline: +91 00000 00000 | Assembly Constituency Placeholder</div>
+        <div>English | Hindi | Search | Social Links</div>
+      </div>
+      <nav class="public-nav">
+        <div class="brand">
+          <img src="../../PoliticalLeaderPortal/Content/images/logo.png" alt="Campaign logo">
+          <div><strong>Leader Name Campaign</strong><small>Election Management Portal</small></div>
+        </div>
+        <div class="nav-links">
+          <span>Home</span><span>About Leader</span><span>Mera Kshetra</span><span>Events</span><span>Gallery</span><span>Citizen Connect</span>
+        </div>
+        <div class="nav-actions">
+          <button class="icon-btn">⌕</button>
+          <button class="btn btn-outline">Manifesto</button>
+          <button class="btn btn-primary">Join as Volunteer</button>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero annotation" data-note="Hero + leader identity">
+      <div class="hero-copy">
+        <span class="section-tag">Section 4: Hero Slider</span>
+        <h1>Leader Name for a Stronger Constituency</h1>
+        <p>Clear campaign message placeholder for development, public service, voter connection, and transparent communication with every booth, ward, village, and citizen group.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Volunteer Now</button>
+          <button class="btn btn-outline">Share Feedback</button>
+          <button class="btn btn-outline">View Events</button>
+        </div>
+        <div class="hero-stats annotation" data-note="Live public stats">
+          <div class="stat-card"><strong>245</strong><span>Booths Covered</span></div>
+          <div class="stat-card"><strong>18K</strong><span>Volunteer Network</span></div>
+          <div class="stat-card"><strong>92</strong><span>Upcoming Meetings</span></div>
+        </div>
+      </div>
+      <div class="leader-stage">
+        <div class="leader-card"><img src="../../PoliticalLeaderPortal/Content/images/leader.png" alt="Leader placeholder"></div>
+        <div class="floating-note"><strong>Today: 6 Jan Sampark visits</strong><span>Leader schedule and public meeting cue</span></div>
+      </div>
+    </section>
+
+    <div class="marquee annotation" data-note="News ticker / marquee">
+      <strong>Latest Update</strong>
+      <span>Public meeting at Village Placeholder at 5:00 PM | New manifesto document uploaded | Booth worker training starts tomorrow</span>
+    </div>
+
+    <section class="public-section annotation" data-note="Leader intro + vision">
+      <div class="section-head">
+        <div><span class="section-tag">Section 3: Leader Introduction</span><h2>Service, development, and accountable leadership</h2></div>
+        <p>Compact, CMS-managed introduction blocks showing biography, vision, achievements, and constituency priorities.</p>
+      </div>
+      <div class="intro-grid">
+        <article class="content-card"><div class="card-icon">V</div><h3>Vision & Mission</h3><p>Development agenda, education, employment, security, farmers, youth, and transparent governance placeholders.</p></article>
+        <article class="content-card"><div class="card-icon">A</div><h3>Achievements</h3><p>Cards for projects completed, funds utilized, public welfare milestones, and awards.</p></article>
+        <article class="content-card"><div class="card-icon">C</div><h3>Citizen Connect</h3><p>Feedback, suggestions, survey responses, grievances, and contact form entry points.</p></article>
+      </div>
+    </section>
+
+    <section class="public-section alt annotation" data-note="Events + poll widget">
+      <div class="section-head">
+        <div><span class="section-tag">Section 10: Campaign Modules</span><h2>Upcoming events and public pulse</h2></div>
+        <p>Events, roadshows, public meetings, media coverage, and survey widgets remain CMS-configurable.</p>
+      </div>
+      <div class="campaign-grid">
+        <div class="event-list">
+          <div class="event-row"><div class="date-box">24<br>JUL</div><div><h3>Booth Committee Meeting</h3><p>Ward 12 Community Hall | 10:30 AM | Responsible: Team Lead</p></div><button class="btn btn-outline">Details</button></div>
+          <div class="event-row"><div class="date-box">25<br>JUL</div><div><h3>Women Outreach Sabha</h3><p>Village Placeholder | 4:00 PM | Vehicle and media team assigned</p></div><button class="btn btn-outline">Register</button></div>
+          <div class="event-row"><div class="date-box">26<br>JUL</div><div><h3>Youth Volunteer Training</h3><p>Block Office | 11:00 AM | Attendance enabled</p></div><button class="btn btn-outline">Map</button></div>
+        </div>
+        <aside class="content-card poll-card">
+          <span class="section-tag">Survey / Poll</span>
+          <h3>What should be the top campaign focus this week?</h3>
+          <div class="poll-option active"><span>Employment</span><strong>42%</strong></div>
+          <div class="poll-option"><span>Roads</span><strong>27%</strong></div>
+          <div class="poll-option"><span>Farmers</span><strong>19%</strong></div>
+          <div class="poll-option"><span>Education</span><strong>12%</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="public-section annotation" data-note="Gallery + volunteer CTA + reorder cue">
+      <div class="section-head">
+        <div><span class="section-tag">Gallery / Media / CMS reorder</span><h2>Campaign gallery and community action</h2></div>
+        <p>Drag handles indicate optional homepage section order management from admin CMS.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="photo-tile">Rally Moments</div>
+        <div class="photo-tile">Village Visit</div>
+        <div class="photo-tile">Media Coverage</div>
+        <div class="photo-tile">Volunteer Work</div>
+      </div>
+      <div class="cta-band">
+        <div><h2>Become a booth-level campaign volunteer</h2><p>Role-based signup for youth, women, booth workers, social media team, and event coordinators.</p></div>
+        <button class="btn btn-primary">Start Registration</button>
+      </div>
+    </section>
+
+    <footer class="footer annotation" data-note="Footer IA">
+      <div><h3>Leader Name Campaign</h3><p>Official public website homepage mockup with CMS-managed identity, content sections, calls to action, and voter engagement widgets.</p></div>
+      <div><h3>Quick Links</h3><ul><li>About Leader</li><li>Vision</li><li>Achievements</li><li>Downloads</li></ul></div>
+      <div><h3>Campaign</h3><ul><li>Events</li><li>Volunteer</li><li>Survey</li><li>Citizen Connect</li></ul></div>
+      <div><h3>Contact</h3><ul><li>Office address placeholder</li><li>Helpline placeholder</li><li>Social links</li></ul></div>
+    </footer>
+  </main>
+
+  <main class="page">
+    <div class="mock-label">Admin Dashboard - Desktop <span>Responsive high-fidelity annotated visual, AdminLTE enterprise shell</span></div>
+    <section class="admin-app">
+      <aside class="sidebar annotation" data-note="Role-based sidebar">
+        <div class="side-brand"><img src="../../PoliticalLeaderPortal/Content/images/logo.png" alt="Logo"><div><strong>Campaign Admin</strong><small>Election War Room</small></div></div>
+        <div class="side-user"><div class="avatar">CM</div><div><strong>Campaign Manager</strong><span>Role: Admin</span></div></div>
+        <div class="side-search">Search modules, booths, volunteers</div>
+        <div class="menu-title">Core Operations</div>
+        <div class="menu-item active"><span class="menu-icon">▣</span>Dashboard</div>
+        <div class="menu-item"><span class="menu-icon">◎</span>Constituency & Booths</div>
+        <div class="menu-item"><span class="menu-icon">◷</span>Events & Rallies</div>
+        <div class="menu-item"><span class="menu-icon">♟</span>Volunteers & Teams</div>
+        <div class="menu-item"><span class="menu-icon">☑</span>Tasks & Follow-up</div>
+        <div class="menu-title">Communication</div>
+        <div class="menu-item"><span class="menu-icon">✉</span>Surveys & Polls</div>
+        <div class="menu-item"><span class="menu-icon">▤</span>Content CMS</div>
+        <div class="menu-item"><span class="menu-icon">◉</span>Media Gallery</div>
+        <div class="menu-title">Governance</div>
+        <div class="menu-item"><span class="menu-icon">₹</span>Expenses</div>
+        <div class="menu-item"><span class="menu-icon">⚑</span>Reports & Analytics</div>
+        <div class="menu-item orange"><span class="menu-icon">⚙</span>Settings & Roles</div>
+      </aside>
+      <div class="admin-main">
+        <div class="admin-bar annotation" data-note="Top bar">
+          <div class="admin-bar-left"><button class="icon-btn">☰</button><div class="admin-welcome"><span>Good morning</span><strong>War Room Live Summary</strong></div></div>
+          <div class="admin-bar-right"><button class="btn btn-outline">Hindi</button><button class="btn btn-outline">View Website</button><button class="icon-btn">🔔</button><button class="btn btn-primary">+ New Event</button></div>
+        </div>
+        <div class="admin-content">
+          <div class="page-title annotation" data-note="Page title + actions">
+            <div><span class="section-tag">Section 22: Admin Dashboard</span><h1>Election Campaign Command Center</h1><p>Real-time view of booths, volunteers, public engagement, events, and campaign alerts.</p></div>
+            <div><button class="btn btn-outline">Export Report</button><button class="btn btn-primary">Assign Task</button></div>
+          </div>
+
+          <div class="metrics-grid annotation" data-note="Key metrics">
+            <div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#0d6efd">B</div><span class="trend">+12%</span></div><h3>245 / 312</h3><p>Booths Covered</p></div>
+            <div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#ff671f">V</div><span class="trend">+386</span></div><h3>18,420</h3><p>Total Volunteers</p></div>
+            <div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#138808">E</div><span class="trend">Today 9</span></div><h3>92</h3><p>Upcoming Events</p></div>
+            <div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#dc3545">!</div><span class="trend">4 urgent</span></div><h3>31</h3><p>Open Alerts</p></div>
+          </div>
+
+          <div class="admin-grid">
+            <section class="panel annotation" data-note="Analytics chart">
+              <div class="panel-head"><div><span class="section-tag">Booth Activity Analytics</span><h2>Volunteer activity by zone</h2><p>Daily contact, issue resolution, and event participation trend.</p></div><button class="btn btn-outline">Filter</button></div>
+              <div class="chart">
+                <div class="bar" style="height:62%"><span>North</span></div>
+                <div class="bar" style="height:78%"><span>South</span></div>
+                <div class="bar" style="height:48%"><span>East</span></div>
+                <div class="bar" style="height:86%"><span>West</span></div>
+                <div class="bar" style="height:70%"><span>Rural</span></div>
+                <div class="bar" style="height:56%"><span>Urban</span></div>
+              </div>
+            </section>
+            <section class="panel annotation" data-note="Quick actions">
+              <div class="panel-head"><div><span class="section-tag">Fast workflow</span><h2>Quick actions</h2><p>Common campaign actions for non-technical operators.</p></div></div>
+              <div class="quick-grid">
+                <div class="quick"><span>＋</span>Add Volunteer</div>
+                <div class="quick"><span>◷</span>Schedule Event</div>
+                <div class="quick"><span>☑</span>Assign Booth Task</div>
+                <div class="quick"><span>✉</span>Publish Poll</div>
+                <div class="quick"><span>▤</span>Update Homepage</div>
+                <div class="quick"><span>⚑</span>Generate Report</div>
+              </div>
+            </section>
+          </div>
+
+          <div class="lower-grid">
+            <section class="panel annotation" data-note="Operational table">
+              <div class="panel-head"><div><span class="section-tag">Today schedule</span><h2>Upcoming events</h2></div><button class="btn btn-outline">Manage</button></div>
+              <table class="table">
+                <thead><tr><th>Event</th><th>Location</th><th>Owner</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Booth Meeting</td><td>Ward 12</td><td>Rakesh</td><td><span class="badge green">Ready</span></td></tr>
+                  <tr><td>Road Show</td><td>Main Bazaar</td><td>Sonia</td><td><span class="badge orange">Vehicle pending</span></td></tr>
+                  <tr><td>Youth Training</td><td>Block Office</td><td>Amit</td><td><span class="badge blue">Attendance on</span></td></tr>
+                </tbody>
+              </table>
+            </section>
+            <section class="panel annotation" data-note="Alerts + reports">
+              <div class="panel-head"><div><span class="section-tag">Campaign alerts</span><h2>Priority follow-ups</h2></div><button class="btn btn-outline">View All</button></div>
+              <table class="table">
+                <thead><tr><th>Alert</th><th>Area</th><th>Due</th></tr></thead>
+                <tbody>
+                  <tr><td>Low volunteer coverage</td><td>Booth 089</td><td><span class="badge orange">Today</span></td></tr>
+                  <tr><td>Survey response spike</td><td>Village A</td><td><span class="badge green">Monitor</span></td></tr>
+                  <tr><td>Expense approval needed</td><td>Event Team</td><td><span class="badge blue">2 hrs</span></td></tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main class="mobile-frame">
+    <div class="mock-label">Public Homepage - Mobile <span>430px</span></div>
+    <header class="public-top annotation" data-note="Mobile nav">
+      <div class="top-strip"><div>Helpline + Language</div><div>Search</div></div>
+      <nav class="public-nav"><div class="brand"><img src="../../PoliticalLeaderPortal/Content/images/logo.png" alt="Logo"><div><strong>Leader Campaign</strong><small>Public Website</small></div></div><button class="icon-btn">☰</button></nav>
+    </header>
+    <section class="hero annotation" data-note="Stacked hero">
+      <div class="hero-copy"><span class="section-tag">Hero</span><h1>Leader Name for a Stronger Constituency</h1><p>Mobile-first message with volunteer, feedback, and event actions kept visible without crowding.</p><div class="hero-actions"><button class="btn btn-primary">Volunteer Now</button><button class="btn btn-outline">Share Feedback</button></div><div class="hero-stats"><div class="stat-card"><strong>245</strong><span>Booths</span></div><div class="stat-card"><strong>18K</strong><span>Volunteers</span></div></div></div>
+      <div class="leader-stage"><div class="leader-card"><img src="../../PoliticalLeaderPortal/Content/images/leader.png" alt="Leader"></div><div class="floating-note"><strong>Today: 6 Visits</strong><span>Schedule cue</span></div></div>
+    </section>
+    <div class="marquee annotation" data-note="Ticker"><strong>Latest</strong><span>Meeting at Village Placeholder | Manifesto uploaded</span></div>
+    <section class="public-section annotation" data-note="Mobile sections">
+      <div class="section-head"><span class="section-tag">Intro</span><h2>Service and accountable leadership</h2><p>CMS-managed biography, achievements, and vision cards.</p></div>
+      <div class="intro-grid"><article class="content-card"><div class="card-icon">V</div><h3>Vision & Mission</h3><p>Priorities and public development agenda.</p></article><article class="content-card"><div class="card-icon">C</div><h3>Citizen Connect</h3><p>Feedback, surveys, and grievances.</p></article></div>
+    </section>
+    <section class="public-section alt annotation" data-note="Events + poll"><div class="event-list"><div class="event-row"><div class="date-box">24<br>JUL</div><div><h3>Booth Committee Meeting</h3><p>Ward 12 | 10:30 AM</p></div><button class="btn btn-outline">Details</button></div></div><aside class="content-card poll-card"><span class="section-tag">Poll</span><h3>Top focus this week?</h3><div class="poll-option active"><span>Employment</span><strong>42%</strong></div><div class="poll-option"><span>Roads</span><strong>27%</strong></div></aside></section>
+  </main>
+
+  <main class="admin-mobile-frame">
+    <div class="mock-label">Admin Dashboard - Mobile Cue <span>430px</span></div>
+    <div class="mobile-drawer annotation" data-note="Collapsed sidebar">☰ Campaign Admin / Role: Manager</div>
+    <div class="admin-bar annotation" data-note="Mobile top bar"><div class="admin-bar-left"><button class="icon-btn">☰</button><button class="btn btn-outline">Hindi</button></div><div class="admin-bar-right"><button class="btn btn-outline">Website</button><button class="btn btn-primary">+ Task</button></div></div>
+    <div class="admin-content">
+      <div class="page-title annotation" data-note="Mobile page title"><span class="section-tag">Admin Dashboard</span><h1>Campaign Command Center</h1><p>Stacked metrics, actions, alerts, and tables for field operators.</p></div>
+      <div class="metrics-grid annotation" data-note="Stacked metrics"><div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#0d6efd">B</div><span class="trend">+12%</span></div><h3>245 / 312</h3><p>Booths Covered</p></div><div class="metric"><div class="metric-top"><div class="metric-icon" style="background:#ff671f">V</div><span class="trend">+386</span></div><h3>18,420</h3><p>Total Volunteers</p></div></div>
+      <section class="panel annotation" data-note="Mobile quick actions"><div class="panel-head"><div><span class="section-tag">Fast workflow</span><h2>Quick actions</h2></div></div><div class="quick-grid"><div class="quick"><span>＋</span>Add Volunteer</div><div class="quick"><span>◷</span>Schedule Event</div><div class="quick"><span>☑</span>Assign Booth Task</div></div></section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.HeroSliderId)
+
+<div class="hero-admin-page">
+    <header class="hero-command-bar">
+        <div class="hero-command-left">
+            <nav class="hero-breadcrumb">
+                <a href="@Url.Action("Index", "Dashboard")">Dashboard</a>
+                <span>/</span>
+                <a href="@Url.Action("Index", "HeroSlider")">Hero Slider</a>
+                <span>/</span>
+                <strong>Edit</strong>
+            </nav>
+
+            <h2>Edit Hero Slider</h2>
+            <small>All text is optional. Use image or video media for this slide.</small>
+        </div>
+
+        <div class="hero-command-right">
+            <a href="@Url.Action("Index")"
+               class="btn btn-light hero-btn-cancel">
+                Cancel
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary hero-btn-save">
+                <i class="fa fa-save"></i>
+                Update Hero
+            </button>
+        </div>
+    </header>
+
+    <div class="hero-builder">
+        <main class="hero-workspace" style="grid-column:1 / span 2;">
+            <div class="hero-workspace-body">
+                @Html.Partial("_HeroSliderContent", Model)
+                @Html.Partial("_HeroSliderMedia", Model)
+                @Html.Partial("_HeroSliderCTA", Model)
+                @Html.Partial("_HeroSliderAppearance", Model)
+                @Html.Partial("_HeroSliderAnimation", Model)
+            </div>
+        </main>
+
+        <aside class="hero-right-panel">
+            <div class="hero-preview-panel">
+                <div class="hero-panel-title">Live Preview</div>
+                <div class="hero-preview-body">
+                    @Html.Partial("_HeroSliderPreview", Model)
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

@@ -1,0 +1,218 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.ViewModels.UpcomingEventListVM>
+
+@{
+    ViewBag.Title = "Upcoming Events";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+            <h2 class="fw-bold">
+                Upcoming Events
+            </h2>
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Create","UpcomingEvent")"
+               class="btn btn-primary">
+
+                <i class="bi bi-plus-circle"></i>
+                Add New Event
+
+            </a>
+
+        </div>
+
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+
+            @TempData["SuccessMessage"]
+
+        </div>
+    }
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th style="width:100px;">
+                                Image
+                            </th>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Event Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Order
+                            </th>
+
+                            <th>
+                                Active
+                            </th>
+
+                            <th style="width:220px;">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.EventImagePath))
+                                        {
+                                            <img src="@Url.Content(item.EventImagePath)"
+                                                 class="img-thumbnail"
+                                                 style="width:80px;height:60px;object-fit:cover;" />
+                                        }
+                                        else
+                                        {
+                                            <span>No Image</span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+
+                                            @item.Title
+
+                                        </strong>
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.EventDate.ToString("dd MMM yyyy")
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.EventTime
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.EventLocation
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.DisplayOrder
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge bg-success">
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                Inactive
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Details","UpcomingEvent",
+                                            new { id = item.EventId })"
+                                           class="btn btn-info btn-sm">
+
+                                            View
+
+                                        </a>
+
+                                        <a href="@Url.Action("Edit","UpcomingEvent",
+                                            new { id = item.EventId })"
+                                           class="btn btn-warning btn-sm">
+
+                                            Edit
+
+                                        </a>
+
+                                        <a href="@Url.Action("Delete","UpcomingEvent",
+                                            new { id = item.EventId })"
+                                           class="btn btn-danger btn-sm">
+
+                                            Delete
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="8"
+                                    class="text-center">
+
+                                    No Events Found
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,101 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+@{
+    ViewBag.Title = "Create Menu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid menu-management-page">
+    <div class="menu-workspace">
+        <div class="menu-page-header">
+            <div class="menu-page-header-left">
+
+            <h2 class="menu-page-title">
+
+                <i class="fas fa-plus-circle text-primary me-2"></i>
+
+                Create Menu
+
+            </h2>
+
+            <p class="menu-page-subtitle">
+
+                Create Website Navigation, Admin Sidebar,
+                Footer Menu and Quick Links.
+
+            </p>
+
+            </div>
+
+            <div class="menu-page-toolbar">
+
+                <a href="@Url.Action("Index","MenuCMS")"
+                   class="btn btn-outline-secondary menu-icon-btn"
+                   title="Back to Menu List">
+
+                    <i class="fas fa-arrow-left"></i>
+
+                </a>
+
+            </div>
+        </div>
+
+    <!-- ========================================= -->
+    <!-- VALIDATION                                -->
+    <!-- ========================================= -->
+
+        @Html.ValidationSummary(true, "", new
+        {
+            @class = "alert alert-danger"
+        })
+
+    <!-- ========================================= -->
+    <!-- FORM                                      -->
+    <!-- ========================================= -->
+
+        @using (Html.BeginForm(
+                "CreateMenu",
+                "MenuCMS",
+                new { area = "Admin" },
+                FormMethod.Post,
+                new
+                {
+                    id = "frmCreateMenu",
+                    autocomplete = "off"
+                }))
+        {
+
+            @Html.Partial("_MenuForm", Model)
+
+        }
+
+    </div>
+</div>
+
+@section Styles{
+
+    <link href="~/Areas/Admin/Content/css/menu-cms.css" rel="stylesheet" />
+
+}
+
+@section Scripts{
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+    window.MenuCMS = {
+
+        menuListUrl: '@Url.Action("MenuList", "MenuCMS", new { area = "Admin" })',
+
+        deleteUrl: '@Url.Action("DeleteMenu", "MenuCMS", new { area = "Admin" })',
+
+        toggleUrl: '@Url.Action("ToggleActive", "MenuCMS", new { area = "Admin" })',
+
+        saveOrderUrl: '@Url.Action("SaveOrder", "MenuCMS", new { area = "Admin" })'
+
+    };
+
+    </script>
+    <script src="~/Scripts/custom/menu-cms.js"></script>
+
+}

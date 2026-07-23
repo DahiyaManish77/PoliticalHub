@@ -1,0 +1,127 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>
+
+@{
+    ViewBag.Title = "Media Coverage";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>() : Model.ToList();
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Media Coverage</h1>
+        <p>Manage press reports, interviews, public mentions and coverage highlights.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "PublicMediaCoverage", new { area = "" })" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Media
+        </a>
+        <a href="@Url.Action("Create","MediaCoverage")" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add Coverage
+        </a>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="admin-ticker-stats news-cms-stats">
+    <div><span>Total Coverage</span><strong>@rows.Count</strong></div>
+    <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+    <div><span>Featured</span><strong>@rows.Count(x => x.IsFeatured)</strong></div>
+    <div><span>Total Views</span><strong>@rows.Sum(x => x.ViewCount)</strong></div>
+</div>
+
+<div class="admin-card homepage-section-manager media-cms-panel">
+    @Html.AntiForgeryToken()
+    <div class="section-manager-toolbar">
+        <div>
+            <h2>Press Library</h2>
+            <span>Featured coverage appears first on the public homepage</span>
+        </div>
+    </div>
+
+    <div class="media-cms-grid">
+        @if (!rows.Any())
+        {
+            <div class="media-empty-state">
+                <i class="fas fa-newspaper"></i>
+                <strong>No media coverage found.</strong>
+                <span>Add press clippings, interviews or coverage links to fill this section.</span>
+            </div>
+        }
+
+        @foreach (var item in rows.OrderBy(x => x.DisplayOrder).ThenByDescending(x => x.CoverageDate))
+        {
+            var imagePath = !String.IsNullOrWhiteSpace(item.CoverImagePath)
+                ? Url.Content(item.CoverImagePath)
+                : Url.Content("~/Content/images/no-image-news.jpg");
+
+            <article class="media-cms-card">
+                <div class="media-cms-thumb">
+                    <img src="@imagePath" alt="@item.Title" />
+                    <span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <div class="media-cms-body">
+                    <span class="media-cms-category">@item.SourceName</span>
+                    <h3>@item.Title</h3>
+                    <p>@(String.IsNullOrWhiteSpace(item.ShortDescription) ? "No short description added." : (item.ShortDescription.Length > 110 ? item.ShortDescription.Substring(0, 110) + "..." : item.ShortDescription))</p>
+                    <div class="media-cms-meta">
+                        <span><i class="fas fa-calendar"></i> @(item.CoverageDate.HasValue ? item.CoverageDate.Value.ToString("dd MMM yyyy") : "No date")</span>
+                        <span><i class="fas fa-eye"></i> @item.ViewCount views</span>
+                        @if (item.IsFeatured)
+                        {
+                            <span class="media-featured"><i class="fas fa-star"></i> Featured</span>
+                        }
+                    </div>
+                </div>
+                <div class="media-cms-actions">
+                    <a href="@Url.Action("Details", "PublicMediaCoverage", new { area = "", id = item.MediaCoverageId })" target="_blank" class="btn btn-sm btn-outline-secondary" title="Preview">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Edit", "MediaCoverage", new { id = item.MediaCoverageId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-btn" data-id="@item.MediaCoverageId" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </article>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(".delete-btn").click(function () {
+                var id = $(this).data("id");
+
+                Swal.fire({
+                    title: "Delete media coverage?",
+                    text: "This coverage item will be removed from the public website.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Delete"
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("Delete","MediaCoverage")', {
+                            id: id,
+                            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+                        }, function (response) {
+                            if (response.success) {
+                                location.reload();
+                            } else {
+                                Swal.fire("Error", response.message, "error");
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

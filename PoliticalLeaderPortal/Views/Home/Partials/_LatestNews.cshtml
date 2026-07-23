@@ -1,0 +1,144 @@
+@model List<PoliticalLeaderPortal.ViewModels.LatestNewsDisplayVM>
+@using System.Linq
+
+@{
+    Layout = null;
+
+    var news = Model ?? new List<PoliticalLeaderPortal.ViewModels.LatestNewsDisplayVM>();
+    var leadNews = news.FirstOrDefault();
+    var sideNews = news.Skip(1).Take(4).ToList();
+}
+
+<section class="editorial-newsroom-section">
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="editorial-newsroom-header reveal-element">
+            <div class="editorial-header-left">
+                <span class="editorial-section-label">LATEST NEWS</span>
+                @*<h2 class="editorial-section-title">News & Announcements</h2>*@
+                <p class="editorial-section-description">
+                    Stay updated with the latest public engagements,
+                    constituency developments, government initiatives,
+                    press releases and important announcements.
+                </p>
+            </div>
+            <div class="editorial-header-right">
+                <a href="@Url.Action("Index","News")" class="editorial-view-all-btn">
+                    View All News <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </header>
+
+        <div class="editorial-divider"></div>
+
+        @if (news.Any())
+        {
+            <div class="editorial-news-layout-3col">
+
+                <!-- COLUMN 1: FEATURED NEWS -->
+                @if (leadNews != null)
+                {
+                    var leadImage = !String.IsNullOrWhiteSpace(leadNews.ImagePath)
+                        ? Url.Content(leadNews.ImagePath)
+                        : Url.Content("~/Content/images/no-image-news.jpg");
+
+                    <article class="editorial-lead-story reveal-element">
+                        <div class="editorial-lead-media">
+                            <a href="@Url.Action("Details","News", new { id = leadNews.NewsId })" aria-label="@leadNews.Title">
+                                <img src="@leadImage" alt="@leadNews.Title" loading="lazy" />
+                            </a>
+                            @if (leadNews.IsFeatured)
+                            {
+                                <span class="editorial-featured-badge">Featured</span>
+                            }
+                        </div>
+                        <div class="editorial-lead-content">
+                            <time datetime="@leadNews.PublishDate.ToString("yyyy-MM-dd")">
+                                <i class="bi bi-calendar3"></i>
+                                @leadNews.PublishDate.ToString("dd MMM yyyy")
+                            </time>
+                            <h3 class="editorial-lead-title">
+                                <a href="@Url.Action("Details","News", new { id = leadNews.NewsId })">@leadNews.Title</a>
+                            </h3>
+                            @if (!String.IsNullOrWhiteSpace(leadNews.ShortDescription))
+                            {
+                                <p class="editorial-lead-summary">
+                                    @(leadNews.ShortDescription.Length > 240 ? leadNews.ShortDescription.Substring(0,240) + "..." : leadNews.ShortDescription)
+                                </p>
+                            }
+                            <a href="@Url.Action("Details","News", new { id = leadNews.NewsId })" class="editorial-read-link">
+                                Continue Reading <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                }
+
+                <!-- COLUMN 2: SIDE NEWS -->
+                <aside class="editorial-side-stories">
+                    @foreach (var item in sideNews)
+                    {
+                        var imagePath = !String.IsNullOrWhiteSpace(item.ImagePath)
+                            ? Url.Content(item.ImagePath)
+                            : Url.Content("~/Content/images/no-image-news.jpg");
+
+                        <article class="editorial-story-item reveal-element">
+                            <div class="editorial-story-image">
+                                <a href="@Url.Action("Details","News", new { id = item.NewsId })" aria-label="@item.Title">
+                                    <img src="@imagePath" alt="@item.Title" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="editorial-story-content">
+                                <time datetime="@item.PublishDate.ToString("yyyy-MM-dd")">
+                                    <i class="bi bi-calendar3"></i>
+                                    @item.PublishDate.ToString("dd MMM yyyy")
+                                </time>
+                                <h4 class="editorial-story-title">
+                                    <a href="@Url.Action("Details","News", new { id = item.NewsId })">
+                                        @(item.Title.Length > 90 ? item.Title.Substring(0,90) + "..." : item.Title)
+                                    </a>
+                                </h4>
+                                @if (!String.IsNullOrWhiteSpace(item.ShortDescription))
+                                {
+                                    <p class="editorial-story-summary">
+                                        @(item.ShortDescription.Length > 95 ? item.ShortDescription.Substring(0,95) + "..." : item.ShortDescription)
+                                    </p>
+                                }
+                                <a href="@Url.Action("Details","News", new { id = item.NewsId })" class="editorial-story-link">
+                                    Read More <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    }
+                </aside>
+
+                <aside class="editorial-blank-column editorial-digest-panel reveal-element">
+                    <span class="editorial-section-label">CAMPAIGN DESK</span>
+                    <h3>Activities At A Glance</h3>
+                    <p>
+                        Track public meetings, constituency updates, press notes and important announcements in one place.
+                    </p>
+                    <div class="editorial-digest-count">
+                        <strong>@news.Count</strong>
+                        <span>recent updates</span>
+                    </div>
+                    <a href="@Url.Action("Index","News")" class="editorial-view-all-btn">
+                        Open News Room <i class="bi bi-arrow-right"></i>
+                    </a>
+                </aside>
+
+            </div>
+        }
+        else
+        {
+            <div class="editorial-empty-state reveal-element">
+                <i class="bi bi-newspaper"></i>
+                <h3>No News Available</h3>
+                <p>Please check back soon for the latest updates and important information.</p>
+                <a href="@Url.Action("Index", "Home")" class="editorial-view-all-btn">
+                    Back to Home <i class="bi bi-house-door"></i>
+                </a>
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,116 @@
+@model PoliticalLeaderPortal.ViewModels.SearchPageVM
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="site-search-results-page">
+    <div class="site-search-results-wrap">
+        <div class="site-search-results-head">
+            <span>Search</span>
+            <h1>Search Results</h1>
+            <p>
+                @(Model.TotalResults) result@(Model.TotalResults == 1 ? "" : "s")
+                @if (!string.IsNullOrWhiteSpace(Model.Keyword))
+                {
+                    <text> for "@Model.Keyword"</text>
+                }
+            </p>
+        </div>
+
+        <form class="site-search-results-form"
+              method="get"
+              action="@Url.Action("Index", "Search", new { area = "" })">
+            <input type="text"
+                   name="keyword"
+                   value="@Model.Keyword"
+                   placeholder="Enter Keyword"
+                   aria-label="Search keyword" />
+
+            <input type="date"
+                   name="from"
+                   value="@(Model.FromDate.HasValue ? Model.FromDate.Value.ToString("yyyy-MM-dd") : "")"
+                   aria-label="From date" />
+
+            <input type="date"
+                   name="to"
+                   value="@(Model.ToDate.HasValue ? Model.ToDate.Value.ToString("yyyy-MM-dd") : "")"
+                   aria-label="To date" />
+
+            <button type="submit">
+                Go
+            </button>
+        </form>
+
+        @if (Model.TotalResults == 0)
+        {
+            <div class="site-search-empty">
+                <i class="bi bi-search"></i>
+                <h2>No results found</h2>
+                <p>Try a different keyword or widen the date range.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var group in Model.GroupedResults)
+            {
+                <section class="site-search-result-group">
+                    <div class="site-search-group-title">
+                        <h2>@group.Key</h2>
+                        <span>@group.Count()</span>
+                    </div>
+
+                    <div class="site-search-result-list">
+                        @foreach (var item in group)
+                        {
+                            <article class="site-search-result-card">
+                                <a href="@item.Url" class="site-search-result-media">
+                                    @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                                    {
+                                        <img src="@Url.Content(item.ImagePath)"
+                                             alt="@item.Title" />
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    }
+                                </a>
+
+                                <div class="site-search-result-body">
+                                    <div class="site-search-result-meta">
+                                        <span>@item.Category</span>
+                                        @if (item.PublishedDate.HasValue)
+                                        {
+                                            <time datetime="@item.PublishedDate.Value.ToString("yyyy-MM-dd")">
+                                                @item.PublishedDate.Value.ToString("dd MMM yyyy")
+                                            </time>
+                                        }
+                                    </div>
+
+                                    <h3>
+                                        <a href="@item.Url">@item.Title</a>
+                                    </h3>
+
+                                    @if (!string.IsNullOrWhiteSpace(item.Description))
+                                    {
+                                        <p>
+                                            @(item.Description.Length > 180
+                                                ? item.Description.Substring(0, 180) + "..."
+                                                : item.Description)
+                                        </p>
+                                    }
+
+                                    <a href="@item.Url" class="site-search-read-more">
+                                        Read More
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                </section>
+            }
+        }
+    </div>
+</section>

@@ -1,0 +1,735 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+                <i class="fa-solid fa-images text-primary me-2"></i>
+                Enterprise Media Manager
+            </h3>
+
+            <p class="hero-section-description">
+                Upload background, leader and mobile images for your hero slider.
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+            Step 2 of 6
+        </span>
+
+    </div>
+
+    <div class="hero-media-manager">
+
+        <div class="hero-media-grid">
+
+            <!-- ===================================================== -->
+            <!-- BACKGROUND IMAGE -->
+            <!-- ===================================================== -->
+
+            <div class="hero-media-card">
+
+                <div class="hero-media-header">
+
+                    <div>
+
+                        <h4 class="hero-media-title">
+                            Background Image
+                        </h4>
+
+                        <div class="hero-media-subtitle">
+                            Desktop Hero Background
+                        </div>
+
+                    </div>
+
+                    <div class="hero-media-icon">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+
+                </div>
+
+                <div class="hero-upload-zone">
+
+                    @Html.TextBoxFor(m => m.BackgroundImageFile,
+                        new
+                        {
+                            type = "file",
+                            accept = ".jpg,.jpeg,.png,.webp",
+                            @class = "hero-file-input"
+                        })
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <div class="hero-upload-title">
+                        Drop Background Image
+                    </div>
+
+                    <div class="hero-upload-text">
+                        or
+                        <span class="hero-upload-link">
+                            Browse Files
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="hero-image-preview">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.BackgroundImagePath) ? "" : Url.Content(Model.BackgroundImagePath))"
+                         alt="Background Preview" />
+
+                    <div class="hero-preview-overlay">
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-rotate"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                @Html.HiddenFor(m => m.BackgroundImagePath)
+
+                <div class="hero-media-footer">
+
+                    <div class="hero-media-buttons">
+
+                        <button type="button" class="btn btn-outline-primary">
+
+                            <i class="fa-solid fa-repeat me-1"></i>
+
+                            Replace
+
+                        </button>
+
+                        <button type="button" class="btn btn-outline-danger">
+
+                            <i class="fa-solid fa-trash me-1"></i>
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                    <div class="hero-file-info">
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Recommended
+                            </span>
+
+                            <span class="hero-file-value">
+                                1920 × 900
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Max Size
+                            </span>
+
+                            <span class="hero-file-value">
+                                5 MB
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Formats
+                            </span>
+
+                            <span class="hero-file-value">
+                                JPG PNG WEBP
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="hero-upload-progress">
+
+                        <div class="progress">
+
+                            <div class="progress-bar" style="width:0%;"></div>
+
+                        </div>
+
+                        <div class="hero-progress-text">
+
+                            <span>Uploading...</span>
+
+                            <span>0%</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- LEADER IMAGE -->
+            <!-- ===================================================== -->
+
+            <div class="hero-media-card">
+
+                <div class="hero-media-header">
+
+                    <div>
+
+                        <h4 class="hero-media-title">
+                            Leader Image
+                        </h4>
+
+                        <div class="hero-media-subtitle">
+                            Transparent PNG Recommended
+                        </div>
+
+                    </div>
+
+                    <div class="hero-media-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-upload-zone">
+
+                    @Html.TextBoxFor(m => m.LeaderImageFile,
+                        new
+                        {
+                            type = "file",
+                            accept = ".png,.webp",
+                            @class = "hero-file-input"
+                        })
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    <div class="hero-upload-title">
+
+                        Drop Leader Image
+
+                    </div>
+
+                    <div class="hero-upload-text">
+
+                        Transparent PNG Preferred
+
+                    </div>
+
+                </div>
+
+                <div class="hero-image-preview">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.LeaderImagePath) ? "" : Url.Content(Model.LeaderImagePath))"
+                         alt="Leader Preview" />
+
+                    <div class="hero-preview-overlay">
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-rotate"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                @Html.HiddenFor(m => m.LeaderImagePath)
+
+                <div class="hero-media-footer">
+
+                    <div class="hero-media-buttons">
+
+                        <button type="button" class="btn btn-outline-primary">
+
+                            Replace
+
+                        </button>
+
+                        <button type="button" class="btn btn-outline-danger">
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                    <div class="hero-file-info">
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Recommended
+                            </span>
+
+                            <span class="hero-file-value">
+                                PNG 800 × 1000
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Background
+                            </span>
+
+                            <span class="hero-file-value">
+                                Transparent
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Max Size
+                            </span>
+
+                            <span class="hero-file-value">
+                                3 MB
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- HERO VIDEO -->
+            <!-- ===================================================== -->
+
+            <div class="hero-media-card">
+
+                <div class="hero-media-header">
+
+                    <div>
+
+                        <h4 class="hero-media-title">
+                            Hero Video
+                        </h4>
+
+                        <div class="hero-media-subtitle">
+                            Optional video background for this slide
+                        </div>
+
+                    </div>
+
+                    <div class="hero-media-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        Media Mode
+                    </label>
+
+                    <div class="form-check form-switch">
+                        @Html.CheckBoxFor(m => m.IsVideoSlide, new { @class = "form-check-input", id = "IsVideoSlide" })
+                        <label class="form-check-label" for="IsVideoSlide">
+                            Use video as hero background
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        Video Source Type
+                    </label>
+
+                    @Html.DropDownListFor(m => m.VideoSourceType,
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem { Text = "Image Only", Value = "Image" },
+                            new SelectListItem { Text = "Upload Video", Value = "Upload" },
+                            new SelectListItem { Text = "External URL / YouTube / Vimeo", Value = "Url" }
+                        },
+                        new { @class = "form-select hero-input", id = "VideoSourceType" })
+                </div>
+
+                <div class="hero-upload-zone">
+
+                    @Html.TextBoxFor(m => m.VideoFile,
+                        new
+                        {
+                            type = "file",
+                            accept = ".mp4,.webm,.mov",
+                            @class = "hero-file-input"
+                        })
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <div class="hero-upload-title">
+                        Drop Hero Video
+                    </div>
+
+                    <div class="hero-upload-text">
+                        MP4, WEBM or MOV
+                    </div>
+
+                </div>
+
+                @Html.HiddenFor(m => m.VideoPath)
+
+                @if (!String.IsNullOrWhiteSpace(Model.VideoPath))
+                {
+                    <div class="alert alert-info mt-3 mb-0">
+                        Current video:
+                        <strong>@Model.VideoPath</strong>
+                    </div>
+                }
+
+                <div class="mt-3">
+                    <label class="form-label fw-semibold">
+                        External Video URL
+                    </label>
+
+                    @Html.TextBoxFor(m => m.VideoUrl,
+                        new
+                        {
+                            @class = "form-control hero-input",
+                            placeholder = "https://youtu.be/... or /Uploads/HeroSlider/video.mp4"
+                        })
+
+                    <small class="text-muted">
+                        Supports direct MP4/WEBM/MOV files, YouTube and Vimeo URLs.
+                    </small>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.VideoAutoplay, new { @class = "form-check-input", id = "VideoAutoplay" })
+                            <label class="form-check-label" for="VideoAutoplay">Autoplay</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.VideoMuted, new { @class = "form-check-input", id = "VideoMuted" })
+                            <label class="form-check-label" for="VideoMuted">Muted</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.VideoLoop, new { @class = "form-check-input", id = "VideoLoop" })
+                            <label class="form-check-label" for="VideoLoop">Loop</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-file-info mt-3">
+                    <div class="hero-file-row">
+                        <span class="hero-file-label">Recommended</span>
+                        <span class="hero-file-value">MP4, 1920 x 900</span>
+                    </div>
+
+                    <div class="hero-file-row">
+                        <span class="hero-file-label">Fallback</span>
+                        <span class="hero-file-value">Keep background image set</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- MOBILE IMAGE -->
+            <!-- ===================================================== -->
+
+            <div class="hero-media-card">
+
+                <div class="hero-media-header">
+
+                    <div>
+
+                        <h4 class="hero-media-title">
+
+                            Mobile Image
+
+                        </h4>
+
+                        <div class="hero-media-subtitle">
+
+                            Optimized for Mobile Devices
+
+                        </div>
+
+                    </div>
+
+                    <div class="hero-media-icon">
+
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-upload-zone">
+
+                    @Html.TextBoxFor(m => m.MobileImageFile,
+                        new
+                        {
+                            type = "file",
+                            accept = ".jpg,.jpeg,.png,.webp",
+                            @class = "hero-file-input"
+                        })
+
+                    <i class="fa-solid fa-mobile"></i>
+
+                    <div class="hero-upload-title">
+
+                        Drop Mobile Banner
+
+                    </div>
+
+                    <div class="hero-upload-text">
+
+                        Best for phones & tablets
+
+                    </div>
+
+                </div>
+
+                <div class="hero-image-preview">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.MobileImagePath) ? "" : Url.Content(Model.MobileImagePath))"
+                         alt="Mobile Preview" />
+
+                    <div class="hero-preview-overlay">
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-rotate"></i>
+
+                        </button>
+
+                        <button type="button" class="hero-image-action">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                @Html.HiddenFor(m => m.MobileImagePath)
+
+                <div class="hero-media-footer">
+
+                    <div class="hero-media-buttons">
+
+                        <button type="button" class="btn btn-outline-primary">
+
+                            Replace
+
+                        </button>
+
+                        <button type="button" class="btn btn-outline-danger">
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                    <div class="hero-file-info">
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Recommended
+                            </span>
+
+                            <span class="hero-file-value">
+                                768 × 1024
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Max Size
+                            </span>
+
+                            <span class="hero-file-value">
+                                3 MB
+                            </span>
+
+                        </div>
+
+                        <div class="hero-file-row">
+
+                            <span class="hero-file-label">
+                                Formats
+                            </span>
+
+                            <span class="hero-file-value">
+                                JPG PNG WEBP
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-lg-6">
+
+            <div class="hero-guideline-card">
+
+                <h4 class="hero-guideline-title">
+
+                    Recommended Guidelines
+
+                </h4>
+
+                <div class="hero-guideline-item">
+
+                    <div class="hero-guideline-icon">
+
+                        <i class="fa-solid fa-expand"></i>
+
+                    </div>
+
+                    <div class="hero-guideline-text">
+
+                        <strong>Desktop Banner</strong>
+
+                        <span>1920 × 900 pixels</span>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-guideline-item">
+
+                    <div class="hero-guideline-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="hero-guideline-text">
+
+                        <strong>Leader Image</strong>
+
+                        <span>Transparent PNG</span>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-guideline-item">
+
+                    <div class="hero-guideline-icon">
+
+                        <i class="fa-solid fa-mobile-screen"></i>
+
+                    </div>
+
+                    <div class="hero-guideline-text">
+
+                        <strong>Mobile Banner</strong>
+
+                        <span>768 × 1024 pixels</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="hero-guideline-card">
+
+                <h4 class="hero-guideline-title">
+
+                    Supported Formats
+
+                </h4>
+
+                <span class="hero-chip">JPG</span>
+
+                <span class="hero-chip">JPEG</span>
+
+                <span class="hero-chip success">PNG</span>
+
+                <span class="hero-chip warning">WEBP</span>
+
+                <span class="hero-chip danger">Max 5 MB</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

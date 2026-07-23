@@ -1,0 +1,190 @@
+const fs = require("fs");
+const path = require("path");
+const { execFileSync } = require("child_process");
+
+const root = __dirname;
+const outputDir = path.join(root, "output", "pdf");
+const htmlPath = path.join(outputDir, "election-war-room-hindi-manual.html");
+const pdfPath = path.join(outputDir, "election-war-room-hindi-manual.pdf");
+
+fs.mkdirSync(outputDir, { recursive: true });
+
+const today = new Date().toLocaleDateString("hi-IN", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+
+const modules = [
+  ["डैशबोर्ड", "आज के इवेंट, लंबित कार्य, बूथ कवरेज और गंभीर अलर्ट एक ही स्क्रीन पर दिखते हैं।"],
+  ["इवेंट्स", "सभा, रैली, बैठक, जनसंपर्क कार्यक्रम आदि की योजना और स्थिति देखने के लिए।"],
+  ["वाहन", "वाहन आवंटन, ड्राइवर विवरण, ईंधन खर्च और सत्यापन देखने के लिए।"],
+  ["अटेंडेंस", "कार्यकर्ता, स्वयंसेवक, वीआईपी और टीम उपस्थिति की निगरानी के लिए।"],
+  ["टीम्स", "टीम, टीम लीडर, क्षेत्र, सदस्य और काम की स्थिति देखने के लिए।"],
+  ["गेस्ट्स", "अतिथि निमंत्रण, पुष्टि, वाहन, होटल और सुरक्षा जरूरतें देखने के लिए।"],
+  ["अरेंजमेंट्स", "मंच, कुर्सी, साउंड, टेंट, बिजली, पानी और अन्य लॉजिस्टिक्स की स्थिति के लिए।"],
+  ["एक्सपेंसेस", "बजट, वास्तविक खर्च, भुगतान और अनुमोदन की निगरानी के लिए।"],
+  ["मीडिया", "फोटो, वीडियो, दस्तावेज, प्रेस कवरेज और प्रकाशन स्थिति देखने के लिए।"],
+  ["टास्क्स", "काम सौंपना, प्रगति देखना, प्राथमिकता और पूरा/लंबित स्थिति ट्रैक करना।"],
+  ["पोल्स", "सर्वे, प्रश्न, प्रतिक्रियाएं और जनता की राय समझने के लिए।"],
+  ["इलेक्शन बूथ्स", "बूथ स्तर की प्राथमिकता, ताकत, कवरेज और फॉलो-अप योजना देखने के लिए।"],
+  ["बूथ विजिट्स", "घर-घर संपर्क, समर्थक, विरोधी, शिकायतें और पर्चा वितरण रिकॉर्ड देखने के लिए।"],
+  ["जन संपर्क", "जनता की समस्या, शिकायत, मांग, असाइनमेंट और समाधान स्थिति देखने के लिए।"],
+  ["कैंपेन्स", "पूरे चुनाव अभियान की समयसीमा, क्षेत्र, प्रकार और स्थिति देखने के लिए।"],
+  ["कैंपेन अलर्ट्स", "महत्वपूर्ण चेतावनी, किसे सौंपा गया, क्या कार्रवाई हुई और समाधान स्थिति देखने के लिए।"],
+];
+
+const html = `<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <title>Election War Room Hindi Manual</title>
+  <style>
+    @page { size: A4; margin: 16mm 14mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Nirmala UI", "Mangal", "Arial", sans-serif;
+      color: #1f2937;
+      background: #fff;
+      line-height: 1.48;
+      font-size: 12.5px;
+    }
+    .cover {
+      min-height: 245mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 2px solid #1f4e79;
+      padding: 28mm 18mm;
+      page-break-after: always;
+    }
+    .eyebrow { color: #b42318; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    h1 { font-size: 34px; line-height: 1.18; color: #12395b; margin: 8px 0 14px; }
+    h2 { font-size: 21px; color: #12395b; margin: 0 0 12px; padding-bottom: 5px; border-bottom: 2px solid #e5e7eb; }
+    h3 { font-size: 15px; color: #1f4e79; margin: 14px 0 6px; }
+    p { margin: 0 0 8px; }
+    .subtitle { font-size: 17px; color: #4b5563; max-width: 620px; }
+    .meta { margin-top: 26px; color: #4b5563; }
+    .section { page-break-inside: avoid; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 10px 0 16px; }
+    .card { border: 1px solid #d9e2ec; border-radius: 6px; padding: 11px; background: #fbfdff; }
+    .card strong { display: block; color: #12395b; margin-bottom: 4px; }
+    ul, ol { margin: 7px 0 12px 20px; padding: 0; }
+    li { margin: 4px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; page-break-inside: auto; }
+    tr { page-break-inside: avoid; }
+    th, td { border: 1px solid #d6dee8; padding: 7px 8px; vertical-align: top; }
+    th { background: #1f4e79; color: white; text-align: left; }
+    .note { border-left: 4px solid #b42318; background: #fff7ed; padding: 10px 12px; margin: 10px 0 14px; }
+    .footer { margin-top: 16px; color: #6b7280; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">Admin Module Manual</div>
+    <h1>इलेक्शन वार रूम मॉड्यूल</h1>
+    <p class="subtitle">राजनीतिक अभियान, बूथ प्रबंधन, जनसंपर्क, टीम कार्य, खर्च, सर्वे और अलर्ट को एक केंद्रीकृत डैशबोर्ड से संचालित करने की हिंदी उपयोग पुस्तिका।</p>
+    <div class="meta">
+      <p><strong>प्रोजेक्ट:</strong> Political Leader Portal</p>
+      <p><strong>एडमिन पाथ:</strong> /Admin/ElectionWarRoom</p>
+      <p><strong>तैयार किया गया:</strong> ${today}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. इस मॉड्यूल में क्या जोड़ा गया है</h2>
+    <p>इलेक्शन वार रूम को पहले केवल एक साधारण पेज की तरह रखा गया था। अब इसे असली कार्यशील डैशबोर्ड बनाया गया है, जो मौजूदा डेटाबेस और सर्विस लेयर से लाइव जानकारी दिखा सकता है।</p>
+    <div class="grid">
+      <div class="card"><strong>लाइव डैशबोर्ड</strong>आज के इवेंट, लंबित कार्य, बूथ कवरेज और गंभीर अलर्ट दिखते हैं।</div>
+      <div class="card"><strong>काम करने वाले लिंक</strong>पहले टूटे हुए लिंक अब Election War Room के अंदर सही पेज पर खुलते हैं।</div>
+      <div class="card"><strong>मॉड्यूल लिस्टिंग</strong>हर प्रमुख मॉड्यूल की सूची देखने के लिए सामान्य टेबल स्क्रीन जोड़ी गई है।</div>
+      <div class="card"><strong>सर्च सुविधा</strong>मॉड्यूल पेजों पर keyword search उपलब्ध है।</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>2. कौन-कौन से भाग काम कर रहे हैं</h2>
+    <table>
+      <thead><tr><th>मॉड्यूल</th><th>उपयोग</th></tr></thead>
+      <tbody>
+        ${modules.map(([name, desc]) => `<tr><td><strong>${name}</strong></td><td>${desc}</td></tr>`).join("")}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>3. कैसे उपयोग करें</h2>
+    <ol>
+      <li>एडमिन पैनल में लॉगिन करें।</li>
+      <li>ब्राउज़र में <strong>/Admin/ElectionWarRoom</strong> खोलें।</li>
+      <li>ऊपर के चार कार्ड देखें: Today Events, Pending Tasks, Booth Coverage, Critical Alerts।</li>
+      <li>जिस विभाग पर काम करना हो, उसके कार्ड पर क्लिक करें, जैसे Events, Tasks, Election Booths या Jan Sampark।</li>
+      <li>खुले हुए मॉड्यूल पेज पर रिकॉर्ड देखें और search box में नाम, स्थान, मोबाइल, status या keyword डालकर खोजें।</li>
+      <li>Dashboard Alerts और Upcoming Events सेक्शन से तुरंत प्राथमिकता वाले काम पहचानें।</li>
+    </ol>
+    <div class="note"><strong>ध्यान दें:</strong> इस चरण में dashboard, navigation, listing और search layer पूरी की गई है। कई modules के save/update/delete methods पहले से service layer में मौजूद हैं, लेकिन हर module के अलग create/edit/delete screens अभी अलग से बनाए जाने बाकी हैं।</div>
+  </section>
+
+  <section class="section">
+    <h2>4. राजनेता और चुनाव टीम के लिए लाभ</h2>
+    <h3>केंद्रीकृत नियंत्रण</h3>
+    <p>एक ही स्क्रीन से अभियान की स्थिति, इवेंट, टीम, बूथ, खर्च, सर्वे और अलर्ट देखे जा सकते हैं। इससे campaign manager को अलग-अलग फाइल या लोगों पर निर्भर नहीं रहना पड़ता।</p>
+    <h3>बूथ स्तर की रणनीति</h3>
+    <p>Election Booths और Booth Visits से पता चलता है कि कौन सा बूथ मजबूत है, कौन सा कमजोर है, कहां कवरेज कम है और कहां तुरंत फॉलो-अप चाहिए।</p>
+    <h3>जनता की समस्या पर तेजी से कार्रवाई</h3>
+    <p>Jan Sampark से जनता की शिकायत, मांग और समाधान status ट्रैक होता है। इससे नेता की ground connect और responsiveness मजबूत होती है।</p>
+    <h3>टीम जवाबदेही</h3>
+    <p>Tasks, Teams और Attendance से यह पता चलता है कि किसे काम दिया गया, कौन उपस्थित है, कौन सा काम लंबित है और कौन सा पूरा हो गया है।</p>
+    <h3>खर्च और संसाधन नियंत्रण</h3>
+    <p>Expenses, Vehicles और Arrangements से अभियान में पैसे, वाहन और logistics का बेहतर control मिलता है।</p>
+    <h3>जोखिम और अलर्ट प्रबंधन</h3>
+    <p>Campaign Alerts से गंभीर मुद्दे तुरंत दिखाई देते हैं, जैसे urgent complaint, high priority follow-up, pending action या operational risk।</p>
+  </section>
+
+  <section class="section">
+    <h2>5. व्यावहारिक चुनावी उपयोग</h2>
+    <ul>
+      <li>सुबह dashboard खोलकर आज के events और critical alerts देखें।</li>
+      <li>दोपहर में booth coverage और pending tasks की review meeting करें।</li>
+      <li>शाम को Jan Sampark और Booth Visits देखकर अगले दिन की field team planning करें।</li>
+      <li>रैली या सभा से पहले Vehicles, Guests, Arrangements और Attendance की readiness देखें।</li>
+      <li>हर सप्ताह Polls और Jan Sampark data से जनता की प्राथमिक समस्याएं पहचानें।</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>6. आगे क्या जोड़ा जा सकता है</h2>
+    <ul>
+      <li>हर मॉड्यूल के लिए full Create, Edit, Delete forms।</li>
+      <li>Booth wise map view और color-coded weak/strong booth analysis।</li>
+      <li>Daily campaign report PDF export।</li>
+      <li>Role-based access: candidate, campaign manager, booth manager, volunteer।</li>
+      <li>WhatsApp/SMS notification integration for alerts and tasks।</li>
+    </ul>
+    <p class="footer">यह manual Election War Room module की current completed functionality पर आधारित है।</p>
+  </section>
+</body>
+</html>`;
+
+function main() {
+  fs.writeFileSync(htmlPath, html, "utf8");
+
+  execFileSync("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", [
+    "--headless",
+    "--disable-gpu",
+    "--no-sandbox",
+    "--no-pdf-header-footer",
+    `--print-to-pdf=${pdfPath}`,
+    `file:///${htmlPath.replace(/\\/g, "/")}`,
+  ], { stdio: "inherit" });
+
+  console.log(pdfPath);
+}
+
+try {
+  main();
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}

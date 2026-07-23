@@ -1,0 +1,91 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HomeMemberVM
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.HomeMemberId)
+@Html.HiddenFor(m => m.PhotoPath)
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Home Page Member</h4>
+        </div>
+
+        <div class="card-body">
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Name</label>
+                            @Html.TextBoxFor(m => m.MemberName, new { @class = "form-control", placeholder = "Shri Atal Bihari Vajpayee" })
+                            @Html.ValidationMessageFor(m => m.MemberName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Designation</label>
+                            @Html.TextBoxFor(m => m.Designation, new { @class = "form-control", placeholder = "Party President" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tenure</label>
+                            @Html.TextBoxFor(m => m.Tenure, new { @class = "form-control", placeholder = "1980 - 1986" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Photo</label>
+                            <input type="file" name="PhotoFile" class="form-control" accept="image/*" />
+                            <small class="text-muted">Upload PNG/JPG/WebP. Max 5 MB.</small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Display Order</label>
+                            @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control", type = "number" })
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="form-check mt-4">
+                                @Html.CheckBoxFor(m => m.ShowOnHome, new { @class = "form-check-input" })
+                                <label class="form-check-label">Show On Home</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="form-check mt-4">
+                                @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                                <label class="form-check-label">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="border rounded p-3 bg-light">
+                        <div class="fw-semibold mb-2">Current Photo</div>
+                        @if (!string.IsNullOrWhiteSpace(Model.PhotoPath))
+                        {
+                            <img src="@Url.Content(Model.PhotoPath)"
+                                 alt="@Model.MemberName"
+                                 class="img-fluid rounded"
+                                 style="max-height:260px;object-fit:cover;width:100%;" />
+                        }
+                        else
+                        {
+                            <div class="text-muted">No photo uploaded yet.</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>
+                        Save
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">
+                        Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

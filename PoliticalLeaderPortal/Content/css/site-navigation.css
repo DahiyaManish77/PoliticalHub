@@ -1,0 +1,363 @@
+/* ==========================
+   SITE MEGA NAVIGATION
+========================== */
+
+.site-mega-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    background: #17b9ca;
+    color: #ffffff;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .14);
+}
+
+.site-menu-topbar {
+    min-height: 100px;
+    padding: 0 28px;
+    background: #ffffff;
+    display: grid;
+    grid-template-columns: 54px minmax(260px, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+}
+
+.site-menu-close {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: #050505;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    line-height: 1;
+    border-radius: 0;
+}
+
+.site-menu-close i {
+    display: block;
+}
+
+.site-menu-brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 14px;
+    color: #2d2f95;
+    font-size: clamp(36px, 4.8vw, 68px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.site-menu-brand:hover,
+.site-menu-brand:focus {
+    color: #2d2f95;
+}
+
+.site-menu-brand strong {
+    font-weight: 800;
+}
+
+.site-menu-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    color: #111827;
+    font-size: 24px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.site-menu-actions a {
+    min-height: 44px;
+    padding: 0 16px;
+    border-right: 1px solid rgba(17, 24, 39, .45);
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.site-language-dropdown {
+    position: relative;
+    min-height: 44px;
+    padding-left: 16px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.site-language-btn {
+    border: 0;
+    background: transparent;
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    line-height: 1;
+    padding: 0;
+}
+
+.site-language-btn i {
+    color: #18bfd0;
+    font-size: 18px;
+}
+
+.site-language-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 1060;
+    min-width: 160px;
+    padding: 8px;
+    margin: 0;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid rgba(17, 24, 39, .12);
+    border-radius: 8px;
+    box-shadow: 0 18px 38px rgba(15, 23, 42, .16);
+    display: none;
+}
+
+.site-language-dropdown.open .site-language-menu {
+    display: block;
+}
+
+.site-language-menu li {
+    padding: 9px 12px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.2;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.site-language-menu li:hover {
+    background: #effbfc;
+    color: #2930a0;
+}
+
+.site-menu-actions a:last-child {
+    border-right: 0;
+    padding-right: 0;
+}
+
+.site-menu-actions a:hover,
+.site-menu-actions a:focus {
+    color: #2d2f95;
+}
+
+.site-menu-actions i {
+    color: #18bfd0;
+    font-size: 31px;
+    line-height: 1;
+}
+
+.site-search-link i {
+    font-size: 38px;
+}
+
+.site-mega-panel {
+    padding: 48px 18px 28px;
+    background: #18b9ca;
+}
+
+.site-mega-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    max-width: 1720px;
+    margin: 0 auto;
+}
+
+.site-mega-column {
+    min-height: 240px;
+    padding: 6px 22px 18px;
+    border-right: 1px dotted rgba(29, 45, 115, .9);
+}
+
+.site-mega-column:last-child {
+    border-right: 0;
+}
+
+.site-mega-heading {
+    display: inline-flex;
+    margin-bottom: 8px;
+    color: #2930a0;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.site-mega-heading:hover,
+.site-mega-heading:focus {
+    color: #ffffff;
+}
+
+.site-mega-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-mega-links li {
+    margin: 0;
+}
+
+.site-mega-links a {
+    display: inline-flex;
+    padding: 5px 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.18;
+}
+
+.site-mega-links a:hover,
+.site-mega-links a:focus {
+    color: #2930a0;
+}
+
+.site-menu-social {
+    max-width: 1720px;
+    margin: 26px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.site-menu-social a {
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, .68);
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.site-menu-social a:hover,
+.site-menu-social a:focus {
+    background: #ffffff;
+    color: #18b9ca;
+}
+
+.site-mega-nav.is-collapsed .site-mega-panel {
+    display: none;
+}
+
+.site-mega-nav.is-collapsed {
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .08);
+}
+
+.site-mega-nav.is-collapsed .site-menu-close {
+    color: #2930a0;
+    font-size: 34px;
+}
+
+@media (max-width: 1399px) {
+    .site-menu-topbar {
+        grid-template-columns: 46px 1fr;
+        min-height: 86px;
+    }
+
+    .site-menu-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .site-menu-brand {
+        font-size: clamp(34px, 6vw, 54px);
+    }
+}
+
+@media (max-width: 991px) {
+    .site-menu-topbar {
+        padding: 12px 16px;
+        min-height: auto;
+        gap: 12px;
+    }
+
+    .site-menu-close {
+        width: 38px;
+        height: 38px;
+        font-size: 34px;
+    }
+
+    .site-menu-actions {
+        font-size: 15px;
+    }
+
+    .site-menu-actions a {
+        padding: 0 12px;
+    }
+
+    .site-language-dropdown {
+        padding-left: 0;
+    }
+
+    .site-menu-actions i {
+        font-size: 23px;
+    }
+
+    .site-mega-panel {
+        padding: 26px 12px 22px;
+    }
+
+    .site-mega-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-mega-column {
+        min-height: auto;
+        padding: 12px 16px 18px;
+        border-right: 0;
+        border-bottom: 1px dotted rgba(29, 45, 115, .55);
+    }
+
+    .site-mega-heading {
+        font-size: 18px;
+    }
+
+    .site-mega-links a {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 575px) {
+    .site-menu-brand {
+        gap: 8px;
+        font-size: 32px;
+    }
+
+    .site-menu-actions {
+        gap: 8px;
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+
+    .site-menu-actions a {
+        min-height: 32px;
+        padding: 0 9px 0 0;
+        font-size: 13px;
+    }
+
+    .site-language-btn {
+        font-size: 13px;
+    }
+
+    .site-mega-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .site-menu-social {
+        flex-wrap: wrap;
+    }
+}

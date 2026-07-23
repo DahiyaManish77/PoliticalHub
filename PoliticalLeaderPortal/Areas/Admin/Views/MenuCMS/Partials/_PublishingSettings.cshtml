@@ -1,0 +1,271 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+<!-- ========================================================= -->
+<!-- PUBLISHING & VISIBILITY                                   -->
+<!-- ========================================================= -->
+
+<div class="menu-card menu-shadow menu-rounded">
+
+    <!-- Card Header -->
+    <div class="menu-card-header">
+
+        <div class="menu-card-header-left">
+
+            <div class="menu-card-header-icon">
+                <i class="fas fa-globe"></i>
+            </div>
+
+            <div class="menu-card-header-content">
+
+                <h5 class="menu-card-title">
+                    Visibility Settings
+                </h5>
+
+                <div class="menu-card-subtitle">
+                    Control where this menu is displayed throughout the application.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Card Body -->
+    <div class="menu-card-body">
+        <div class="menu-settings">
+
+            <div class="menu-settings-body">
+
+                <div class="menu-settings-grid">
+
+                    <!-- Active Menu -->
+                    <div class="menu-setting-item">
+
+                        <div class="menu-setting-left">
+
+                            <div class="menu-setting-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+
+                            <div class="menu-setting-content">
+
+                                <div class="menu-setting-title-text">
+                                    Active Menu
+                                </div>
+
+                                <div class="menu-setting-description">
+                                    Enable or disable this menu.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-setting-right">
+
+                            <div class="menu-switch-row">
+
+                                <div class="menu-switch-action">
+
+                                    @Html.CheckBoxFor(
+                                        m => m.IsActive,
+                                        new
+                                        {
+                                            @class = "menu-switch"
+                                        })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Mega Menu -->
+                    <div class="menu-setting-item">
+
+                        <div class="menu-setting-left">
+
+                            <div class="menu-setting-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+
+                            <div class="menu-setting-content">
+
+                                <div class="menu-setting-title-text">
+                                    Show In Mega Menu
+                                </div>
+
+                                <div class="menu-setting-description">
+                                    Display this menu inside the public mega menu.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-setting-right">
+
+                            <div class="menu-switch-row">
+
+                                <div class="menu-switch-action">
+
+                                    @Html.CheckBoxFor(
+                                        m => m.ShowOnHome,
+                                        new
+                                        {
+                                            @class = "menu-switch"
+                                        })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Admin Sidebar -->
+                    <div class="menu-setting-item">
+
+                        <div class="menu-setting-left">
+
+                            <div class="menu-setting-icon">
+                                <i class="fas fa-columns"></i>
+                            </div>
+
+                            <div class="menu-setting-content">
+
+                                <div class="menu-setting-title-text">
+                                    Show In Sidebar
+                                </div>
+
+                                <div class="menu-setting-description">
+                                    Display this menu inside the admin dashboard sidebar.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-setting-right">
+
+                            <div class="menu-switch-row">
+
+                                <div class="menu-switch-action">
+
+                                    @Html.CheckBoxFor(
+                                        m => m.ShowInAdminSidebar,
+                                        new
+                                        {
+                                            @class = "menu-switch"
+                                        })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Menu -->
+                    <div class="menu-setting-item">
+
+                        <div class="menu-setting-left">
+
+                            <div class="menu-setting-icon">
+                                <i class="fas fa-window-maximize"></i>
+                            </div>
+
+                            <div class="menu-setting-content">
+
+                                <div class="menu-setting-title-text">
+                                    Footer Menu
+                                </div>
+
+                                <div class="menu-setting-description">
+                                    Display this menu within the website footer.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-setting-right">
+
+                            <div class="menu-switch-row">
+
+                                <div class="menu-switch-action">
+
+                                    @Html.CheckBoxFor(
+                                        m => m.ShowInFooter,
+                                        new
+                                        {
+                                            @class = "menu-switch"
+                                        })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="menu-setting-item">
+
+                        <div class="menu-setting-left">
+
+                            <div class="menu-setting-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+
+                            <div class="menu-setting-content">
+
+                                <div class="menu-setting-title-text">
+                                    Quick Links
+                                </div>
+
+                                <div class="menu-setting-description">
+                                    Display this menu in the Quick Links section.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="menu-setting-right">
+
+                            <div class="menu-switch-row">
+
+                                <div class="menu-switch-action">
+
+                                    @Html.CheckBoxFor(
+                                        m => m.ShowInQuickLinks,
+                                        new
+                                        {
+                                            @class = "menu-switch"
+                                        })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

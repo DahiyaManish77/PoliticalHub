@@ -1,0 +1,11 @@
+{
+  "JobId": "voice-model-20260715-025401",
+  "CreatedUtc": "2026-07-15T02:54:01.7854667Z",
+  "Workflow": "Consent-Based Voice Model",
+  "VoiceSamplePath": "C:\\Users\\Admin\\Downloads\\Atul Pradhan attacks Sangeet Som \u092D\u0921\u093C\u0915\u0947 \u0905\u0924\u0941\u0932 \u092A\u094D\u0930\u0927\u093E\u0928 \u0928\u0947 \u0938\u0902\u0917\u0940\u0924 \u0938\u094B\u092E \u0915\u0947 \u0927\u093E\u0917\u0947 \u0916\u094B\u0932 \u0921\u093E\u0932\u0947! - UP Tak.mp3",
+  "SampleFileName": "Atul Pradhan attacks Sangeet Som \u092D\u0921\u093C\u0915\u0947 \u0905\u0924\u0941\u0932 \u092A\u094D\u0930\u0927\u093E\u0928 \u0928\u0947 \u0938\u0902\u0917\u0940\u0924 \u0938\u094B\u092E \u0915\u0947 \u0927\u093E\u0917\u0947 \u0916\u094B\u0932 \u0921\u093E\u0932\u0947! - UP Tak.mp3",
+  "SampleSizeBytes": 941800,
+  "ConsentNote": "I confirm I own this voice or have explicit permission to use it for this AI voice workflow.",
+  "UserBrief": "Create a consent-based Hindi voiceover sample for a public information video.",
+  "SafetyPolicy": "Use only voices you own or have explicit permission to use. Label generated output as AI-generated."
+}

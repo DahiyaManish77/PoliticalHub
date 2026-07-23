@@ -1,0 +1,132 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.LatestNewsVM>
+
+@{
+    ViewBag.Title = "Latest News";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.LatestNewsVM>() : Model.ToList();
+    var publicNewsUrl = Url.Action("Index", "News", new { area = "" });
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Latest Campaign Activities</h1>
+        <p>Create and manage news, announcements, press updates and homepage activity cards.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@publicNewsUrl" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview News
+        </a>
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add News
+        </a>
+    </div>
+</div>
+
+<div class="admin-ticker-stats news-cms-stats">
+    <div><span>Total News</span><strong>@rows.Count</strong></div>
+    <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+    <div><span>Featured</span><strong>@rows.Count(x => x.IsFeatured)</strong></div>
+    <div><span>This Month</span><strong>@rows.Count(x => x.PublishDate.Month == DateTime.Now.Month && x.PublishDate.Year == DateTime.Now.Year)</strong></div>
+</div>
+
+<div class="admin-card homepage-section-manager news-cms-panel">
+    <div class="section-manager-toolbar">
+        <div>
+            <h2>News Library</h2>
+            <span>Sorted by display order and publish date</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table admin-table section-manager-table news-cms-table">
+            <thead>
+                <tr>
+                    <th style="width: 92px;">Image</th>
+                    <th>News</th>
+                    <th style="width: 130px;">Publish Date</th>
+                    <th style="width: 110px;">Order</th>
+                    <th style="width: 150px;">Status</th>
+                    <th class="text-end" style="width: 170px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!rows.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="fas fa-newspaper fa-2x d-block mb-2"></i>
+                            No news has been added yet.
+                        </td>
+                    </tr>
+                }
+
+                @foreach (var item in rows.OrderBy(x => x.DisplayOrder).ThenByDescending(x => x.PublishDate))
+                {
+                    var imagePath = !String.IsNullOrWhiteSpace(item.ImagePath)
+                        ? Url.Content(item.ImagePath)
+                        : Url.Content("~/Content/images/no-image-news.jpg");
+
+                    <tr>
+                        <td>
+                            <img src="@imagePath" alt="@item.Title" class="news-thumb" />
+                        </td>
+                        <td>
+                            <div class="section-name-block">
+                                <strong>@item.Title</strong>
+                                @if (!String.IsNullOrWhiteSpace(item.ShortDescription))
+                                {
+                                    <span>@(item.ShortDescription.Length > 150 ? item.ShortDescription.Substring(0, 150) + "..." : item.ShortDescription)</span>
+                                }
+                                <code>NewsId: @item.NewsId</code>
+                            </div>
+                        </td>
+                        <td>@item.PublishDate.ToString("dd MMM yyyy")</td>
+                        <td><span class="ticker-order"><i class="fas fa-sort"></i>@item.DisplayOrder</span></td>
+                        <td>
+                            <span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span>
+                            @if (item.IsFeatured)
+                            {
+                                <span class="badge bg-warning text-dark ms-1">Featured</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <a href="@Url.Action("Details", "News", new { area = "", id = item.NewsId })" target="_blank" class="btn btn-sm btn-outline-secondary" title="Preview">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="@Url.Action("Edit", new { id = item.NewsId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-outline-danger btnDelete" data-id="@item.NewsId" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(".btnDelete").click(function () {
+            var id = $(this).data("id");
+
+            Swal.fire({
+                title: "Delete News?",
+                text: "This action cannot be undone.",
+                icon: "warning",
+                showCancelButton: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.post('@Url.Action("Delete")', { id: id }, function () {
+                        location.reload();
+                    });
+                }
+            });
+        });
+    </script>
+}

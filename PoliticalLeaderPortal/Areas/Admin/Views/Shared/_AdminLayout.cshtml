@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1" />
+
+    <title>
+        @(ViewBag.Title ?? "Admin Panel")
+    </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link href="~/Areas/Admin/Content/admin.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/admin-pro-polish.css?v=20260719-1" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/admin-campaign-dashboard.css?v=20260723-1" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+</head>
+<body class="admin-lte-shell">
+
+    @{
+        var adminName = Convert.ToString(Session["UserName"]);
+        var roleName = Convert.ToString(Session["RoleName"]);
+
+        if (String.IsNullOrWhiteSpace(adminName))
+        {
+            adminName = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin";
+        }
+
+        if (String.IsNullOrWhiteSpace(roleName))
+        {
+            roleName = "Administrator";
+        }
+    }
+
+    <div class="admin-app">
+        <aside class="admin-sidebar admin-main-sidebar" id="adminSidebar">
+            <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })" class="admin-brand">
+                <span class="admin-brand-mark">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </span>
+                <span>
+                    <strong>जनसेवा अभियान</strong>
+                    <small>Election Campaign</small>
+                </span>
+            </a>
+
+            <div class="admin-user-panel d-none">
+                <div class="admin-user-avatar">
+                    @adminName.Substring(0, 1).ToUpper()
+                </div>
+                <div>
+                    <strong>@adminName</strong>
+                    <span>@roleName</span>
+                </div>
+            </div>
+
+            <div class="admin-sidebar-search d-none">
+                <i class="bi bi-search"></i>
+                <input type="search"
+                       id="adminSidebarSearch"
+                       placeholder="Search menu" />
+            </div>
+
+            <nav class="admin-sidebar-nav">
+                @Html.Action("AdminSidebar", "MenuCMS")
+            </nav>
+
+            <button type="button"
+                    class="admin-sidebar-collapse"
+                    id="adminSidebarCollapse"
+                    aria-label="Collapse sidebar">
+                <i class="bi bi-chevron-left"></i>
+                <span>Collapse</span>
+            </button>
+        </aside>
+
+        <div class="admin-main">
+            <header class="admin-navbar">
+                <div class="admin-navbar-left">
+                    <button type="button"
+                            class="admin-icon-btn"
+                            id="adminSidebarToggle"
+                            aria-label="Toggle sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                    <div class="admin-global-search">
+                        <input type="search"
+                               placeholder="Search anything..."
+                               aria-label="Global search" />
+                        <i class="bi bi-search"></i>
+                    </div>
+                </div>
+
+                <div class="admin-navbar-right">
+                    <a href="@Url.Action("Index", "Home", new { area = "" })"
+                       class="admin-top-link"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                        <span>View Site</span>
+                    </a>
+
+                    <div class="admin-language-dropdown" id="siteLanguageWrapper">
+                        <button type="button"
+                                id="siteLanguageButton"
+                                class="admin-language-btn"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="bi bi-translate"></i>
+                            <span id="siteSelectedLanguage">English</span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+
+                        <ul class="admin-language-menu">
+                            <li data-lang="en">English</li>
+                            <li data-lang="hi">Hindi</li>
+                            <li data-lang="pa">Punjabi</li>
+                            <li data-lang="gu">Gujarati</li>
+                            <li data-lang="mr">Marathi</li>
+                            <li data-lang="bn">Bengali</li>
+                            <li data-lang="ta">Tamil</li>
+                            <li data-lang="te">Telugu</li>
+                        </ul>
+                    </div>
+
+                    <button type="button" class="admin-notification-btn" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span>7</span>
+                    </button>
+
+                    <div class="admin-navbar-user">
+                        <span>@adminName.Substring(0, 1).ToUpper()</span>
+                        <div>
+                            <strong>@adminName</strong>
+                            <small>@roleName</small>
+                        </div>
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <main class="admin-content">
+@RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+
+    <script>
+        window.adminFlash = {
+            success: @Html.Raw(Json.Encode(TempData["SuccessMessage"] ?? TempData["Success"])),
+            error: @Html.Raw(Json.Encode(TempData["ErrorMessage"] ?? TempData["Error"])),
+            warning: @Html.Raw(Json.Encode(TempData["WarningMessage"] ?? TempData["Warning"]))
+        };
+    </script>
+
+    <script src="~/Areas/Admin/Scripts/admin.js"></script>
+
+    @RenderSection("Scripts", false)
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {
+                    pageLanguage: 'en',
+                    autoDisplay: false
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+
+    <div id="google_translate_element"
+         style="display:none;">
+    </div>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
+
+

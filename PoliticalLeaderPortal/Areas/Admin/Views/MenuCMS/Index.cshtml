@@ -1,0 +1,662 @@
+﻿@{
+    ViewBag.Title = "Menu Management";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid menu-management-page">
+
+    <!-- ========================================================= -->
+    <!-- Enterprise Breadcrumb                                     -->
+    <!-- ========================================================= -->
+
+    <nav aria-label="breadcrumb"
+         class="mb-4">
+
+        <ol class="breadcrumb menu-breadcrumb">
+
+            <li class="breadcrumb-item">
+
+                <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })">
+
+                    <i class="fas fa-home me-1"></i>
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li class="breadcrumb-item">
+
+                Content Management
+
+            </li>
+
+            <li class="breadcrumb-item active"
+                aria-current="page">
+
+                Menu Management
+
+            </li>
+
+        </ol>
+
+    </nav>
+    </div>
+    <!-- ========================================================= -->
+    <!-- Enterprise Page Header                                    -->
+    <!-- ========================================================= -->
+
+    <div class="card border-0 shadow-sm mb-4 menu-page-header">
+
+        <div class="card-body p-4">
+
+            <div class="row align-items-center">
+
+                <div class="col-xl-8 col-lg-7">
+
+                    <div class="d-flex align-items-start">
+
+                        <div class="menu-header-icon me-4">
+
+                            <i class="fas fa-sitemap"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h2 class="fw-bold mb-2">
+
+                                Menu Management
+
+                            </h2>
+
+                            <p class="text-muted mb-3">
+
+                                Centralized Navigation Management System for
+                                Website Navigation, Admin Sidebar,
+                                Footer Links and future Mega Menu support.
+
+                            </p>
+
+                            <div class="d-flex flex-wrap gap-2">
+
+                                <span class="badge bg-primary">
+
+                                    Website Menu
+
+                                </span>
+
+                                <span class="badge bg-success">
+
+                                    Admin Sidebar
+
+                                </span>
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Footer Links
+
+                                </span>
+
+                                <span class="badge bg-info text-dark">
+
+                                    Mega Menu Ready
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-4 col-lg-5 text-lg-end mt-4 mt-lg-0">
+
+                    <a href="@Url.Action("CreateMenu","MenuCMS")"
+                       class="btn btn-primary btn-lg me-2">
+
+                        <i class="fas fa-plus-circle me-2"></i>
+
+                        Add Menu
+
+                    </a>
+
+                    <button type="button"
+                            id="btnRefresh"
+                            class="btn btn-outline-secondary btn-lg">
+
+                        <i class="fas fa-sync-alt me-2"></i>
+
+                        Refresh
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- Dashboard Statistics                                      -->
+    <!-- ========================================================= -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Total Menus -->
+
+        <div class="col-xl-3 col-lg-6 col-md-6">
+
+            <div class="card border-0 shadow-sm menu-stat-card">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <div class="text-muted text-uppercase small">
+
+                                Total Menus
+
+                            </div>
+
+                            <h2 class="fw-bold mt-2 mb-1">
+
+                                <span id="totalMenus">
+
+                                    0
+
+                                </span>
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                                All configured menus
+
+                            </small>
+
+                        </div>
+
+                        <div class="menu-stat-icon bg-primary">
+
+                            <i class="fas fa-sitemap"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Active Menus -->
+
+        <div class="col-xl-3 col-lg-6 col-md-6">
+
+            <div class="card border-0 shadow-sm menu-stat-card">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <div class="text-muted text-uppercase small">
+
+                                Active Menus
+
+                            </div>
+
+                            <h2 class="fw-bold mt-2 mb-1">
+
+                                <span id="activeMenus">
+
+                                    0
+
+                                </span>
+
+                            </h2>
+
+                            <small class="text-success">
+
+                                Currently Visible
+
+                            </small>
+
+                        </div>
+
+                        <div class="menu-stat-icon bg-success">
+
+                            <i class="fas fa-check-circle"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Parent Menus -->
+        <!-- ========================================================= -->
+        <!-- START : PART 2 OF 5                                       -->
+        <!-- Enterprise Dashboard Statistics                           -->
+        <!-- ========================================================= -->
+
+        <div class="row g-4 mb-4">
+
+            <!-- ===================================================== -->
+            <!-- Total Menus                                            -->
+            <!-- ===================================================== -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6">
+
+                <div class="card border-0 shadow-sm menu-stat-card h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <div class="text-uppercase text-muted small fw-semibold">
+
+                                    Total Menus
+
+                                </div>
+
+                                <h2 class="fw-bold mt-2 mb-1">
+
+                                    <span id="totalMenus">
+
+                                        0
+
+                                    </span>
+
+                                </h2>
+
+                                <small class="text-muted">
+
+                                    All menus configured in the CMS
+
+                                </small>
+
+                            </div>
+
+                            <div class="menu-stat-icon bg-primary">
+
+                                <i class="fas fa-sitemap"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- Active Menus                                           -->
+            <!-- ===================================================== -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6">
+
+                <div class="card border-0 shadow-sm menu-stat-card h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <div class="text-uppercase text-muted small fw-semibold">
+
+                                    Active Menus
+
+                                </div>
+
+                                <h2 class="fw-bold mt-2 mb-1">
+
+                                    <span id="activeMenus">
+
+                                        0
+
+                                    </span>
+
+                                </h2>
+
+                                <small class="text-success">
+
+                                    Visible to users
+
+                                </small>
+
+                            </div>
+
+                            <div class="menu-stat-icon bg-success">
+
+                                <i class="fas fa-check-circle"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- Parent Menus                                           -->
+            <!-- ===================================================== -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6">
+
+                <div class="card border-0 shadow-sm menu-stat-card h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <div class="text-uppercase text-muted small fw-semibold">
+
+                                    Parent Menus
+
+                                </div>
+
+                                <h2 class="fw-bold mt-2 mb-1">
+
+                                    <span id="parentMenus">
+
+                                        0
+
+                                    </span>
+
+                                </h2>
+
+                                <small class="text-muted">
+
+                                    Root level navigation
+
+                                </small>
+
+                            </div>
+
+                            <div class="menu-stat-icon bg-warning">
+
+                                <i class="fas fa-layer-group"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===================================================== -->
+            <!-- Hidden Menus                                           -->
+            <!-- ===================================================== -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6">
+
+                <div class="card border-0 shadow-sm menu-stat-card h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <div class="text-uppercase text-muted small fw-semibold">
+
+                                    Hidden Menus
+
+                                </div>
+
+                                <h2 class="fw-bold mt-2 mb-1">
+
+                                    <span id="hiddenMenus">
+
+                                        0
+
+                                    </span>
+
+                                </h2>
+
+                                <small class="text-danger">
+
+                                    Currently disabled
+
+                                </small>
+
+                            </div>
+
+                            <div class="menu-stat-icon bg-danger">
+
+                                <i class="fas fa-eye-slash"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- END : PART 2 OF 5                                         -->
+        <!-- Next Part Starts With Enterprise Action Toolbar           -->
+        <!-- ========================================================= -->
+        <!-- ========================================================= -->
+        <!-- START : PART 3 OF 5                                       -->
+        <!-- Enterprise Search Workspace                               -->
+        <!-- ========================================================= -->
+
+        <div class="card border-0 shadow-sm mb-4 menu-workspace-card">
+
+            <div class="card-header bg-white border-0">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-8">
+
+                        <h5 class="fw-bold mb-1">
+
+                            <i class="fas fa-search text-primary me-2"></i>
+
+                            Search Workspace
+
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Search menus instantly by name. Additional enterprise
+                            filters will be enabled in the next implementation phase.
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+
+                        <span class="badge bg-primary">
+
+                            Live Search Enabled
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row align-items-end">
+
+                    <!-- ============================================= -->
+                    <!-- Search Box                                    -->
+                    <!-- ============================================= -->
+
+                    <div class="col-xl-8 col-lg-8">
+
+                        <label class="form-label fw-semibold">
+
+                            Search Menu
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="fas fa-search"></i>
+
+                            </span>
+
+                            <input type="text"
+                                   id="txtSearch"
+                                   class="form-control form-control-lg"
+                                   placeholder="Search menu name..." />
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Live filtering is performed while typing.
+
+                        </small>
+
+                    </div>
+
+                    <!-- ============================================= -->
+                    <!-- Information Panel                             -->
+                    <!-- ============================================= -->
+
+                    <div class="col-xl-4 col-lg-4 mt-4 mt-lg-0">
+
+                        <div class="alert alert-light border mb-0">
+
+                            <div class="fw-semibold mb-2">
+
+                                <i class="fas fa-lightbulb text-warning me-2"></i>
+
+                                Quick Tips
+
+                            </div>
+
+                            <ul class="mb-0 ps-3 small">
+
+                                <li>
+
+                                    Search updates automatically.
+
+                                </li>
+
+                                <li>
+
+                                    Use meaningful menu names.
+
+                                </li>
+
+                                <li>
+
+                                    Keep navigation hierarchy simple.
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- END : PART 3 OF 5                                         -->
+        <!-- Next Part Starts With Menu Grid Container                 -->
+        <!-- ========================================================= -->
+        <!-- ========================================================= -->
+        <!-- START : PART 4 OF 5                                       -->
+        <!-- Enterprise Menu Grid                                      -->
+        <!-- ========================================================= -->
+
+        <div class="card border-0 shadow-sm menu-grid-card">
+
+            <div class="card-header bg-white">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h5 class="fw-bold mb-1">
+
+                            <i class="fas fa-list-ul text-primary me-2"></i>
+
+                            Menu Directory
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Manage all configured menus from a centralized list.
+
+                        </small>
+
+                    </div>
+
+                    <span class="badge bg-primary">
+
+                        Live Data
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="card-body p-0">
+
+                <div id="menuListContainer">
+
+                    @Html.Action("MenuList", "MenuCMS")
+
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+        <!-- ========================================================= -->
+        <!-- END : PART 4 OF 5                                         -->
+        <!-- Next Part : Styles & Scripts                              -->
+        <!-- ========================================================= -->

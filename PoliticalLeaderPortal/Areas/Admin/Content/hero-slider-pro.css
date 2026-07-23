@@ -1,0 +1,172 @@
+.hero-pro-page {
+    padding: 18px;
+}
+
+.hero-pro-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+}
+
+.hero-pro-eyebrow {
+    color: #f97316;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.hero-pro-header h3 {
+    margin: 2px 0 4px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.hero-pro-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.hero-pro-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.hero-pro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 18px;
+}
+
+.hero-pro-main,
+.hero-pro-side {
+    display: grid;
+    gap: 18px;
+    align-content: start;
+}
+
+.hero-pro-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
+}
+
+.hero-pro-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.hero-pro-card-head h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    color: #172033;
+}
+
+.hero-pro-card-head span {
+    display: block;
+    margin-top: 2px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.hero-pro-card-head > i {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #0f172a;
+    background: #f1f5f9;
+}
+
+.hero-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.hero-upload-card {
+    padding: 14px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.hero-upload-label {
+    display: grid;
+    gap: 3px;
+    margin-bottom: 10px;
+}
+
+.hero-upload-label i {
+    color: #f97316;
+    font-size: 20px;
+}
+
+.hero-upload-label strong {
+    color: #111827;
+    font-size: 13px;
+}
+
+.hero-upload-label small,
+.hero-current-file {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.hero-current-file {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.hero-pro-page .form-label {
+    color: #334155;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.hero-pro-page .form-control,
+.hero-pro-page .form-select {
+    min-height: 40px;
+    border-radius: 7px;
+    border-color: #d8e0ea;
+    font-size: 14px;
+}
+
+@media (max-width: 1199px) {
+    .hero-pro-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-pro-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-pro-actions .btn {
+        width: 100%;
+    }
+
+    .hero-upload-grid {
+        grid-template-columns: 1fr;
+    }
+}

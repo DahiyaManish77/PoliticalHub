@@ -1,0 +1,226 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.ViewModels.GalleryCategoryListVM>
+
+@{
+    ViewBag.Title = "Gallery Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <h2 class="fw-bold">
+                Gallery Categories
+            </h2>
+
+        </div>
+
+        <div class="col-md-6 text-end">
+
+            <a href="@Url.Action("Create","GalleryCategory")"
+               class="btn btn-primary">
+
+                <i class="bi bi-plus-circle"></i>
+                Add New Category
+
+            </a>
+
+        </div>
+
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+
+            @TempData["SuccessMessage"]
+
+        </div>
+    }
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th style="width:100px;">
+                                Cover
+                            </th>
+
+                            <th>
+                                Category Name
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Images
+                            </th>
+
+                            <th>
+                                Order
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th style="width:220px;">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @if (!string.IsNullOrWhiteSpace(item.CoverImagePath))
+                                        {
+                                            <img src="@Url.Content(item.CoverImagePath)"
+                                                 class="img-thumbnail"
+                                                 style="width:80px;height:60px;object-fit:cover;" />
+                                        }
+                                        else
+                                        {
+                                            <span>No Image</span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+
+                                            @item.CategoryName
+
+                                        </strong>
+
+                                    </td>
+
+                                    <td>
+
+                                        @{
+                                            string description =
+                                                string.IsNullOrWhiteSpace(item.CategoryDescription)
+                                                ? ""
+                                                : item.CategoryDescription;
+                                        }
+
+                                        @(description.Length > 80
+                                            ? description.Substring(0, 80) + "..."
+                                            : description)
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-info">
+
+                                            @item.TotalImages
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.DisplayOrder
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge bg-success">
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                Inactive
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Details",
+                                                "GalleryCategory",
+                                                new { id = item.GalleryCategoryId })"
+                                           class="btn btn-info btn-sm">
+
+                                            View
+
+                                        </a>
+
+                                        <a href="@Url.Action("Edit",
+                                                "GalleryCategory",
+                                                new { id = item.GalleryCategoryId })"
+                                           class="btn btn-warning btn-sm">
+
+                                            Edit
+
+                                        </a>
+
+                                        <a href="@Url.Action("Delete",
+                                                "GalleryCategory",
+                                                new { id = item.GalleryCategoryId })"
+                                           class="btn btn-danger btn-sm">
+
+                                            Delete
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="7"
+                                    class="text-center">
+
+                                    No Gallery Categories Found
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

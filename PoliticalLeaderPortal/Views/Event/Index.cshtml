@@ -1,0 +1,129 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.ViewModels.UpcomingEventListVM>
+
+@{
+    ViewBag.Title = "Upcoming Events";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="events-page py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="events-subtitle">
+                Upcoming Events
+            </span>
+
+            <h1 class="events-title">
+                Join Our Upcoming Programs & Public Meetings
+            </h1>
+
+            <p class="events-description">
+                Stay informed about upcoming meetings, public interactions,
+                development programs, awareness campaigns and special events.
+            </p>
+
+        </div>
+
+        <div class="row">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+
+                        <div class="event-card">
+
+                            @if (!string.IsNullOrWhiteSpace(item.EventImagePath))
+                            {
+                                <div class="event-image">
+
+                                    <img src="@Url.Content(item.EventImagePath)"
+                                         alt="@item.Title"
+                                         class="img-fluid" />
+
+                                </div>
+                            }
+
+                            <div class="event-content">
+
+                                <div class="event-date">
+
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    @item.EventDate.ToString("dd MMM yyyy")
+
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(item.EventTime))
+                                {
+                                    <div class="event-time">
+
+                                        <i class="bi bi-clock"></i>
+
+                                        @item.EventTime
+
+                                    </div>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(item.EventLocation))
+                                {
+                                    <div class="event-location">
+
+                                        <i class="bi bi-geo-alt"></i>
+
+                                        @item.EventLocation
+
+                                    </div>
+                                }
+
+                                <h3 class="event-title">
+
+                                    @item.Title
+
+                                </h3>
+
+                                <p class="event-short-desc">
+
+                                    @(string.IsNullOrWhiteSpace(item.ShortDescription)
+                                        ? ""
+                                        : item.ShortDescription)
+
+                                </p>
+
+                                <a href="@Url.Action("Details",
+                                                    "Event",
+                                                    new { id = item.EventId })"
+                                   class="btn-event-readmore">
+
+                                    Read More
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+
+                    <div class="alert alert-info text-center">
+
+                        No Upcoming Events Available.
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>

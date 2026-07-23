@@ -1,0 +1,95 @@
+﻿@model PoliticalLeaderPortal.ViewModels.UpcomingEventDetailsVM
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="event-details-page">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                <article class="event-details-card">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.EventImagePath))
+                    {
+                        <div class="event-main-image">
+
+                            <img src="@Url.Content(Model.EventImagePath)"
+                                 alt="@Model.Title"
+                                 class="img-fluid" />
+
+                        </div>
+                    }
+
+                    <div class="event-details-content">
+
+                        <div class="event-meta">
+
+                            <span class="event-meta-item">
+
+                                <i class="bi bi-calendar-event"></i>
+
+                                @Model.EventDate.ToString("dd MMM yyyy")
+
+                            </span>
+
+                            @if (!string.IsNullOrWhiteSpace(Model.EventTime))
+                            {
+                                <span class="event-meta-item">
+
+                                    <i class="bi bi-clock"></i>
+
+                                    @Model.EventTime
+
+                                </span>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(Model.EventLocation))
+                            {
+                                <span class="event-meta-item">
+
+                                    <i class="bi bi-geo-alt"></i>
+
+                                    @Model.EventLocation
+
+                                </span>
+                            }
+
+                        </div>
+
+                        <h1 class="event-main-title">
+
+                            @Model.Title
+
+                        </h1>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ShortDescription))
+                        {
+                            <div class="event-summary-box">
+
+                                @Model.ShortDescription
+
+                            </div>
+                        }
+                    <div class="event-article-body">
+
+                        @Html.Raw(Model.FullDescription)
+
+                    </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,633 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+
+                <i class="fa fa-magic text-primary me-2"></i>
+
+                Premium Animation &amp; Effects Studio
+
+            </h3>
+
+            <p class="hero-section-description">
+
+                Configure slider transitions, text animations, overlays and visual effects.
+
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+
+            Step 5 of 6
+
+        </span>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- SLIDER TRANSITION -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Slider Transition
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            @{
+                string[] transitions =
+                {
+                    "Fade",
+                    "Slide",
+                    "Zoom",
+                    "Flip",
+                    "Cube",
+                    "Coverflow"
+                };
+            }
+
+            <div class="hero-option-grid">
+
+                @for (int i = 0; i < transitions.Length; i++)
+                {
+                    var id = "transition_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.SliderTransition,
+                        transitions[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-option-card" for="@id">
+
+                        <span class="hero-option-icon">
+
+                            <i class="fa fa-random"></i>
+
+                        </span>
+
+                        <span class="hero-option-name">
+
+                            @transitions[i]
+
+                        </span>
+
+                        <span class="hero-option-desc">
+
+                            Transition Effect
+
+                        </span>
+
+                    </label>
+                }
+
+            </div>
+
+            <div class="hero-transition-preview mt-4">
+
+                <div class="hero-transition-box"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- TITLE ANIMATION -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Title Animation
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            @{
+                string[] titleAnimations =
+                {
+                    "None",
+                    "Fade Up",
+                    "Fade Down",
+                    "Slide Left",
+                    "Slide Right",
+                    "Zoom",
+                    "Bounce"
+                };
+            }
+
+            <div class="hero-option-grid">
+
+                @for (int i = 0; i < titleAnimations.Length; i++)
+                {
+                    var id = "titleAnimation_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.TitleAnimation,
+                        titleAnimations[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-option-card" for="@id">
+
+                        <span class="hero-option-icon">
+
+                            <i class="fa fa-header"></i>
+
+                        </span>
+
+                        <span class="hero-option-name">
+
+                            @titleAnimations[i]
+
+                        </span>
+
+                    </label>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- SUBTITLE ANIMATION -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Subtitle Animation
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            <div class="hero-option-grid">
+
+                @for (int i = 0; i < titleAnimations.Length; i++)
+                {
+                    var id = "subtitleAnimation_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.SubTitleAnimation,
+                        titleAnimations[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-option-card" for="@id">
+
+                        <span class="hero-option-icon">
+
+                            <i class="fa fa-font"></i>
+
+                        </span>
+
+                        <span class="hero-option-name">
+
+                            @titleAnimations[i]
+
+                        </span>
+
+                    </label>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- DESCRIPTION ANIMATION -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Description Animation
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            <div class="hero-option-grid">
+
+                @for (int i = 0; i < titleAnimations.Length; i++)
+                {
+                    var id = "descriptionAnimation_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.DescriptionAnimation,
+                        titleAnimations[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-option-card" for="@id">
+
+                        <span class="hero-option-icon">
+
+                            <i class="fa fa-align-left"></i>
+
+                        </span>
+
+                        <span class="hero-option-name">
+
+                            @titleAnimations[i]
+
+                        </span>
+
+                    </label>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- BUTTON ANIMATION -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Button Animation
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            @{
+                string[] buttonAnimations =
+                {
+                    "None",
+                    "Pulse",
+                    "Scale",
+                    "Fade",
+                    "Bounce",
+                    "Zoom"
+                };
+            }
+
+            <div class="hero-option-grid">
+
+                @for (int i = 0; i < buttonAnimations.Length; i++)
+                {
+                    var id = "buttonAnimation_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.ButtonAnimation,
+                        buttonAnimations[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-option-card" for="@id">
+
+                        <span class="hero-option-icon">
+
+                            <i class="fa fa-hand-pointer-o"></i>
+
+                        </span>
+
+                        <span class="hero-option-name">
+
+                            @buttonAnimations[i]
+
+                        </span>
+
+                    </label>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ====================================================== -->
+    <!-- OVERLAY -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Overlay Type
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            @{
+                string[] overlays =
+                {
+                    "None",
+                    "Dark",
+                    "Light",
+                    "Blue",
+                    "Gradient"
+                };
+            }
+
+            <div class="hero-overlay-grid">
+
+                @for (int i = 0; i < overlays.Length; i++)
+                {
+                    var id = "overlay_" + i;
+
+                    @Html.RadioButtonFor(
+                        m => m.OverlayType,
+                        overlays[i],
+                        new
+                        {
+                            id = id,
+                            @class = "d-none"
+                        })
+
+                    <label class="hero-overlay-card" for="@id">
+
+                        <span class="hero-overlay-preview"></span>
+
+                        <span class="hero-overlay-caption">
+
+                            @overlays[i]
+
+                        </span>
+
+                    </label>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- OPACITY -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Overlay Opacity
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            <div class="hero-slider-group">
+
+                <div class="hero-slider-header">
+
+                    <span>
+
+                        Opacity
+
+                    </span>
+
+                    <span class="hero-slider-value">
+
+                        @(Model.OverlayOpacity.HasValue
+                            ? Model.OverlayOpacity.Value.ToString("0.00")
+                            : "0.50")
+
+                    </span>
+
+                </div>
+
+                @Html.TextBoxFor(
+                    m => m.OverlayOpacity,
+                    new
+                    {
+                        type = "range",
+                        min = "0",
+                        max = "1",
+                        step = "0.05",
+                        @class = "hero-range"
+                    })
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- ANIMATION TIMELINE -->
+    <!-- ====================================================== -->
+
+    <div class="hero-animation-card mb-4">
+
+        <div class="hero-animation-card-header">
+
+            <div class="hero-animation-card-title">
+
+                Animation Timeline
+
+            </div>
+
+        </div>
+
+        <div class="hero-animation-card-body">
+
+            <div class="hero-timeline">
+
+                <div class="hero-timeline-row">
+
+                    <div class="hero-timeline-label">
+
+                        Title
+
+                    </div>
+
+                    <div class="hero-timeline-track">
+
+                        <div class="hero-timeline-fill"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-timeline-row">
+
+                    <div class="hero-timeline-label">
+
+                        Subtitle
+
+                    </div>
+
+                    <div class="hero-timeline-track">
+
+                        <div class="hero-timeline-fill"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-timeline-row">
+
+                    <div class="hero-timeline-label">
+
+                        Description
+
+                    </div>
+
+                    <div class="hero-timeline-track">
+
+                        <div class="hero-timeline-fill"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-timeline-row">
+
+                    <div class="hero-timeline-label">
+
+                        Buttons
+
+                    </div>
+
+                    <div class="hero-timeline-track">
+
+                        <div class="hero-timeline-fill"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- LIVE PREVIEW -->
+    <!-- ====================================================== -->
+
+    <div class="hero-live-preview">
+
+        <h2>
+
+            Building a Better Tomorrow
+
+        </h2>
+
+        <h5>
+
+            Strong Leadership. Better Future.
+
+        </h5>
+
+        <p>
+
+            Live animation preview will become interactive after JavaScript integration.
+
+        </p>
+
+        <span class="hero-preview-button">
+
+            Learn More
+
+        </span>
+
+        <div class="hero-effect-tags mt-4">
+
+            <span class="hero-effect-tag">
+
+                Transition
+
+            </span>
+
+            <span class="hero-effect-tag">
+
+                Overlay
+
+            </span>
+
+            <span class="hero-effect-tag">
+
+                Animation
+
+            </span>
+
+            <span class="hero-effect-tag">
+
+                Responsive
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>

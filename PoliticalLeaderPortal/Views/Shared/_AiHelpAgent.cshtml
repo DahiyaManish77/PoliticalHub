@@ -1,0 +1,73 @@
+@{
+    var isAdminArea =
+        ViewContext.RouteData.DataTokens["area"] != null &&
+        Convert.ToString(ViewContext.RouteData.DataTokens["area"]).Equals("Admin", StringComparison.OrdinalIgnoreCase);
+}
+
+<div class="ai-help-agent"
+     data-ai-help-agent
+     data-context="@(isAdminArea ? "admin" : "public")">
+    <button type="button"
+            class="ai-help-launcher"
+            data-ai-help-toggle
+            aria-label="Open help center"
+            aria-expanded="false">
+        <span class="ai-help-launcher-icon">
+            <i class="bi bi-stars"></i>
+        </span>
+        <span class="ai-help-launcher-text">Help</span>
+    </button>
+
+    <section class="ai-help-panel"
+             data-ai-help-panel
+             aria-label="AI Help Center">
+        <header class="ai-help-header">
+            <div>
+                <span>AI Help Center</span>
+                <strong>What can I do?</strong>
+            </div>
+            <button type="button"
+                    class="ai-help-close"
+                    data-ai-help-close
+                    aria-label="Close help center">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </header>
+
+        <div class="ai-help-body" data-ai-help-body>
+            <div class="ai-help-message ai-help-message-bot">
+                <span class="ai-help-avatar"><i class="bi bi-robot"></i></span>
+                <div>
+                    Hi, I can guide you through this portal. Ask about admin modules, voter records, hero slider, citizen messages, events, permissions, or website content.
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-help-suggestions" data-ai-help-suggestions>
+            @if (isAdminArea)
+            {
+                <button type="button" data-ai-help-question="How do I add voter records?">Voter records</button>
+                <button type="button" data-ai-help-question="How do I update hero slider images or videos?">Hero slider</button>
+                <button type="button" data-ai-help-question="How do role permissions work?">Permissions</button>
+                <button type="button" data-ai-help-question="Where can I see citizen contact messages?">Citizen messages</button>
+            }
+            else
+            {
+                <button type="button" data-ai-help-question="How can I contact the office?">Contact office</button>
+                <button type="button" data-ai-help-question="How can I become a volunteer?">Become volunteer</button>
+                <button type="button" data-ai-help-question="How can I search news and updates?">Search updates</button>
+                <button type="button" data-ai-help-question="Where can I see events and gallery?">Events/gallery</button>
+            }
+        </div>
+
+        <form class="ai-help-form" data-ai-help-form>
+            <input type="text"
+                   data-ai-help-input
+                   autocomplete="off"
+                   placeholder="Type your question..." />
+            <button type="submit" aria-label="Send question">
+                <i class="bi bi-send-fill"></i>
+            </button>
+        </form>
+    </section>
+</div>

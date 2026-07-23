@@ -1,0 +1,195 @@
+@model List<PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.VoterRollPdfVM>
+
+@{
+    ViewBag.Title = "Official Voter Rolls";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    bool canCreate = ViewBag.CanCreate == true;
+    bool canEdit = ViewBag.CanEdit == true;
+    bool canDelete = ViewBag.CanDelete == true;
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <div class="text-uppercase small fw-semibold text-primary">Sardhana AC 44</div>
+                <h4 class="mb-0 fw-bold">Official Voter Roll PDFs</h4>
+                <small class="text-muted">Booth-wise official electoral roll register with source, file and search metadata.</small>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="@Url.Action("Index", "Voter")" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-people"></i> Voter Records
+                </a>
+                @if (canCreate)
+                {
+                    <a href="@Url.Action("CreateRoll", "Voter")" class="btn btn-primary btn-sm">
+                        <i class="bi bi-file-earmark-plus"></i> Add Roll PDF
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("Rolls", "Voter", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            {
+                <div class="col-lg-5">
+                    <input type="search" name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Search by booth, village, ward, polling station, AC or district" />
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" name="village" value="@ViewBag.Village" class="form-control" placeholder="Village" />
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" name="partNumber" value="@ViewBag.PartNumber" class="form-control" placeholder="Part no." />
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+                </div>
+            }
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <div class="border rounded-2 p-3 bg-light">
+                        <div class="small text-muted">PDF Records</div>
+                        <div class="fs-4 fw-bold">@Model.Count</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded-2 p-3 bg-light">
+                        <div class="small text-muted">Villages Covered</div>
+                        <div class="fs-4 fw-bold">@Model.Where(x => !String.IsNullOrWhiteSpace(x.Village)).Select(x => x.Village).Distinct().Count()</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded-2 p-3 bg-light">
+                        <div class="small text-muted">Latest Roll Year</div>
+                        <div class="fs-4 fw-bold">@(Model.Any() ? Model.Max(x => x.RollYear).ToString() : "-")</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Part</th>
+                            <th>Booth / Polling Station</th>
+                            <th>Village / Ward</th>
+                            <th>Constituency</th>
+                            <th>Year</th>
+                            <th>Source</th>
+                            <th class="text-end" width="170">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-5">
+                                    <i class="bi bi-file-earmark-pdf fs-1 d-block mb-2"></i>
+                                    No official voter roll PDFs saved yet.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="badge bg-primary">@item.PartNumber</span></td>
+                                <td>
+                                    <strong>@(String.IsNullOrWhiteSpace(item.BoothName) ? "Booth " + item.PartNumber : item.BoothName)</strong>
+                                    <div class="small text-muted">@item.PollingStation</div>
+                                </td>
+                                <td>@item.Village <div class="small text-muted">@item.Ward</div></td>
+                                <td>
+                                    @item.AssemblyConstituency
+                                    <div class="small text-muted">@item.District, @item.State</div>
+                                </td>
+                                <td>
+                                    <strong>@item.RollYear</strong>
+                                    <div class="small text-muted">@item.RevisionType</div>
+                                </td>
+                                <td>
+                                    @if (!String.IsNullOrWhiteSpace(item.SourceUrl))
+                                    {
+                                        <a href="@item.SourceUrl" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if (!String.IsNullOrWhiteSpace(item.PdfFilePath))
+                                    {
+                                        <a href="@Url.Action("DownloadRoll", new { id = item.VoterRollPdfId })" class="btn btn-sm btn-outline-success" title="Download PDF">
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    }
+                                    @if (canEdit)
+                                    {
+                                        <a href="@Url.Action("EditRoll", new { id = item.VoterRollPdfId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-outline-danger btnDeleteRoll" data-id="@item.VoterRollPdfId" data-delete-url="@Url.Action("DeleteRoll")" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function notify(options) {
+                if (window.Swal) return Swal.fire(options);
+                alert(options.text || options.title || "");
+                return Promise.resolve({ isConfirmed: true });
+            }
+
+            document.querySelectorAll(".btnDeleteRoll").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    notify({
+                        title: "Delete PDF record?",
+                        text: "The roll register entry will be removed from the admin list.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete",
+                        cancelButtonText: "Cancel"
+                    }).then(function (result) {
+                        if (!result.isConfirmed) return;
+
+                        fetch(button.getAttribute("data-delete-url"), {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                                "X-Requested-With": "XMLHttpRequest"
+                            },
+                            body: "id=" + encodeURIComponent(button.getAttribute("data-id"))
+                        })
+                        .then(function (response) { return response.json(); })
+                        .then(function (data) {
+                            notify({
+                                title: data.success ? "Deleted" : "Not deleted",
+                                text: data.message,
+                                icon: data.success ? "success" : "error"
+                            }).then(function () {
+                                if (data.success) window.location.reload();
+                            });
+                        });
+                    });
+                });
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,104 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.TodayScheduleVM
+
+@{
+    bool isEdit = Model != null && Model.TodayScheduleId > 0;
+    ViewBag.Title = isEdit ? "Edit Schedule" : "Add Schedule";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <div class="text-uppercase small fw-semibold text-primary">Today's Schedule</div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <small class="text-muted">Create a clean daily itinerary entry with timing, place and coordination details.</small>
+            </div>
+            <a href="@Url.Action("Index", "TodaySchedule")" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm(isEdit ? "Edit" : "Create", "TodaySchedule", FormMethod.Post, new { area = "Admin", @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.TodayScheduleId)
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger col-12" })
+
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.ScheduleDate, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ScheduleDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.ScheduleDate, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.ScheduleTime, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ScheduleTime, new { @class = "form-control", type = "time" })
+                    @Html.ValidationMessageFor(m => m.ScheduleTime, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Category, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.Category, new SelectList(new[] { "Public Program", "Meeting", "Jan Sampark", "Visit", "Development Review", "Party Work", "Media", "Personal", "Other" }, Model.Category), "Select", new { @class = "form-select" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m.Priority, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.Priority, new SelectList(new[] { "Low", "Medium", "High", "Critical" }, Model.Priority), "Select", new { @class = "form-select" })
+                </div>
+
+                <div class="col-md-8">
+                    @Html.LabelFor(m => m.Title, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Program title or meeting purpose" })
+                    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Status, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Scheduled", "In Progress", "Completed", "Postponed", "Cancelled" }, Model.Status), "Select", new { @class = "form-select" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Place, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Place, new { @class = "form-control", placeholder = "Village, venue, office or meeting place" })
+                    @Html.ValidationMessageFor(m => m.Place, "", new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.MapLink, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.MapLink, new { @class = "form-control", placeholder = "Google Maps link" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.OrganizerName, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.OrganizerName, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.ContactPerson, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ContactPerson, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.ContactMobile, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ContactMobile, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.Description, 3, 40, new { @class = "form-control", placeholder = "Short public/internal description" })
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Notes, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.Notes, 3, 40, new { @class = "form-control", placeholder = "Protocol, travel, security, follow-up or internal notes" })
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                        <label class="form-check-label">Active</label>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 border-top pt-3">
+                    <a href="@Url.Action("Index", "TodaySchedule")" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Schedule</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

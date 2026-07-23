@@ -1,0 +1,129 @@
+﻿@model PoliticalLeaderPortal.ViewModels.LayoutHeaderVM
+
+@if (Model.ShowTopBar)
+{
+    <div class="top-bar">
+
+        <div class="container-fluid">
+
+            <div class="row align-items-center">
+
+                <!-- LEFT -->
+
+                <div class="col-lg-6 col-md-6 d-none d-md-block">
+
+                    <div class="top-bar-left">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+                        {
+                            <a href="tel:@Model.PhoneNumber">
+
+                                <i class="bi bi-telephone-fill"></i>
+
+                                <span>@Model.PhoneNumber</span>
+
+                            </a>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.EmailAddress))
+                        {
+                            <a href="mailto:@Model.EmailAddress">
+
+                                <i class="bi bi-envelope-fill"></i>
+
+                                <span>@Model.EmailAddress</span>
+
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+
+                <div class="col-lg-6 col-md-6 col-12">
+
+                    <div class="top-bar-right">
+
+                        @if (Model.ShowLanguageSwitcher)
+                        {
+
+                            <div class="custom-language-dropdown"
+                                 id="bkkuLangWrapper">
+
+                                <button type="button"
+                                        class="language-btn"
+                                        onclick="toggleLanguageMenu()">
+
+                                    <i class="bi bi-globe2"></i>
+
+                                    <span>
+
+                                        Language
+
+                                    </span>
+
+                                    <i class="bi bi-chevron-down"></i>
+
+                                </button>
+
+                                <ul class="language-menu">
+
+                                    <li onclick="changeLanguage('en')">
+
+                                        🇬🇧 English
+
+                                    </li>
+
+                                    <li onclick="changeLanguage('hi')">
+
+                                        🇮🇳 हिन्दी
+
+                                    </li>
+
+                                    <li onclick="changeLanguage('pa')">
+
+                                        Punjabi
+
+                                    </li>
+
+                                    <li onclick="changeLanguage('ur')">
+
+                                        Urdu
+
+                                    </li>
+
+                                    <li onclick="changeLanguage('ta')">
+
+                                        Tamil
+
+                                    </li>
+
+                                    <li onclick="changeLanguage('gu')">
+
+                                        Gujarati
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                            <div id="google_translate_element"
+                                 style="display:none;">
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}

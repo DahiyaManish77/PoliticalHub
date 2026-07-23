@@ -1,0 +1,78 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignPollVM
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    string source = Convert.ToString(ViewBag.Source ?? "web");
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="text-muted small mb-2">@Model.PollType @if (!string.IsNullOrWhiteSpace(Model.TargetArea)) { <span> - @Model.TargetArea</span> }</div>
+                    <h2 class="fw-bold mb-2">@Model.Title</h2>
+                    <p class="lead mb-3">@Model.Question</p>
+                    @if (!string.IsNullOrWhiteSpace(Model.Description)) { <p class="text-muted">@Model.Description</p> }
+
+                    @using (Html.BeginForm("Submit", "CampaignPoll", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("slug", Model.PublicSlug)
+                        @Html.Hidden("source", source)
+                        <div class="d-grid gap-2 my-4">
+                            @foreach (var option in Model.Options)
+                            {
+                                <label class="border rounded-3 p-3 d-flex gap-2 align-items-center">
+                                    <input type="radio" name="CampaignPollOptionId" value="@option.CampaignPollOptionId" required />
+                                    <span>@option.OptionText</span>
+                                </label>
+                            }
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6"><input class="form-control" name="RespondentName" placeholder="Name optional" /></div>
+                            <div class="col-md-6"><input class="form-control" name="MobileNo" placeholder="Mobile optional" /></div>
+                            <div class="col-12"><input class="form-control" name="AreaName" placeholder="Area / ward optional" /></div>
+                            <div class="col-12"><textarea class="form-control" name="Remarks" rows="3" placeholder="Remark optional"></textarea></div>
+                        </div>
+
+                        if (Model.RequireConsent)
+                        {
+                            <label class="form-check mt-3"><input class="form-check-input" type="checkbox" name="ConsentGiven" value="true" required /> <span class="form-check-label">I agree to submit this feedback voluntarily.</span></label>
+                        }
+                        else
+                        {
+                            <input type="hidden" name="ConsentGiven" value="true" />
+                        }
+
+                        <button class="btn btn-primary btn-lg w-100 mt-4" type="submit">Submit Feedback</button>
+                    }
+
+                    @if (Model.ShowPublicResults && Model.Options != null && Model.Options.Any())
+                    {
+                        <div class="mt-4 pt-4 border-top">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Current Results</h5>
+                                <span class="badge text-bg-light">@Model.TotalResponses responses</span>
+                            </div>
+                            @foreach (var option in Model.Options)
+                            {
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small mb-1">
+                                        <strong>@option.OptionText</strong>
+                                        <span>@option.ResponsePercent%</span>
+                                    </div>
+                                    <div class="progress" style="height:8px">
+                                        <div class="progress-bar" style="width:@option.ResponsePercent%"></div>
+                                    </div>
+                                </div>
+                            }
+                            <p class="text-muted small mb-0">These results reflect public feedback only and should not be treated as final political support.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

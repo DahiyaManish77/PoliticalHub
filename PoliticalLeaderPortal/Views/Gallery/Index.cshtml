@@ -1,0 +1,285 @@
+﻿@model List<PoliticalLeaderPortal.ViewModels.PublicGalleryCategoryVM>
+
+@{
+    ViewBag.Title = "Photo Gallery";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="page-header bg-dark text-white py-5">
+
+    <div class="container text-center">
+
+        <h1 class="display-5 fw-bold mb-3">
+            Photo Gallery
+        </h1>
+
+        <p class="lead mb-0">
+            Explore memorable moments, public meetings, development activities and social events.
+        </p>
+
+    </div>
+
+</section>
+
+<section class="gallery-page-section py-5">
+
+    <div class="container">
+
+        <div class="row mb-5">
+
+            <div class="col-lg-8 mx-auto text-center">
+
+                <h2 class="fw-bold mb-3">
+                    Gallery Albums
+                </h2>
+
+                <p class="text-muted">
+                    Browse photo albums and discover important highlights and activities.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="row g-4">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+
+                        <div class="gallery-album-card h-100">
+
+                            <div class="gallery-image-wrapper">
+
+                                @if (!string.IsNullOrWhiteSpace(item.CoverImagePath))
+                                {
+                                    <img src="@Url.Content(item.CoverImagePath)"
+                                         alt="@item.CategoryName"
+                                         class="gallery-cover-image" />
+                                }
+                                else
+                                {
+                                    <img src="https://placehold.co/600x400?text=Gallery"
+                                         alt="Gallery"
+                                         class="gallery-cover-image" />
+                                }
+
+                                <div class="gallery-image-overlay">
+
+                                    <span class="gallery-count-badge">
+
+                                        @item.TotalImages Photos
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="gallery-content">
+
+                                <h4 class="gallery-title">
+
+                                    @item.CategoryName
+
+                                </h4>
+
+                                <p class="gallery-description">
+
+                                    @if (!string.IsNullOrWhiteSpace(item.CategoryDescription))
+                                    {
+                                        @(item.CategoryDescription.Length > 120
+                                            ? item.CategoryDescription.Substring(0, 120) + "..."
+                                            : item.CategoryDescription)
+                                    }
+
+                                </p>
+
+                                <a href="@Url.Action(
+                                            "Album",
+                                            "Gallery",
+                                            new { id = item.GalleryCategoryId })"
+                                   class="btn btn-gallery">
+
+                                    View Album
+
+                                </a>
+
+                                <div class="gallery-page-actions"
+                                     data-public-actions
+                                     data-item-type="gallery-album"
+                                     data-item-id="@item.GalleryCategoryId"
+                                     data-title="@item.CategoryName"
+                                     data-url="@Url.Action("Album", "Gallery", new { id = item.GalleryCategoryId }, Request.Url.Scheme)">
+                                    <button type="button" data-action="like" aria-label="Like album">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        <span>Like</span>
+                                        <small data-like-count>0</small>
+                                    </button>
+                                    <button type="button" data-action="comment" aria-label="Comment on album">
+                                        <i class="bi bi-chat-dots"></i>
+                                        <span>Comment</span>
+                                    </button>
+                                    <button type="button" data-action="share" aria-label="Share album">
+                                        <i class="bi bi-share"></i>
+                                        <span>Share</span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+
+                    <div class="alert alert-info text-center">
+
+                        No Gallery Albums Available.
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+
+    .gallery-page-section {
+        background: #f8fafc;
+    }
+
+    .gallery-album-card {
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+        transition: all .35s ease;
+    }
+
+    .gallery-album-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .gallery-image-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gallery-cover-image {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        transition: .4s ease;
+    }
+
+    .gallery-album-card:hover .gallery-cover-image {
+        transform: scale(1.08);
+    }
+
+    .gallery-image-overlay {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+    }
+
+    .gallery-count-badge {
+        background: rgba(255,153,51,.95);
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .gallery-content {
+        padding: 18px;
+    }
+
+    .gallery-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #0f172a;
+    }
+
+    .gallery-description {
+        color: #64748b;
+        min-height: 70px;
+        margin-bottom: 14px;
+    }
+
+    .btn-gallery {
+        background: #0f172a;
+        color: #fff;
+        border-radius: 8px;
+        padding: 12px 24px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .btn-gallery:hover {
+        color: #fff;
+        background: #ff9933;
+    }
+
+    .gallery-page-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .gallery-page-actions button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 34px;
+        border: 1px solid #dbe4f0;
+        border-radius: 999px;
+        padding: 0 11px;
+        color: #22304a;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .gallery-page-actions button:hover,
+    .gallery-page-actions button.is-liked {
+        color: #fff;
+        border-color: #ff9933;
+        background: #ff7a1a;
+        transform: translateY(-1px);
+    }
+
+    .gallery-page-actions small {
+        font-weight: 900;
+    }
+
+    @@media(max-width:767px) {
+
+        .gallery-cover-image {
+            height: 220px;
+        }
+
+        .gallery-content {
+            padding: 20px;
+        }
+
+    }
+
+</style>

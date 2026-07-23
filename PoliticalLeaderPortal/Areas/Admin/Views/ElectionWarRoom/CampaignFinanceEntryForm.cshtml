@@ -1,0 +1,53 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignFinanceEntryVM
+@{
+    bool isEdit = Model != null && Model.CampaignFinanceEntryId > 0;
+    ViewBag.Title = isEdit ? "Edit Finance Entry" : "Create Finance Entry";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold">@ViewBag.Title</h4>
+                <div class="text-muted small">Track lawful donations, expenses, approvals and payment proof.</div>
+            </div>
+            <a href="@Url.Action("FinanceAndDonations", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditFinanceEntry" : "CreateFinanceEntry", "ElectionWarRoom", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.CampaignFinanceEntryId)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-lg-3">@Html.LabelFor(m => m.EntryType, new { @class = "form-label" }) @Html.DropDownListFor(m => m.EntryType, new SelectList(new[] { "Donation", "Expense", "Refund", "Adjustment" }, Model.EntryType), new { @class = "form-select" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.EntryDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.EntryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.ReferenceNo, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ReferenceNo, new { @class = "form-control", placeholder = "Receipt / voucher no" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.Amount, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", type = "number", step = "0.01", min = "0" })</div>
+
+                    <div class="col-lg-6">@Html.LabelFor(m => m.Title, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Title, new { @class = "form-control", required = "required", placeholder = "Donation received / Rally sound expense" }) @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger small" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.Category, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Category, new SelectList(new[] { "Donation", "Rally", "Vehicle", "Food", "Printing", "Media", "Office", "Volunteer", "Other" }, Model.Category), "Select", new { @class = "form-select" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.PaymentMode, new { @class = "form-label" }) @Html.DropDownListFor(m => m.PaymentMode, new SelectList(new[] { "Cash", "Bank Transfer", "UPI", "Cheque", "Card", "Other" }, Model.PaymentMode), "Select", new { @class = "form-select" })</div>
+
+                    <div class="col-lg-4">@Html.LabelFor(m => m.PersonOrVendorName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PersonOrVendorName, new { @class = "form-control", placeholder = "Donor / vendor name" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.MobileNo, new { @class = "form-label" }) @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.ProofUrl, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ProofUrl, new { @class = "form-control", placeholder = "/Uploads/receipt.pdf" })</div>
+
+                    <div class="col-lg-4">@Html.LabelFor(m => m.ApprovalStatus, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ApprovalStatus, new SelectList(new[] { "Pending", "Under Review", "Approved", "Rejected", "Paid" }, Model.ApprovalStatus), new { @class = "form-select" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.ApprovedBy, new { @class = "form-label" }) @Html.TextBoxFor(m => m.ApprovedBy, new { @class = "form-control" })</div>
+                    <div class="col-lg-4 form-check form-switch pt-4">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active record</label></div>
+
+                    <div class="col-12">@Html.LabelFor(m => m.Remarks, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Remarks, 4, 40, new { @class = "form-control", placeholder = "Compliance notes, approval remarks, payment details" })</div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action("FinanceAndDonations", "ElectionWarRoom")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Entry</button>
+            </div>
+        }
+    </div>
+</div>

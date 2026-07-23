@@ -1,0 +1,30 @@
+﻿@model PoliticalLeaderPortal.ViewModels.AccountRegisterVM
+
+<div class="modal fade auth-modal auth-dissolve" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content auth-modal-content auth-compact-content">
+            <button type="button" class="btn-close auth-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="auth-leader-panel">
+                <img src="~/Content/images/auth/sangeet-som-auth.jpg" alt="Sangeet Som" />
+                <div class="auth-leader-overlay"><span>Join Portal</span><strong>Stay Connected</strong></div>
+            </div>
+            <div class="auth-form-card auth-register-card">
+                <h2 id="registerModalLabel">Sign Up</h2>
+                <p class="auth-subtitle">Create a compact public portal account.</p>
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { area = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <label>Full Name</label>
+                    @Html.TextBoxFor(m => m.FullName, new { placeholder = "Full name", autocomplete = "name" })
+                    <label>Email Address</label>
+                    @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email address", type = "email", autocomplete = "email" })
+                    <label>Mobile Number</label>
+                    @Html.TextBoxFor(m => m.MobileNumber, new { placeholder = "Mobile number", autocomplete = "tel" })
+                    <div class="auth-two-fields"><div><label>Password</label>@Html.PasswordFor(m => m.Password, new { placeholder = "Password", autocomplete = "new-password" })</div><div><label>Confirm</label>@Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm", autocomplete = "new-password" })</div></div>
+                    <button type="submit" class="auth-submit">Create Account</button>
+                }
+                <button type="button" class="auth-switch-button mt-3" data-bs-target="#loginModal" data-bs-toggle="modal">Sign In</button>
+            </div>
+        </div>
+    </div>
+</div>

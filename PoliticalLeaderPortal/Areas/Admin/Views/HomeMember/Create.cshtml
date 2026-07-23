@@ -1,0 +1,11 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HomeMemberVM
+
+@{
+    ViewBag.Title = "Add Home Member";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "HomeMember", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Partial("_Form", Model)
+}

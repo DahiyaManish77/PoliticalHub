@@ -1,0 +1,93 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VoterBackupSettingsVM
+@{
+    ViewBag.Title = "Voter Backup Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0 fw-bold">Voter Backup Settings</h4>
+                    <div class="text-muted small">Protect voter records with automatic CSV backups and optional Google Drive folder mirroring.</div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Index", "VoterBackupSettings", FormMethod.Post, new { area = "Admin" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.BackupSettingId)
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(m => m.AutoBackupEnabled, new { @class = "form-check-input", role = "switch" })
+                                    @Html.LabelFor(m => m.AutoBackupEnabled, new { @class = "form-check-label fw-semibold" })
+                                </div>
+                                <div class="form-text">When enabled, backup is generated after every new voter creation.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.KeepLatestFiles, new { @class = "form-label fw-semibold" })
+                                @Html.TextBoxFor(m => m.KeepLatestFiles, new { @class = "form-control", type = "number", min = "1", max = "500" })
+                                @Html.ValidationMessageFor(m => m.KeepLatestFiles, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(m => m.MirrorToDriveFolder, new { @class = "form-check-input", role = "switch" })
+                                    @Html.LabelFor(m => m.MirrorToDriveFolder, new { @class = "form-check-label fw-semibold" })
+                                </div>
+                                <div class="form-text">Use this with Google Drive for desktop. Example: C:\Users\Admin\Google Drive\PoliticalLeaderBackups</div>
+                            </div>
+
+                            <div class="col-12">
+                                @Html.LabelFor(m => m.DriveMirrorFolderPath, new { @class = "form-label fw-semibold" })
+                                @Html.TextBoxFor(m => m.DriveMirrorFolderPath, new { @class = "form-control", placeholder = @"C:\Users\Admin\Google Drive\PoliticalLeaderBackups" })
+                                @Html.ValidationMessageFor(m => m.DriveMirrorFolderPath, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="col-12 d-flex flex-wrap justify-content-end gap-2 border-top pt-3">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-save"></i>
+                                    Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white fw-bold">Backup Status</div>
+                <div class="card-body">
+                    <div class="small text-muted mb-1">Last Status</div>
+                    <div class="fw-semibold mb-3">@(!String.IsNullOrWhiteSpace(Model.LastBackupStatus) ? Model.LastBackupStatus : "No backup generated yet.")</div>
+
+                    <div class="small text-muted mb-1">Last Local Backup</div>
+                    <div class="small text-break mb-3">@(!String.IsNullOrWhiteSpace(Model.LastBackupFilePath) ? Model.LastBackupFilePath : "-")</div>
+
+                    <div class="small text-muted mb-1">Last Google Drive Mirror</div>
+                    <div class="small text-break mb-3">@(!String.IsNullOrWhiteSpace(Model.LastMirrorFilePath) ? Model.LastMirrorFilePath : "-")</div>
+
+                    @using (Html.BeginForm("GenerateNow", "VoterBackupSettings", FormMethod.Post, new { area = "Admin" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-outline-primary w-100" type="submit">
+                            <i class="bi bi-database-down"></i>
+                            Generate Backup Now
+                        </button>
+                    }
+
+                    <a href="@Url.Action("DownloadLatestBackup", "Voter", new { area = "Admin" })" class="btn btn-outline-secondary w-100 mt-2">
+                        <i class="bi bi-download"></i>
+                        Download Latest Backup
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

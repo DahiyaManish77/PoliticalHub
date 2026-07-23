@@ -1,0 +1,67 @@
+﻿/* ===========================
+   HEADER
+=========================== */
+
+.site-header {
+    background: #ffffff;
+    padding: 15px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header-logo img {
+    max-height: 80px;
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #FF671F;
+}
+
+.header-title p {
+    margin: 0;
+    font-size: 15px;
+    color: #6b7280;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.leader-photo img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border: 3px solid #FF671F;
+}
+
+.auth-buttons {
+    gap: 10px;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 767px) {
+
+    .site-header {
+        padding: 10px 0;
+    }
+
+    .header-logo img {
+        max-height: 55px;
+    }
+
+    .header-title h1 {
+        font-size: 20px;
+    }
+
+    .header-title p {
+        font-size: 12px;
+    }
+}

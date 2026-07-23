@@ -1,0 +1,211 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.VoterVM
+
+@{
+    bool isEdit = Model != null && Model.VoterId > 0;
+    ViewBag.Title = isEdit ? "Edit Voter" : "Add Voter";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">@ViewBag.Title</h4>
+            <a href="@Url.Action("Index")" class="btn btn-light btn-sm">
+                <i class="bi bi-arrow-left"></i>
+                Back
+            </a>
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm(isEdit ? "Edit" : "Create", "Voter", FormMethod.Post, new { area = "Admin", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.VoterId)
+                @Html.HiddenFor(m => m.VoterPhotoPath)
+                @Html.HiddenFor(m => m.AadhaarPhotoPath)
+
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <h5 class="fw-bold mb-3">Voter Identity</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.EpicNumber, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.EpicNumber, new { @class = "form-control", placeholder = "ABC1234567" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.VoterName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.VoterName, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.VoterName, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FatherOrHusbandName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.FatherOrHusbandName, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Gender, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Gender, new SelectList(new[] { "", "Male", "Female", "Other" }), new { @class = "form-select" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Age, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", type = "number", min = "18", max = "120" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", maxlength = "20" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.AadhaarNumber, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.AadhaarNumber, new { @class = "form-control", maxlength = "12", pattern = "[0-9]{12}", placeholder = "12 digit Aadhaar" })
+                        @Html.ValidationMessageFor(m => m.AadhaarNumber, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.VoterType, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.VoterType, new SelectList(new[] { "General", "Service Voter", "NRI", "Shifted", "Deceased", "Duplicate Suspected" }), new { @class = "form-select" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.VoterPhotoFile, "Passport Size Photo", new { @class = "form-label" })
+                        <input type="file" name="VoterPhotoFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        @if (!String.IsNullOrWhiteSpace(Model.VoterPhotoPath))
+                        {
+                            <a href="@Url.Content(Model.VoterPhotoPath)" target="_blank" class="small d-inline-block mt-1">View current photo</a>
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.AadhaarPhotoFile, "Aadhaar Photo", new { @class = "form-label" })
+                        <input type="file" name="AadhaarPhotoFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        @if (!String.IsNullOrWhiteSpace(Model.AadhaarPhotoPath))
+                        {
+                            <a href="@Url.Content(Model.AadhaarPhotoPath)" target="_blank" class="small d-inline-block mt-1">View Aadhaar photo</a>
+                        }
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3">Election Roll Details</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">@Html.LabelFor(m => m.PartNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PartNumber, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.SectionNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.SectionNumber, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.SerialNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.SerialNumber, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.HouseNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.HouseNumber, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.BoothNumber, new { @class = "form-label" }) @Html.TextBoxFor(m => m.BoothNumber, new { @class = "form-control" })</div>
+                    <div class="col-md-5">@Html.LabelFor(m => m.BoothName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.BoothName, new { @class = "form-control" })</div>
+                    <div class="col-md-4">@Html.LabelFor(m => m.PollingStation, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PollingStation, new { @class = "form-control" })</div>
+                </div>
+
+                <h5 class="fw-bold mb-3">Location</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">@Html.LabelFor(m => m.State, new { @class = "form-label" }) @Html.DropDownListFor(m => m.State, new SelectList(new[] { Model.State }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select State", new { @class = "form-select js-location", data_field = "State" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.District, new { @class = "form-label" }) @Html.DropDownListFor(m => m.District, new SelectList(new[] { Model.District }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select District", new { @class = "form-select js-location", data_field = "District" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.AssemblyConstituency, new { @class = "form-label" }) @Html.DropDownListFor(m => m.AssemblyConstituency, new SelectList(new[] { Model.AssemblyConstituency }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select Assembly", new { @class = "form-select js-location", data_field = "AssemblyConstituency" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.ParliamentConstituency, new { @class = "form-label" }) @Html.DropDownListFor(m => m.ParliamentConstituency, new SelectList(new[] { Model.ParliamentConstituency }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select Parliament", new { @class = "form-select js-location", data_field = "ParliamentConstituency" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Block, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Block, new SelectList(new[] { Model.Block }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select Block", new { @class = "form-select js-location", data_field = "Block" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Village, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Village, new SelectList(new[] { Model.Village }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select Village", new { @class = "form-select js-location", data_field = "Village" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Ward, new { @class = "form-label" }) @Html.DropDownListFor(m => m.Ward, new SelectList(new[] { Model.Ward }.Where(x => !String.IsNullOrWhiteSpace(x))), "Select Ward", new { @class = "form-select js-location", data_field = "Ward" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Category, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Category, new { @class = "form-control", placeholder = "SC/ST/OBC/General" })</div>
+                    <div class="col-md-6">@Html.LabelFor(m => m.Address, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Address, new { @class = "form-control", rows = "3" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Caste, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Caste, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.Religion, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })</div>
+                </div>
+
+                <h5 class="fw-bold mb-3">Campaign Mapping</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">@Html.LabelFor(m => m.PoliticalStatus, new { @class = "form-label" }) @Html.DropDownListFor(m => m.PoliticalStatus, new SelectList(new[] { "Unknown", "Supporter", "Opposition", "Neutral", "Swing", "Influencer" }), new { @class = "form-select" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.SupportLevel, new { @class = "form-label" }) @Html.DropDownListFor(m => m.SupportLevel, new SelectList(new[] { "Unknown", "Strong", "Medium", "Weak", "Against" }), new { @class = "form-select" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.InfluencerName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.InfluencerName, new { @class = "form-control" })</div>
+                    <div class="col-md-3">@Html.LabelFor(m => m.PannaPramukhName, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PannaPramukhName, new { @class = "form-control" })</div>
+                    <div class="col-md-3">
+                        <div class="form-check mt-4">
+                            @Html.CheckBoxFor(m => m.IsPriorityVoter, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.IsPriorityVoter, new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-check mt-4">
+                            @Html.CheckBoxFor(m => m.IsFirstTimeVoter, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.IsFirstTimeVoter, new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">@Html.LabelFor(m => m.Remarks, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", rows = "3" })</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i>
+                        @(isEdit ? "Update Voter" : "Save Voter")
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var endpoint = "@Url.Action("LocationOptions", "Voter", new { area = "Admin" })";
+            var fields = ["State", "District", "AssemblyConstituency", "ParliamentConstituency", "Block", "Village", "Ward"];
+
+            function select(id) {
+                return document.getElementById(id);
+            }
+
+            function getFilters() {
+                return {
+                    state: select("State").value,
+                    district: select("District").value,
+                    assembly: select("AssemblyConstituency").value,
+                    parliament: select("ParliamentConstituency").value,
+                    block: select("Block").value,
+                    village: select("Village").value
+                };
+            }
+
+            function fill(field, selected) {
+                var ddl = select(field);
+                var filters = getFilters();
+                var url = endpoint + "?field=" + encodeURIComponent(field)
+                    + "&state=" + encodeURIComponent(filters.state)
+                    + "&district=" + encodeURIComponent(filters.district)
+                    + "&assembly=" + encodeURIComponent(filters.assembly)
+                    + "&parliament=" + encodeURIComponent(filters.parliament)
+                    + "&block=" + encodeURIComponent(filters.block)
+                    + "&village=" + encodeURIComponent(filters.village);
+
+                return fetch(url)
+                    .then(function (response) { return response.json(); })
+                    .then(function (items) {
+                        var current = selected || ddl.value;
+                        var label = ddl.options.length ? ddl.options[0].text : "Select";
+                        ddl.innerHTML = "";
+                        ddl.appendChild(new Option(label, ""));
+                        items.forEach(function (item) {
+                            ddl.appendChild(new Option(item, item, false, item === current));
+                        });
+                    });
+            }
+
+            function clearAfter(field) {
+                var index = fields.indexOf(field);
+                fields.slice(index + 1).forEach(function (next) {
+                    var ddl = select(next);
+                    var label = ddl.options.length ? ddl.options[0].text : "Select";
+                    ddl.innerHTML = "";
+                    ddl.appendChild(new Option(label, ""));
+                });
+            }
+
+            fields.forEach(function (field) {
+                select(field).addEventListener("change", function () {
+                    clearAfter(field);
+                    fields.slice(fields.indexOf(field) + 1).forEach(function (next) {
+                        fill(next);
+                    });
+                });
+            });
+
+            fields.forEach(function (field) {
+                fill(field, select(field).value);
+            });
+        })();
+    </script>
+}

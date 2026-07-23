@@ -1,0 +1,111 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HomePageSectionPageVM
+
+@{
+    ViewBag.Title = "Home Page Sections";
+    var publicHomeUrl = Url.Action("Index", "Home", new { area = "" });
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Home Page Sections</h1>
+        <p>Control homepage section visibility, order and publishing windows.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@publicHomeUrl" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Home
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@using (Html.BeginForm("Save", "HomePageSection", FormMethod.Post, new { @class = "homepage-section-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="admin-card homepage-section-manager">
+        <div class="section-manager-toolbar">
+            <div>
+                <h2>Section Manager</h2>
+                <span>@Model.Sections.Count sections configured</span>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Save Changes
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table admin-table section-manager-table">
+                <thead>
+                    <tr>
+                        <th style="width: 82px;">Order</th>
+                        <th>Section</th>
+                        <th style="width: 120px;">Visible</th>
+                        <th style="width: 210px;">Start</th>
+                        <th style="width: 210px;">End</th>
+                        <th style="width: 150px;">Render</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Sections.Count; i++)
+                    {
+                        var section = Model.Sections[i];
+                        var renderTarget = section.RenderType == "Action"
+                            ? section.ControllerName + "/" + section.ActionName
+                            : section.PartialViewPath;
+
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m.Sections[i].HomePageSectionId)
+                                @Html.HiddenFor(m => m.Sections[i].SectionKey)
+                                @Html.HiddenFor(m => m.Sections[i].SectionName)
+                                @Html.HiddenFor(m => m.Sections[i].Description)
+                                @Html.HiddenFor(m => m.Sections[i].RenderType)
+                                @Html.HiddenFor(m => m.Sections[i].ControllerName)
+                                @Html.HiddenFor(m => m.Sections[i].ActionName)
+                                @Html.HiddenFor(m => m.Sections[i].PartialViewPath)
+                                @Html.TextBoxFor(m => m.Sections[i].DisplayOrder, new { @class = "form-control order-input", type = "number", min = "0" })
+                            </td>
+                            <td>
+                                <div class="section-name-block">
+                                    <strong>@section.SectionName</strong>
+                                    <span>@section.Description</span>
+                                    <code>@section.SectionKey</code>
+                                </div>
+                            </td>
+                            <td>
+                                <label class="cms-switch">
+                                    @Html.CheckBoxFor(m => m.Sections[i].IsVisible)
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.Sections[i].StartDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                                @Html.ValidationMessageFor(m => m.Sections[i].StartDate, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.Sections[i].EndDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                                @Html.ValidationMessageFor(m => m.Sections[i].EndDate, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                <span class="render-type-badge">@section.RenderType</span>
+                                <small>@renderTarget</small>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

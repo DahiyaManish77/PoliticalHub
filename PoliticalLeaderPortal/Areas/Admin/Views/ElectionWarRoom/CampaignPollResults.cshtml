@@ -1,0 +1,70 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignPollVM
+@{
+    ViewBag.Title = "Poll Results";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Func<string, string> maskMobile = delegate(string mobile)
+    {
+        if (String.IsNullOrWhiteSpace(mobile)) return "-";
+        string clean = mobile.Trim();
+        if (clean.Length <= 4) return "****";
+        return new String('*', Math.Max(0, clean.Length - 4)) + clean.Substring(clean.Length - 4);
+    };
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h3 class="fw-bold mb-1">@Model.Title</h3>
+            <div class="text-muted">@Model.Question</div>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-success" target="_blank" href="@Model.WhatsAppShareUrl"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
+            <a class="btn btn-primary" target="_blank" href="@Model.FacebookShareUrl"><i class="bi bi-facebook me-1"></i>Facebook</a>
+            <a class="btn btn-outline-secondary" target="_blank" href="@Model.PublicUrl"><i class="bi bi-box-arrow-up-right me-1"></i>Public Link</a>
+            <a class="btn btn-outline-secondary" href="@Url.Action("CampaignPolls", "ElectionWarRoom")">Back</a>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-lg-3"><div class="card border-0 shadow-sm"><div class="card-body"><div class="text-muted small">Total Responses</div><div class="fs-3 fw-bold">@Model.TotalResponses</div></div></div></div>
+        <div class="col-lg-9"><div class="card border-0 shadow-sm"><div class="card-body"><div class="small text-muted mb-1">Share URL</div><code>@Model.PublicUrl</code></div></div></div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header bg-white fw-bold">Option Results</div>
+        <div class="card-body">
+            @foreach (var option in Model.Options)
+            {
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between"><strong>@option.OptionText</strong><span>@option.ResponseCount (@option.ResponsePercent%)</span></div>
+                    <div class="progress" style="height:10px"><div class="progress-bar" style="width:@option.ResponsePercent%"></div></div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white fw-bold">Recent Responses</div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead><tr><th>Date</th><th>Option</th><th>Name</th><th>Mobile</th><th>Area</th><th>Source</th></tr></thead>
+                <tbody>
+                    @if (Model.Responses == null || !Model.Responses.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">No responses received yet.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.Responses)
+                        {
+                            <tr><td>@item.SubmittedOn.ToString("dd MMM yyyy HH:mm")</td><td>@item.OptionText</td><td>@(String.IsNullOrWhiteSpace(item.RespondentName) ? "-" : item.RespondentName)</td><td>@maskMobile(item.MobileNo)</td><td>@(String.IsNullOrWhiteSpace(item.AreaName) ? "-" : item.AreaName)</td><td><span class="badge text-bg-light">@item.Source</span></td></tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.PublicNewsTickerVM>
+@using System.Globalization
+@{
+    var tickerItems = Model == null
+        ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.PublicNewsTickerVM>()
+        : Model.Where(x => x != null && !String.IsNullOrWhiteSpace(x.TickerText)).OrderBy(x => x.DisplayOrder).ToList();
+
+    if (!tickerItems.Any())
+    {
+        tickerItems.Add(new PoliticalLeaderPortal.Areas.Admin.ViewModels.PublicNewsTickerVM { TickerText = "नही अजमेरे आते हैं जिन्हें ख्वाजा बुलाते हैं..!", DisplayOrder = 1 });
+    }
+
+    var today = DateTime.Now.ToString("dddd, MMMM dd yyyy", CultureInfo.InvariantCulture);
+}
+<section class="public-news-ticker" aria-label="Breaking news ticker">
+    <div class="public-news-ticker-inner">
+        <div class="ticker-date"><i class="bi bi-clock"></i><span>@today</span></div>
+        <div class="ticker-label">Breaking News</div>
+        <div class="ticker-marquee" aria-live="polite">
+            <div class="ticker-track">
+                @for (int repeat = 0; repeat < 2; repeat++)
+                {
+                    foreach (var item in tickerItems)
+                    {
+                        if (!String.IsNullOrWhiteSpace(item.LinkUrl))
+                        {
+                            <a href="@item.LinkUrl" target="_blank" rel="noopener"><span>@item.TickerText</span></a>
+                        }
+                        else
+                        {
+                            <span>@item.TickerText</span>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="ticker-actions" aria-label="Quick links">
+            <button type="button" class="ticker-icon" aria-label="Previous"><i class="bi bi-chevron-left"></i></button>
+            <button type="button" class="ticker-icon" aria-label="Next"><i class="bi bi-chevron-right"></i></button>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            <button type="button" class="ticker-icon" aria-label="Search"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.PublicNewsTickerVM>
+
+@{
+    ViewBag.Title = "Public News Ticker";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.PublicNewsTickerVM>() : Model.ToList();
+}
+
+<div class="admin-ticker-page">
+    <div class="admin-ticker-hero">
+        <div>
+            <span>Public Website</span>
+            <h2>News Ticker Control</h2>
+            <p>Manage the black breaking-news marquee that appears above the public header.</p>
+        </div>
+        <a href="@Url.Action("Create", "PublicNewsTicker")" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Text
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="admin-ticker-stats">
+        <div><span>Total Items</span><strong>@rows.Count</strong></div>
+        <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+        <div><span>Scheduled</span><strong>@rows.Count(x => x.StartDate.HasValue || x.EndDate.HasValue)</strong></div>
+    </div>
+
+    <div class="admin-ticker-panel">
+        @using (Html.BeginForm("Index", "PublicNewsTicker", FormMethod.Get, new { area = "Admin", @class = "admin-ticker-filter" }))
+        {
+            <div class="ticker-search-field">
+                <i class="bi bi-search"></i>
+                <input type="search" name="keyword" value="@ViewBag.Keyword" placeholder="Search text, category or link" />
+            </div>
+            <select name="status">
+                <option value="">All Status</option>
+                <option value="active" @(Convert.ToString(ViewBag.Status) == "active" ? "selected" : "")>Active</option>
+                <option value="inactive" @(Convert.ToString(ViewBag.Status) == "inactive" ? "selected" : "")>Inactive</option>
+            </select>
+            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+        }
+
+        <div class="table-responsive admin-ticker-table-wrap">
+            <table class="table table-hover align-middle mb-0" id="publicTickerTable">
+                <thead>
+                    <tr>
+                        <th width="90">Order</th>
+                        <th>Ticker Text</th>
+                        <th width="160">Category</th>
+                        <th width="190">Schedule</th>
+                        <th width="110">Status</th>
+                        <th class="text-end" width="150">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!rows.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-5"><i class="bi bi-megaphone fs-1 d-block mb-2"></i>No ticker item found.</td></tr>
+                    }
+                    @foreach (var item in rows)
+                    {
+                        <tr>
+                            <td>
+                                <span class="ticker-order"><i class="bi bi-play-fill"></i>@item.DisplayOrder</span>
+                            </td>
+                            <td>
+                                <strong class="ticker-text">@item.TickerText</strong>
+                                @if (!String.IsNullOrWhiteSpace(item.LinkUrl))
+                                {
+                                    <a href="@item.LinkUrl" target="_blank" rel="noopener" class="ticker-link">@item.LinkUrl</a>
+                                }
+                            </td>
+                            <td><span class="ticker-category">@item.Category</span></td>
+                            <td>
+                                <div class="ticker-date-row">Start: @(item.StartDate.HasValue ? item.StartDate.Value.ToString("dd MMM yyyy") : "Always")</div>
+                                <div class="ticker-date-row muted">End: @(item.EndDate.HasValue ? item.EndDate.Value.ToString("dd MMM yyyy") : "No end")</div>
+                            </td>
+                            <td><span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span></td>
+                            <td class="text-end">
+                                <button type="button" class="btn btn-sm btn-outline-secondary btnToggleTicker" data-id="@item.PublicNewsTickerId" data-url="@Url.Action("ToggleActive")" title="Toggle Active"><i class="bi bi-power"></i></button>
+                                <a href="@Url.Action("Edit", new { id = item.PublicNewsTickerId })" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></a>
+                                <button type="button" class="btn btn-sm btn-outline-danger btnDeleteTicker" data-id="@item.PublicNewsTickerId" data-url="@Url.Action("Delete")" title="Delete"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function postAction(button, title, text) {
+                var confirmed = window.Swal ? Swal.fire({ title: title, text: text, icon: "warning", showCancelButton: true, confirmButtonText: "Yes", cancelButtonText: "Cancel" }) : Promise.resolve({ isConfirmed: confirm(text) });
+                confirmed.then(function (result) {
+                    if (!result.isConfirmed) return;
+                    fetch(button.getAttribute("data-url"), {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "X-Requested-With": "XMLHttpRequest" },
+                        body: "id=" + encodeURIComponent(button.getAttribute("data-id"))
+                    }).then(function (response) { return response.json(); })
+                      .then(function (data) {
+                          if (window.Swal) Swal.fire({ title: data.success ? "Done" : "Error", text: data.message, icon: data.success ? "success" : "error" }).then(function () { if (data.success) location.reload(); });
+                          else { alert(data.message); if (data.success) location.reload(); }
+                      });
+                });
+            }
+
+            document.querySelectorAll(".btnDeleteTicker").forEach(function (button) {
+                button.addEventListener("click", function () { postAction(button, "Delete ticker item?", "This ticker text will be removed from the public marquee."); });
+            });
+            document.querySelectorAll(".btnToggleTicker").forEach(function (button) {
+                button.addEventListener("click", function () { postAction(button, "Change ticker status?", "This will show or hide the item on the public ticker."); });
+            });
+        })();
+    </script>
+}

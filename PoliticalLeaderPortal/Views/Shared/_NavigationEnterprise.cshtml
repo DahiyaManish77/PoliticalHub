@@ -1,0 +1,317 @@
+﻿@using PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu
+@using System.Web.Routing
+@using System.Linq
+@model List<MenuVM>
+
+@functions
+{
+    private RouteValueDictionary ParseRouteValues(MenuVM menu)
+    {
+        var values = new RouteValueDictionary();
+
+        values["area"] = string.IsNullOrWhiteSpace(menu.AreaName)
+            ? ""
+            : menu.AreaName.Trim();
+
+        if (string.IsNullOrWhiteSpace(menu.RouteValues))
+        {
+            return values;
+        }
+
+        foreach (var pair in menu.RouteValues.Split('&'))
+        {
+            var parts = pair.Split('=');
+
+            if (parts.Length == 2 && !string.IsNullOrWhiteSpace(parts[0]))
+            {
+                values[parts[0].Trim()] = parts[1].Trim();
+            }
+        }
+
+        return values;
+    }
+
+    private string GetMenuUrl(MenuVM menu)
+    {
+        if (!string.IsNullOrWhiteSpace(menu.CustomUrl))
+        {
+            return menu.CustomUrl;
+        }
+
+        if (!string.IsNullOrWhiteSpace(menu.ControllerName) &&
+            !string.IsNullOrWhiteSpace(menu.ActionName))
+        {
+            return Url.Action(
+                menu.ActionName.Trim(),
+                menu.ControllerName.Trim(),
+                ParseRouteValues(menu));
+        }
+
+        return "#";
+    }
+}
+
+@helper RenderMegaColumn(MenuVM menu)
+{
+    var menuUrl = GetMenuUrl(menu);
+    var target = menu.OpenInNewTab ? "_blank" : "_self";
+    var rel = menu.OpenInNewTab ? "noopener noreferrer" : "";
+    var isClickable = menu.IsClickable && menuUrl != "#";
+    var iconClass = string.IsNullOrWhiteSpace(menu.IconClass)
+        ? "bi bi-circle"
+        : menu.IconClass;
+
+    <section class="site-mega-column @menu.CssClass">
+        <a href="@(isClickable ? menuUrl : "#")"
+           class="site-mega-heading"
+           target="@target"
+           rel="@rel">
+            <i class="@iconClass"></i>
+            <span>@menu.MenuName</span>
+        </a>
+
+        @if (!string.IsNullOrWhiteSpace(menu.MenuDescription))
+        {
+            <p class="site-mega-description">@menu.MenuDescription</p>
+        }
+
+        @if (menu.Children != null && menu.Children.Any())
+        {
+            <ul class="site-mega-links">
+                @foreach (var child in menu.Children.OrderBy(x => x.DisplayOrder))
+                {
+                    var childUrl = GetMenuUrl(child);
+                    var childTarget = child.OpenInNewTab ? "_blank" : "_self";
+                    var childRel = child.OpenInNewTab ? "noopener noreferrer" : "";
+                    var childClickable = child.IsClickable && childUrl != "#";
+
+                    <li>
+                        <a href="@(childClickable ? childUrl : "#")"
+                           target="@childTarget"
+                           rel="@childRel">
+                            <i class="bi bi-chevron-right"></i>
+                            @child.MenuName
+                        </a>
+
+                        @if (child.Children != null && child.Children.Any())
+                        {
+                            <ul class="site-mega-sub-links">
+                                @foreach (var grandChild in child.Children.OrderBy(x => x.DisplayOrder))
+                                {
+                                    var grandChildUrl = GetMenuUrl(grandChild);
+                                    var grandChildTarget = grandChild.OpenInNewTab ? "_blank" : "_self";
+                                    var grandChildRel = grandChild.OpenInNewTab ? "noopener noreferrer" : "";
+                                    var grandChildClickable = grandChild.IsClickable && grandChildUrl != "#";
+
+                                    <li>
+                                        <a href="@(grandChildClickable ? grandChildUrl : "#")"
+                                           target="@grandChildTarget"
+                                           rel="@grandChildRel">
+                                            @grandChild.MenuName
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <a class="site-mega-single-link"
+               href="@menuUrl"
+               target="@target"
+               rel="@rel">
+                Open section
+            </a>
+        }
+    </section>
+}
+
+@{
+    var navigationItems = Model != null && Model.Any()
+        ? Model.OrderBy(x => x.DisplayOrder).ToList()
+        : new List<MenuVM>
+        {
+            new MenuVM { MenuName = "Home", ControllerName = "Home", ActionName = "Index", IconClass = "bi bi-house-door", DisplayOrder = 1, IsClickable = true },
+            new MenuVM { MenuName = "About", ControllerName = "AboutLeader", ActionName = "Index", IconClass = "bi bi-person-badge", DisplayOrder = 2, IsClickable = true },
+            new MenuVM { MenuName = "News", ControllerName = "News", ActionName = "Index", IconClass = "bi bi-newspaper", DisplayOrder = 3, IsClickable = true },
+            new MenuVM { MenuName = "Events", ControllerName = "Event", ActionName = "Index", IconClass = "bi bi-calendar-event", DisplayOrder = 4, IsClickable = true },
+            new MenuVM { MenuName = "Gallery", ControllerName = "Gallery", ActionName = "Index", IconClass = "bi bi-images", DisplayOrder = 5, IsClickable = true },
+            new MenuVM { MenuName = "Contact", CustomUrl = "#contact-section", IconClass = "bi bi-telephone", DisplayOrder = 6, IsClickable = true }
+        };
+}
+
+<nav class="site-mega-nav is-collapsed" aria-label="Main navigation">
+    <div class="site-menu-topbar">
+        <button type="button"
+                class="site-menu-close"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="siteMegaPanel">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <a href="@Url.Action("Index", "Home", new { area = "" })" class="site-menu-brand">
+            <img src="@Url.Content("~/Content/images/logo.png")" alt="Logo" />
+            <span class="site-brand-copy">
+                <strong>Sangeet Som</strong>
+                <small>Public Service Portal</small>
+            </span>
+        </a>
+
+        <div class="site-menu-actions">
+            @Html.Action("HomeVisitMenu", "Home")
+
+            <a href="@Url.Action("Index", "MeraKshetra", new { area = "" })" class="site-menu-text-link">
+                <span>Mera Kshetra</span>
+            </a>
+
+            <a href="@Url.Action("Index", "SomApp", new { area = "" })" class="site-menu-text-link">
+                <span>Som App</span>
+                <i class="bi bi-phone"></i>
+            </a>
+
+            @if (Request.IsAuthenticated)
+            {
+                <span class="site-menu-text-link site-user-link">
+                    <i class="bi bi-person-check"></i>
+                    <strong>@User.Identity.Name</strong>
+                </span>
+
+                using (Html.BeginForm("Logout", "Account", new { area = "" }, FormMethod.Post, new { @class = "site-logout-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="site-menu-text-link site-logout-button">
+                        <span>Logout</span>
+                    </button>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Account", new { area = "" })"
+                   class="site-menu-text-link"
+                   data-bs-toggle="modal"
+                   data-bs-target="#loginModal">
+                    <strong>Login</strong>
+                    <span>/ Register</span>
+                </a>
+            }
+
+            <div class="site-search-dropdown" id="siteSearchWrapper">
+                <button type="button"
+                        id="siteSearchButton"
+                        class="site-search-button"
+                        aria-label="Search"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    <span>Search</span>
+                    <i class="bi bi-search"></i>
+                </button>
+
+                <form class="site-search-panel"
+                      method="get"
+                      action="@Url.Action("Index", "Search", new { area = "" })">
+                    <input type="text"
+                           name="keyword"
+                           placeholder="Enter Keyword"
+                           aria-label="Enter Keyword" />
+
+                    <div class="site-search-date-row">
+                        <input type="text"
+                               name="from"
+                               placeholder="From"
+                               aria-label="From date"
+                               onfocus="this.type='date'"
+                               onblur="if(!this.value){this.type='text'}" />
+
+                        <input type="text"
+                               name="to"
+                               placeholder="To"
+                               aria-label="To date"
+                               onfocus="this.type='date'"
+                               onblur="if(!this.value){this.type='text'}" />
+                    </div>
+
+                    <button type="submit">
+                        Go
+                    </button>
+                </form>
+            </div>
+
+            <div class="site-language-dropdown" id="siteLanguageWrapper">
+                <button type="button"
+                        id="siteLanguageButton"
+                        class="site-language-btn"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    <i class="bi bi-translate"></i>
+                    <span id="siteSelectedLanguage">English</span>
+                    <i class="bi bi-caret-down-fill"></i>
+                </button>
+
+                <ul class="site-language-menu">
+                    <li data-lang="en">English</li>
+                    <li data-lang="hi">Hindi</li>
+                    <li data-lang="pa">Punjabi</li>
+                    <li data-lang="gu">Gujarati</li>
+                    <li data-lang="mr">Marathi</li>
+                    <li data-lang="bn">Bengali</li>
+                    <li data-lang="ta">Tamil</li>
+                    <li data-lang="te">Telugu</li>
+                </ul>
+            </div>
+
+            <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })" class="site-menu-chip">
+                <i class="bi bi-person-circle"></i>
+                <span>Admin</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="site-mega-panel" id="siteMegaPanel">
+        <div class="site-mega-drawer-head">
+            <div>
+                <span>Explore Portal</span>
+                <strong>Services, updates and public resources</strong>
+            </div>
+        </div>
+
+        <ul class="site-primary-menu">
+            @foreach (var menu in navigationItems)
+            {
+                var menuUrl = GetMenuUrl(menu);
+                var hasChildren = menu.Children != null && menu.Children.Any();
+                var target = menu.OpenInNewTab ? "_blank" : "_self";
+                var rel = menu.OpenInNewTab ? "noopener noreferrer" : "";
+                var iconClass = string.IsNullOrWhiteSpace(menu.IconClass) ? "bi bi-grid" : menu.IconClass;
+                <li class="site-primary-item @(hasChildren ? "has-mega" : "")">
+                    <a class="site-primary-link" href="@menuUrl" target="@target" rel="@rel" aria-expanded="false">
+                        <span><i class="@iconClass"></i> @menu.MenuName</span>
+                        @if (hasChildren) { <i class="bi bi-chevron-down site-primary-caret"></i> }
+                    </a>
+                    @if (hasChildren)
+                    {
+                        <div class="site-mega-flyout">
+                            <div class="site-mega-feature">
+                                <span>@menu.MenuName</span>
+                                <strong>@menu.MenuName</strong>
+                                <p>@(String.IsNullOrWhiteSpace(menu.MenuDescription) ? "Open related pages and services." : menu.MenuDescription)</p>
+                            </div>
+                            <div class="site-mega-grid">
+                                @foreach (var child in menu.Children.OrderBy(x => x.DisplayOrder))
+                                {
+                                    @RenderMegaColumn(child)
+                                }
+                            </div>
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
+
+
+

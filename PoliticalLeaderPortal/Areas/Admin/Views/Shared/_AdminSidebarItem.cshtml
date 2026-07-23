@@ -1,0 +1,107 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuVM
+
+@{
+    Layout = null;
+
+    bool hasChildren = Model.Children != null &&
+                       Model.Children.Any();
+
+    string menuUrl = "#";
+
+    if (!string.IsNullOrWhiteSpace(Model.CustomUrl))
+    {
+        menuUrl = Model.CustomUrl;
+    }
+    else if (!string.IsNullOrWhiteSpace(Model.ControllerName) &&
+             !string.IsNullOrWhiteSpace(Model.ActionName))
+    {
+        menuUrl = Url.Action(
+                    Model.ActionName,
+                    Model.ControllerName,
+                    new
+                    {
+                        area = string.IsNullOrWhiteSpace(Model.AreaName)
+                                    ? "Admin"
+                                    : Model.AreaName
+                    });
+    }
+
+    string iconClass =
+        string.IsNullOrWhiteSpace(Model.IconClass)
+            ? "fas fa-folder"
+            : Model.IconClass;
+
+    string target = Model.OpenInNewTab ? "_blank" : "_self";
+    string rel = Model.OpenInNewTab ? "noopener noreferrer" : "";
+}
+
+<li class="admin-menu-item
+           @(hasChildren ? "has-children" : "")
+           @(Model.IsActive ? "active" : "")
+           @(Model.IsExpanded ? "open" : "")">
+
+    @if (Model.IsClickable)
+    {
+        <a href="@menuUrl"
+           target="@target"
+           rel="@rel"
+           class="admin-menu-link">
+
+            <span class="menu-left">
+
+                <i class="@iconClass"></i>
+
+                <span>
+
+                    @Model.MenuName
+
+                </span>
+
+            </span>
+
+            @if (hasChildren)
+            {
+                <i class="fas fa-chevron-right menu-arrow"></i>
+            }
+
+        </a>
+    }
+    else
+    {
+        <div class="admin-menu-heading">
+
+            <span class="menu-left">
+
+                <i class="@iconClass"></i>
+
+                <span>
+
+                    @Model.MenuName
+
+                </span>
+
+            </span>
+
+            @if (hasChildren)
+            {
+                <i class="fas fa-chevron-right menu-arrow"></i>
+            }
+
+        </div>
+    }
+
+    @if (hasChildren)
+    {
+        <ul class="admin-submenu">
+
+            @foreach (var child in Model.Children)
+            {
+                @Html.Partial(
+                    "_AdminSidebarItem",
+                    child)
+            }
+
+        </ul>
+    }
+
+</li>

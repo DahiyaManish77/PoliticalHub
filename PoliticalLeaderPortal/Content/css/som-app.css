@@ -1,0 +1,366 @@
+.som-app-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: clamp(24px, 5vw, 58px);
+    align-items: center;
+    padding: clamp(58px, 8vw, 96px) clamp(18px, 5vw, 78px);
+    background:
+        radial-gradient(circle at 85% 18%, rgba(37, 185, 207, .18), transparent 30%),
+        linear-gradient(135deg, #101827 0%, #14213d 54%, #0c7c91 100%);
+    color: #fff;
+    overflow: hidden;
+}
+
+.som-app-kicker {
+    display: inline-flex;
+    width: fit-content;
+    border-radius: 999px;
+    background: rgba(255, 138, 28, .16);
+    color: #ffd4a6;
+    padding: 7px 11px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.som-app-hero h1 {
+    margin: 14px 0 12px;
+    font-size: clamp(42px, 7vw, 88px);
+    line-height: .94;
+    font-weight: 800;
+}
+
+.som-app-hero p,
+.som-install-panel p {
+    color: rgba(255, 255, 255, .78);
+    line-height: 1.7;
+    font-size: 16px;
+    max-width: 720px;
+}
+
+.som-app-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 26px 0 12px;
+}
+
+.som-app-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 18px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.som-app-btn:hover {
+    transform: translateY(-2px);
+}
+
+.som-app-btn--primary {
+    background: #ff8a1c;
+    color: #111827;
+    box-shadow: 0 18px 34px rgba(255, 138, 28, .24);
+}
+
+.som-app-btn--ghost {
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .18);
+}
+
+#somInstallHelp {
+    display: block;
+    color: rgba(255, 255, 255, .62);
+}
+
+.som-phone-frame {
+    width: min(100%, 330px);
+    margin-inline: auto;
+    border: 10px solid rgba(255, 255, 255, .16);
+    border-radius: 34px;
+    background: #07111f;
+    padding: 12px;
+    box-shadow: 0 34px 70px rgba(0, 0, 0, .32);
+}
+
+.som-phone-top {
+    width: 78px;
+    height: 5px;
+    margin: 0 auto 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .25);
+}
+
+.som-phone-screen {
+    min-height: 520px;
+    border-radius: 24px;
+    padding: 16px;
+    background: #f6f8fb;
+    color: #14213d;
+}
+
+.som-appbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+}
+
+.som-appbar img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.som-appbar i {
+    margin-left: auto;
+    color: #0c7c91;
+}
+
+.som-card {
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 18px;
+    background: linear-gradient(135deg, #ff8a1c, #25b9cf);
+    color: #fff;
+}
+
+.som-card span {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.som-card strong {
+    display: block;
+    margin: 8px 0;
+    font-size: 24px;
+}
+
+.som-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, .82);
+    font-size: 13px;
+}
+
+.som-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.som-mini-grid span {
+    display: grid;
+    gap: 8px;
+    place-items: center;
+    min-height: 88px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(20, 33, 61, .08);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.som-mini-grid i {
+    color: #ff8a1c;
+    font-size: 24px;
+}
+
+.som-app-page {
+    padding: 42px clamp(14px, 4vw, 64px) 58px;
+    background: #f6f8fb;
+}
+
+.som-section-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.som-section-title span {
+    color: #d95f00;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.som-section-title h2,
+.som-install-panel h2 {
+    margin: 8px 0 0;
+    color: #14213d;
+    font-size: clamp(25px, 3vw, 38px);
+    font-weight: 800;
+}
+
+.som-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.som-feature-card,
+.som-install-panel {
+    border: 1px solid rgba(20, 33, 61, .08);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 14px 34px rgba(20, 33, 61, .07);
+}
+
+.som-feature-card {
+    display: block;
+    padding: 22px;
+    color: #14213d;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.som-feature-card:hover {
+    transform: translateY(-4px);
+    color: #14213d;
+    box-shadow: 0 18px 42px rgba(20, 33, 61, .11);
+}
+
+.som-feature-card i {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff8a1c, #25b9cf);
+}
+
+.som-feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.som-feature-card p {
+    margin: 0;
+    color: #5f6b7a;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.som-install-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    max-width: 1180px;
+    margin: 24px auto 0;
+    padding: clamp(22px, 4vw, 36px);
+    background: #10213f;
+}
+
+.som-install-panel h2 {
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    .som-app-hero,
+    .som-install-panel {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+
+    .som-feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .som-app-hero {
+        padding: 42px 16px;
+    }
+
+    .som-phone-screen {
+        min-height: 460px;
+    }
+
+    .som-feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .som-app-btn {
+        width: 100%;
+    }
+}
+
+.som-home-cta-section {
+    padding: 26px clamp(14px, 4vw, 64px);
+    background: #f6f8fb;
+}
+
+.som-home-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px clamp(18px, 4vw, 34px);
+    border-radius: 8px;
+    background: linear-gradient(135deg, #10213f, #0c7c91);
+    color: #fff;
+    box-shadow: 0 16px 38px rgba(20, 33, 61, .14);
+}
+
+.som-home-cta__copy span {
+    color: #ffd4a6;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.som-home-cta__copy h2 {
+    margin: 5px 0 7px;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+}
+
+.som-home-cta__copy p {
+    margin: 0;
+    color: rgba(255, 255, 255, .76);
+    line-height: 1.6;
+    max-width: 720px;
+}
+
+.som-home-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 8px;
+    background: #ff8a1c;
+    color: #111827;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+    .som-home-cta {
+        display: grid;
+    }
+
+    .som-home-cta__button {
+        width: 100%;
+    }
+}

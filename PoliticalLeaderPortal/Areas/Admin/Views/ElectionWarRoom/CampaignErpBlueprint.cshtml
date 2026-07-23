@@ -1,0 +1,113 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignErpBlueprintVM
+@{
+    ViewBag.Title = "Campaign ERP Blueprint";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .erp-blueprint { color: #17202a; }
+        .erp-hero, .erp-panel, .erp-pillar { background: #fff; border: 1px solid #e9ecef; border-radius: 8px; }
+        .erp-hero { padding: 22px; }
+        .erp-panel { padding: 18px; }
+        .erp-pillar { height: 100%; padding: 16px; transition: transform .15s ease, box-shadow .15s ease; }
+        .erp-pillar:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(15, 23, 42, .08); }
+        .erp-icon { width: 38px; height: 38px; border-radius: 8px; display: inline-grid; place-items: center; background: #eef5ff; color: #0d6efd; }
+        .erp-status { font-size: .72rem; }
+        .erp-capability { border: 1px solid #e9ecef; border-radius: 999px; padding: 4px 9px; font-size: .78rem; color: #495057; background: #f8f9fa; }
+        .erp-phase { border-left: 3px solid #0d6efd; padding-left: 12px; }
+        .erp-rule { border: 1px solid #e9ecef; border-radius: 8px; padding: 10px 12px; background: #f8fbff; }
+    </style>
+}
+
+<div class="container-fluid erp-blueprint">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+        <div>
+            <h2 class="fw-bold mb-1">@Model.Title</h2>
+            <p class="text-muted mb-0">@Model.Subtitle</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "ElectionWarRoom")"><i class="bi bi-speedometer2 me-1"></i>War Room</a>
+            <a class="btn btn-primary" href="@Url.Action("CampaignAlerts", "ElectionWarRoom")"><i class="bi bi-bell me-1"></i>Alerts</a>
+        </div>
+    </div>
+
+    <div class="erp-hero mb-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-lg-8">
+                <div class="text-uppercase small fw-semibold text-primary mb-1">Prompt-aligned architecture</div>
+                <h4 class="fw-bold mb-2">From political website to complete campaign operations platform</h4>
+                <p class="text-muted mb-0">This page converts the requested Election War Room prompt into a maintainable MVC 5 roadmap: implemented modules, extension modules, security rules and the next delivery phases.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="row g-2 text-center">
+                    <div class="col-4"><div class="bg-light rounded p-2"><div class="fw-bold">@Model.Pillars.Count</div><div class="small text-muted">Pillars</div></div></div>
+                    <div class="col-4"><div class="bg-light rounded p-2"><div class="fw-bold">@Model.DeliveryPhases.Count</div><div class="small text-muted">Phases</div></div></div>
+                    <div class="col-4"><div class="bg-light rounded p-2"><div class="fw-bold">@Model.GovernanceRules.Count</div><div class="small text-muted">Rules</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        @foreach (var pillar in Model.Pillars)
+        {
+            var tone = pillar.Status == "Implemented" ? "success" : pillar.Status == "Planned" ? "secondary" : pillar.Status == "Ongoing" ? "warning" : "primary";
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="erp-pillar">
+                    <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                        <span class="erp-icon"><i class="bi @pillar.Icon"></i></span>
+                        <span class="badge text-bg-@tone erp-status">@pillar.Status</span>
+                    </div>
+                    <h6 class="fw-bold mb-1">@pillar.Name</h6>
+                    <p class="text-muted small mb-3">@pillar.Description</p>
+                    <div class="d-flex flex-wrap gap-1 mb-3">
+                        @foreach (var capability in pillar.Capabilities)
+                        {
+                            <span class="erp-capability">@capability</span>
+                        }
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(pillar.ActionName))
+                    {
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action(pillar.ActionName, "ElectionWarRoom")">Open module</a>
+                    }
+                    else
+                    {
+                        <span class="small text-muted">Requires next-phase module screens</span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="erp-panel h-100">
+                <h5 class="fw-bold mb-3">Delivery Phases</h5>
+                <div class="row g-3">
+                    @foreach (var phase in Model.DeliveryPhases)
+                    {
+                        <div class="col-md-6">
+                            <div class="erp-phase">
+                                <div class="small text-primary fw-semibold">@phase.Phase</div>
+                                <h6 class="fw-bold mb-1">@phase.Focus</h6>
+                                <p class="text-muted small mb-0">@phase.Outcome</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="erp-panel h-100">
+                <h5 class="fw-bold mb-3">Governance and Safety Rules</h5>
+                <div class="d-grid gap-2">
+                    @foreach (var rule in Model.GovernanceRules)
+                    {
+                        <div class="erp-rule small">@rule</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

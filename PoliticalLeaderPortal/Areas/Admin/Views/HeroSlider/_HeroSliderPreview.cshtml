@@ -1,0 +1,306 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+
+                <i class="fa-solid fa-desktop text-primary me-2"></i>
+
+                Live Hero Preview
+
+            </h3>
+
+            <p class="hero-section-description">
+
+                Preview how the Hero Slider will appear on desktop, tablet and mobile devices.
+
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+
+            Step 6 of 6
+
+        </span>
+
+    </div>
+
+    <div class="row">
+
+        <!-- =============================================== -->
+        <!-- DEVICE TABS -->
+        <!-- =============================================== -->
+
+        <div class="col-lg-12 mb-4">
+
+            <div class="hero-device-toolbar">
+
+                <button type="button"
+                        class="btn btn-primary">
+
+                    <i class="fa-solid fa-desktop me-2"></i>
+
+                    Desktop
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary">
+
+                    <i class="fa-solid fa-tablet-screen-button me-2"></i>
+
+                    Tablet
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary">
+
+                    <i class="fa-solid fa-mobile-screen-button me-2"></i>
+
+                    Mobile
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- =============================================== -->
+        <!-- PREVIEW -->
+        <!-- =============================================== -->
+
+        <div class="col-lg-8">
+
+            <div class="hero-preview-wrapper">
+
+                <div class="hero-preview-browser">
+
+                    <div class="hero-browser-header">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    <div class="hero-browser-body">
+
+                        <div class="hero-live-banner">
+
+                            <div class="hero-live-overlay"></div>
+
+                            <div class="hero-live-content">
+
+                                <h5 id="previewSubTitle">
+
+                                    @(String.IsNullOrWhiteSpace(Model.SubTitle)
+                                        ? "Leader Subtitle"
+                                        : Model.SubTitle)
+
+                                </h5>
+
+                                <h1 id="previewTitle">
+
+                                    @(String.IsNullOrWhiteSpace(Model.Title)
+                                        ? "Leader Title"
+                                        : Model.Title)
+
+                                </h1>
+
+                                <p id="previewDescription">
+
+                                    @(String.IsNullOrWhiteSpace(Model.Description)
+                                        ? "Hero description preview will appear here while typing."
+                                        : Model.Description)
+
+                                </p>
+
+                                @if (Model.ShowButtons)
+                                {
+                                    <div class="mt-4">
+
+                                        <button type="button"
+                                                class="hero-btn-primary-preview">
+
+                                            @(String.IsNullOrWhiteSpace(Model.ButtonText)
+                                                ? "Primary Button"
+                                                : Model.ButtonText)
+
+                                        </button>
+
+                                        <button type="button"
+                                                class="hero-btn-secondary-preview">
+
+                                            @(String.IsNullOrWhiteSpace(Model.ButtonText2)
+                                                ? "Secondary Button"
+                                                : Model.ButtonText2)
+
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                            @if (Model.ShowLeaderImage)
+                            {
+                                <div class="hero-live-leader">
+
+                                    <img src="@(String.IsNullOrWhiteSpace(Model.LeaderImagePath) ? "" : Url.Content(Model.LeaderImagePath))"
+                                         alt="Leader" />
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =============================================== -->
+        <!-- SUMMARY -->
+        <!-- =============================================== -->
+
+        <div class="col-lg-4">
+
+            <div class="hero-info-card mb-4">
+
+                <h5>
+
+                    Preview Summary
+
+                </h5>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Template
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(String.IsNullOrWhiteSpace(Model.TemplateType)
+                            ? "--"
+                            : Model.TemplateType)
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Transition
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(String.IsNullOrWhiteSpace(Model.SliderTransition)
+                            ? "--"
+                            : Model.SliderTransition)
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Overlay
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(String.IsNullOrWhiteSpace(Model.OverlayType)
+                            ? "--"
+                            : Model.OverlayType)
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Alignment
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(String.IsNullOrWhiteSpace(Model.TextAlignment)
+                            ? "--"
+                            : Model.TextAlignment)
+
+                    </span>
+
+                </div>
+
+                <div class="hero-summary-item">
+
+                    <span class="hero-summary-label">
+
+                        Status
+
+                    </span>
+
+                    <span class="hero-summary-value">
+
+                        @(Model.IsActive ? "Active" : "Draft")
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="hero-info-card">
+
+                <h5>
+
+                    Preview Checklist
+
+                </h5>
+
+                <ul class="hero-check-list">
+
+                    <li>✓ Responsive Layout</li>
+
+                    <li>✓ Background Image</li>
+
+                    <li>✓ Leader Image</li>
+
+                    <li>✓ Buttons</li>
+
+                    <li>✓ Animation Ready</li>
+
+                    <li>✓ Swiper Ready</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

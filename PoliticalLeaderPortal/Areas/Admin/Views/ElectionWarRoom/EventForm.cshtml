@@ -1,0 +1,153 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.EventVM
+@{
+    bool isEdit = Model != null && Model.EventId > 0;
+    ViewBag.Title = isEdit ? "Edit Event" : "Create Event";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">@ViewBag.Title</h4>
+                <small>Public fields stay clean; operational fields remain inside Election War Room.</small>
+            </div>
+            <a href="@Url.Action("Events")" class="btn btn-light"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditEvent" : "CreateEvent", "ElectionWarRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.EventId)
+            @Html.HiddenFor(m => m.EventImagePath)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#publicInfo" type="button">Public Info</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#locationInfo" type="button">Location</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#trackingInfo" type="button">Tracking</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#responsibilityInfo" type="button">Responsibility</button></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="publicInfo">
+                        <div class="row g-3">
+                            <div class="col-lg-6">
+                                <label class="form-label">Event Title</label>
+                                @Html.TextBoxFor(m => m.EventTitle, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="form-label">Subtitle</label>
+                                @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-label">Event Category</label>
+                                @Html.DropDownListFor(m => m.EventType, new SelectList(new[] { "Public Meeting", "Rally", "Booth Meeting", "Roadshow", "Training", "Jan Sampark", "Press", "Social", "Internal Meeting" }), "Select", new { @class = "form-select" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-label">Event Scope</label>
+                                @Html.DropDownListFor(m => m.EventScope, new SelectList(new[] { "Public", "ElectionWarRoom", "Both" }), new { @class = "form-select" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-label">Status</label>
+                                @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Planned", "In Progress", "Completed", "Cancelled" }), new { @class = "form-select" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">Start Date</label>
+                                @Html.TextBoxFor(m => m.EventDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", required = "required" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">Finish Date</label>
+                                @Html.TextBoxFor(m => m.FinishDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">Start Time</label>
+                                @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", type = "time" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">End Time</label>
+                                @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control", type = "time" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-label">Event Image</label>
+                                <input type="file" name="EventImageFile" class="form-control" accept=".jpg,.jpeg,.png,.webp,.gif" />
+                                @if (!String.IsNullOrWhiteSpace(Model.EventImagePath))
+                                {
+                                    <img src="@Url.Content(Model.EventImagePath)" class="img-thumbnail mt-2" style="height:90px;object-fit:cover;" />
+                                }
+                            </div>
+                            <div class="col-lg-8">
+                                <label class="form-label">Description</label>
+                                @Html.TextAreaFor(m => m.Description, 4, 20, new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-3 form-check form-switch ms-2">
+                                @Html.CheckBoxFor(m => m.ShowOnHome, new { @class = "form-check-input" })
+                                <label class="form-check-label">Show on Home/Public Event</label>
+                            </div>
+                            <div class="col-lg-3 form-check form-switch">
+                                @Html.CheckBoxFor(m => m.ShowInElectionWarRoom, new { @class = "form-check-input" })
+                                <label class="form-check-label">Show in Election War Room</label>
+                            </div>
+                            <div class="col-lg-3 form-check form-switch">
+                                @Html.CheckBoxFor(m => m.IsConfidential, new { @class = "form-check-input" })
+                                <label class="form-check-label">Confidential/Internal</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="locationInfo">
+                        <div class="row g-3">
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "State" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.District, new { @class = "form-control", placeholder = "District" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.Block, new { @class = "form-control", placeholder = "Block" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.Village, new { @class = "form-control", placeholder = "Village" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.Booth, new { @class = "form-control", placeholder = "Booth/Ward" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.Venue, new { @class = "form-control", placeholder = "Venue" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.Landmark, new { @class = "form-control", placeholder = "Landmark" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.GoogleMapLink, new { @class = "form-control", placeholder = "Google Map Link" })</div>
+                            <div class="col-12">@Html.TextAreaFor(m => m.FullAddress, 3, 20, new { @class = "form-control", placeholder = "Full address" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="trackingInfo">
+                        <div class="row g-3">
+                            <div class="col-lg-3"><label class="form-label">Expected Gathering</label>@Html.TextBoxFor(m => m.ExpectedCrowd, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Actual Gathering</label>@Html.TextBoxFor(m => m.ActualCrowd, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Expected Vehicles</label>@Html.TextBoxFor(m => m.ExpectedVehicles, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Actual Vehicles</label>@Html.TextBoxFor(m => m.ActualVehicles, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Expected Volunteers</label>@Html.TextBoxFor(m => m.ExpectedVolunteers, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Actual Volunteers</label>@Html.TextBoxFor(m => m.ActualVolunteers, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Expected Food Plates</label>@Html.TextBoxFor(m => m.ExpectedFoodPlates, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Actual Food Plates</label>@Html.TextBoxFor(m => m.ActualFoodPlates, new { @class = "form-control", type = "number" })</div>
+                            <div class="col-lg-3"><label class="form-label">Budget</label>@Html.TextBoxFor(m => m.Budget, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                            <div class="col-lg-3"><label class="form-label">Actual Expense</label>@Html.TextBoxFor(m => m.ActualExpense, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                            <div class="col-lg-3"><label class="form-label">Priority</label>@Html.DropDownListFor(m => m.Priority, new SelectList(new[] { "Low", "Medium", "High", "Critical" }), new { @class = "form-select" })</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="responsibilityInfo">
+                        <div class="row g-3">
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.OrganizerName, new { @class = "form-control", placeholder = "Organizer Name" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.OrganizerMobile, new { @class = "form-control", placeholder = "Organizer Mobile" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.ResponsiblePerson, new { @class = "form-control", placeholder = "Main Responsible Person" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.ResponsibleMobile, new { @class = "form-control", placeholder = "Responsible Mobile" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.TransportResponsible, new { @class = "form-control", placeholder = "Transport Responsible" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.FoodResponsible, new { @class = "form-control", placeholder = "Food Responsible" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.MediaResponsible, new { @class = "form-control", placeholder = "Media Responsible" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.VolunteerResponsible, new { @class = "form-control", placeholder = "Volunteer Responsible" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.ChiefGuest, new { @class = "form-control", placeholder = "Chief Guest" })</div>
+                            <div class="col-lg-3">@Html.TextBoxFor(m => m.ChiefGuestMobile, new { @class = "form-control", placeholder = "Chief Guest Mobile" })</div>
+                            <div class="col-12">@Html.TextAreaFor(m => m.Remarks, 4, 20, new { @class = "form-control", placeholder = "Internal notes, risks, follow-up and observations" })</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <a href="@Url.Action("Events")" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Event</button>
+            </div>
+        }
+    </div>
+</div>

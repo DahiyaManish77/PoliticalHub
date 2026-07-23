@@ -1,0 +1,207 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadDocumentVM>
+
+@{
+    ViewBag.Title = "Downloads";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="page-header bg-light py-5">
+
+    <div class="container text-center">
+
+        <h2 class="fw-bold">
+
+            Downloads & Documents
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            Download official documents, reports, notices, publications and verified external resources.
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="py-5">
+
+    <div class="container">
+
+        @if (Model.Any())
+        {
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    string icon = "fa-file";
+
+                    switch (item.FileExtension)
+                    {
+                        case "PDF":
+                            icon = "fa-file-pdf-o";
+                            break;
+
+                        case "DOC":
+                        case "DOCX":
+                            icon = "fa-file-word-o";
+                            break;
+
+                        case "XLS":
+                        case "XLSX":
+                            icon = "fa-file-excel-o";
+                            break;
+
+                        case "PPT":
+                        case "PPTX":
+                            icon = "fa-file-powerpoint-o";
+                            break;
+
+                        case "ZIP":
+                        case "RAR":
+                            icon = "fa-file-archive-o";
+                            break;
+
+                        case "TXT":
+                        case "RTF":
+                            icon = "fa-file-text-o";
+                            break;
+                    }
+
+                    <div class="col-lg-6 mb-4">
+
+                        <div class="card shadow-sm border-0 h-100">
+
+                            <div class="card-body">
+
+                                <div class="d-flex">
+
+                                    <div class="me-3">
+
+                                        <i class="fa @icon fa-3x text-danger"></i>
+
+                                    </div>
+
+                                    <div class="flex-grow-1">
+
+                                        <h5 class="fw-bold">
+
+                                            @item.Title
+
+                                        </h5>
+
+                                        <p class="text-muted mb-2">
+
+                                            @item.ShortDescription
+
+                                        </p>
+
+                                        <div class="row small">
+
+                                            <div class="col-6 mb-2">
+
+                                                <strong>Category</strong>
+
+                                                <br />
+
+                                                @item.CategoryName
+
+                                            </div>
+
+                                            <div class="col-6 mb-2">
+
+                                                <strong>Document No.</strong>
+
+                                                <br />
+
+                                                @item.DocumentNumber
+
+                                            </div>
+
+                                            <div class="col-6 mb-2">
+
+                                                <strong>Version</strong>
+
+                                                <br />
+
+                                                @item.VersionNo
+
+                                            </div>
+
+                                            <div class="col-6 mb-2">
+
+                                                <strong>Published</strong>
+
+                                                <br />
+
+                                                @(item.PublishDate.HasValue
+                                                    ? item.PublishDate.Value.ToString("dd MMM yyyy")
+                                                    : "-")
+
+                                            </div>
+
+                                            <div class="col-6">
+
+                                                <strong>File Size</strong>
+
+                                                <br />
+
+                                                @(item.FileSizeKB >= 1024
+                                                    ? (item.FileSizeKB / 1024).ToString("0.00") + " MB"
+                                                    : item.FileSizeKB.ToString("0.00") + " KB")
+
+                                            </div>
+
+                                            <div class="col-6">
+
+                                                <strong>Downloads</strong>
+
+                                                <br />
+
+                                                @item.DownloadsCount
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+
+                                <a href="@Url.Action("Download",
+                                                     "Downloads",
+                                                     new { id = item.DownloadDocumentId })"
+                                   class="btn btn-primary w-100">
+
+                                    <i class="fa fa-download"></i>
+
+                                    @(item.FilePath != null && item.FilePath.StartsWith("http") ? "Open Official Link" : "Download Document")
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+
+                No documents are available.
+
+            </div>
+        }
+
+    </div>
+
+</section>

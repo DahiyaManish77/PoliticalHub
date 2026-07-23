@@ -1,0 +1,370 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>
+
+@{
+    Layout = null;
+    var items = Model == null
+        ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>()
+        : Model.ToList();
+
+    var featured = items.FirstOrDefault();
+    var sideItems = items.Skip(1).Take(4).ToList();
+}
+
+@functions
+{
+    private string TrimText(string value, int length)
+    {
+        if (String.IsNullOrWhiteSpace(value))
+        {
+            return "";
+        }
+
+        return value.Length <= length
+            ? value
+            : value.Substring(0, length).Trim() + "...";
+    }
+}
+
+@if (items.Any())
+{
+    <section class="press-desk-section">
+        <div class="container">
+            <div class="press-desk-head">
+                <div>
+                    <span>In The Media</span>
+                    <h2>Coverage & Public Mentions</h2>
+                </div>
+                <a href="@Url.Action("Index", "PublicMediaCoverage")">View All</a>
+            </div>
+
+            <div class="press-desk-layout">
+                @if (featured != null)
+                {
+                    <article class="press-feature">
+                        <a href="@Url.Action("Details", "PublicMediaCoverage", new { id = featured.MediaCoverageId })"
+                           class="press-feature-media">
+                            @if (!String.IsNullOrWhiteSpace(featured.CoverImagePath))
+                            {
+                                <img src="@Url.Content(featured.CoverImagePath)" alt="@featured.Title" />
+                            }
+                            <span class="press-feature-tag">Featured</span>
+                        </a>
+
+                        <div class="press-feature-copy">
+                            <div class="press-source-line">
+                                @if (!String.IsNullOrWhiteSpace(featured.SourceLogoPath))
+                                {
+                                    <img src="@Url.Content(featured.SourceLogoPath)" alt="@featured.SourceName" />
+                                }
+                                <strong>@featured.SourceName</strong>
+                                <span>
+                                    @(featured.CoverageDate.HasValue
+                                        ? featured.CoverageDate.Value.ToString("dd MMM yyyy")
+                                        : "")
+                                </span>
+                            </div>
+
+                            <h3>@featured.Title</h3>
+                            <p>@TrimText(featured.ShortDescription, 175)</p>
+
+                            <a href="@Url.Action("Details", "PublicMediaCoverage", new { id = featured.MediaCoverageId })"
+                               class="press-read-link">
+                                Read Coverage
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                }
+
+                <div class="press-feed">
+                    @foreach (var item in sideItems)
+                    {
+                        <article class="press-feed-item">
+                            <a href="@Url.Action("Details", "PublicMediaCoverage", new { id = item.MediaCoverageId })"
+                               class="press-feed-thumb">
+                                @if (!String.IsNullOrWhiteSpace(item.CoverImagePath))
+                                {
+                                    <img src="@Url.Content(item.CoverImagePath)" alt="@item.Title" />
+                                }
+                                else
+                                {
+                                    <span><i class="bi bi-newspaper"></i></span>
+                                }
+                            </a>
+
+                            <div class="press-feed-copy">
+                                <div class="press-feed-meta">
+                                    <strong>@item.SourceName</strong>
+                                    <span>
+                                        @(item.CoverageDate.HasValue
+                                            ? item.CoverageDate.Value.ToString("dd MMM yyyy")
+                                            : "")
+                                    </span>
+                                </div>
+
+                                <h3>
+                                    <a href="@Url.Action("Details", "PublicMediaCoverage", new { id = item.MediaCoverageId })">
+                                        @item.Title
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .press-desk-section {
+            padding: 34px 0;
+            background:
+                linear-gradient(90deg, #ffffff 0%, #ffffff 52%, #f4f7fb 52%, #f4f7fb 100%);
+        }
+
+        .press-desk-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .press-desk-head span {
+            display: inline-flex;
+            color: #e85d04;
+            font-size: .76rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            margin-bottom: 5px;
+        }
+
+        .press-desk-head h2 {
+            margin: 0;
+            color: #111827;
+            font-size: clamp(1.35rem, 2vw, 2rem);
+            line-height: 1.15;
+            font-weight: 900;
+        }
+
+        .press-desk-head > a {
+            color: #fff;
+            background: #111827;
+            text-decoration: none;
+            border-radius: 6px;
+            padding: 9px 14px;
+            font-size: .86rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .press-desk-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.16fr) minmax(360px, .84fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .press-feature {
+            display: grid;
+            grid-template-columns: minmax(280px, .95fr) minmax(0, 1fr);
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 16px 38px rgba(15, 23, 42, .07);
+        }
+
+        .press-feature-media {
+            position: relative;
+            min-height: 316px;
+            overflow: hidden;
+            background: #111827;
+        }
+
+        .press-feature-media img,
+        .press-feed-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .25s ease;
+        }
+
+        .press-feature:hover img,
+        .press-feed-item:hover img {
+            transform: scale(1.035);
+        }
+
+        .press-feature-tag {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            border-radius: 999px;
+            padding: 5px 10px;
+            color: #fff;
+            background: #9f1239;
+            font-size: .72rem;
+            font-weight: 900;
+        }
+
+        .press-feature-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .press-source-line {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: #64748b;
+            font-size: .78rem;
+            font-weight: 800;
+        }
+
+        .press-source-line img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #f8fafc;
+        }
+
+        .press-source-line strong {
+            color: #e85d04;
+        }
+
+        .press-feature-copy h3 {
+            margin: 0 0 10px;
+            color: #0f172a;
+            font-size: clamp(1.25rem, 1.7vw, 1.85rem);
+            line-height: 1.22;
+            font-weight: 900;
+        }
+
+        .press-feature-copy p {
+            margin: 0 0 16px;
+            color: #64748b;
+            font-size: .93rem;
+            line-height: 1.55;
+        }
+
+        .press-read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            color: #e85d04;
+            text-decoration: none;
+            font-size: .9rem;
+            font-weight: 900;
+        }
+
+        .press-feed {
+            display: grid;
+            gap: 12px;
+        }
+
+        .press-feed-item {
+            display: grid;
+            grid-template-columns: 132px minmax(0, 1fr);
+            gap: 14px;
+            align-items: center;
+            min-height: 112px;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, .055);
+        }
+
+        .press-feed-thumb {
+            display: block;
+            height: 92px;
+            overflow: hidden;
+            border-radius: 6px;
+            background: #111827;
+        }
+
+        .press-feed-thumb span {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .press-feed-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: #64748b;
+            font-size: .72rem;
+            font-weight: 800;
+        }
+
+        .press-feed-meta strong {
+            color: #e85d04;
+        }
+
+        .press-feed-copy h3 {
+            margin: 4px 0 0;
+            font-size: .98rem;
+            line-height: 1.35;
+            font-weight: 900;
+        }
+
+        .press-feed-copy h3 a {
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+        .press-feed-copy h3 a:hover {
+            color: #e85d04;
+        }
+
+        @@media (max-width: 991px) {
+            .press-desk-section {
+                background: #f6f8fb;
+            }
+
+            .press-desk-layout,
+            .press-feature {
+                grid-template-columns: 1fr;
+            }
+
+            .press-feature-media {
+                min-height: 260px;
+            }
+        }
+
+        @@media (max-width: 575px) {
+            .press-desk-section {
+                padding: 26px 0;
+            }
+
+            .press-desk-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .press-desk-head > a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .press-feed-item {
+                grid-template-columns: 108px minmax(0, 1fr);
+            }
+
+            .press-feed-thumb {
+                height: 78px;
+            }
+        }
+    </style>
+}

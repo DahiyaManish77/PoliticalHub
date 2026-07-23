@@ -1,0 +1,72 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.EventTrackingItemVM
+@{
+    bool isEdit = Model != null && Model.EventTrackingItemId > 0;
+    string category = Convert.ToString(ViewBag.TrackingCategory ?? Model.Category);
+    ViewBag.Title = (isEdit ? "Edit " : "Add ") + category;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">@ViewBag.Title</h4>
+                <small>Track operational details against a specific event.</small>
+            </div>
+            <a href="@Url.Action("Events")" class="btn btn-light"><i class="bi bi-arrow-left me-1"></i>Back</a>
+        </div>
+
+        @using (Html.BeginForm(isEdit ? "EditTrackingItem" : "CreateTrackingItem", "ElectionWarRoom", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.EventTrackingItemId)
+            @Html.HiddenFor(m => m.Category)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <label class="form-label">Event</label>
+                        @Html.DropDownListFor(m => m.EventId, (IEnumerable<SelectListItem>)ViewBag.EventList, "Select Event", new { @class = "form-select", required = "required" })
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Item / Menu / Person / Village</label>
+                        @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control", required = "required" })
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Status</label>
+                        @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Planned", "Assigned", "In Progress", "Completed", "Shortage", "Extra", "Pending Return", "Returned", "Appreciation Pending" }), "Select", new { @class = "form-select" })
+                    </div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.Village, new { @class = "form-control", placeholder = "Village" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.Ward, new { @class = "form-control", placeholder = "Ward" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.Booth, new { @class = "form-control", placeholder = "Booth" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.Unit, new { @class = "form-control", placeholder = "Unit: people/kg/plate/item" })</div>
+                    <div class="col-lg-3"><label class="form-label">Expected Qty</label>@Html.TextBoxFor(m => m.ExpectedQuantity, new { @class = "form-control", type = "number" })</div>
+                    <div class="col-lg-3"><label class="form-label">Actual Qty</label>@Html.TextBoxFor(m => m.ActualQuantity, new { @class = "form-control", type = "number" })</div>
+                    <div class="col-lg-3"><label class="form-label">Estimated Cost</label>@Html.TextBoxFor(m => m.EstimatedCost, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                    <div class="col-lg-3"><label class="form-label">Actual Cost</label>@Html.TextBoxFor(m => m.ActualCost, new { @class = "form-control", type = "number", step = "0.01" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.ResponsiblePerson, new { @class = "form-control", placeholder = "Responsible Person" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.ResponsibleMobile, new { @class = "form-control", placeholder = "Responsible Mobile" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.ProviderName, new { @class = "form-control", placeholder = "Provider / Volunteer" })</div>
+                    <div class="col-lg-3">@Html.TextBoxFor(m => m.ProviderMobile, new { @class = "form-control", placeholder = "Provider Mobile" })</div>
+                    <div class="col-lg-3 form-check form-switch ms-2">
+                        @Html.CheckBoxFor(m => m.ReturnRequired, new { @class = "form-check-input" })
+                        <label class="form-check-label">Return Required</label>
+                    </div>
+                    <div class="col-lg-3 form-check form-switch">
+                        @Html.CheckBoxFor(m => m.Returned, new { @class = "form-check-input" })
+                        <label class="form-check-label">Returned</label>
+                    </div>
+                    <div class="col-lg-3 form-check form-switch">
+                        @Html.CheckBoxFor(m => m.AppreciationPending, new { @class = "form-check-input" })
+                        <label class="form-check-label">Appreciation Pending</label>
+                    </div>
+                    <div class="col-12">@Html.TextAreaFor(m => m.Remarks, 4, 20, new { @class = "form-control", placeholder = "Remarks, recipe notes, return note, performance note, etc." })</div>
+                </div>
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Save</button>
+            </div>
+        }
+    </div>
+</div>

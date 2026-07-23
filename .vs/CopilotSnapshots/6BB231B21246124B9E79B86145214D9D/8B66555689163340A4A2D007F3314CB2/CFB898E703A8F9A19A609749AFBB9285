@@ -1,0 +1,548 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.ViewModels.HeroSliderDisplayVM>
+
+@functions
+{
+    private string GetVideoEmbedUrl(string url)
+    {
+        if (String.IsNullOrWhiteSpace(url))
+        {
+            return "";
+        }
+
+        var value = url.Trim();
+
+        if (value.Contains("youtube.com/watch?v="))
+        {
+            var id = value.Substring(value.IndexOf("watch?v=") + 8);
+            var amp = id.IndexOf("&");
+
+            if (amp >= 0)
+            {
+                id = id.Substring(0, amp);
+            }
+
+            return "https://www.youtube.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=0&showinfo=0&rel=0";
+        }
+
+        if (value.Contains("youtu.be/"))
+        {
+            var id = value.Substring(value.LastIndexOf("/") + 1);
+
+            return "https://www.youtube.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=0&showinfo=0&rel=0";
+        }
+
+        if (value.Contains("vimeo.com/"))
+        {
+            var id = value.Substring(value.LastIndexOf("/") + 1);
+
+            return "https://player.vimeo.com/video/" + id + "?background=1&autoplay=1&muted=1&loop=1";
+        }
+
+        return "";
+    }
+
+    private bool IsDirectVideo(string url)
+    {
+        if (String.IsNullOrWhiteSpace(url))
+        {
+            return false;
+        }
+
+        var value = url.ToLower();
+
+        return value.EndsWith(".mp4") ||
+               value.EndsWith(".webm") ||
+               value.EndsWith(".mov");
+    }
+
+    private string NormalizeHeroHeightCss(string value)
+    {
+        if (String.IsNullOrWhiteSpace(value))
+        {
+            return "480px";
+        }
+
+        var trimmed = value.Trim();
+
+        return System.Text.RegularExpressions.Regex.IsMatch(
+            trimmed,
+            @"^\d{2,4}(\.\d+)?(px|vh|vw|rem|em)$",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+            ? trimmed
+            : "480px";
+    }
+
+    private string WithAssetVersion(string url, string version)
+    {
+        if (String.IsNullOrWhiteSpace(url) ||
+            String.IsNullOrWhiteSpace(version))
+        {
+            return url;
+        }
+
+        return url + (url.Contains("?") ? "&" : "?") + "v=" + version;
+    }
+}
+
+@if (Model != null && Model.Any())
+{
+    var sectionHeroHeightCss = NormalizeHeroHeightCss(Model.OrderBy(x => x.DisplayOrder).FirstOrDefault().HeroHeightCss);
+
+    <section class="hero-slider-section"
+             style="--hero-admin-height:@sectionHeroHeightCss;">
+
+        <div class="swiper heroSwiper">
+
+            <div class="swiper-wrapper">
+
+                @foreach (var item in Model.OrderBy(x => x.DisplayOrder))
+                {
+                    var backgroundImage = !string.IsNullOrWhiteSpace(item.BackgroundImagePath)
+                        ? Url.Content(item.BackgroundImagePath)
+                        : (!string.IsNullOrWhiteSpace(item.ImagePath)
+                            ? Url.Content(item.ImagePath)
+                            : "");
+
+                    backgroundImage = WithAssetVersion(backgroundImage, item.AssetVersion);
+
+                    var mobileImage = !string.IsNullOrWhiteSpace(item.MobileImagePath)
+                        ? WithAssetVersion(Url.Content(item.MobileImagePath), item.AssetVersion)
+                        : backgroundImage;
+
+                    var videoSource = !string.IsNullOrWhiteSpace(item.VideoPath)
+                        ? Url.Content(item.VideoPath)
+                        : item.VideoUrl;
+
+                    var videoEmbedUrl = GetVideoEmbedUrl(videoSource);
+
+                    var showVideo = item.IsVideoSlide &&
+                        !string.IsNullOrWhiteSpace(videoSource);
+
+                    if (showVideo)
+                    {
+                        backgroundImage = "";
+                        mobileImage = "";
+                    }
+
+                    var leaderImage = !String.IsNullOrWhiteSpace(item.LeaderImagePath)
+                        ? WithAssetVersion(Url.Content(item.LeaderImagePath), item.AssetVersion)
+                        : "";
+
+                    var useLeaderAsPrimaryMedia =
+                        !showVideo &&
+                        String.IsNullOrWhiteSpace(backgroundImage) &&
+                        !String.IsNullOrWhiteSpace(leaderImage);
+
+                    var overlayOpacity = item.OverlayOpacity.HasValue
+                        ? item.OverlayOpacity.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                        : "0.50";
+
+                    var heroHeightCss = NormalizeHeroHeightCss(item.HeroHeightCss);
+
+                    var textAlignment = "text-start";
+
+                    switch ((item.TextAlignment ?? "").ToLower())
+                    {
+                        case "center":
+                            textAlignment = "text-center";
+                            break;
+
+                        case "right":
+                            textAlignment = "text-end";
+                            break;
+                    }
+
+                    var leaderColumn = "col-lg-5";
+                    var contentColumn = "col-lg-7";
+
+                    <div class="swiper-slide"
+                         data-hero-video="@(showVideo ? "true" : "false")"
+                         data-hero-video-kind="@(showVideo && IsDirectVideo(videoSource) ? "direct" : (showVideo ? "embed" : ""))">
+
+                        <section class="hero-slide @item.TemplateType"
+                                 style="--hero-admin-height:@heroHeightCss;">
+
+                            <!-- Desktop Background -->
+                            <div class="hero-background desktop-only"
+                                 style="background-color:@item.BackgroundColor;">
+                                @if (!String.IsNullOrWhiteSpace(backgroundImage))
+                                {
+                                    <img src="@backgroundImage"
+                                         alt="@(!String.IsNullOrWhiteSpace(item.Title) ? item.Title : "Hero slide")"
+                                         class="hero-background-img" />
+                                }
+                                else if (useLeaderAsPrimaryMedia)
+                                {
+                                    <img src="@leaderImage"
+                                         alt="@(!String.IsNullOrWhiteSpace(item.Title) ? item.Title : "Hero slide")"
+                                         class="hero-background-img hero-background-img-contained" />
+                                }
+                            </div>
+
+                            <!-- Mobile Background -->
+                            <div class="hero-background mobile-only"
+                                 style="background-color:@item.BackgroundColor;">
+                                @if (!String.IsNullOrWhiteSpace(mobileImage))
+                                {
+                                    <img src="@mobileImage"
+                                         alt="@(!String.IsNullOrWhiteSpace(item.Title) ? item.Title : "Hero slide")"
+                                         class="hero-background-img" />
+                                }
+                                else if (useLeaderAsPrimaryMedia)
+                                {
+                                    <img src="@leaderImage"
+                                         alt="@(!String.IsNullOrWhiteSpace(item.Title) ? item.Title : "Hero slide")"
+                                         class="hero-background-img hero-background-img-contained" />
+                                }
+                            </div>
+
+                            @if (showVideo && IsDirectVideo(videoSource))
+                            {
+                                <video class="hero-background-video"
+                                       data-hero-video="true"
+                                       @(item.VideoAutoplay ? "autoplay" : "")
+                                       @(item.VideoMuted ? "muted" : "")
+                                       playsinline
+                                       preload="metadata"
+                                       poster="@backgroundImage">
+                                    <source src="@videoSource" />
+                                </video>
+                            }
+                            else if (showVideo && !String.IsNullOrWhiteSpace(videoEmbedUrl))
+                            {
+                                <iframe class="hero-background-video hero-background-embed"
+                                        src="@videoEmbedUrl"
+                                        title="@(!String.IsNullOrWhiteSpace(item.Title) ? item.Title : "Hero video")"
+                                        frameborder="0"
+                                        allow="autoplay; fullscreen; picture-in-picture"
+                                        allowfullscreen>
+                                </iframe>
+                            }
+
+                            @if (item.ShowOverlay)
+                            {
+                                <div class="hero-overlay hero-overlay-@((item.OverlayType ?? "dark").ToLower())"
+                                     style="opacity:@overlayOpacity;">
+                                </div>
+                            }
+<div class="container">
+
+                                <div class="row align-items-center hero-row">
+
+                                    @if (item.ShowLeaderImage &&
+                                         !useLeaderAsPrimaryMedia &&
+                                         !String.IsNullOrWhiteSpace(item.LeaderImagePath))
+                                    {
+                                        if ((item.LeaderImagePosition ?? "").ToLower() == "left")
+                                        {
+                                            <div class="@leaderColumn hero-leader-column order-lg-1 order-2">
+
+                                                <div class="hero-leader-wrapper hero-leader-left">
+
+                                                    <img src="@leaderImage"
+                                                         alt="@item.Title"
+                                                         class="img-fluid hero-leader-image" />
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="@contentColumn hero-content-column order-lg-2 order-1 @textAlignment">
+
+                                                <div class="hero-content">
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.SubTitle))
+                                                    {
+                                                        <span class="hero-subtitle @item.SubTitleAnimation">
+
+                                                            @item.SubTitle
+
+                                                        </span>
+                                                    }
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.Title))
+                                                    {
+                                                        <h1 class="hero-title @item.TitleAnimation">
+
+                                                            @item.Title
+
+                                                        </h1>
+                                                    }
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.Description))
+                                                    {
+                                                        <p class="hero-description @item.DescriptionAnimation">
+
+                                                            @item.Description
+
+                                                        </p>
+                                                    }
+
+                                                    @if (item.ShowButtons)
+                                                    {
+                                                        <div class="hero-buttons @item.ButtonAnimation">
+
+                                                            @if (!String.IsNullOrWhiteSpace(item.ButtonText) &&
+                                                                 !String.IsNullOrWhiteSpace(item.ButtonUrl))
+                                                            {
+                                                                <a href="@item.ButtonUrl"
+                                                                   class="btn hero-btn hero-btn-primary">
+
+                                                                    @item.ButtonText
+
+                                                                </a>
+                                                            }
+
+                                                            @if (!String.IsNullOrWhiteSpace(item.ButtonText2) &&
+                                                                 !String.IsNullOrWhiteSpace(item.ButtonUrl2))
+                                                            {
+                                                                <a href="@item.ButtonUrl2"
+                                                                   class="btn hero-btn hero-btn-secondary">
+
+                                                                    @item.ButtonText2
+
+                                                                </a>
+                                                            }
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="@contentColumn hero-content-column @textAlignment">
+
+                                                <div class="hero-content">
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.SubTitle))
+                                                    {
+                                                        <span class="hero-subtitle @item.SubTitleAnimation">
+
+                                                            @item.SubTitle
+
+                                                        </span>
+                                                    }
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.Title))
+                                                    {
+                                                        <h1 class="hero-title @item.TitleAnimation">
+
+                                                            @item.Title
+
+                                                        </h1>
+                                                    }
+
+                                                    @if (!String.IsNullOrWhiteSpace(item.Description))
+                                                    {
+                                                        <p class="hero-description @item.DescriptionAnimation">
+
+                                                            @item.Description
+
+                                                        </p>
+                                                    }
+
+                                                    @if (item.ShowButtons)
+                                                    {
+                                                        <div class="hero-buttons @item.ButtonAnimation">
+
+                                                            @if (!String.IsNullOrWhiteSpace(item.ButtonText) &&
+                                                                 !String.IsNullOrWhiteSpace(item.ButtonUrl))
+                                                            {
+                                                                <a href="@item.ButtonUrl"
+                                                                   class="btn hero-btn hero-btn-primary">
+
+                                                                    @item.ButtonText
+
+                                                                </a>
+                                                            }
+
+                                                            @if (!String.IsNullOrWhiteSpace(item.ButtonText2) &&
+                                                                 !String.IsNullOrWhiteSpace(item.ButtonUrl2))
+                                                            {
+                                                                <a href="@item.ButtonUrl2"
+                                                                   class="btn hero-btn hero-btn-secondary">
+
+                                                                    @item.ButtonText2
+
+                                                                </a>
+                                                            }
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="@leaderColumn hero-leader-column">
+
+                                                <div class="hero-leader-wrapper hero-leader-right">
+
+                                                    <img src="@leaderImage"
+                                                         alt="@item.Title"
+                                                         class="img-fluid hero-leader-image" />
+
+                                                </div>
+
+                                            </div>
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-lg-12">
+
+                                            <div class="hero-content hero-content-full @textAlignment">
+
+                                                @if (!String.IsNullOrWhiteSpace(item.SubTitle))
+                                                {
+                                                    <span class="hero-subtitle @item.SubTitleAnimation">
+
+                                                        @item.SubTitle
+
+                                                    </span>
+                                                }
+
+                                                @if (!String.IsNullOrWhiteSpace(item.Title))
+                                                {
+                                                    <h1 class="hero-title @item.TitleAnimation">
+
+                                                        @item.Title
+
+                                                    </h1>
+                                                }
+
+                                                @if (!String.IsNullOrWhiteSpace(item.Description))
+                                                {
+                                                    <p class="hero-description @item.DescriptionAnimation">
+
+                                                        @item.Description
+
+                                                    </p>
+                                                }
+
+                                                @if (item.ShowButtons)
+                                                {
+                                                    <div class="hero-buttons @item.ButtonAnimation">
+
+                                                        @if (!String.IsNullOrWhiteSpace(item.ButtonText) &&
+                                                             !String.IsNullOrWhiteSpace(item.ButtonUrl))
+                                                        {
+                                                            <a href="@item.ButtonUrl"
+                                                               class="btn hero-btn hero-btn-primary">
+
+                                                                @item.ButtonText
+
+                                                            </a>
+                                                        }
+
+                                                        @if (!String.IsNullOrWhiteSpace(item.ButtonText2) &&
+                                                             !String.IsNullOrWhiteSpace(item.ButtonUrl2))
+                                                        {
+                                                            <a href="@item.ButtonUrl2"
+                                                               class="btn hero-btn hero-btn-secondary">
+
+                                                                @item.ButtonText2
+
+                                                            </a>
+                                                        }
+
+                                                    </div>
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class="hero-caption-band">
+                                <span>
+                                    @(!String.IsNullOrWhiteSpace(item.Description)
+                                        ? item.Description
+                                        : "Public service, development updates and citizen connect in one digital platform.")
+                                </span>
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                }
+
+            </div>
+
+            <!-- ============================================= -->
+            <!-- Swiper Navigation -->
+            <!-- ============================================= -->
+
+            <div class="swiper-button-prev hero-swiper-prev">
+
+                <i class="fa fa-angle-left"></i>
+
+            </div>
+
+            <div class="swiper-button-next hero-swiper-next">
+
+                <i class="fa fa-angle-right"></i>
+
+            </div>
+
+            <!-- ============================================= -->
+            <!-- Swiper Pagination -->
+            <!-- ============================================= -->
+
+            <div class="swiper-pagination hero-swiper-pagination"></div>
+
+            <!-- ============================================= -->
+            <!-- Scroll Indicator -->
+            <!-- ============================================= -->
+
+            <div class="hero-scroll-indicator">
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </section>
+}
+else
+{
+    <section class="hero-slider-section hero-empty-state">
+        <div class="hero-slide template-standard" style="--hero-admin-height:480px;">
+            <div class="hero-background desktop-only" style="background-color:#0b3b63;"></div>
+            <div class="hero-background mobile-only" style="background-color:#0b3b63;"></div>
+            <div class="hero-overlay hero-overlay-dark" style="opacity:.42;"></div>
+
+            <div class="container">
+                <div class="row align-items-center hero-row">
+                    <div class="col-lg-8">
+                        <div class="hero-content hero-content-full text-start">
+                            <span class="hero-subtitle">जनसेवा अभियान</span>
+                            <h1 class="hero-title">Public Service And Development Updates</h1>
+                            <p class="hero-description">
+                                Stay connected with campaign activities, constituency updates, events and citizen services.
+                            </p>
+                            <div class="hero-buttons">
+                                <a href="/AboutLeader/Biography" class="btn hero-btn hero-btn-primary">Read Profile</a>
+                                <a href="/CitizenConnect/Volunteer" class="btn hero-btn hero-btn-secondary">Join As Volunteer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-caption-band">
+                <span>Use Website CMS > Hero Slider to add campaign slides.</span>
+            </div>
+        </div>
+    </section>
+}

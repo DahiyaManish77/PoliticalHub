@@ -1,0 +1,280 @@
+﻿@{
+    ViewBag.Title = "Vision";
+
+    ViewBag.PageTitle = "Vision";
+
+    ViewBag.PageDescription = "A vision focused on inclusive development, good governance, youth empowerment and public welfare.";
+
+    ViewBag.BannerImage = Url.Content("~/Content/User/images/banners/vision-banner.jpg");
+
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@Html.Partial("_PageBanner")
+
+<section class="about-page-section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-4 col-xl-3">
+
+                @Html.Partial("_AboutLeaderSidebar")
+
+            </div>
+
+            <div class="col-lg-8 col-xl-9">
+
+                <!-- INTRO -->
+
+                <div class="about-content-card">
+
+                    <span class="about-page-badge">
+
+                        Vision
+
+                    </span>
+
+                    <h2 class="about-page-title">
+
+                        A Vision For Inclusive Growth & Public Service
+
+                    </h2>
+
+                    <p class="about-page-text">
+
+                        Development is most meaningful when every citizen has equal
+                        opportunities to progress. The vision is centred around
+                        transparent governance, modern infrastructure, quality
+                        education, improved healthcare, youth empowerment and
+                        sustainable development.
+
+                    </p>
+
+                </div>
+
+                <!-- VISION CARDS -->
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-road"></i>
+
+                            <h5>
+
+                                Infrastructure
+
+                            </h5>
+
+                            <p>
+
+                                Better roads, transport connectivity and modern civic
+                                infrastructure for every region.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-user-graduate"></i>
+
+                            <h5>
+
+                                Education
+
+                            </h5>
+
+                            <p>
+
+                                Quality education, skill development and opportunities
+                                for every student.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-heartbeat"></i>
+
+                            <h5>
+
+                                Healthcare
+
+                            </h5>
+
+                            <p>
+
+                                Accessible healthcare facilities and improved medical
+                                services for all citizens.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-seedling"></i>
+
+                            <h5>
+
+                                Agriculture
+
+                            </h5>
+
+                            <p>
+
+                                Supporting farmers through better infrastructure,
+                                technology and welfare initiatives.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-laptop-code"></i>
+
+                            <h5>
+
+                                Digital Governance
+
+                            </h5>
+
+                            <p>
+
+                                Transparent administration through technology and
+                                citizen-centric digital services.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="leader-info-card">
+
+                            <i class="fas fa-users"></i>
+
+                            <h5>
+
+                                Youth Empowerment
+
+                            </h5>
+
+                            <p>
+
+                                Encouraging leadership, innovation, entrepreneurship
+                                and employment opportunities.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- QUOTE -->
+
+                <div class="about-quote-box mt-4">
+
+                    <i class="fas fa-quote-left"></i>
+
+                    <h4>
+
+                        A strong nation is built through education,
+                        opportunity, transparency and public participation.
+
+                    </h4>
+
+                </div>
+
+                <!-- FOCUS AREAS -->
+
+                <div class="about-content-card">
+
+                    <h3>
+
+                        Key Focus Areas
+
+                    </h3>
+
+                    <ul class="reference-list">
+
+                        <li>Good Governance</li>
+
+                        <li>Public Infrastructure</li>
+
+                        <li>Women's Safety & Empowerment</li>
+
+                        <li>Farmer Welfare</li>
+
+                        <li>Youth Development</li>
+
+                        <li>Employment Generation</li>
+
+                        <li>Digital Transformation</li>
+
+                        <li>Social Harmony</li>
+
+                    </ul>
+
+                </div>
+
+                <!-- PAGE NAVIGATION -->
+
+                <div class="about-navigation">
+
+                    <a href="@Url.Action("Biography","AboutLeader")"
+                       class="about-nav-btn">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Biography
+
+                    </a>
+
+                    <a href="@Url.Action("Achievements","AboutLeader")"
+                       class="about-nav-btn">
+
+                        Achievements
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+@*@Html.Partial("_JoinUs")*@

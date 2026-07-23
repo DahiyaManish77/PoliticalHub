@@ -1,0 +1,14 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+@{
+    ViewBag.Title = "Create Hero Slider";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Areas/Admin/Content/hero-slider-pro.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm("Create", "HeroSlider", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Partial("_HeroSliderProfessionalForm", Model)
+}

@@ -1,0 +1,102 @@
+@model IEnumerable<PoliticalLeaderPortal.ViewModels.VideoGalleryListVM>
+
+@{
+    ViewBag.Title = "Video Gallery";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.ViewModels.VideoGalleryListVM>() : Model.ToList();
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Video Gallery</h1>
+        <p>Manage speeches, interviews, meetings and public activity videos for the website.</p>
+    </div>
+    <div class="admin-page-actions">
+        @using (Html.BeginForm("SyncYouTube", "VideoGallery", FormMethod.Post, new { @class = "d-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="fab fa-youtube"></i>
+                Sync YouTube
+            </button>
+        }
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "Video", new { area = "" })" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Videos
+        </a>
+        <a href="@Url.Action("Create","VideoGallery")" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add Video
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<div class="admin-ticker-stats news-cms-stats">
+    <div><span>Total Videos</span><strong>@rows.Count</strong></div>
+    <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+    <div><span>Featured</span><strong>@rows.Count(x => x.IsFeatured)</strong></div>
+    <div><span>YouTube Links</span><strong>@rows.Count(x => !String.IsNullOrWhiteSpace(x.YoutubeUrl))</strong></div>
+</div>
+
+<div class="admin-card homepage-section-manager media-cms-panel">
+    <div class="section-manager-toolbar">
+        <div>
+            <h2>Video Library</h2>
+            <span>Featured videos appear first on the public homepage</span>
+        </div>
+    </div>
+
+    <div class="media-cms-grid">
+        @if (!rows.Any())
+        {
+            <div class="media-empty-state">
+                <i class="fas fa-video"></i>
+                <strong>No videos found.</strong>
+                <span>Add campaign videos or sync YouTube to fill this section.</span>
+            </div>
+        }
+
+        @foreach (var item in rows.OrderBy(x => x.DisplayOrder).ThenBy(x => x.VideoId))
+        {
+            var thumbPath = !String.IsNullOrWhiteSpace(item.ThumbnailImagePath)
+                ? Url.Content(item.ThumbnailImagePath)
+                : Url.Content("~/Content/images/logo.png");
+
+            <article class="media-cms-card">
+                <div class="media-cms-thumb media-cms-video-thumb">
+                    <img src="@thumbPath" alt="@item.VideoTitle" />
+                    <span class="media-play"><i class="fas fa-play"></i></span>
+                    <span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <div class="media-cms-body">
+                    <span class="media-cms-category">@item.CategoryName</span>
+                    <h3>@item.VideoTitle</h3>
+                    <div class="media-cms-meta">
+                        <span><i class="fas fa-sort"></i> Order @item.DisplayOrder</span>
+                        @if (item.IsFeatured)
+                        {
+                            <span class="media-featured"><i class="fas fa-star"></i> Featured</span>
+                        }
+                    </div>
+                </div>
+                <div class="media-cms-actions">
+                    <a href="@Url.Action("Details", "VideoGallery", new { id = item.VideoId })" class="btn btn-sm btn-outline-secondary" title="View">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Edit", "VideoGallery", new { id = item.VideoId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "VideoGallery", new { id = item.VideoId })" class="btn btn-sm btn-outline-danger" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </article>
+        }
+    </div>
+</div>

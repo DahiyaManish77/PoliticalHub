@@ -1,0 +1,86 @@
+@using PoliticalLeaderPortal.Areas.Admin.Services
+@{
+    Layout = null;
+    var leaderIntroService = new LeaderIntroductionService();
+    var leader = leaderIntroService.GetDisplaySetting();
+    var portraitPath = String.IsNullOrWhiteSpace(leader.PortraitImagePath)
+        ? "~/Content/images/leader.png"
+        : leader.PortraitImagePath;
+}
+
+<section class="leader-introduction-section home-leader-command">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-5 col-md-12">
+                <div class="leader-introduction-image home-leader-portrait">
+                    <img src="@Url.Content(portraitPath)"
+                         alt="@leader.LeaderName"
+                         class="img-fluid" />
+                    <div class="home-leader-status">
+                        <strong>@leader.StatusTitle</strong>
+                        <span>@leader.StatusText</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-12">
+                <div class="leader-introduction-content">
+                    <span class="section-tag">@leader.SectionLabel</span>
+
+                    <h2>@leader.LeaderName</h2>
+                    <h5>@leader.RoleTagline</h5>
+
+                    <p>
+                        @leader.IntroText
+                    </p>
+
+                    <p>
+                        @leader.SecondaryText
+                    </p>
+
+                    <div class="row mt-4 g-3">
+                        <div class="col-md-6">
+                            <div class="vision-mission-card">
+                                <span class="home-card-kicker">Vision</span>
+                                <h4>@leader.VisionTitle</h4>
+                                <p>
+                                    @leader.VisionText
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="vision-mission-card">
+                                <span class="home-card-kicker">Mission</span>
+                                <h4>@leader.MissionTitle</h4>
+                                <p>
+                                    @leader.MissionText
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="home-leader-actions">
+                        @if (!String.IsNullOrWhiteSpace(leader.PrimaryButtonText) &&
+                             !String.IsNullOrWhiteSpace(leader.PrimaryButtonUrl))
+                        {
+                            <a href="@leader.PrimaryButtonUrl"
+                               class="btn btn-warning btn-lg">
+                                @leader.PrimaryButtonText
+                            </a>
+                        }
+
+                        @if (!String.IsNullOrWhiteSpace(leader.SecondaryButtonText) &&
+                             !String.IsNullOrWhiteSpace(leader.SecondaryButtonUrl))
+                        {
+                            <a href="@leader.SecondaryButtonUrl"
+                               class="btn btn-outline-dark btn-lg">
+                                @leader.SecondaryButtonText
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

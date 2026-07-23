@@ -1,0 +1,189 @@
+﻿@using System.Linq
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.DashboardVM
+@{
+    ViewBag.Title = "Election War Room";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var modules = new[]
+    {
+        new { Group = "Daily Command", Title = "War Room Dashboard", Action = "Index", Text = "Today rallies, pending work, booth coverage, alerts and daily summary.", Count = Model.OperationalReadinessScore.ToString(), Tone = "success", Icon = "bi-speedometer2" },
+        new { Group = "Daily Command", Title = "Rally & Event Management", Action = "Events", Text = "Rallies, meetings, venue details, expected crowd and attendance.", Count = Model.TotalEvents.ToString(), Tone = "primary", Icon = "bi-calendar-event" },
+        new { Group = "Daily Command", Title = "Campaign Task Management", Action = "Tasks", Text = "Assignments, priority, due dates, updates and completion tracking.", Count = Model.PendingTasks.ToString(), Tone = "warning", Icon = "bi-check2-square" },
+        new { Group = "People & Booths", Title = "Volunteer Management", Action = "Volunteers", Text = "Volunteer teams, area assignment, contact details and active status.", Count = Model.TotalTeams.ToString(), Tone = "info", Icon = "bi-people" },
+        new { Group = "People & Booths", Title = "Booth Monitoring", Action = "ElectionBooths", Text = "Booth in-charge, voter outreach, coverage and weak/strong indicators.", Count = Model.TotalBooths.ToString(), Tone = "success", Icon = "bi-building-check" },
+        new { Group = "People & Booths", Title = "People Connect", Action = "JanSampark", Text = "Jan Sampark grievances, village visits, meetings and resolution tracking.", Count = Model.OpenComplaints.ToString(), Tone = "danger", Icon = "bi-chat-left-text" },
+        new { Group = "Planning & Control", Title = "Election Calendar", Action = "ElectionCalendar", Text = "Meetings, rallies, campaign programmes and political dates.", Count = Model.UpcomingEventsCount.ToString(), Tone = "secondary", Icon = "bi-calendar-week" },
+        new { Group = "Planning & Control", Title = "Finance & Donations", Action = "FinanceAndDonations", Text = "Rally, vehicle, printing, food, budget and actual spending visibility.", Count = Model.MonthExpense.ToString("N0"), Tone = "warning", Icon = "bi-cash-stack" }
+    };
+
+    Func<string, string> progressTone = delegate(string value)
+    {
+        if (value == "Election-ready") return "success";
+        if (value == "Needs supervision") return "warning";
+        if (value == "Needs intervention") return "danger";
+        return "dark";
+    };
+}
+
+@section Styles {
+    <style>
+        .war-room-shell { color: #17202a; }
+        .command-hero { background: linear-gradient(135deg, #10291b 0%, #16603a 55%, #d4af37 150%); color: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 16px 32px rgba(16, 41, 27, .18); }
+        .command-kpi, .command-panel, .module-tile { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 10px 24px rgba(15, 23, 42, .06); }
+        .command-kpi { padding: 16px; min-height: 126px; }
+        .metric-label { color: #64748b; font-size: .78rem; font-weight: 600; text-transform: uppercase; }
+        .metric-value { font-size: 1.85rem; font-weight: 700; line-height: 1.1; }
+        .readiness-ring { width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#d4af37 @(Model.OperationalReadinessScore * 1)%, rgba(255,255,255,.18) 0); margin-left: auto; }
+        .readiness-ring-inner { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: #10291b; color: #fff; }
+        .module-tile { height: 100%; padding: 16px; transition: transform .15s ease, box-shadow .15s ease; }
+        .module-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(15, 23, 42, .10); }
+        .module-icon { width: 36px; height: 36px; border-radius: 8px; display: inline-grid; place-items: center; background: #f1f5f9; }
+        .focus-list .list-group-item { border-left: 0; border-right: 0; }
+        @@media (max-width: 767.98px) { .command-hero { padding: 18px; } .readiness-ring { margin: 16px 0 0; } }
+    </style>
+}
+
+<div class="container-fluid war-room-shell">
+    <div class="command-hero mb-4">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+                <div class="text-uppercase small fw-semibold opacity-75">Election Operations Command Center</div>
+                <h2 class="fw-bold mb-2">Election War Room</h2>
+                <p class="mb-3 opacity-75">Live command dashboard for booth coverage, voter contact, field teams, alerts, events, logistics and campaign execution.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge text-bg-light">Focus: @Model.CommandFocus</span>
+                    <span class="badge text-bg-@progressTone(Model.ReadinessStatus)">@Model.ReadinessStatus</span>
+                    <a class="badge text-bg-warning text-decoration-none" href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom")">Campaign ERP Blueprint</a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="readiness-ring"><div class="readiness-ring-inner"><div class="text-center"><div class="fs-2 fw-bold">@Model.OperationalReadinessScore</div><div class="small opacity-75">Readiness</div></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6"><div class="command-kpi"><div class="metric-label">Today Field Ops</div><div class="metric-value">@Model.FieldOperations</div><div class="small text-muted">@Model.TodayEvents events, @Model.TotalTeams teams, @Model.TotalVehicles vehicles</div></div></div>
+        <div class="col-xl-3 col-md-6"><div class="command-kpi"><div class="metric-label">Booth Coverage</div><div class="metric-value">@Model.BoothCoveragePercentage.ToString("N1")%</div><div class="progress mt-2" style="height:6px;"><div class="progress-bar bg-success" style="width:@Math.Min(100, Model.BoothCoveragePercentage)%"></div></div><div class="small text-muted mt-2">@Model.VisitedBooths of @Model.TotalBooths booths visited</div></div></div>
+        <div class="col-xl-3 col-md-6"><div class="command-kpi"><div class="metric-label">Voter Contact</div><div class="metric-value">@Model.VoterContactPercentage.ToString("N1")%</div><div class="small text-muted">@Model.TotalVisitedHouses of @Model.TotalHouses houses reached</div></div></div>
+        <div class="col-xl-3 col-md-6"><div class="command-kpi"><div class="metric-label">Active Issues</div><div class="metric-value">@Model.ActiveIssues</div><div class="small text-muted">@Model.PendingTasks tasks, @Model.OpenComplaints complaints, @Model.CriticalAlerts critical alerts</div></div></div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-xl-8">
+            <div class="command-panel p-3 h-100">
+                <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
+                    <div>
+                        <h5 class="fw-bold mb-1">Campaign Action Plan</h5>
+                        <div class="text-muted small">@Model.SuggestedNextMove</div>
+                    </div>
+                    <span class="badge text-bg-@progressTone(Model.ReadinessStatus)">Risk: @Model.PollingDayRisk</span>
+                </div>
+                <div class="row g-3">
+                    @foreach (var item in Model.ActionPlan)
+                    {
+                        <div class="col-md-6">
+                            <a href="@Url.Action(item.ActionName, "ElectionWarRoom")" class="text-decoration-none text-reset">
+                                <div class="module-tile">
+                                    <div class="d-flex justify-content-between align-items-start gap-2">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">@item.Title</h6>
+                                            <p class="text-muted small mb-0">@item.Detail</p>
+                                        </div>
+                                        <span class="badge text-bg-@item.Tone">@item.Count</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="command-panel p-3 h-100">
+                <h5 class="fw-bold mb-3">Voter Mood Snapshot</h5>
+                <div class="row g-2 text-center mb-3">
+                    <div class="col-4"><div class="p-2 bg-light rounded"><div class="fw-bold text-success">@Model.NewSupporters</div><div class="small text-muted">Supporters</div></div></div>
+                    <div class="col-4"><div class="p-2 bg-light rounded"><div class="fw-bold text-danger">@Model.OppositionSupporters</div><div class="small text-muted">Opposition</div></div></div>
+                    <div class="col-4"><div class="p-2 bg-light rounded"><div class="fw-bold text-warning">@Model.NeutralFamilies</div><div class="small text-muted">Neutral</div></div></div>
+                </div>
+                <div class="mb-3"><div class="d-flex justify-content-between small fw-semibold"><span>Resource verification</span><span>@Model.ResourceVerificationPercentage.ToString("N1")%</span></div><div class="progress" style="height:7px;"><div class="progress-bar bg-info" style="width:@Math.Min(100, Model.ResourceVerificationPercentage)%"></div></div></div>
+                <div><div class="d-flex justify-content-between small fw-semibold"><span>Supporter conversion</span><span>@Model.SupporterConversionPercentage.ToString("N1")%</span></div><div class="progress" style="height:7px;"><div class="progress-bar bg-warning" style="width:@Math.Min(100, Model.SupporterConversionPercentage)%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-xl-8">
+            <div class="command-panel p-3 h-100">
+                <h5 class="fw-bold mb-1">Operational Workstreams</h5>
+                <div class="text-muted small mb-3">Use these modules to run daily election execution from one screen.</div>
+                @foreach (var group in modules.GroupBy(x => x.Group))
+                {
+                    <div class="mb-3">
+                        <div class="metric-label mb-2">@group.Key</div>
+                        <div class="row g-3">
+                            @foreach (var item in group)
+                            {
+                                <div class="col-xl-4 col-md-6">
+                                    <a href="@Url.Action(item.Action, "ElectionWarRoom")" class="text-decoration-none text-reset">
+                                        <div class="module-tile">
+                                            <div class="d-flex justify-content-between gap-2 mb-3"><span class="module-icon text-@item.Tone"><i class="bi @item.Icon"></i></span><span class="badge text-bg-@item.Tone align-self-start">@item.Count</span></div>
+                                            <h6 class="fw-bold mb-1">@item.Title</h6>
+                                            <p class="text-muted small mb-0">@item.Text</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="command-panel p-3 mb-4">
+                <h5 class="fw-bold mb-3">Priority Queue</h5>
+                <div class="list-group list-group-flush focus-list">
+                    <a href="@Url.Action("CampaignAlerts", "ElectionWarRoom")" class="list-group-item d-flex justify-content-between align-items-center px-0"><span><i class="bi bi-exclamation-triangle text-danger me-2"></i>Critical alerts</span><span class="badge text-bg-danger">@Model.CriticalAlerts</span></a>
+                    <a href="@Url.Action("Tasks", "ElectionWarRoom", new { status = "Pending" })" class="list-group-item d-flex justify-content-between align-items-center px-0"><span><i class="bi bi-check2-square text-warning me-2"></i>Pending tasks</span><span class="badge text-bg-warning">@Model.PendingTasks</span></a>
+                    <a href="@Url.Action("JanSampark", "ElectionWarRoom")" class="list-group-item d-flex justify-content-between align-items-center px-0"><span><i class="bi bi-chat-left-text text-primary me-2"></i>Open complaints</span><span class="badge text-bg-primary">@Model.OpenComplaints</span></a>
+                    <a href="@Url.Action("BoothVisits", "ElectionWarRoom")" class="list-group-item d-flex justify-content-between align-items-center px-0"><span><i class="bi bi-geo-alt text-success me-2"></i>Booth visits</span><span class="badge text-bg-success">@Model.VisitedBooths</span></a>
+                </div>
+            </div>
+            <div class="command-panel p-3">
+                <h5 class="fw-bold mb-3">Execution Health</h5>
+                <div class="mb-3"><div class="d-flex justify-content-between small fw-semibold"><span>Task completion</span><span>@Model.TaskCompletionPercentage.ToString("N1")%</span></div><div class="progress" style="height:7px;"><div class="progress-bar bg-success" style="width:@Math.Min(100, Model.TaskCompletionPercentage)%"></div></div></div>
+                <div class="mb-3"><div class="d-flex justify-content-between small fw-semibold"><span>Complaint resolution</span><span>@Model.ComplaintResolutionPercentage.ToString("N1")%</span></div><div class="progress" style="height:7px;"><div class="progress-bar bg-primary" style="width:@Math.Min(100, Model.ComplaintResolutionPercentage)%"></div></div></div>
+                <div><div class="d-flex justify-content-between small fw-semibold"><span>Booth coverage</span><span>@Model.BoothCoveragePercentage.ToString("N1")%</span></div><div class="progress" style="height:7px;"><div class="progress-bar bg-warning" style="width:@Math.Min(100, Model.BoothCoveragePercentage)%"></div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6"><div class="command-panel h-100"><div class="p-3 border-bottom"><h5 class="fw-bold mb-0">Upcoming Field Events</h5></div><div class="p-3">
+            @if (!Model.UpcomingEvents.Any()) { <p class="text-muted mb-0">No upcoming events found.</p> }
+            else { <div class="list-group list-group-flush">@foreach (var item in Model.UpcomingEvents.Take(7)) { <div class="list-group-item px-0"><div class="d-flex justify-content-between gap-3"><div><div class="fw-semibold">@item.EventTitle</div><div class="small text-muted">@item.EventDate.ToString("dd MMM yyyy") - @item.District - @item.Venue</div></div><span class="badge text-bg-light align-self-start">@item.Status</span></div></div> }</div> }
+        </div></div></div>
+        <div class="col-lg-6"><div class="command-panel h-100"><div class="p-3 border-bottom"><h5 class="fw-bold mb-0">Dashboard Alerts</h5></div><div class="p-3">
+            @if (!Model.Alerts.Any()) { <p class="text-muted mb-0">No dashboard alerts found.</p> }
+            else { <div class="list-group list-group-flush">@foreach (var item in Model.Alerts) { var alertTone = item.Severity == "Critical" ? "danger" : item.Severity == "High" ? "warning" : "secondary"; <div class="list-group-item px-0 d-flex justify-content-between gap-3"><div><div class="fw-semibold">@item.AlertTitle</div><div class="small text-muted">@item.CreatedDate.ToString("dd MMM yyyy") - @item.Status</div></div><span class="badge text-bg-@alertTone align-self-start">@item.Severity</span></div> }</div> }
+        </div></div></div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-xl-4"><div class="command-panel h-100"><div class="p-3 border-bottom"><h5 class="fw-bold mb-0">Low Coverage Booths</h5></div><div class="p-3">
+            @if (!Model.LowCoverageBooths.Any()) { <p class="text-muted mb-0">No low coverage booths found.</p> }
+            else { <div class="list-group list-group-flush">@foreach (var item in Model.LowCoverageBooths) { <div class="list-group-item px-0"><div class="d-flex justify-content-between gap-3"><div><div class="fw-semibold">@item.BoothName</div><div class="small text-muted">@item.District - @item.Village</div></div><span class="badge text-bg-warning align-self-start">@item.CoveragePercentage.ToString("N1")%</span></div></div> }</div> }
+        </div></div></div>
+        <div class="col-xl-4"><div class="command-panel h-100"><div class="p-3 border-bottom"><h5 class="fw-bold mb-0">Pending Follow-Ups</h5></div><div class="p-3">
+            @if (!Model.FollowUpVisits.Any()) { <p class="text-muted mb-0">No pending follow-ups found.</p> }
+            else { <div class="list-group list-group-flush">@foreach (var item in Model.FollowUpVisits) { <div class="list-group-item px-0"><div class="fw-semibold">@item.BoothName</div><div class="small text-muted">@item.VisitorName - @item.NextVisitDate.GetValueOrDefault().ToString("dd MMM yyyy")</div><div class="small">@item.VisitSummary</div></div> }</div> }
+        </div></div></div>
+        <div class="col-xl-4"><div class="command-panel h-100"><div class="p-3 border-bottom"><h5 class="fw-bold mb-0">Top Field Workers</h5></div><div class="p-3">
+            @if (!Model.TopWorkers.Any()) { <p class="text-muted mb-0">No worker performance found.</p> }
+            else { <div class="list-group list-group-flush">@foreach (var item in Model.TopWorkers) { <div class="list-group-item px-0"><div class="d-flex justify-content-between gap-3"><div><div class="fw-semibold">@item.WorkerName</div><div class="small text-muted">@item.MemberCode - @item.Attendance houses - @item.SurveyCount families</div></div><span class="badge text-bg-success align-self-start">@item.PerformanceScore</span></div></div> }</div> }
+        </div></div></div>
+    </div>
+</div>
+

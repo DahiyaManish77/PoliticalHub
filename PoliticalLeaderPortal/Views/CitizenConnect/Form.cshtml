@@ -1,0 +1,68 @@
+@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+@{
+    ViewBag.Title = ViewBag.FormTitle ?? "Citizen Connect";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="citizen-connect-page">
+    <div class="container">
+        <div class="citizen-connect-shell">
+            <div class="citizen-connect-copy">
+                <span>Citizen Connect</span>
+                <h1>@ViewBag.FormTitle</h1>
+                <p>@ViewBag.FormDescription</p>
+                <div class="connect-assurance">
+                    <div><i class="bi bi-shield-check"></i> Reviewed by office team</div>
+                    <div><i class="bi bi-clock-history"></i> Status tracked in admin</div>
+                    <div><i class="bi bi-person-check"></i> Duplicate entries prevented</div>
+                </div>
+            </div>
+
+            <div class="citizen-connect-card">
+                @using (Html.BeginForm("Submit", "CitizenConnect", FormMethod.Post, new { @class = "row g-3" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.RequestType)
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.FullName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Your full name" })
+                        @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", placeholder = "Mobile number" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.District, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.District, new { @class = "form-control", placeholder = "District" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Assembly, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Assembly, new { @class = "form-control", placeholder = "Assembly constituency" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Subject, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Subject" })
+                        @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-12">
+                        @Html.LabelFor(m => m.Message, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.Message, 5, 40, new { @class = "form-control", placeholder = "Write your message" })
+                        @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn connect-submit-btn" type="submit">
+                            <i class="bi bi-send"></i> Submit Request
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

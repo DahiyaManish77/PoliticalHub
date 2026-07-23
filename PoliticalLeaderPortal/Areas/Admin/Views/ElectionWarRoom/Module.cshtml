@@ -1,0 +1,178 @@
+﻿@using System.ComponentModel
+@using System.Collections.Generic
+@using System.Linq
+@model object
+@{
+    ViewBag.Title = ViewBag.Title ?? "Election War Room";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var source = Model as System.Collections.IEnumerable;
+    string createAction = Convert.ToString(ViewBag.CreateAction);
+    string editAction = Convert.ToString(ViewBag.EditAction);
+    string deleteAction = Convert.ToString(ViewBag.DeleteAction);
+    string keyName = Convert.ToString(ViewBag.KeyName);
+    string trackingCategory = Convert.ToString(ViewBag.TrackingCategory);
+    string operationModuleKey = Convert.ToString(ViewBag.OperationModuleKey);
+    object createRouteValues = null;
+    if (!String.IsNullOrWhiteSpace(operationModuleKey)) { createRouteValues = new { moduleKey = operationModuleKey }; }
+    else if (!String.IsNullOrWhiteSpace(trackingCategory)) { createRouteValues = new { category = trackingCategory }; }
+
+    bool canCreate = ViewBag.CanCreate == true && !String.IsNullOrWhiteSpace(createAction);
+    bool canEdit = ViewBag.CanEdit == true && !String.IsNullOrWhiteSpace(editAction);
+    bool canDelete = ViewBag.CanDelete == true && !String.IsNullOrWhiteSpace(deleteAction);
+    bool showActions = (canEdit || canDelete) && !String.IsNullOrWhiteSpace(keyName);
+    var rows = source == null ? new List<object>() : source.Cast<object>().ToList();
+    var properties = rows.Any()
+        ? TypeDescriptor.GetProperties(rows.First()).Cast<PropertyDescriptor>()
+            .Where(x => x.PropertyType == typeof(string)
+                || x.PropertyType == typeof(int)
+                || x.PropertyType == typeof(int?)
+                || x.PropertyType == typeof(decimal)
+                || x.PropertyType == typeof(decimal?)
+                || x.PropertyType == typeof(bool)
+                || x.PropertyType == typeof(bool?)
+                || x.PropertyType == typeof(System.DateTime)
+                || x.PropertyType == typeof(System.DateTime?))
+            .Take(10)
+            .ToList()
+        : new List<PropertyDescriptor>();
+
+    Func<object, string> badgeTone = delegate(object value)
+    {
+        var text = Convert.ToString(value) ?? string.Empty;
+        if (text == "Critical" || text == "Cancelled" || text == "Overdue" || text == "Rejected") return "danger";
+        if (text == "High" || text == "Pending" || text == "Planned" || text == "In Progress") return "warning";
+        if (text == "Completed" || text == "Resolved" || text == "Approved" || text == "Active") return "success";
+        if (text == "Medium" || text == "Published") return "primary";
+        return "secondary";
+    };
+
+    Func<string, bool> isBadgeColumn = delegate(string name)
+    {
+        return name.IndexOf("Status", StringComparison.OrdinalIgnoreCase) >= 0
+            || name.IndexOf("Priority", StringComparison.OrdinalIgnoreCase) >= 0
+            || name.IndexOf("Severity", StringComparison.OrdinalIgnoreCase) >= 0
+            || name.IndexOf("Strength", StringComparison.OrdinalIgnoreCase) >= 0;
+    };
+
+    Func<object, object> getKey = delegate(object row)
+    {
+        if (row == null || String.IsNullOrWhiteSpace(keyName)) return null;
+        var property = TypeDescriptor.GetProperties(row).Find(keyName, true);
+        return property == null ? null : property.GetValue(row);
+    };
+}
+
+@section Styles {
+    <style>
+        .module-header { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; box-shadow: 0 10px 24px rgba(15, 23, 42, .05); }
+        .module-card { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; box-shadow: 0 12px 26px rgba(15, 23, 42, .06); }
+        .module-stat { min-width: 118px; border-left: 1px solid #e5e7eb; padding-left: 16px; }
+        .module-table th { white-space: nowrap; color: #475569; font-size: .78rem; text-transform: uppercase; }
+        .module-table td { max-width: 260px; vertical-align: middle; }
+        .module-table .text-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .module-actions { width: 110px; white-space: nowrap; }
+    </style>
+}
+
+<div class="container-fluid">
+    @Html.AntiForgeryToken()
+    <div class="module-header mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+            <div>
+                <div class="text-uppercase text-muted small fw-semibold">Election War Room Module</div>
+                <h2 class="fw-bold mb-1">@ViewBag.Title</h2>
+                <p class="text-muted mb-0">@ViewBag.Description</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                @if (canCreate)
+                {
+                    <a href="@Url.Action(createAction, "ElectionWarRoom", createRouteValues)" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Add New</a>
+                }
+                <div class="module-stat">
+                    <div class="small text-muted">Records</div>
+                    <div class="fs-4 fw-bold">@rows.Count</div>
+                </div>
+                <a href="@Url.Action("Index", "ElectionWarRoom")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="module-card bg-white">
+        <div class="p-3 border-bottom bg-white">
+            @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "row g-2 align-items-center" }))
+            {
+                <div class="col-lg-8"><div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input type="search" name="keyword" value="@Request.QueryString["keyword"]" class="form-control" placeholder="Search @ViewBag.Title" /></div></div>
+                <div class="col-lg-2 d-grid"><button type="submit" class="btn btn-primary">Search</button></div>
+                <div class="col-lg-2 d-grid"><a href="@Url.Action(null)" class="btn btn-outline-secondary">Reset</a></div>
+            }
+        </div>
+
+        <div class="table-responsive">
+            @if (!rows.Any())
+            {
+                <div class="p-5 text-center text-muted"><i class="bi bi-inbox fs-1 d-block mb-2"></i>No records found for this module.</div>
+            }
+            else
+            {
+                <table class="table table-hover align-middle mb-0 module-table">
+                    <thead class="table-light"><tr>@foreach (var property in properties) { <th>@property.DisplayName</th> } @if (showActions) { <th class="text-end module-actions">Actions</th> }</tr></thead>
+                    <tbody>
+                        @foreach (var row in rows)
+                        {
+                            var key = getKey(row);
+                            <tr>
+                                @foreach (var property in properties)
+                                {
+                                    var value = property.GetValue(row);
+                                    <td>
+                                        @if (value is System.DateTime) { @(((System.DateTime)value).ToString("dd MMM yyyy")) }
+                                        else if (value is decimal) { @(((decimal)value).ToString("N2")) }
+                                        else if (value is bool) { <span class="badge text-bg-@(((bool)value) ? "success" : "secondary")">@(((bool)value) ? "Yes" : "No")</span> }
+                                        else if (isBadgeColumn(property.Name)) { <span class="badge text-bg-@badgeTone(value)">@(String.IsNullOrWhiteSpace(Convert.ToString(value)) ? "-" : value)</span> }
+                                        else { <span class="text-cell d-inline-block">@(String.IsNullOrWhiteSpace(Convert.ToString(value)) ? "-" : value)</span> }
+                                    </td>
+                                }
+                                @if (showActions)
+                                {
+                                    <td class="text-end module-actions">
+                                        @if (canEdit && key != null) { <a href="@Url.Action(editAction, "ElectionWarRoom", new { id = key })" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></a> }
+                                        @if (canDelete && key != null) { <button type="button" class="btn btn-sm btn-outline-danger js-delete-record" data-id="@key" data-url="@Url.Action(deleteAction, "ElectionWarRoom")" title="Delete"><i class="bi bi-trash"></i></button> }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function notify(options) {
+                if (window.Swal) return Swal.fire(options);
+                alert(options.text || options.title || "");
+                return Promise.resolve({ isConfirmed: true });
+            }
+            document.querySelectorAll(".js-delete-record").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var id = button.getAttribute("data-id");
+                    var url = button.getAttribute("data-url");
+                    notify({ title: "Delete record?", text: "This action cannot be undone.", icon: "warning", showCancelButton: true, confirmButtonText: "Yes, delete", cancelButtonText: "Cancel" }).then(function (result) {
+                        if (!result.isConfirmed) return;
+                        var token = document.querySelector("input[name='__RequestVerificationToken']");
+                        var body = "id=" + encodeURIComponent(id);
+                        if (token) body += "&__RequestVerificationToken=" + encodeURIComponent(token.value);
+                        fetch(url, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "X-Requested-With": "XMLHttpRequest" }, body: body })
+                            .then(function (response) { return response.json(); })
+                            .then(function (data) { if (data.success) location.reload(); else notify({ title: "Unable to delete", text: data.message || "Please try again.", icon: "error" }); })
+                            .catch(function () { notify({ title: "Unable to delete", text: "Please try again.", icon: "error" }); });
+                    });
+                });
+            });
+        }());
+    </script>
+}

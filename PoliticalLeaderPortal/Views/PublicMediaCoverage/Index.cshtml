@@ -1,0 +1,167 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.MediaCoverageVM>
+
+@{
+    ViewBag.Title = "Media Coverage";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="media-coverage-page py-5">
+
+    <div class="container">
+
+        <div class="row mb-5">
+
+            <div class="col-12 text-center">
+
+                <h2 class="section-title">
+                    Media Coverage
+                </h2>
+
+                <p class="section-subtitle">
+                    News Coverage, Interviews, Press Reports and Media Highlights
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+
+                        <div class="card media-card h-100">
+
+                            @if (!string.IsNullOrEmpty(item.CoverImagePath))
+                            {
+                                <img src="@item.CoverImagePath"
+                                     class="card-img-top media-image"
+                                     alt="@item.Title" />
+                            }
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+
+                                    @if (!string.IsNullOrEmpty(item.SourceLogoPath))
+                                    {
+                                        <img src="@item.SourceLogoPath"
+                                             class="source-logo me-2" />
+                                    }
+
+                                    <span class="source-name">
+                                        @item.SourceName
+                                    </span>
+
+                                </div>
+
+                                <div class="media-date">
+
+                                    @(item.CoverageDate.HasValue
+                                        ? item.CoverageDate.Value.ToString("dd MMM yyyy")
+                                        : "")
+
+                                </div>
+
+                                <h5 class="media-title">
+
+                                    @item.Title
+
+                                </h5>
+
+                                <p class="media-desc">
+
+                                    @(string.IsNullOrEmpty(item.ShortDescription)
+                                        ? ""
+                                        : item.ShortDescription.Length > 120
+                                            ? item.ShortDescription.Substring(0, 120) + "..."
+                                            : item.ShortDescription)
+
+                                </p>
+
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+
+                                <a href="@Url.Action("Details",
+                                                     "PublicMediaCoverage",
+                                                     new { id = item.MediaCoverageId })"
+                                   class="btn btn-primary w-100">
+
+                                    Read Full Coverage
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+
+                    <h4>
+                        No Media Coverage Available
+                    </h4>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+
+    .media-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        transition: .3s;
+    }
+
+        .media-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .media-image {
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .source-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .media-title {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .media-date {
+        color: #888;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    .section-title {
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    .section-subtitle {
+        color: #666;
+    }
+</style>

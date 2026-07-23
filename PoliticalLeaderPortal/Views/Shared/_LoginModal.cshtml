@@ -1,0 +1,28 @@
+﻿@model PoliticalLeaderPortal.ViewModels.AccountLoginVM
+
+<div class="modal fade auth-modal auth-dissolve" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content auth-modal-content auth-compact-content">
+            <button type="button" class="btn-close auth-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="auth-leader-panel">
+                <img src="~/Content/images/auth/sangeet-som-auth.jpg" alt="Sangeet Som" />
+                <div class="auth-leader-overlay"><span>Public Portal</span><strong>Welcome Back</strong></div>
+            </div>
+            <div class="auth-form-card">
+                <h2 id="loginModalLabel">Sign In</h2>
+                <p class="auth-subtitle">Secure access for members and campaign team.</p>
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { area = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <label>Email Address</label>
+                    @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email address", type = "email", autocomplete = "email" })
+                    <label>Password</label>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", autocomplete = "current-password" })
+                    <div class="auth-row"><label class="auth-check">@Html.CheckBoxFor(m => m.RememberMe)<span>Remember</span></label><a href="@Url.Action("Login", "Account")">Forgot?</a></div>
+                    <button type="submit" class="auth-submit">Sign In</button>
+                }
+                <button type="button" class="auth-switch-button mt-3" data-bs-target="#registerModal" data-bs-toggle="modal">Create Account</button>
+            </div>
+        </div>
+    </div>
+</div>

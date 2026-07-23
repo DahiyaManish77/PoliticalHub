@@ -1,0 +1,839 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.HeroSliderVM
+
+<div class="hero-section-card">
+
+    <div class="hero-section-header mb-4">
+
+        <div>
+
+            <h3 class="hero-section-title">
+
+                <i class="fa fa-paint-brush text-primary me-2"></i>
+
+                Premium Appearance Designer
+
+            </h3>
+
+            <p class="hero-section-description">
+
+                Design the layout, colors, alignment and visibility of the Hero Slider.
+
+            </p>
+
+        </div>
+
+        <span class="hero-section-badge">
+
+            Step 4 of 6
+
+        </span>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TEMPLATE LAYOUT -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-th-large"></i>
+
+            <div>
+
+                <h4>Template Layout</h4>
+
+                <p>Select the Hero Slider layout.</p>
+
+            </div>
+
+        </div>
+
+        @{
+            string[] templates =
+            {
+                "Leader Banner",
+                "Campaign Banner",
+                "Full Background",
+                "Announcement"
+            };
+        }
+
+        <div class="hero-template-grid">
+
+            @for (int i = 0; i < templates.Length; i++)
+            {
+                var templateId = "template_" + i;
+
+                @Html.RadioButtonFor(
+                    m => m.TemplateType,
+                    templates[i],
+                    new
+                    {
+                        id = templateId,
+                        @class = "d-none"
+                    })
+
+                <label class="hero-template-card" for="@templateId">
+
+                    <span class="hero-template-preview"></span>
+
+                    <span class="hero-template-caption">
+
+                        <strong class="d-block">
+
+                            @templates[i]
+
+                        </strong>
+
+                        <small>
+
+                            Professional Layout
+
+                        </small>
+
+                    </span>
+
+                </label>
+
+            }
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- LEADER POSITION -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-user"></i>
+
+            <div>
+
+                <h4>Leader Position</h4>
+
+                <p>Select where the leader image appears.</p>
+
+            </div>
+
+        </div>
+
+        @{
+            string[] positions =
+            {
+                "Left",
+                "Center",
+                "Right",
+                "Hidden"
+            };
+        }
+
+        <div class="hero-position-grid">
+
+            @for (int i = 0; i < positions.Length; i++)
+            {
+                var positionId = "position_" + i;
+
+                @Html.RadioButtonFor(
+                    m => m.LeaderImagePosition,
+                    positions[i],
+                    new
+                    {
+                        id = positionId,
+                        @class = "d-none"
+                    })
+
+                <label class="hero-position-card" for="@positionId">
+
+                    <span class="hero-position-demo">
+
+                        @if (positions[i] == "Left")
+                        {
+                            <span class="leader" style="left:12px;"></span>
+                            <span class="text" style="right:12px;"></span>
+                        }
+                        else if (positions[i] == "Center")
+                        {
+                            <span class="leader" style="left:50%;margin-left:-12px;"></span>
+                            <span class="text" style="left:50%;margin-left:-30px;top:58px;"></span>
+                        }
+                        else if (positions[i] == "Right")
+                        {
+                            <span class="leader" style="right:12px;"></span>
+                            <span class="text" style="left:12px;"></span>
+                        }
+                        else
+                        {
+                            <span class="text" style="left:50%;margin-left:-30px;top:34px;"></span>
+                        }
+
+                    </span>
+
+                    <strong class="d-block mt-3">
+
+                        @positions[i]
+
+                    </strong>
+
+                </label>
+
+            }
+
+        </div>
+
+    </div>
+
+    <!-- ===== Part 2 Starts From Text Alignment ===== -->
+    <!-- ========================================================= -->
+    <!-- TEXT ALIGNMENT -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-align-left"></i>
+
+            <div>
+
+                <h4>Text Alignment</h4>
+
+                <p>Choose text placement for the Hero content.</p>
+
+            </div>
+
+        </div>
+
+        @{
+            string[] alignments =
+            {
+                "Left",
+                "Center",
+                "Right"
+            };
+        }
+
+        <div class="hero-alignment-grid">
+
+            @for (int i = 0; i < alignments.Length; i++)
+            {
+                var alignmentId = "alignment_" + i;
+
+                @Html.RadioButtonFor(
+                    m => m.TextAlignment,
+                    alignments[i],
+                    new
+                    {
+                        id = alignmentId,
+                        @class = "d-none"
+                    })
+
+                <label class="hero-alignment-card" for="@alignmentId">
+
+                    <span class="hero-align-demo hero-align-@alignments[i].ToLower()">
+
+                        <span class="hero-align-line"></span>
+
+                        <span class="hero-align-line" style="width:70%;"></span>
+
+                        <span class="hero-align-line" style="width:40%;"></span>
+
+                    </span>
+
+                    <strong class="d-block mt-3">
+
+                        @alignments[i]
+
+                    </strong>
+
+                </label>
+
+            }
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BACKGROUND THEME -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-tint"></i>
+
+            <div>
+
+                <h4>Background Theme</h4>
+
+                <p>Select a predefined theme or choose a custom color.</p>
+
+            </div>
+
+        </div>
+
+        @{
+            var colors = new[]
+            {
+                new { Name="Blue", Value="#2563eb"},
+                new { Name="Green", Value="#16a34a"},
+                new { Name="Orange", Value="#ea580c"},
+                new { Name="Purple", Value="#7c3aed"},
+                new { Name="Red", Value="#dc2626"},
+                new { Name="Dark", Value="#111827"}
+            };
+        }
+
+        <div class="hero-color-grid">
+
+            @for (int i = 0; i < colors.Length; i++)
+            {
+                var colorId = "themeColor_" + i;
+
+                @Html.RadioButtonFor(
+                    m => m.BackgroundColor,
+                    colors[i].Value,
+                    new
+                    {
+                        id = colorId,
+                        @class = "d-none"
+                    })
+
+                <label class="hero-color-card" for="@colorId">
+
+                    <span class="hero-color-circle"
+                          style="background:@colors[i].Value;">
+
+                    </span>
+
+                    <span class="hero-color-name">
+
+                        @colors[i].Name
+
+                    </span>
+
+                </label>
+
+            }
+
+        </div>
+
+        <div class="hero-color-picker mt-4">
+
+            <div>
+
+                <label class="form-label">
+
+                    Custom Theme Color
+
+                </label>
+
+                <input type="color"
+                       id="customThemeColor"
+                       value="#2563eb"
+                       class="form-control form-control-color" />
+
+            </div>
+
+            @Html.HiddenFor(m => m.BackgroundColor)
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- HERO HEIGHT -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-arrows-v"></i>
+
+            <div>
+
+                <h4>Hero Height</h4>
+
+                <p>Control the public slider height for this slide.</p>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-6">
+
+                @Html.LabelFor(m => m.HeroHeightCss, "Slider Height", new { @class = "form-label fw-bold" })
+
+                @Html.TextBoxFor(
+                    m => m.HeroHeightCss,
+                    new
+                    {
+                        @class = "form-control hero-input",
+                        placeholder = "440px",
+                        list = "heroHeightPresets"
+                    })
+
+                <datalist id="heroHeightPresets">
+                    <option value="420px"></option>
+                    <option value="440px"></option>
+                    <option value="480px"></option>
+                    <option value="520px"></option>
+                    <option value="58vh"></option>
+                    <option value="640px"></option>
+                </datalist>
+
+                <small class="text-muted">
+                    Use CSS units such as 420px, 440px or 58vh.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VISIBILITY SETTINGS -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-eye"></i>
+
+            <div>
+
+                <h4>Visibility Settings</h4>
+
+                <p>Choose which Hero Slider elements should be displayed.</p>
+
+            </div>
+
+        </div>
+
+        <div class="hero-visibility-grid">
+
+            <!-- Leader Image -->
+
+            <div class="hero-visibility-card">
+
+                <div>
+
+                    <div class="hero-visibility-title">
+
+                        Leader Image
+
+                    </div>
+
+                    <div class="hero-visibility-desc">
+
+                        Show or hide leader image.
+
+                    </div>
+
+                </div>
+
+                <label class="hero-switch">
+
+                    @Html.CheckBoxFor(m => m.ShowLeaderImage)
+
+                    <span class="hero-switch-slider"></span>
+
+                </label>
+
+            </div>
+
+            <!-- Overlay -->
+
+            <div class="hero-visibility-card">
+
+                <div>
+
+                    <div class="hero-visibility-title">
+
+                        Overlay
+
+                    </div>
+
+                    <div class="hero-visibility-desc">
+
+                        Enable dark overlay on background image.
+
+                    </div>
+
+                </div>
+
+                <label class="hero-switch">
+
+                    @Html.CheckBoxFor(m => m.ShowOverlay)
+
+                    <span class="hero-switch-slider"></span>
+
+                </label>
+
+            </div>
+
+            <!-- CTA Buttons -->
+
+            <div class="hero-visibility-card">
+
+                <div>
+
+                    <div class="hero-visibility-title">
+
+                        CTA Buttons
+
+                    </div>
+
+                    <div class="hero-visibility-desc">
+
+                        Display primary & secondary buttons.
+
+                    </div>
+
+                </div>
+
+                <label class="hero-switch">
+
+                    @Html.CheckBoxFor(m => m.ShowButtons)
+
+                    <span class="hero-switch-slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===== Part 3 Starts From Display Order ===== -->
+    <!-- ========================================================= -->
+    <!-- DISPLAY ORDER -->
+    <!-- ========================================================= -->
+
+    <div class="hero-order-card mt-4">
+
+        <div>
+
+            <h5 class="mb-1">
+
+                Display Order
+
+            </h5>
+
+            <small class="text-muted">
+
+                Smaller numbers are displayed first on the website.
+
+            </small>
+
+        </div>
+
+        <div class="hero-stepper">
+
+            <button type="button"
+                    class="hero-step-btn hero-order-minus">
+
+                <i class="fa fa-minus"></i>
+
+            </button>
+
+            @Html.TextBoxFor(m => m.DisplayOrder,
+                new
+                {
+                    @class = "form-control text-center",
+                    style = "width:80px;",
+                    min = "1"
+                })
+
+            <button type="button"
+                    class="hero-step-btn hero-order-plus">
+
+                <i class="fa fa-plus"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- STATUS -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-group mt-5">
+
+        <div class="hero-group-title">
+
+            <i class="fa fa-check-circle"></i>
+
+            <div>
+
+                <h4>Status</h4>
+
+                <p>Select whether this Hero Slider is active or draft.</p>
+
+            </div>
+
+        </div>
+
+        <div class="hero-status-grid">
+
+            @{
+                var activeId = "heroStatusActive";
+                var draftId = "heroStatusDraft";
+            }
+
+            @Html.RadioButtonFor(
+                m => m.IsActive,
+                true,
+                new
+                {
+                    id = activeId,
+                    @class = "d-none"
+                })
+
+            <label class="hero-status-card" for="@activeId">
+
+                <span class="hero-status-icon hero-status-active">
+
+                    <i class="fa fa-check"></i>
+
+                </span>
+
+                <strong class="d-block mb-2">
+
+                    Active
+
+                </strong>
+
+                <small>
+
+                    Hero Slider will be visible on the website.
+
+                </small>
+
+            </label>
+
+            @Html.RadioButtonFor(
+                m => m.IsActive,
+                false,
+                new
+                {
+                    id = draftId,
+                    @class = "d-none"
+                })
+
+            <label class="hero-status-card" for="@draftId">
+
+                <span class="hero-status-icon hero-status-draft">
+
+                    <i class="fa fa-file-text-o"></i>
+
+                </span>
+
+                <strong class="d-block mb-2">
+
+                    Draft
+
+                </strong>
+
+                <small>
+
+                    Save without publishing.
+
+                </small>
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- APPEARANCE SUMMARY -->
+    <!-- ========================================================= -->
+
+    <div class="hero-appearance-summary mt-5">
+
+        <div class="hero-summary-title">
+
+            Appearance Summary
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Template
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryTemplate">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Leader Position
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryLeaderPosition">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Text Alignment
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryAlignment">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Background Theme
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryTheme">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Leader Image
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryLeaderImage">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Overlay
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryOverlay">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                CTA Buttons
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryButtons">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+        <div class="hero-summary-item">
+
+            <span class="hero-summary-label">
+
+                Status
+
+            </span>
+
+            <span class="hero-summary-value">
+
+                <span id="summaryStatus">
+
+                    --
+
+                </span>
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>

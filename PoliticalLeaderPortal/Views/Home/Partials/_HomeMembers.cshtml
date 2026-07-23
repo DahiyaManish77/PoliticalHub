@@ -1,0 +1,289 @@
+﻿@model List<PoliticalLeaderPortal.ViewModels.HomeMemberDisplayVM>
+
+@{
+    Layout = null;
+    var members = Model ?? new List<PoliticalLeaderPortal.ViewModels.HomeMemberDisplayVM>();
+}
+
+@if (members.Any())
+{
+    <section class="home-members-section">
+        <div class="home-members-track" data-home-members-track>
+            @foreach (var item in members)
+            {
+                var photoPath = !string.IsNullOrWhiteSpace(item.PhotoPath)
+                    ? Url.Content(item.PhotoPath)
+                    : Url.Content("~/Content/images/leader.png");
+
+                <article class="home-member-card">
+                    <img src="@photoPath" alt="@item.MemberName" />
+                    <div class="home-member-overlay"></div>
+                    <div class="home-member-copy">
+                        <h3>@item.MemberName</h3>
+                    </div>
+
+                    <div class="home-member-meta">
+                        @if (!string.IsNullOrWhiteSpace(item.Tenure))
+                        {
+                            <p>@item.Tenure</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.Designation))
+                        {
+                            <span>@item.Designation</span>
+                        }
+                    </div>
+                </article>
+            }
+        </div>
+
+        <button type="button" class="home-members-nav home-members-prev" data-home-members-prev aria-label="Previous member">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <button type="button" class="home-members-nav home-members-next" data-home-members-next aria-label="Next member">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <div class="home-members-title">PARTY MEMBERS</div>
+    </section>
+
+    <style>
+        .home-members-section {
+            position: relative;
+            overflow: hidden;
+            background: #6f95bd;
+        }
+
+        .home-members-track {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 25%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            scroll-snap-type: x mandatory;
+        }
+
+        .home-members-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .home-member-card {
+            position: relative;
+            min-height: clamp(280px, 32vw, 390px);
+            overflow: hidden;
+            border-right: 2px solid rgba(255,255,255,.66);
+            background: #739bc1;
+            scroll-snap-align: start;
+        }
+
+        .home-member-card img {
+            position: absolute;
+            inset: 58px 0 0;
+            width: 100%;
+            height: 74%;
+            object-fit: cover;
+            object-position: center top;
+            filter: saturate(.92);
+        }
+
+        .home-member-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(77, 119, 160, .42) 0%, rgba(77, 119, 160, .10) 42%, rgba(8, 27, 55, .70) 100%);
+        }
+
+        .home-member-copy {
+            position: relative;
+            z-index: 1;
+            padding: 12px 14px 0;
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 4px 18px rgba(10, 28, 54, .2);
+        }
+
+        .home-member-copy h3 {
+            margin: 0 auto;
+            max-width: 360px;
+            color: #fff;
+            font-size: clamp(.9rem, 1.1vw, 1.25rem);
+            line-height: 1.12;
+            font-weight: 900;
+        }
+
+        .home-member-meta {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            bottom: 12px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 10px;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            background: rgba(10, 24, 45, .34);
+            backdrop-filter: blur(8px);
+        }
+
+        .home-member-meta p {
+            margin: 0;
+            color: #fff;
+            font-size: .78rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .home-member-meta span {
+            display: inline-flex;
+            border-radius: 999px;
+            padding: 4px 10px;
+            color: #fff;
+            background: rgba(255, 153, 51, .94);
+            font-size: .68rem;
+            line-height: 1.1;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .home-members-title {
+            position: absolute;
+            left: 3vw;
+            bottom: 12px;
+            z-index: 1;
+            color: rgba(255,255,255,.9);
+            font-size: clamp(1.7rem, 3.2vw, 3.8rem);
+            line-height: .86;
+            font-weight: 1000;
+            letter-spacing: 0;
+            pointer-events: none;
+            text-shadow: 0 12px 26px rgba(8, 27, 55, .2);
+        }
+
+        .home-members-nav {
+            position: absolute;
+            top: 50%;
+            z-index: 3;
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 54px;
+            border: 0;
+            color: #fff;
+            background: rgba(15, 33, 59, .38);
+            font-size: 1.45rem;
+            transform: translateY(-50%);
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .home-members-nav:hover {
+            background: rgba(15, 33, 59, .6);
+            transform: translateY(-50%) scale(1.03);
+        }
+
+        .home-members-prev {
+            left: 24px;
+        }
+
+        .home-members-next {
+            right: 24px;
+        }
+
+        @@media (max-width: 1199px) {
+            .home-members-track {
+                grid-auto-columns: 33.333%;
+            }
+        }
+
+        @@media (max-width: 767px) {
+            .home-members-track {
+                grid-auto-columns: 78%;
+            }
+
+            .home-member-card {
+                min-height: 310px;
+            }
+
+            .home-members-title {
+                font-size: 2.8rem;
+                bottom: 12px;
+            }
+
+            .home-member-meta {
+                left: 10px;
+                right: 10px;
+                bottom: 12px;
+            }
+
+            .home-members-nav {
+                width: 44px;
+                height: 58px;
+                font-size: 1.55rem;
+            }
+
+            .home-members-prev {
+                left: 10px;
+            }
+
+            .home-members-next {
+                right: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        (function () {
+            var track = document.querySelector("[data-home-members-track]");
+            if (!track) return;
+
+            var previous = document.querySelector("[data-home-members-prev]");
+            var next = document.querySelector("[data-home-members-next]");
+            var autoTimer;
+            var autoDelay = 3200;
+
+            function move(direction) {
+                var amount = track.clientWidth * 0.85 * direction;
+                track.scrollBy({ left: amount, behavior: "smooth" });
+            }
+
+            function autoMove() {
+                var nearEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+
+                if (nearEnd) {
+                    track.scrollTo({ left: 0, behavior: "smooth" });
+                    return;
+                }
+
+                move(1);
+            }
+
+            function startAuto() {
+                stopAuto();
+                autoTimer = window.setInterval(autoMove, autoDelay);
+            }
+
+            function stopAuto() {
+                if (autoTimer) {
+                    window.clearInterval(autoTimer);
+                    autoTimer = null;
+                }
+            }
+
+            if (previous) previous.addEventListener("click", function () { move(-1); });
+            if (next) next.addEventListener("click", function () { move(1); });
+
+            track.addEventListener("mouseenter", stopAuto);
+            track.addEventListener("mouseleave", startAuto);
+            track.addEventListener("touchstart", stopAuto, { passive: true });
+            track.addEventListener("touchend", startAuto, { passive: true });
+
+            if (track.scrollWidth > track.clientWidth) {
+                startAuto();
+            }
+        })();
+    </script>
+}
+

@@ -1,0 +1,159 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+
+<div class="menu-card menu-shadow menu-rounded">
+
+    <!-- Card Header -->
+    <div class="menu-card-header">
+
+        <div class="menu-card-header-left">
+
+            <div class="menu-card-header-icon">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="menu-card-header-content">
+
+                <h5 class="menu-card-title">
+                    SEO &amp; Page Metadata
+                </h5>
+
+                <div class="menu-card-subtitle">
+                    Improve search engine visibility and optimize search results.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Card Body -->
+    <div class="menu-card-body">
+
+        <!-- ========================================= -->
+        <!-- SEO PAGE TITLE -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <label for="PageTitle" class="menu-form-label">
+                SEO Page Title
+            </label>
+
+            @Html.TextBoxFor(
+                m => m.PageTitle,
+                new
+                {
+                    @class = "menu-form-control",
+                    id = "PageTitle",
+                    maxlength = "70",
+                    placeholder = "Enter SEO Page Title"
+                })
+
+            <div class="menu-character-counter">
+
+                <span class="menu-help-text">
+                    Recommended: 50–60 characters
+                </span>
+
+                <strong>
+                    <span id="pageTitleCount">0</span>/70
+                </strong>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- META DESCRIPTION -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <label for="MetaDescription" class="menu-form-label">
+                Meta Description
+            </label>
+
+            @Html.TextAreaFor(
+                m => m.MetaDescription,
+                new
+                {
+                    @class = "menu-textarea",
+                    rows = "5",
+                    id = "MetaDescription",
+                    maxlength = "160",
+                    placeholder = "Write Meta Description..."
+                })
+
+            <div class="menu-character-counter">
+
+                <span class="menu-help-text">
+                    Recommended: 150–160 characters
+                </span>
+
+                <strong>
+                    <span id="metaDescriptionCount">0</span>/160
+                </strong>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- GOOGLE SEARCH PREVIEW -->
+        <!-- ========================================= -->
+
+        <div class="menu-card-section">
+
+            <div class="menu-google-preview">
+
+                <div class="menu-google-header">
+
+                    <div class="menu-seo-score">
+
+                        SEO Score:
+                        <span class="menu-seo-score-value">
+                            Good
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="menu-google-body">
+
+                    <div class="menu-google-result">
+
+                        <div class="menu-google-domain">
+                            yourwebsite.com
+                        </div>
+
+                        <div class="menu-google-url">
+                            https://yourwebsite.com/
+                        </div>
+
+                        <div class="menu-google-title"
+                             id="seoTitlePreview">
+
+                            Your Page Title
+
+                        </div>
+
+                        <div class="menu-google-description"
+                             id="seoDescriptionPreview">
+
+                            Your Meta Description will appear here...
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

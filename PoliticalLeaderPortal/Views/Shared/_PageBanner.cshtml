@@ -1,0 +1,70 @@
+﻿
+@{
+    var pageTitle = ViewBag.PageTitle ?? "Page Title";
+    var pageDescription = ViewBag.PageDescription ?? "";
+    var backgroundImage = ViewBag.BannerImage ?? Url.Content("~/Content/User/images/page-banner.jpg");
+}
+
+<section class="page-banner-section"
+         style="background-image:url('@backgroundImage');">
+
+    <div class="page-banner-overlay"></div>
+
+    <div class="container">
+
+        <div class="page-banner-content">
+
+            <span class="page-banner-subtitle">
+                Sangeet Som
+            </span>
+
+            <h1 class="page-banner-title">
+
+                @pageTitle
+
+            </h1>
+
+            @if (!String.IsNullOrWhiteSpace(pageDescription))
+            {
+                <p class="page-banner-description">
+
+                    @pageDescription
+
+                </p>
+            }
+
+            <nav aria-label="breadcrumb">
+
+                <ol class="breadcrumb justify-content-center">
+
+                    <li class="breadcrumb-item">
+
+                        <a href="@Url.Action("Index", "Home")">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+                    <li class="breadcrumb-item">
+
+                        About Leader
+
+                    </li>
+
+                    <li class="breadcrumb-item active">
+
+                        @pageTitle
+
+                    </li>
+
+                </ol>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</section>

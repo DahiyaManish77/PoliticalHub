@@ -1,0 +1,175 @@
+@model List<PoliticalLeaderPortal.ViewModels.MeraKshetraItemVM>
+@using System.Linq
+
+@{
+    ViewBag.Title = "Mera Kshetra | Sardhana";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var items = Model ?? new List<PoliticalLeaderPortal.ViewModels.MeraKshetraItemVM>();
+    var featured = items.Where(x => x.IsFeatured).Take(3).ToList();
+    var moduleGroups = items.GroupBy(x => x.ModuleType).OrderBy(x => x.Min(y => y.DisplayOrder)).ToList();
+}
+
+<section class="kshetra-hero">
+    <div class="kshetra-hero__content">
+        <span class="kshetra-eyebrow">Mera Kshetra</span>
+        <h1>Sardhana, Meerut</h1>
+        <p>
+            A historic public-service area in western Uttar Pradesh, known for its heritage,
+            civic energy, nearby Meerut connectivity, and growing sports infrastructure.
+        </p>
+        <div class="kshetra-hero__actions">
+            <a href="#nearby" class="kshetra-btn kshetra-btn--primary">Explore Nearby</a>
+            <a href="@Url.Action("Index", "CitizenConnect", new { area = "" })" class="kshetra-btn kshetra-btn--light">Citizen Connect</a>
+        </div>
+    </div>
+
+    <div class="kshetra-quick-card">
+        <span>Quick View</span>
+        <strong>Meerut District</strong>
+        <p>@items.Count active local modules covering heritage, nearby places, development and citizen-service information.</p>
+    </div>
+</section>
+
+<section class="kshetra-page">
+    <div class="kshetra-stats">
+        <article>
+            <i class="bi bi-geo-alt"></i>
+            <span>Location</span>
+            <strong>About 20 km NW of Meerut</strong>
+        </article>
+        <article>
+            <i class="bi bi-signpost-split"></i>
+            <span>Regional Link</span>
+            <strong>Near Delhi NCR belt</strong>
+        </article>
+        <article>
+            <i class="bi bi-bank"></i>
+            <span>Identity</span>
+            <strong>@items.Count public modules</strong>
+        </article>
+        <article>
+            <i class="bi bi-trophy"></i>
+            <span>Future Focus</span>
+            <strong>Sports university corridor</strong>
+        </article>
+    </div>
+
+    <div class="kshetra-section-grid">
+        <article class="kshetra-panel kshetra-panel--wide">
+            <span class="kshetra-label">About Sardhana</span>
+            <h2>A constituency area with history, villages, markets, and opportunity</h2>
+            <p>
+                Sardhana sits in Meerut district and has long been associated with Begum Samru,
+                the Basilica of Our Lady of Graces, agricultural communities, education needs,
+                road connectivity, youth employment, and citizen-facing development work.
+            </p>
+            <div class="kshetra-tags">
+                <span>Heritage</span>
+                <span>Public service</span>
+                <span>Village connect</span>
+                <span>Youth and sports</span>
+            </div>
+        </article>
+
+        @if (featured.Any())
+        {
+            <article class="kshetra-panel kshetra-panel--accent">
+                <i class="@(string.IsNullOrWhiteSpace(featured.First().IconClass) ? "bi bi-stars" : featured.First().IconClass)"></i>
+                <h3>@featured.First().Title</h3>
+                <p>@featured.First().Description</p>
+            </article>
+        }
+        else
+        {
+            <article class="kshetra-panel kshetra-panel--accent">
+                <i class="bi bi-stars"></i>
+                <h3>Why it matters</h3>
+                <p>
+                    A good Mera Kshetra page should help citizens understand local priorities,
+                    nearby resources, visitor points, and how to reach the public representative.
+                </p>
+            </article>
+        }
+    </div>
+
+    <div class="kshetra-section-title" id="nearby">
+        <span>Dynamic Modules</span>
+        <h2>Places, services and development points near Sardhana</h2>
+    </div>
+
+    @foreach (var group in moduleGroups)
+    {
+        <div class="kshetra-module-block">
+            <div class="kshetra-module-heading">
+                <span>@group.Key</span>
+                <strong>@group.Count() item(s)</strong>
+            </div>
+
+            <div class="kshetra-card-grid">
+                @foreach (var item in group.OrderBy(x => x.DisplayOrder))
+                {
+                    <article class="kshetra-card @(item.IsFeatured ? "kshetra-card--featured" : "")">
+                        @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                        {
+                            <img src="@Url.Content(item.ImagePath)" class="kshetra-card__image" alt="@item.Title" />
+                        }
+                        else
+                        {
+                            <i class="@(string.IsNullOrWhiteSpace(item.IconClass) ? "bi bi-geo-alt" : item.IconClass)"></i>
+                        }
+                        <h3>@item.Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(item.ShortTitle))
+                        {
+                            <strong class="kshetra-card__subtitle">@item.ShortTitle</strong>
+                        }
+                        <p>@item.Description</p>
+                        <div class="kshetra-card__meta">
+                            @if (!string.IsNullOrWhiteSpace(item.LocationName))
+                            {
+                                <span><i class="bi bi-geo-alt"></i>@item.LocationName</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.DistanceText))
+                            {
+                                <span><i class="bi bi-signpost"></i>@item.DistanceText</span>
+                            }
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(item.SourceUrl))
+                        {
+                            <a class="kshetra-source-link" href="@item.SourceUrl" target="_blank" rel="noopener noreferrer">
+                                @(string.IsNullOrWhiteSpace(item.SourceName) ? "View source" : item.SourceName)
+                            </a>
+                        }
+                    </article>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="kshetra-priority-band">
+        <div>
+            <span class="kshetra-label">Development Priorities</span>
+            <h2>Compact local dashboard for citizens</h2>
+            <p>
+                Use this page as the public face of constituency information: roads, sanitation,
+                education, health camps, public meetings, volunteer activity, and complaint routing.
+            </p>
+        </div>
+        <div class="kshetra-priority-list">
+            <span><i class="bi bi-check2-circle"></i> Village and ward updates</span>
+            <span><i class="bi bi-check2-circle"></i> Events and public meetings</span>
+            <span><i class="bi bi-check2-circle"></i> Heritage and visitor information</span>
+            <span><i class="bi bi-check2-circle"></i> Citizen support links</span>
+        </div>
+    </div>
+
+    <div class="kshetra-sources">
+        <span>Information references</span>
+        @foreach (var source in items.Where(x => !string.IsNullOrWhiteSpace(x.SourceUrl)).GroupBy(x => x.SourceUrl).Select(x => x.First()).Take(8))
+        {
+            <a href="@source.SourceUrl" target="_blank" rel="noopener noreferrer">
+                @(string.IsNullOrWhiteSpace(source.SourceName) ? source.Title : source.SourceName)
+            </a>
+        }
+    </div>
+</section>

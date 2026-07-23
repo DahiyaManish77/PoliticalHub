@@ -1,0 +1,802 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9B809407-4E01-4954-8F2A-97D0045447BC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PoliticalLeaderPortal</RootNamespace>
+    <AssemblyName>PoliticalLeaderPortal</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\EnterpriseHomeSeed.sql" />
+    <Content Include="App_Data\AccountAuthUpgrade.sql" />
+    <Content Include="App_Data\AppDownloadSettingUpgrade.sql" />
+    <Content Include="App_Data\CampaignCandidateProfileUpgrade.sql" />
+    <Content Include="App_Data\CampaignComplianceAuditUpgrade.sql" />
+    <Content Include="App_Data\CampaignFinanceDonationUpgrade.sql" />
+    <Content Include="App_Data\CampaignPollSystemUpgrade.sql" />
+    <Content Include="App_Data\CampaignOperationItemUpgrade.sql" />
+    <Content Include="App_Data\CampaignSocialMediaWarRoomUpgrade.sql" />
+    <Content Include="App_Data\ElectionWarRoomSimpleSupport.sql" />
+    <Content Include="App_Data\ElectionWarRoomSidebarSubmenus.sql" />
+    <Content Include="App_Data\GrantAllSidebarModuleViewPermissions.sql" />
+    <Content Include="App_Data\HomePageSectionPollSurveyUpgrade.sql" />
+    <Content Include="App_Data\HomeMemberUpgrade.sql" />
+    <Content Include="App_Data\HeroSliderEnterpriseUpgrade.sql" />
+    <Content Include="App_Data\MegaMenuAdminSeed.sql" />
+    <Content Include="App_Data\HeroSliderVideoUpgrade.sql" />
+    <Content Include="App_Data\RoleMenuPermissionUpgrade.sql" />
+    <Content Include="Areas\Admin\Content\admin.css" />
+    <Content Include="Areas\Admin\Content\admin-campaign-dashboard.css" />
+    <Content Include="Areas\Admin\Content\admin-pro-polish.css" />
+    <Content Include="Areas\Admin\Content\css\menu-cms.css" />
+    <Content Include="Areas\Admin\Content\hero-slider-admin.css" />
+    <Content Include="Areas\Admin\Content\hero-slider-pro.css" />
+    <Content Include="Areas\Admin\Scripts\admin.js" />
+    <Content Include="Areas\Admin\Scripts\hero-slider-admin.js" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\downloads.css" />
+    <Content Include="Content\css\hero-slider.css" />
+    <Content Include="Content\css\mera-kshetra.css" />
+    <Content Include="Content\css\som-app.css" />
+    <Content Include="Content\css\site-aboutleader.css" />
+    <Content Include="Content\css\account.css" />
+    <Content Include="Content\css\site-contact-cta.css" />
+    <Content Include="Content\css\site-events.css" />
+    <Content Include="Content\css\site-footer.css" />
+    <Content Include="Content\css\site-final-polish.css" />
+    <Content Include="Content\css\site-header.css" />
+    <Content Include="Content\css\site-home-statistics.css" />
+    <Content Include="Content\css\site-home.css" />
+    <Content Include="Content\css\site-image-gallery.css" />
+    <Content Include="Content\css\site-joinus-cta.css" />
+    <Content Include="Content\css\site-latest-news.css" />
+    <Content Include="Content\css\site-layout.css" />
+    <Content Include="Scripts\custom\site-latest-news.js" />
+    <Content Include="Scripts\custom\site-preloader.js" />
+    <Content Include="Content\css\site-preloader.css" />
+    <Content Include="Content\videos\som-preloader.mp4" />
+    <Content Include="Content\css\site-media-coverage.css" />
+    <Content Include="Content\css\site-navigation.css" />
+    <Content Include="Content\css\site-enterprise-navigation.css" />
+    <Content Include="Content\css\site-public-polish.css" />
+    <Content Include="Content\css\site-theme.css" />
+    <Content Include="Content\css\site-topbar.css" />
+    <Content Include="Content\css\site-upcoming-events.css" />
+    <Content Include="Content\css\site-video-gallery.css" />
+    <Content Include="Content\images\leader.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\auth\sangeet-som-auth.jpg" />
+    <Content Include="Uploads\HeroSlider\background_20260628121304649.png" />
+    <Content Include="Uploads\HeroSlider\background_20260713110016439.jpg" />
+    <Content Include="Uploads\HeroSlider\background_20260713175027837.jpg" />
+    <Content Include="Uploads\HeroSlider\background_20260719225555536.png" />
+    <Content Include="Uploads\HeroSlider\background_20260719225623335.png" />
+    <Content Include="Uploads\HeroSlider\background_20260719231531631.png" />
+    <Content Include="Uploads\HeroSlider\hero_639169616223734915.jpg" />
+    <Content Include="Uploads\HeroSlider\hero_639169646214137178.jpg" />
+    <Content Include="Uploads\HeroSlider\hero_639169651102277665.jpg" />
+    <Content Include="Uploads\HeroSlider\hero_639169668768139947.jpg" />
+    <Content Include="Uploads\HeroSlider\hero_639169675952576831.png" />
+    <Content Include="Uploads\HeroSlider\leader_20260628121304653.png" />
+    <Content Include="Uploads\HeroSlider\leader_20260628122417416.png" />
+    <Content Include="Views\Shared\_HomeVisitMenu.cshtml" />
+    <Content Include="Views\Shared\_PublicEngagementWidgets.cshtml" />
+    <Content Include="Scripts\custom\public-auth-modal.js" />
+    <Content Include="Scripts\custom\public-engagement.js" />
+    <Content Include="Content\css\public-engagement.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\PoliticalLeaderPortal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
+      <LastGenOutput>PoliticalLeaderPortal.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PoliticalLeaderPortal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
+      <LastGenOutput>PoliticalLeaderPortal.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\AccessDenied.cshtml" />
+    <None Include="Areas\Admin\Views\.editorconfig" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Models\PoliticalLeaderPortal.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PoliticalLeaderPortal.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PoliticalLeaderPortal.edmx.diagram">
+      <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Shared\_AdminSidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HomePageSection\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LeaderIntroduction\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_DashboardList.cshtml" />
+    <Content Include="Areas\Admin\Views\WebsiteSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WebsiteHeaderSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WebsiteFooterSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderForm.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Statistic\_StatisticForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Statistic\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Statistic\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Statistic\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeMember\_Form.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeMember\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeMember\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeMember\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LatestNews\_LatestNewsForm.cshtml" />
+    <Content Include="Areas\Admin\Views\LatestNews\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LatestNews\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LatestNews\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UpcomingEvent\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UpcomingEvent\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UpcomingEvent\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\UpcomingEvent\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\UpcomingEvent\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategory\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategory\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryImage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryImage\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryImage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryImage\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryImage\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoCategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoCategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoCategory\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoCategory\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoGallery\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoGallery\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoGallery\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoGallery\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoGallery\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MediaCoverage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MediaCoverage\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MediaCoverage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadCategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadCategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadDocument\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadDocument\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DownloadDocument\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderContent.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderMedia.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderCTA.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderAppearance.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderAnimation.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderPreview.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderPublish.cshtml" />
+    <Content Include="Areas\Admin\Views\HeroSlider\_HeroSliderProfessionalForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CampaignErpBlueprint.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CampaignErpModule.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CandidateForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CampaignFinanceEntryForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CampaignPollForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\CampaignPollResults.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\GenericForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\SocialMediaPostForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\Module.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\BoothForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\EventForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\TaskForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\TrackingItemForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\JanSamparkForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionWarRoom\VehicleForm.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\_MenuList.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\_MenuForm.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\CreateMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\EditMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminSidebarItem.cshtml" />
+    <Content Include="Areas\Admin\Views\AppDownloadSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_BasicInformation.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_AppearanceRouting.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_SeoSettings.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_LivePreview.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_PublishingSettings.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_SavePanel.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_NavigationSettings.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleMenuPermission\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CitizenConnect\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CitizenConnect\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\VoterBackupSettings\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Voter\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\Voter\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Voter\RollForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Voter\Rolls.cshtml" />
+    <Content Include="Areas\Admin\Views\TodaySchedule\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\TodaySchedule\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PublicNewsTicker\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\PublicNewsTicker\Index.cshtml" />
+    <Content Include="Views\CitizenConnect\Form.cshtml" />
+    <Content Include="Views\CampaignPoll\Details.cshtml" />
+    <Content Include="Views\CampaignPoll\Thanks.cshtml" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\custom\hero-slider.js" />
+    <Content Include="Scripts\custom\menu-cms.js" />
+    <Content Include="Scripts\custom\site-home-statistics.js" />
+    <Content Include="Scripts\custom\site-language.js" />
+    <Content Include="Scripts\custom\site-navigation.js" />
+    <Content Include="Scripts\custom\site-enterprise-navigation.js" />
+    <Content Include="Scripts\som-app.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="som-app-manifest.json" />
+    <Content Include="som-app-sw.js" />
+    <Content Include="Web.config" />
+    <Content Include="Views\Shared\_TopBar.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Shared\_PublicNewsTicker.cshtml" />
+    <Content Include="Views\Shared\_NavigationEnterprise.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_LoginModal.cshtml" />
+    <Content Include="Views\Shared\_RegisterModal.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Partials\_HomePageSections.cshtml" />
+    <Content Include="Views\Home\Partials\_HeroSlider.cshtml" />
+    <Content Include="Views\Home\Partials\_HomeHitCounter.cshtml" />
+    <Content Include="Views\Home\Partials\_LeaderIntroduction.cshtml" />
+    <Content Include="Views\Home\Partials\_HomeStatistics.cshtml" />
+    <Content Include="Views\Home\Partials\_HomeMembers.cshtml" />
+    <Content Include="Views\Home\Partials\_LatestNews.cshtml" />
+    <Content Include="Views\Home\Partials\_UpcomingEvents.cshtml" />
+    <Content Include="Views\Home\Partials\_VideoGallery.cshtml" />
+    <Content Include="Views\Home\Partials\_ImageGallery.cshtml" />
+    <Content Include="Views\Home\Partials\_MediaCoverage.cshtml" />
+    <Content Include="Views\Home\Partials\_PollSurvey.cshtml" />
+    <Content Include="Views\Home\Partials\_JoinUsCallToAction.cshtml" />
+    <Content Include="Views\Home\Partials\_ContactCallToAction.cshtml" />
+    <Content Include="Views\Home\Partials\_SomAppCallToAction.cshtml" />
+    <Content Include="Areas\Admin\Views\MeraKshetra\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MeraKshetra\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MeraKshetra\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MeraKshetra\_Form.cshtml" />
+    <Content Include="Views\MeraKshetra\Index.cshtml" />
+    <Content Include="Views\SomApp\Index.cshtml" />
+    <Content Include="Views\News\Details.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\Details.cshtml" />
+    <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Gallery\Album.cshtml" />
+    <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Video\Details.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomePageSectionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LeaderIntroductionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AppDownloadSettingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DownloadCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DownloadDocumentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CitizenConnectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElectionWarRoomController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GalleryCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GalleryImageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HeroSliderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeMemberController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LatestNewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MediaCoverageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuCMSController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MeraKshetraController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleMenuPermissionController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\PublicNewsTickerVM.cs" />
+    <Compile Include="Areas\Admin\Controllers\PublicNewsTickerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TodayScheduleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VoterBackupSettingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VoterController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatisticController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UpcomingEventController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideoGalleryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WebsiteFooterSettingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WebsiteHeaderSettingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WebsiteSettingController.cs" />
+    <Compile Include="Areas\Admin\Services\DownloadCategoryService.cs" />
+    <Compile Include="Areas\Admin\Services\AppDownloadSettingService.cs" />
+    <Compile Include="Areas\Admin\Services\DownloadDocumentService.cs" />
+    <Compile Include="Areas\Admin\Services\ElectionWarRoomService.cs" />
+    <Compile Include="Areas\Admin\Services\HeroSliderService.cs" />
+    <Compile Include="Areas\Admin\Services\HomeMemberService.cs" />
+    <Compile Include="Areas\Admin\Services\LatestNewsService.cs" />
+    <Compile Include="Areas\Admin\Services\MediaCoverageService.cs" />
+    <Compile Include="Areas\Admin\Services\MenuService.cs" />
+    <Compile Include="Areas\Admin\Services\RoleMenuPermissionService.cs" />
+    <Compile Include="Areas\Admin\Services\StatisticService.cs" />
+    <Compile Include="Areas\Admin\Services\TodayScheduleService.cs" />
+    <Compile Include="Areas\Admin\Services\UpcomingEventService.cs" />
+    <Compile Include="Areas\Admin\Services\VoterBackupSettingsService.cs" />
+    <Compile Include="Areas\Admin\Services\VoterService.cs" />
+    <Compile Include="Areas\Admin\Services\WebsiteFooterSettingService.cs" />
+    <Compile Include="Areas\Admin\Services\WebsiteHeaderSettingService.cs" />
+    <Compile Include="Areas\Admin\Services\WebsiteSettingService.cs" />
+    <Compile Include="Areas\Admin\Services\DashboardService.cs" />
+    <Compile Include="Areas\Admin\Services\HomePageSectionService.cs" />
+    <Compile Include="Areas\Admin\Services\LeaderIntroductionService.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminDashboardVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\HomePageSectionVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\LeaderIntroductionVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignAlertVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignErpBlueprintVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignAuditLogVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CandidateProfileVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignFinanceEntryVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignPollVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignPollOptionVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignPollResponseVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\CampaignOperationItemVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\SocialMediaPostVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AppDownloadSettingVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\DashboardVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\DownloadCategoryVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\DownloadDocumentVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\ElectionBoothVisitVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\ElectionBoothVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\ElectionCampaignVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventArrangementVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventAttendanceVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventExpenseVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventGuestVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventMediaVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventPollOptionVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventPollResponseVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventPollVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventTaskActivityVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventTaskVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventTeamVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventVehicleVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventTrackingItemVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\EventVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\JanSamparkVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\VoterRollPdfVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionWarRoom\VoterVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\HeroSliderVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\HomeMemberVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\HomeVideoGalleryVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\LatestNewsVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MediaCoverageVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RoleMenuPermissionItemVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RoleMenuPermissionPageVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Menu\MenuEditVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Menu\MenuListVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Menu\MenuOrderVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Menu\MenuVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\StatisticVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\TodayScheduleVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UpcomingEventDetailsVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UpcomingEventListVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UpcomingEventVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\VoterBackupSettingsVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\WebsiteFooterSettingVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\WebsiteHeaderSettingVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\WebsiteSettingVM.cs" />
+    <Compile Include="Controllers\AboutLeaderController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CitizenConnectController.cs" />
+    <Compile Include="Controllers\CampaignPollController.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
+    <Compile Include="Controllers\MeraKshetraController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideoCategoryController.cs" />
+    <Compile Include="Controllers\PublicMediaCoverageController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SomAppController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Infrastructure\RoleMenuAuthorizeAttribute.cs" />
+    <Compile Include="Models\ApplicationRole.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationUser.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampaignAlert.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DownloadCategory.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DownloadDocument.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionBooth.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionBoothVisit.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionCampaign.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventArrangement.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventAttendance.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventExpense.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventGuest.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventMedia.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventPoll.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventPollOption.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventPollResponse.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTask.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTaskActivity.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTeam.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTeamMember.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventVehicle.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GalleryCategory.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GalleryImage.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HeroSlider.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomePageStatistic.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JanSampark.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LatestNew.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MediaCoverage.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MenuMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NavigationMenu.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PoliticalLeaderPortal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PoliticalLeaderPortal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PoliticalLeaderPortal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PoliticalLeaderPortal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UpcomingEvent.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VideoCategory.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VideoGallery.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WebsiteFooterSetting.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WebsiteHeaderSetting.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WebsiteSetting.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CitizenConnectService.cs" />
+    <Compile Include="Services\GalleryService.cs" />
+    <Compile Include="Services\MeraKshetraService.cs" />
+    <Compile Include="Services\VideoGalleryService.cs" />
+    <Compile Include="ViewModels\GalleryCategoryListVM.cs" />
+    <Compile Include="ViewModels\AccountLoginVM.cs" />
+    <Compile Include="ViewModels\AccountRegisterVM.cs" />
+    <Compile Include="ViewModels\CitizenConnectVM.cs" />
+    <Compile Include="ViewModels\GalleryCategoryVM.cs" />
+    <Compile Include="ViewModels\AppDownloadDisplayVM.cs" />
+    <Compile Include="ViewModels\GalleryImageListVM.cs" />
+    <Compile Include="ViewModels\GalleryImageVM.cs" />
+    <Compile Include="ViewModels\HeroSliderDisplayVM.cs" />
+    <Compile Include="ViewModels\HomeStatisticDisplayVM.cs" />
+    <Compile Include="ViewModels\HomeMemberDisplayVM.cs" />
+    <Compile Include="ViewModels\LatestNewsDisplayVM.cs" />
+    <Compile Include="ViewModels\LayoutFooterVM.cs" />
+    <Compile Include="ViewModels\LayoutHeaderVM.cs" />
+    <Compile Include="ViewModels\MeraKshetraItemVM.cs" />
+    <Compile Include="ViewModels\NewsDetailsVM.cs" />
+    <Compile Include="ViewModels\SearchPageVM.cs" />
+    <Compile Include="ViewModels\SearchResultItemVM.cs" />
+    <Compile Include="ViewModels\PublicGalleryAlbumVM.cs" />
+    <Compile Include="ViewModels\PublicGalleryCategoryVM.cs" />
+    <Compile Include="ViewModels\PublicGalleryImageVM.cs" />
+    <Compile Include="ViewModels\VideoCategoryListVM.cs" />
+    <Compile Include="ViewModels\VideoCategoryVM.cs" />
+    <Compile Include="ViewModels\VideoGalleryListVM.cs" />
+    <Compile Include="ViewModels\VideoGalleryVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
+    <Content Include="Views\PublicMediaCoverage\Index.cshtml" />
+    <Content Include="Views\PublicMediaCoverage\Details.cshtml" />
+    <Content Include="Views\AboutLeader\Vision.cshtml" />
+    <Content Include="Views\Shared\_AboutLeaderSidebar.cshtml" />
+    <Content Include="Views\AboutLeader\Biography.cshtml" />
+    <Content Include="Views\Shared\_PageBanner.cshtml" />
+    <Content Include="Views\AboutLeader\Achievements.cshtml" />
+    <Content Include="Views\AboutLeader\Timeline.cshtml" />
+    <Content Include="Views\AboutLeader\Awards.cshtml" />
+    <Content Include="Views\AboutLeader\Faq.cshtml" />
+    <Content Include="Views\Shared\_Downloads.cshtml" />
+    <Content Include="Views\Downloads\Index.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Uploads\Documents\" />
+    <Folder Include="Uploads\Events\" />
+    <Folder Include="Uploads\Gallery\Images\" />
+    <Folder Include="Uploads\Header\" />
+    <Folder Include="Uploads\MediaCoverage\CoverImages\" />
+    <Folder Include="Uploads\MediaCoverage\SourceLogos\" />
+    <Folder Include="Uploads\Media\" />
+    <Folder Include="Uploads\Videos\" />
+    <Folder Include="Uploads\Website\" />
+    <Folder Include="Views\Layout\" />
+    <Folder Include="Views\VideoCategory\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51832</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44398/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

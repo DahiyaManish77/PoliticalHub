@@ -1,0 +1,130 @@
+@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadDocumentVM>
+
+@{
+    ViewBag.Title = "Download Documents";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadDocumentVM>() : Model.ToList();
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Documents & Downloads</h1>
+        <p>Publish official documents, reports, circulars and campaign resources.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "Downloads", new { area = "" })" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Downloads
+        </a>
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add Document
+        </a>
+    </div>
+</div>
+
+<div class="admin-ticker-stats news-cms-stats">
+    <div><span>Total Documents</span><strong>@rows.Count</strong></div>
+    <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+    <div><span>Featured</span><strong>@rows.Count(x => x.IsFeatured)</strong></div>
+    <div><span>Downloads</span><strong>@rows.Sum(x => x.DownloadsCount)</strong></div>
+</div>
+
+<div class="admin-card homepage-section-manager media-cms-panel">
+    @Html.AntiForgeryToken()
+    <div class="section-manager-toolbar">
+        <div>
+            <h2>Document Library</h2>
+            <span>Featured and active documents appear on public pages</span>
+        </div>
+    </div>
+
+    <div class="document-cms-list">
+        @if (!rows.Any())
+        {
+            <div class="media-empty-state">
+                <i class="fas fa-file-lines"></i>
+                <strong>No documents available.</strong>
+                <span>Add downloadable resources to fill this section.</span>
+            </div>
+        }
+
+        @foreach (var item in rows.OrderBy(x => x.DisplayOrder).ThenByDescending(x => x.PublishDate))
+        {
+            var ext = String.IsNullOrWhiteSpace(item.FileExtension) ? "FILE" : item.FileExtension.ToUpperInvariant();
+            var iconClass = "fas fa-file";
+            if (ext == "PDF") { iconClass = "fas fa-file-pdf"; }
+            else if (ext == "DOC" || ext == "DOCX") { iconClass = "fas fa-file-word"; }
+            else if (ext == "XLS" || ext == "XLSX") { iconClass = "fas fa-file-excel"; }
+            else if (ext == "PPT" || ext == "PPTX") { iconClass = "fas fa-file-powerpoint"; }
+            else if (ext == "ZIP" || ext == "RAR") { iconClass = "fas fa-file-archive"; }
+
+            <article class="document-cms-row">
+                <div class="document-cms-icon">
+                    <i class="@iconClass"></i>
+                    <span>@ext</span>
+                </div>
+                <div class="document-cms-main">
+                    <span class="media-cms-category">@item.CategoryName</span>
+                    <h3>@item.Title</h3>
+                    <p>@(String.IsNullOrWhiteSpace(item.ShortDescription) ? "No description added." : (item.ShortDescription.Length > 140 ? item.ShortDescription.Substring(0, 140) + "..." : item.ShortDescription))</p>
+                    <div class="media-cms-meta">
+                        <span><i class="fas fa-calendar"></i> @(item.PublishDate.HasValue ? item.PublishDate.Value.ToString("dd MMM yyyy") : "No date")</span>
+                        <span><i class="fas fa-download"></i> @item.DownloadsCount downloads</span>
+                        <span><i class="fas fa-sort"></i> Order @item.DisplayOrder</span>
+                        @if (item.IsFeatured)
+                        {
+                            <span class="media-featured"><i class="fas fa-star"></i> Featured</span>
+                        }
+                    </div>
+                </div>
+                <div class="document-cms-status">
+                    <span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span>
+                    <small>@item.DocumentNumber</small>
+                </div>
+                <div class="media-cms-actions">
+                    <a href="@Url.Action("Download", "Downloads", new { area = "", id = item.DownloadDocumentId })" target="_blank" class="btn btn-sm btn-outline-secondary" title="Open">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Edit", new { id = item.DownloadDocumentId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-outline-danger btnDelete" data-id="@item.DownloadDocumentId" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </article>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $(".btnDelete").click(function () {
+                var id = $(this).data("id");
+
+                Swal.fire({
+                    title: "Delete Document?",
+                    text: "This action cannot be undone.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Delete"
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("Delete")', {
+                            id: id,
+                            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+                        }, function (response) {
+                            if (response.success) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

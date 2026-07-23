@@ -1,0 +1,175 @@
+﻿
+
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.WebsiteSettingVM
+
+@{
+    ViewBag.Title = "Website Setting";
+   
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h4 class="mb-0">
+                Website Setting
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            @using (Html.BeginForm(
+                "Index",
+                "WebsiteSetting",
+                FormMethod.Post,
+                new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        @Html.TextBoxFor(
+                            m => m.WebsiteName,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Website Name"
+                            })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        @Html.TextBoxFor(
+                            m => m.WebsiteTagline,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Website Tagline"
+                            })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="file"
+                               name="LogoFile"
+                               class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="file"
+                               name="FaviconFile"
+                               class="form-control" />
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        @Html.TextBoxFor(
+                            m => m.DefaultMetaTitle,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Meta Title"
+                            })
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        @Html.TextAreaFor(
+                            m => m.DefaultMetaDescription,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "3",
+                                placeholder = "Meta Description"
+                            })
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        @Html.TextAreaFor(
+                            m => m.DefaultMetaKeywords,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "3",
+                                placeholder = "Meta Keywords"
+                            })
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        @Html.TextAreaFor(
+                            m => m.GoogleAnalyticsCode,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "4",
+                                placeholder = "Google Analytics Code"
+                            })
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        @Html.TextAreaFor(
+                            m => m.GoogleSearchConsoleCode,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "4",
+                                placeholder = "Google Search Console Code"
+                            })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        @Html.TextBoxFor(
+                            m => m.DefaultLanguage,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Default Language"
+                            })
+                    </div>
+
+                    <div class="col-md-6 mb-3 d-flex align-items-center">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(
+                                m => m.IsActive,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Settings
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+Swal.fire({
+    icon: 'success',
+    title: 'Success',
+    text: '@TempData["Success"]'
+});
+        </script>
+    }
+
+}

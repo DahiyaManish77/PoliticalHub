@@ -1,0 +1,482 @@
+﻿
+
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.WebsiteHeaderSettingVM
+
+@{
+    ViewBag.Title = "Website Header Setting";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                Website Header Setting
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            @using (Html.BeginForm(
+                "Index",
+                "WebsiteHeaderSetting",
+                FormMethod.Post,
+                new
+                {
+                    enctype = "multipart/form-data"
+                }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+
+                    <!-- CONTACT INFORMATION -->
+
+                    <div class="col-12">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            Contact Information
+                        </h5>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Phone Number
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.PhoneNumber,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Phone Number"
+                            })
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Email Address
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.EmailAddress,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Email Address"
+                            })
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Address
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.Address,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Address"
+                            })
+
+                    </div>
+
+                    <!-- SOCIAL LINKS -->
+
+                    <div class="col-12 mt-3">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            Social Media Links
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Facebook URL
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.FacebookUrl,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Facebook URL"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Instagram URL
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.InstagramUrl,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Instagram URL"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Twitter URL
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.TwitterUrl,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Twitter URL"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            YouTube URL
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.YoutubeUrl,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "YouTube URL"
+                            })
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            WhatsApp URL
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.WhatsappUrl,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "WhatsApp URL"
+                            })
+
+                    </div>
+
+                    <!-- IMAGES -->
+
+                    <div class="col-12 mt-3">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            Header Images
+                        </h5>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Website Logo
+                        </label>
+
+                        <input type="file"
+                               name="LogoFile"
+                               class="form-control" />
+
+                        @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
+                        {
+                            <div class="mt-2">
+
+                                <img src="@Url.Content(Model.LogoPath)"
+                                     style="max-height:80px;"
+                                     class="img-thumbnail" />
+
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Leader Image
+                        </label>
+
+                        <input type="file"
+                               name="LeaderImageFile"
+                               class="form-control" />
+
+                        @if (!string.IsNullOrWhiteSpace(Model.LeaderImagePath))
+                        {
+                            <div class="mt-2">
+
+                                <img src="@Url.Content(Model.LeaderImagePath)"
+                                     style="max-height:120px;"
+                                     class="img-thumbnail" />
+
+                            </div>
+                        }
+
+                    </div>
+
+                    <!-- COLORS -->
+
+                    <div class="col-12 mt-3">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            Header Design
+                        </h5>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Header Background Color
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.HeaderBackgroundColor,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "color"
+                            })
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Header Text Color
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.HeaderTextColor,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "color"
+                            })
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Font Family
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.HeaderFontFamily,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Poppins"
+                            })
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label">
+                            Font Size
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.HeaderFontSize,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "16px"
+                            })
+
+                    </div>
+
+                    <!-- ANIMATIONS -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Logo Animation Class
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.LogoAnimationClass,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "animate__pulse"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Text Animation Class
+                        </label>
+
+                        @Html.TextBoxFor(
+                            m => m.TextAnimationClass,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "animate__fadeIn"
+                            })
+
+                    </div>
+
+                    <!-- SETTINGS -->
+
+                    <div class="col-12 mt-3">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            Display Settings
+                        </h5>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="form-check">
+
+                            @Html.CheckBoxFor(
+                                m => m.ShowTopBar,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Show Top Bar
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="form-check">
+
+                            @Html.CheckBoxFor(
+                                m => m.ShowLanguageSwitcher,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Show Language Switcher
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="form-check">
+
+                            @Html.CheckBoxFor(
+                                m => m.ShowSignIn,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Show Sign In
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <div class="form-check">
+
+                            @Html.CheckBoxFor(
+                                m => m.ShowSignUp,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Show Sign Up
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+
+                        <div class="form-check">
+
+                            @Html.CheckBoxFor(
+                                m => m.IsActive,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            <label class="form-check-label">
+                                Is Active
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SAVE BUTTON -->
+
+                    <div class="col-12">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <i class="bi bi-check-circle"></i>
+                            Save Header Settings
+
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '@TempData["Success"]'
+        });
+
+        </script>
+    }
+
+}

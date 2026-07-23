@@ -1,0 +1,266 @@
+﻿/* ===========================================================
+   PoliticalLeaderPortal
+   Enterprise Design System v1.0
+   Author : OpenAI
+   =========================================================== */
+
+
+/* ===========================================================
+   ROOT VARIABLES
+=========================================================== */
+
+:root {
+    /* Brand */
+
+    --primary: #FF671F;
+    --primary-dark: #E85D0C;
+    --secondary: #138808;
+    --dark: #1F2937;
+    --light: #F8FAFC;
+    --white: #FFFFFF;
+    --text: #374151;
+    --heading: #111827;
+    --border: #E5E7EB;
+    /* Radius */
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    /* Shadow */
+
+    --shadow-sm: 0 4px 12px rgba(0,0,0,.05);
+    --shadow-md: 0 10px 30px rgba(0,0,0,.08);
+    --shadow-lg: 0 20px 45px rgba(0,0,0,.10);
+    /* Transition */
+
+    --transition: .35s ease;
+}
+
+
+
+/* ===========================================================
+   GLOBAL
+=========================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins',sans-serif;
+    background: var(--light);
+    color: var(--text);
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+button {
+    transition: var(--transition);
+}
+
+
+
+/* ===========================================================
+   CONTAINER
+=========================================================== */
+
+.container {
+    max-width: 1320px;
+}
+
+.container-fluid {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+
+
+/* ===========================================================
+   SECTION
+=========================================================== */
+
+.section {
+    position: relative;
+    padding: 70px 0;
+}
+
+.section-light {
+    background: #FFFFFF;
+}
+
+.section-gray {
+    background: #F8FAFC;
+}
+
+.section-gradient {
+    background: linear-gradient(180deg,#FFF7F0,#FFFFFF);
+}
+
+
+
+/* ===========================================================
+   SECTION HEADER
+=========================================================== */
+
+.section-subtitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFF3EB;
+    color: var(--primary);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--heading);
+    margin-top: 18px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.section-description {
+    font-size: 17px;
+    line-height: 1.9;
+    color: #6B7280;
+}
+
+
+
+/* ===========================================================
+   ENTERPRISE CARD
+=========================================================== */
+
+.card-enterprise {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,.04);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+    .card-enterprise:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+
+
+/* ===========================================================
+   BUTTONS
+=========================================================== */
+
+.btn-theme {
+    background: var(--primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+    .btn-theme:hover {
+        background: var(--primary-dark);
+        color: #FFFFFF;
+    }
+
+.btn-theme-outline {
+    background: #FFFFFF;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-weight: 600;
+}
+
+    .btn-theme-outline:hover {
+        background: var(--primary);
+        color: #FFFFFF;
+    }
+
+
+
+/* ===========================================================
+   IMAGE
+=========================================================== */
+
+.image-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+
+
+/* ===========================================================
+   COMMON SPACING
+=========================================================== */
+
+.mb-section {
+    margin-bottom: 70px;
+}
+
+.mt-section {
+    margin-top: 70px;
+}
+
+
+
+/* ===========================================================
+   RESPONSIVE
+=========================================================== */
+
+@media(max-width:991px) {
+
+    .section {
+        padding: 55px 0;
+    }
+
+    .section-title {
+        font-size: 34px;
+    }
+}
+
+@media(max-width:767px) {
+
+    .section {
+        padding: 45px 0;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    .section-description {
+        font-size: 15px;
+    }
+}

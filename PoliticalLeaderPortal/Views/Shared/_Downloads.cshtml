@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadDocumentVM>
+
+@if (Model != null && Model.Any())
+{
+    <section class="downloads-section home-downloads-compact">
+        <div class="container">
+            <div class="downloads-compact-head">
+                <div>
+                    <span class="downloads-kicker">Downloads</span>
+                    <h2>Latest Documents</h2>
+                    <p>Official documents, reports, circulars and verified resources.</p>
+                </div>
+                <a href="@Url.Action("Index", "Downloads")" class="downloads-view-all">View All</a>
+            </div>
+
+            <div class="downloads-compact-grid">
+                @foreach (var item in Model.Take(6))
+                {
+                    string icon = "fa-file";
+                    switch (item.FileExtension)
+                    {
+                        case "PDF": icon = "fa-file-pdf-o"; break;
+                        case "DOC":
+                        case "DOCX": icon = "fa-file-word-o"; break;
+                        case "XLS":
+                        case "XLSX": icon = "fa-file-excel-o"; break;
+                        case "PPT":
+                        case "PPTX": icon = "fa-file-powerpoint-o"; break;
+                        case "ZIP":
+                        case "RAR": icon = "fa-file-archive-o"; break;
+                        case "TXT":
+                        case "RTF": icon = "fa-file-text-o"; break;
+                    }
+
+                    bool isExternal = !String.IsNullOrWhiteSpace(item.FilePath) && item.FilePath.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+
+                    <article class="download-card download-card-compact">
+                        <div class="download-icon"><i class="fa @icon"></i></div>
+                        <div class="download-content">
+                            <h5>@item.Title</h5>
+                            <p>@item.CategoryName</p>
+                            <small>@(item.PublishDate.HasValue ? item.PublishDate.Value.ToString("dd MMM yyyy") : "")</small>
+                        </div>
+                        <a href="@Url.Action("Download", "Downloads", new { id = item.DownloadDocumentId })" class="download-open-link">
+                            <span>@(isExternal ? "Open" : "Download")</span>
+                            <i class="fa @(isExternal ? "fa-external-link" : "fa-download")"></i>
+                        </a>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+}

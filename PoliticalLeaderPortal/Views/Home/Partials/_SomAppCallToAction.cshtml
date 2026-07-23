@@ -1,0 +1,324 @@
+@model PoliticalLeaderPortal.ViewModels.AppDownloadDisplayVM
+
+@{
+    Layout = null;
+    var setting = Model ?? new PoliticalLeaderPortal.ViewModels.AppDownloadDisplayVM
+    {
+        KickerText = "Bharatiya Janata Party",
+        HeadingText = "Download The App Now",
+        SubHeadingText = "Stay connected with organisation updates, campaigns and public outreach.",
+        GooglePlayUrl = "https://play.google.com/store/search?q=Bharatiya%20Janata%20Party&c=apps",
+        AppleAppStoreUrl = "https://apps.apple.com/in/search?term=Bharatiya%20Janata%20Party",
+        IsActive = true
+    };
+}
+
+@if (setting.IsActive)
+{
+    <section class="bjp-app-download-section">
+        <div class="bjp-app-phone-area">
+            <div class="bjp-app-phone-hand"></div>
+            <div class="bjp-app-phone">
+                <div class="bjp-app-screen">
+                    <div class="bjp-lotus-mark" aria-hidden="true">
+                        <span></span>
+                    </div>
+                    <div class="bjp-screen-text">
+                        <strong>भारतीय जनता पार्टी</strong>
+                        <span>BHARATIYA JANATA PARTY</span>
+                        <small>WELCOME TO THE WORLD'S LARGEST POLITICAL PARTY</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bjp-app-copy">
+            <div class="bjp-app-kicker">@setting.KickerText</div>
+            <h2>@setting.HeadingText</h2>
+            @if (!string.IsNullOrWhiteSpace(setting.SubHeadingText))
+            {
+                <p>@setting.SubHeadingText</p>
+            }
+
+            <div class="bjp-store-actions">
+                <a href="@setting.GooglePlayUrl" target="_blank" rel="noopener" class="bjp-store-badge bjp-store-google">
+                    <i class="bi bi-google-play"></i>
+                    <span>GET IT ON</span>
+                    <strong>Google Play</strong>
+                </a>
+
+                <a href="@setting.AppleAppStoreUrl" target="_blank" rel="noopener" class="bjp-store-badge bjp-store-apple">
+                    <i class="bi bi-apple"></i>
+                    <span>Download on the</span>
+                    <strong>App Store</strong>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .bjp-app-download-section {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(300px, .78fr) minmax(420px, 1fr);
+            min-height: clamp(360px, 42vw, 520px);
+            overflow: hidden;
+            color: #fff;
+            background:
+                radial-gradient(circle at 64% 52%, rgba(0, 194, 255, .22), transparent 18%),
+                linear-gradient(100deg, #f28a00 0%, #f27b14 23%, rgba(36, 83, 65, .86) 40%, #083d64 72%, #073250 100%);
+        }
+
+        .bjp-app-download-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,.05), rgba(2,8,23,.22)),
+                repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 28px);
+            pointer-events: none;
+        }
+
+        .bjp-app-phone-area {
+            position: relative;
+            min-height: inherit;
+        }
+
+        .bjp-app-phone-hand {
+            position: absolute;
+            left: -9%;
+            bottom: -26%;
+            width: 76%;
+            max-width: 480px;
+            aspect-ratio: 1 / 1.25;
+            border-radius: 50% 45% 28% 32%;
+            background: linear-gradient(145deg, #f2c3a1 0%, #ce8c68 62%, #93583d 100%);
+            transform: rotate(-13deg);
+            opacity: .88;
+            box-shadow: inset -22px 18px 55px rgba(255,255,255,.18);
+        }
+
+        .bjp-app-phone {
+            position: absolute;
+            left: 28%;
+            top: 7%;
+            width: min(48%, 270px);
+            min-width: 190px;
+            aspect-ratio: 9 / 18.4;
+            padding: 10px;
+            border-radius: 30px;
+            background: #101318;
+            box-shadow: 0 24px 50px rgba(0,0,0,.34);
+        }
+
+        .bjp-app-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+            padding: 42px 18px 24px;
+            border-radius: 24px;
+            color: #0d2f62;
+            text-align: center;
+            background:
+                radial-gradient(circle at 50% 54%, rgba(255,255,255,.88), rgba(255,255,255,.3) 36%, transparent 58%),
+                linear-gradient(160deg, #f58320 0 31%, #ffffff 31% 68%, #07883f 68% 100%);
+        }
+
+        .bjp-lotus-mark {
+            position: relative;
+            width: 92px;
+            height: 92px;
+            margin: 0 auto 24px;
+            filter: drop-shadow(0 3px 0 rgba(0,0,0,.65));
+        }
+
+        .bjp-lotus-mark::before,
+        .bjp-lotus-mark::after,
+        .bjp-lotus-mark span {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 7px;
+            width: 34px;
+            height: 58px;
+            border: 3px solid #101827;
+            border-radius: 50% 50% 44% 44%;
+            background: #ff8a1c;
+            transform-origin: 50% 76%;
+        }
+
+        .bjp-lotus-mark::before {
+            transform: translateX(-50%) rotate(-32deg);
+        }
+
+        .bjp-lotus-mark span {
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .bjp-lotus-mark::after {
+            transform: translateX(-50%) rotate(32deg);
+        }
+
+        .bjp-screen-text {
+            width: 100%;
+            padding: 14px 8px 16px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.78);
+            box-shadow: 0 8px 24px rgba(0,0,0,.08);
+        }
+
+        .bjp-screen-text strong {
+            display: block;
+            color: #12356f;
+            font-family: "Noto Sans Devanagari", "Mangal", "Arial Unicode MS", Arial, sans-serif;
+            font-size: clamp(1.05rem, 1.4vw, 1.42rem);
+            line-height: 1.12;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .bjp-screen-text span {
+            display: block;
+            margin-top: 9px;
+            padding-top: 9px;
+            border-top: 1px solid rgba(15, 23, 42, .16);
+            color: #12356f;
+            font-size: clamp(.82rem, .95vw, 1.02rem);
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .bjp-screen-text small {
+            display: block;
+            margin-top: 18px;
+            color: #6b7280;
+            font-size: clamp(.56rem, .68vw, .72rem);
+            line-height: 1.16;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .bjp-app-copy {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(38px, 5vw, 72px) clamp(24px, 5vw, 80px);
+            text-align: center;
+        }
+
+        .bjp-app-kicker {
+            color: #fff;
+            font-size: clamp(1.45rem, 3vw, 3.45rem);
+            line-height: 1.05;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 7px 22px rgba(0,0,0,.22);
+        }
+
+        .bjp-app-copy h2 {
+            margin: 26px 0 12px;
+            color: #ffd400;
+            font-size: clamp(2.35rem, 5.6vw, 6rem);
+            line-height: .94;
+            font-weight: 1000;
+        }
+
+        .bjp-app-copy p {
+            max-width: 620px;
+            margin: 0 0 22px;
+            color: rgba(255,255,255,.84);
+            font-size: .98rem;
+            line-height: 1.55;
+        }
+
+        .bjp-store-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .bjp-store-badge {
+            display: grid;
+            grid-template-columns: 42px auto;
+            grid-template-rows: auto auto;
+            align-items: center;
+            min-width: 210px;
+            border: 1px solid rgba(255,255,255,.22);
+            border-radius: 8px;
+            padding: 9px 16px 9px 12px;
+            color: #fff;
+            background: #050505;
+            text-align: left;
+            text-decoration: none;
+            box-shadow: 0 16px 32px rgba(0,0,0,.24);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .bjp-store-badge:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 20px 38px rgba(0,0,0,.32);
+        }
+
+        .bjp-store-badge i {
+            grid-row: 1 / 3;
+            font-size: 2.05rem;
+        }
+
+        .bjp-store-google i {
+            color: #34a853;
+        }
+
+        .bjp-store-badge span {
+            font-size: .72rem;
+            font-weight: 700;
+            line-height: 1;
+            opacity: .82;
+        }
+
+        .bjp-store-badge strong {
+            font-size: 1.35rem;
+            line-height: 1.05;
+            font-weight: 800;
+        }
+
+        @@media (max-width: 991px) {
+            .bjp-app-download-section {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .bjp-app-phone-area {
+                min-height: 360px;
+            }
+
+            .bjp-app-phone {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @@media (max-width: 575px) {
+            .bjp-app-phone-area {
+                min-height: 310px;
+            }
+
+            .bjp-app-copy {
+                padding: 28px 16px 34px;
+            }
+
+            .bjp-store-badge {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+}

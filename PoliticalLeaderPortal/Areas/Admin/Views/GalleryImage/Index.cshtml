@@ -1,0 +1,91 @@
+@model IEnumerable<PoliticalLeaderPortal.ViewModels.GalleryImageListVM>
+
+@{
+    ViewBag.Title = "Gallery Images";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var rows = Model == null ? new List<PoliticalLeaderPortal.ViewModels.GalleryImageListVM>() : Model.ToList();
+}
+
+<div class="admin-page-header cms-page-header">
+    <div>
+        <p class="admin-eyebrow">Website CMS</p>
+        <h1>Image Gallery</h1>
+        <p>Upload, organize and publish public photos for the homepage gallery.</p>
+    </div>
+    <div class="admin-page-actions">
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "Gallery", new { area = "" })" target="_blank">
+            <i class="fas fa-eye"></i>
+            Preview Gallery
+        </a>
+        <a href="@Url.Action("Create","GalleryImage")" class="btn btn-primary">
+            <i class="fas fa-cloud-upload-alt"></i>
+            Upload Images
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<div class="admin-ticker-stats news-cms-stats">
+    <div><span>Total Images</span><strong>@rows.Count</strong></div>
+    <div><span>Active</span><strong>@rows.Count(x => x.IsActive)</strong></div>
+    <div><span>Categories</span><strong>@rows.Select(x => x.CategoryName).Distinct().Count()</strong></div>
+    <div><span>Homepage Ready</span><strong>@rows.Count(x => x.IsActive && !String.IsNullOrWhiteSpace(x.ImagePath))</strong></div>
+</div>
+
+<div class="admin-card homepage-section-manager media-cms-panel">
+    <div class="section-manager-toolbar">
+        <div>
+            <h2>Photo Library</h2>
+            <span>Use display order to control homepage priority</span>
+        </div>
+    </div>
+
+    <div class="media-cms-grid">
+        @if (!rows.Any())
+        {
+            <div class="media-empty-state">
+                <i class="fas fa-images"></i>
+                <strong>No gallery images found.</strong>
+                <span>Upload public meeting, event and campaign photos to fill this section.</span>
+            </div>
+        }
+
+        @foreach (var item in rows.OrderBy(x => x.DisplayOrder).ThenBy(x => x.GalleryImageId))
+        {
+            var imagePath = !String.IsNullOrWhiteSpace(item.ImagePath)
+                ? Url.Content(item.ImagePath)
+                : Url.Content("~/Content/images/no-image-news.jpg");
+
+            <article class="media-cms-card">
+                <div class="media-cms-thumb">
+                    <img src="@imagePath" alt="@item.ImageTitle" />
+                    <span class="badge bg-@(item.IsActive ? "success" : "secondary")">@(item.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <div class="media-cms-body">
+                    <span class="media-cms-category">@item.CategoryName</span>
+                    <h3>@(String.IsNullOrWhiteSpace(item.ImageTitle) ? "Untitled Image" : item.ImageTitle)</h3>
+                    <p>@(String.IsNullOrWhiteSpace(item.ImageCaption) ? "No caption added." : (item.ImageCaption.Length > 95 ? item.ImageCaption.Substring(0, 95) + "..." : item.ImageCaption))</p>
+                    <div class="media-cms-meta">
+                        <span><i class="fas fa-sort"></i> Order @item.DisplayOrder</span>
+                        <span>ID @item.GalleryImageId</span>
+                    </div>
+                </div>
+                <div class="media-cms-actions">
+                    <a href="@Url.Action("Details", "GalleryImage", new { id = item.GalleryImageId })" class="btn btn-sm btn-outline-secondary" title="View">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Edit", "GalleryImage", new { id = item.GalleryImageId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "GalleryImage", new { id = item.GalleryImageId })" class="btn btn-sm btn-outline-danger" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </article>
+        }
+    </div>
+</div>

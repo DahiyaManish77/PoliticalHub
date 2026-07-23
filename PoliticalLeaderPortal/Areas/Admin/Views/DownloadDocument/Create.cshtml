@@ -1,0 +1,288 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.DownloadDocumentVM
+
+@{
+    ViewBag.Title = "Add Download Document";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("Create",
+                           "DownloadDocument",
+                           FormMethod.Post,
+                           new
+                           {
+                               enctype = "multipart/form-data"
+                           }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0">
+
+                    Add Download Document
+
+                </h4>
+
+                <a href="@Url.Action("Index")"
+                   class="btn btn-light btn-sm">
+
+                    <i class="fa fa-arrow-left"></i>
+
+                    Back to List
+
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        @Html.LabelFor(m => m.DownloadCategoryId)
+
+                        @Html.DropDownListFor(
+                            m => m.DownloadCategoryId,
+                            Model.Categories,
+                            "-- Select Category --",
+                            new
+                            {
+                                @class = "form-select"
+                            })
+
+                        @Html.ValidationMessageFor(
+                            m => m.DownloadCategoryId,
+                            "",
+                            new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        @Html.LabelFor(m => m.DocumentNumber)
+
+                        @Html.TextBoxFor(
+                            m => m.DocumentNumber,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Document Number"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    @Html.LabelFor(m => m.Title)
+
+                    @Html.TextBoxFor(
+                        m => m.Title,
+                        new
+                        {
+                            @class = "form-control",
+                            placeholder = "Document Title"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.Title,
+                        "",
+                        new { @class = "text-danger" })
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        @Html.LabelFor(m => m.VersionNo)
+
+                        @Html.TextBoxFor(
+                            m => m.VersionNo,
+                            new
+                            {
+                                @class = "form-control",
+                                placeholder = "Version"
+                            })
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        @Html.LabelFor(m => m.PublishDate)
+
+                        @Html.TextBoxFor(
+                            m => m.PublishDate,
+                            "{0:yyyy-MM-dd}",
+                            new
+                            {
+                                @class = "form-control",
+                                type = "date"
+                            })
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    @Html.LabelFor(m => m.File)
+
+                    @Html.TextBoxFor(
+                        m => m.File,
+                        new
+                        {
+                            type = "file",
+                            @class = "form-control",
+                            accept = ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.rtf,.zip,.rar"
+                        })
+
+                    @Html.ValidationMessageFor(
+                        m => m.File,
+                        "",
+                        new { @class = "text-danger" })
+
+                    <small class="text-muted">
+
+                        Allowed:
+                        PDF,
+                        Word,
+                        Excel,
+                        PowerPoint,
+                        Text,
+                        ZIP,
+                        RAR
+
+                    </small>
+
+                </div>
+
+                <div class="mb-3">
+
+                    @Html.LabelFor(m => m.ShortDescription)
+
+                    @Html.TextAreaFor(
+                        m => m.ShortDescription,
+                        new
+                        {
+                            @class = "form-control",
+                            rows = "5"
+                        })
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        @Html.LabelFor(m => m.DisplayOrder)
+
+                        @Html.TextBoxFor(
+                            m => m.DisplayOrder,
+                            new
+                            {
+                                @class = "form-control",
+                                type = "number"
+                            })
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="form-check mt-4">
+
+                            @Html.CheckBoxFor(
+                                m => m.IsFeatured,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            @Html.LabelFor(
+                                m => m.IsFeatured,
+                                new
+                                {
+                                    @class = "form-check-label"
+                                })
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="form-check mt-4">
+
+                            @Html.CheckBoxFor(
+                                m => m.IsActive,
+                                new
+                                {
+                                    @class = "form-check-input"
+                                })
+
+                            @Html.LabelFor(
+                                m => m.IsActive,
+                                new
+                                {
+                                    @class = "form-check-label"
+                                })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-footer text-end">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fa fa-save"></i>
+
+                    Save Document
+
+                </button>
+
+                <a href="@Url.Action("Index")"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+<script>
+
+    $(function () {
+
+        $("#ShortDescription").summernote({
+
+            height: 180
+
+        });
+
+    });
+
+</script>
+
+@section Scripts{
+
+    @@Scripts.Render("~/bundles/jqueryval")
+
+}

@@ -1,0 +1,210 @@
+﻿@model PoliticalLeaderPortal.ViewModels.LayoutFooterVM
+
+@if (Model != null && Model.IsActive)
+{
+    <footer class="site-footer">
+
+        <div class="footer-top">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <!-- ABOUT -->
+
+                    <div class="col-lg-4 col-md-6 mb-4">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.FooterLogoPath))
+                        {
+                            <div class="mb-3">
+
+                                <img src="@Url.Content(Model.FooterLogoPath)"
+                                     class="img-fluid"
+                                     style="max-height:80px;" />
+
+                            </div>
+                        }
+
+                        <h5 class="footer-title">
+                            About Us
+                        </h5>
+
+                        <p>
+                            @Model.AboutText
+                        </p>
+
+                    </div>
+
+                    <!-- QUICK LINKS -->
+
+                    <div class="col-lg-2 col-md-6 mb-4">
+
+                        <h5 class="footer-title">
+                            Quick Links
+                        </h5>
+
+                        <ul class="footer-links">
+
+                            <li>
+                                <a href="@Url.Action("Index","Home")">
+                                    Home
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Index","AboutLeader", new { area = "" })">
+                                    About Leader
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Index","News", new { area = "" })">
+                                    News
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Index","Event", new { area = "" })">
+                                    Events
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Index","Gallery", new { area = "" })">
+                                    Gallery
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- CONTACT -->
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h5 class="footer-title">
+                            Contact Information
+                        </h5>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Address))
+                        {
+                            <p>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                @Model.Address
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+                        {
+                            <p>
+                                <i class="bi bi-telephone-fill"></i>
+                                @Model.PhoneNumber
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Model.EmailAddress))
+                        {
+                            <p>
+                                <i class="bi bi-envelope-fill"></i>
+                                @Model.EmailAddress
+                            </p>
+                        }
+
+                    </div>
+
+                    <!-- SOCIAL -->
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h5 class="footer-title">
+                            Follow Us
+                        </h5>
+
+                        <div class="footer-social">
+
+                            @if (!string.IsNullOrWhiteSpace(Model.FacebookUrl))
+                            {
+                                <a href="@Model.FacebookUrl"
+                                   target="_blank">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(Model.InstagramUrl))
+                            {
+                                <a href="@Model.InstagramUrl"
+                                   target="_blank">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(Model.TwitterUrl))
+                            {
+                                <a href="@Model.TwitterUrl"
+                                   target="_blank">
+                                    <i class="bi bi-twitter-x"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(Model.YoutubeUrl))
+                            {
+                                <a href="@Model.YoutubeUrl"
+                                   target="_blank">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(Model.WhatsappUrl))
+                            {
+                                <a href="@Model.WhatsappUrl"
+                                   target="_blank">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-12 text-center">
+
+                        <p>
+
+                            @if (!string.IsNullOrWhiteSpace(
+                                Model.CopyrightText))
+                            {
+                                @Model.CopyrightText
+                            }
+                            else
+                            {
+                                <text>
+                                    © @DateTime.Now.Year
+                                    All Rights Reserved.
+                                </text>
+                            }
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+}

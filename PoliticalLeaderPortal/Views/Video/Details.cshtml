@@ -1,0 +1,129 @@
+@model PoliticalLeaderPortal.ViewModels.VideoGalleryVM
+
+@{
+    ViewBag.Title = Model.VideoTitle;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@functions
+{
+    private string GetYouTubeId(string url)
+    {
+        if (String.IsNullOrWhiteSpace(url)) return "";
+        var value = url.Trim();
+        if (value.Contains("watch?v="))
+        {
+            var id = value.Substring(value.IndexOf("watch?v=") + 8);
+            var amp = id.IndexOf("&");
+            return amp >= 0 ? id.Substring(0, amp) : id;
+        }
+        if (value.Contains("youtu.be/"))
+        {
+            var id = value.Substring(value.LastIndexOf("/") + 1);
+            var query = id.IndexOf("?");
+            return query >= 0 ? id.Substring(0, query) : id;
+        }
+        if (value.Contains("/shorts/"))
+        {
+            var id = value.Substring(value.IndexOf("/shorts/") + 8);
+            var query = id.IndexOf("?");
+            return query >= 0 ? id.Substring(0, query) : id;
+        }
+        return "";
+    }
+}
+
+@{
+    string youtubeId = GetYouTubeId(Model.YoutubeUrl);
+    string embedUrl = String.IsNullOrWhiteSpace(youtubeId) ? "" : "https://www.youtube.com/embed/" + youtubeId;
+}
+
+<section class="video-detail">
+    <div class="container">
+        <div class="video-detail-head">
+            <a href="@Url.Action("Index", "Video")"><i class="bi bi-arrow-left"></i> All Videos</a>
+            <span>Video Gallery</span>
+            <h1>@Model.VideoTitle</h1>
+        </div>
+
+        <div class="video-detail-layout">
+            <main>
+                <div class="video-player-shell">
+                    <div class="ratio ratio-16x9">
+                        @if (!String.IsNullOrWhiteSpace(Model.VideoFilePath))
+                        {
+                            <video controls preload="metadata" poster="@Url.Content(Model.ThumbnailImagePath ?? "")">
+                                <source src="@Url.Content(Model.VideoFilePath)" />
+                            </video>
+                        }
+                        else if (!String.IsNullOrWhiteSpace(embedUrl))
+                        {
+                            <iframe src="@embedUrl"
+                                    title="@Model.VideoTitle"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                        }
+                        else if (!String.IsNullOrWhiteSpace(Model.YoutubeUrl))
+                        {
+                            <a href="@Model.YoutubeUrl" target="_blank" rel="noopener" class="video-external-link">Open Video</a>
+                        }
+                        else
+                        {
+                            <div class="video-missing">Video source is not available.</div>
+                        }
+                    </div>
+                </div>
+
+                <article class="video-detail-card">
+                    <h2>@Model.VideoTitle</h2>
+                    @if (!String.IsNullOrWhiteSpace(Model.VideoDescription))
+                    {
+                        <div class="video-description">@Html.Raw(Model.VideoDescription)</div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Video description not available.</p>
+                    }
+                </article>
+            </main>
+
+            <aside>
+                <div class="video-side-card">
+                    <h3>Explore</h3>
+                    <a href="@Url.Action("Index", "Video")">All Videos</a>
+                    <a href="@Url.Action("Index", "Gallery")">Photo Gallery</a>
+                    <a href="@Url.Action("Index", "Event")">Upcoming Events</a>
+                    <a href="@Url.Action("Index", "News")">Latest News</a>
+                </div>
+
+                @if (!String.IsNullOrWhiteSpace(Model.ThumbnailImagePath))
+                {
+                    <div class="video-side-card p-0 overflow-hidden">
+                        <img src="@Url.Content(Model.ThumbnailImagePath)" class="img-fluid" alt="@Model.VideoTitle" />
+                    </div>
+                }
+            </aside>
+        </div>
+    </div>
+</section>
+
+<style>
+    .video-detail { background: #f6f8fb; padding: 34px 0; }
+    .video-detail-head { margin-bottom: 16px; }
+    .video-detail-head > a { color: #475569; text-decoration: none; font-size: .9rem; font-weight: 700; }
+    .video-detail-head span { display: block; margin-top: 14px; color: #e85d04; font-size: .78rem; font-weight: 850; text-transform: uppercase; }
+    .video-detail-head h1 { color: #111827; margin: 5px 0 0; max-width: 980px; font-size: clamp(1.55rem, 3vw, 2.65rem); line-height: 1.12; font-weight: 850; }
+    .video-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+    .video-player-shell, .video-detail-card, .video-side-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 12px 28px rgba(15, 23, 42, .06); }
+    .video-player-shell { padding: 10px; overflow: hidden; }
+    .video-player-shell iframe, .video-player-shell video { width: 100%; height: 100%; border: 0; background: #111827; }
+    .video-detail-card { padding: 18px; margin-top: 14px; }
+    .video-detail-card h2 { color: #111827; font-size: 1.35rem; line-height: 1.25; font-weight: 850; margin: 0 0 10px; }
+    .video-description { color: #475569; line-height: 1.75; font-size: .96rem; }
+    .video-side-card { padding: 16px; margin-bottom: 14px; }
+    .video-side-card h3 { font-size: 1rem; font-weight: 850; margin: 0 0 10px; color: #111827; }
+    .video-side-card a { display: block; color: #334155; text-decoration: none; padding: 9px 0; border-top: 1px solid #eef2f7; font-weight: 700; font-size: .9rem; }
+    .video-side-card a:hover { color: #e85d04; }
+    .video-external-link, .video-missing { display: grid; place-items: center; width: 100%; height: 100%; color: #fff; background: #111827; text-decoration: none; font-weight: 800; }
+    @@media (max-width: 991px) { .video-detail-layout { grid-template-columns: 1fr; } }
+</style>
