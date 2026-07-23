@@ -222,6 +222,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\AccessDenied.cshtml" />
+    <Content Include="AGENTS.md" />
+    <Content Include="AI_CONTEXT.md" />
     <None Include="Areas\Admin\Views\.editorconfig" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <EntityDeploy Include="Models\PoliticalLeaderPortal.edmx">
@@ -342,6 +344,7 @@
     <Content Include="Views\CitizenConnect\Form.cshtml" />
     <Content Include="Views\CampaignPoll\Details.cshtml" />
     <Content Include="Views\CampaignPoll\Thanks.cshtml" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\custom\hero-slider.js" />
     <Content Include="Scripts\custom\menu-cms.js" />
