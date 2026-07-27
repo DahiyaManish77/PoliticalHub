@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,7 +36,7 @@
          GOOGLE FONT
     ====================================================== -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
           rel="stylesheet" />
 
     <!-- ======================================================
@@ -114,7 +114,9 @@
     <link href="~/Content/css/site-enterprise-navigation.css?v=20260713-search-toggle-1" rel="stylesheet" />
     <link href="~/Content/css/site-public-polish.css?v=20260713-home-polish-5" rel="stylesheet" />
     <link href="~/Content/css/ai-help-agent.css?v=20260713-1" rel="stylesheet" />
-    <link href="~/Content/css/site-final-polish.css?v=20260719-final-1" rel="stylesheet" />
+    <link href="~/Content/css/site-final-polish.css?v=20260726-banner-auth-2" rel="stylesheet" />
+    <link href="~/Content/css/campaign-home-reference.css?v=20260726-news-magazine-7" rel="stylesheet" />
+    <link href="~/Content/css/people-say.css?v=20260726-youtube-playlist-5" rel="stylesheet" />
     @RenderSection("Styles", required: false)
 
     @{
@@ -133,10 +135,8 @@
         </video>
     </div>
     *@
-    <!-- TOP NEWS TICKER -->
-    @Html.Action("PublicNewsTicker", "Layout")
-
-    <!-- NAVIGATION -->
+    <!-- REFERENCE TOP BAR + NAVIGATION -->
+    @Html.Action("TopBar", "Layout")
     @Html.Action("WebsiteNavigation", "Layout")
 
     <!-- PAGE CONTENT -->
@@ -155,7 +155,7 @@
     @Html.Partial("~/Views/Shared/_LoginModal.cshtml", new PoliticalLeaderPortal.ViewModels.AccountLoginVM())
     @Html.Partial("~/Views/Shared/_RegisterModal.cshtml", new PoliticalLeaderPortal.ViewModels.AccountRegisterVM())
     @*@Html.Partial("~/Views/Shared/_AiHelpAgent.cshtml")*@
-    @Html.Partial("~/Views/Shared/_PublicEngagementWidgets.cshtml")
+
 
     <!-- jQuery -->
     <script src="~/Scripts/jquery-3.7.1.min.js"></script>
@@ -170,9 +170,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Hero Slider -->
-    <script src="~/Scripts/custom/hero-slider.js"></script>
-    <script src="~/Scripts/custom/public-media-actions.js?v=20260713-2"></script>
-    <script src="~/Scripts/custom/public-auth-modal.js?v=20260719-1"></script>
+    <script src="~/Scripts/custom/hero-slider.js?v=20260724-slider-autoplay-1"></script>
+    <script src="~/Scripts/custom/campaign-home-reference.js?v=20260726-zoom-1"></script>
+    <script src="~/Scripts/custom/public-media-actions.js?v=20260726-gallery-index-1"></script>
+    <script src="~/Scripts/custom/public-auth-modal.js?v=20260726-modal-2"></script>
     <script src="~/Scripts/custom/ai-help-agent.js?v=20260713-1"></script>
     <script src="~/Scripts/custom/public-engagement.js?v=20260719"></script>
     @* <script src="~/Scripts/custom/site-preloader.js?v=20260719"></script> *@
@@ -196,13 +197,40 @@
 
         }
 
-        function changeLanguage(lang) {
+        function setTranslationCookie(lang) {
+            var host = window.location.hostname;
+
+            if (lang === "en") {
+                document.cookie = "googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                document.cookie = "googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" + host;
+                return;
+            }
+
+            var value = "/en/" + lang;
+            document.cookie = "googtrans=" + value + ";path=/";
+
+            if (host.indexOf(".") > -1) {
+                document.cookie = "googtrans=" + value + ";path=/;domain=." + host.replace(/^www\./, "");
+            }
+        }
+
+        function changeLanguage(lang, label) {
 
             var combo =
                 document.querySelector(".goog-te-combo");
 
-            if (combo) {
+            setTranslationCookie(lang);
+            window.localStorage.setItem("portal-language", lang);
+            window.localStorage.setItem("portal-language-label", label || lang);
 
+            function applyTranslation(select) {
+                if (!select) return false;
+                select.value = lang;
+                select.dispatchEvent(new Event("change", { bubbles: true }));
+                return true;
+            }
+
+            if (combo) {
                 combo.value = lang;
 
                 if (document.createEvent) {
@@ -225,10 +253,23 @@
 
                 }
 
+            } else {
+                var attempts = 0;
+                var translateTimer = window.setInterval(function () {
+                    attempts++;
+                    var delayedCombo = document.querySelector(".goog-te-combo");
+                    if (applyTranslation(delayedCombo)) {
+                        window.clearInterval(translateTimer);
+                    } else if (attempts >= 20) {
+                        window.clearInterval(translateTimer);
+                        window.location.reload();
+                    }
+                }, 250);
             }
 
             var wrapper = document.getElementById("siteLanguageWrapper");
             var button = document.getElementById("siteLanguageButton");
+            var current = document.querySelector("[data-current-language]");
 
             if (wrapper) {
                 wrapper.classList.remove("open");
@@ -236,6 +277,10 @@
 
             if (button) {
                 button.setAttribute("aria-expanded", "false");
+            }
+
+            if (current) {
+                current.textContent = label || lang;
             }
 
         }
@@ -247,7 +292,11 @@
 
             if (wrapper) {
 
-                wrapper.classList.toggle("open");
+                var isOpen = wrapper.classList.toggle("open");
+                var button = document.getElementById("siteLanguageButton");
+                if (button) {
+                    button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                }
 
             }
 
@@ -284,6 +333,20 @@
 
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            var current = document.querySelector("[data-current-language]");
+            var savedLabel = window.localStorage.getItem("portal-language-label");
+            if (current && savedLabel) {
+                current.textContent = savedLabel;
+            }
+
+            document.querySelectorAll(".campaign-utility-bar *").forEach(function (element) {
+                if (element.children.length === 0 && element.textContent.trim().toLowerCase() === "featured") {
+                    element.remove();
+                }
+            });
+        });
+
     </script>
 
     <div id="google_translate_element"
@@ -293,17 +356,9 @@
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script src="~/Scripts/custom/site-latest-news.js"></script>
+    <script src="~/Scripts/custom/people-say.js?v=20260726-landscape-toast-2"></script>
 
 
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-

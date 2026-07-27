@@ -1,0 +1,29 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ConstituencyMaster.GeographyDashboardVM
+@{ ViewBag.Title = "Constituency Masters"; Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; var types = new[] { "State", "District", "Tehsil", "Block", "ParliamentaryConstituency", "AssemblyConstituency", "Ward", "GramPanchayat", "Village" }; }
+<link href="@Url.Content("~/Areas/Admin/Content/constituency-master.css")" rel="stylesheet" />
+<div class="container-fluid geo-page">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3"><div><div class="text-uppercase small fw-semibold text-primary">Political Geography</div><h3 class="mb-0">Constituency & Administrative Masters</h3><small class="text-muted">LGD/ECI codes, hierarchy and cascading dropdown data.</small></div><div class="d-flex gap-2"><a class="btn btn-outline-primary" href="@Url.Action("Import")"><i class="bi bi-upload"></i> Import Government XLSX</a><a class="btn btn-primary" href="@Url.Action("Create",new{entityType=Model.EntityType})"><i class="bi bi-plus-circle"></i> Add @Model.EntityType</a></div></div>
+    @if (TempData["SuccessMessage"] != null)
+    {<div class="alert alert-success">@TempData["SuccessMessage"]</div>}
+    <div class="row g-2 mb-3"><div class="col">States <b>@Model.States</b></div><div class="col">Districts <b>@Model.Districts</b></div><div class="col">Tehsils <b>@Model.Tehsils</b></div><div class="col">Blocks <b>@Model.Blocks</b></div><div class="col">PC <b>@Model.ParliamentaryConstituencies</b></div><div class="col">AC <b>@Model.AssemblyConstituencies</b></div><div class="col">Villages <b>@Model.Villages</b></div></div>
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "ConstituencyMaster", FormMethod.Get, new { @class = "row g-2 mb-3" }))
+            {<div class="col-md-4"><select name="entityType" class="form-select">@foreach (var t in types)
+                {<option value="@t" @(Model.EntityType == t ? "selected" : "")>@t</option>}</select></div><div class="col-md-6"><input name="keyword" value="@Model.Keyword" class="form-control" placeholder="Search code, English or Hindi name" /></div><div class="col-md-2 d-grid"><button class="btn btn-dark">Search</button></div>}
+            <div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>Code</th><th>English Name</th><th>Hindi Name</th><th>Parent</th><th>Status</th><th class="text-end">Action</th></tr></thead><tbody>@if (Model.Rows.Count == 0)
+            {<tr><td colspan="6" class="text-center text-muted py-5">No records found.</td></tr>}@foreach (var x in Model.Rows)
+            {<tr><td><code>@x.Code</code></td><td>@x.NameEnglish</td><td>@x.NameHindi</td><td>@x.ParentName</td><td><span class="badge bg-@(x.IsActive?"success":"secondary")">@(x.IsActive?"Active":"Inactive")</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit",new{id=x.Id,entityType=x.EntityType})">Edit</a> <button class="btn btn-sm btn-outline-danger js-delete" data-id="@x.Id" data-type="@x.EntityType">Delete</button></td></tr>}</tbody></table></div>
+            <div class="d-flex justify-content-between align-items-center pt-2">
+                <small class="text-muted">Showing page @Model.Page of @Model.TotalPages · @Model.TotalRows records</small>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary @(Model.Page <= 1 ? "disabled" : "")" href="@Url.Action("Index", new { entityType = Model.EntityType, keyword = Model.Keyword, page = Model.Page - 1 })">Previous</a>
+                    <a class="btn btn-sm btn-outline-secondary @(Model.Page >= Model.TotalPages ? "disabled" : "")" href="@Url.Action("Index", new { entityType = Model.EntityType, keyword = Model.Keyword, page = Model.Page + 1 })">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>document.querySelectorAll('.js-delete').forEach(function(b){b.onclick=function(){if(!confirm('Delete this record?'))return;fetch('@Url.Action("Delete")',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'id='+b.dataset.id+'&entityType='+encodeURIComponent(b.dataset.type)}).then(r=>r.json()).then(x=>{if(x.success){location.reload();return;}alert('This record cannot be deleted because active child records depend on it.');});};});</script>
+}

@@ -1,285 +1,384 @@
-﻿@model List<PoliticalLeaderPortal.ViewModels.PublicGalleryCategoryVM>
-
+@model List<PoliticalLeaderPortal.ViewModels.PublicGalleryImageVM>
+@using System.Linq
 @{
     ViewBag.Title = "Photo Gallery";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var images = Model ?? new List<PoliticalLeaderPortal.ViewModels.PublicGalleryImageVM>();
 }
 
-<section class="page-header bg-dark text-white py-5">
-
-    <div class="container text-center">
-
-        <h1 class="display-5 fw-bold mb-3">
-            Photo Gallery
-        </h1>
-
-        <p class="lead mb-0">
-            Explore memorable moments, public meetings, development activities and social events.
-        </p>
-
+<section class="gallery-index-hero">
+    <div class="gallery-index-shell">
+        <span>PHOTO GALLERY</span>
+        <h1>Moments from the community</h1>
+        <p>Explore public meetings, development activities, constituency visits and memorable events.</p>
     </div>
-
 </section>
 
-<section class="gallery-page-section py-5">
+<section class="gallery-index-section" data-gallery-index>
+    <div class="gallery-index-shell">
+        @if (images.Any())
+        {
+            <div class="gallery-index-grid">
+                @for (var index = 0; index < images.Count; index++)
+                {
+                    var item = images[index];
+                    var imagePath = String.IsNullOrWhiteSpace(item.ImagePath)
+                        ? Url.Content("~/Content/images/gallery-placeholder.jpg")
+                        : Url.Content(item.ImagePath);
+                    var imageTitle = String.IsNullOrWhiteSpace(item.ImageTitle) ? "Community moment" : item.ImageTitle;
 
-    <div class="container">
-
-        <div class="row mb-5">
-
-            <div class="col-lg-8 mx-auto text-center">
-
-                <h2 class="fw-bold mb-3">
-                    Gallery Albums
-                </h2>
-
-                <p class="text-muted">
-                    Browse photo albums and discover important highlights and activities.
-                </p>
-
+                    <article class="gallery-index-card js-gallery-lightbox @(index >= 9 ? "is-pending" : "")"
+                             role="button"
+                             tabindex="0"
+                             data-gallery-grid-item
+                             data-image-id="@item.GalleryImageId"
+                             data-image-src="@imagePath"
+                             data-image-title="@imageTitle"
+                             aria-label="Open @imageTitle">
+                        <div class="gallery-index-image">
+                            <img src="@imagePath" alt="@imageTitle" loading="@(index < 9 ? "eager" : "lazy")" />
+                            <span><i class="bi bi-arrows-fullscreen"></i></span>
+                        </div>
+                        <div class="gallery-index-copy">
+                            <h2>@imageTitle</h2>
+                            @if (!String.IsNullOrWhiteSpace(item.ImageCaption))
+                            {
+                                <p>@(item.ImageCaption.Length > 105 ? item.ImageCaption.Substring(0, 105) + "..." : item.ImageCaption)</p>
+                            }
+                        </div>
+                    </article>
+                }
             </div>
 
-        </div>
-
-        <div class="row g-4">
-
-            @if (Model != null && Model.Any())
+            if (images.Count > 9)
             {
-                foreach (var item in Model)
-                {
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-
-                        <div class="gallery-album-card h-100">
-
-                            <div class="gallery-image-wrapper">
-
-                                @if (!string.IsNullOrWhiteSpace(item.CoverImagePath))
-                                {
-                                    <img src="@Url.Content(item.CoverImagePath)"
-                                         alt="@item.CategoryName"
-                                         class="gallery-cover-image" />
-                                }
-                                else
-                                {
-                                    <img src="https://placehold.co/600x400?text=Gallery"
-                                         alt="Gallery"
-                                         class="gallery-cover-image" />
-                                }
-
-                                <div class="gallery-image-overlay">
-
-                                    <span class="gallery-count-badge">
-
-                                        @item.TotalImages Photos
-
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <div class="gallery-content">
-
-                                <h4 class="gallery-title">
-
-                                    @item.CategoryName
-
-                                </h4>
-
-                                <p class="gallery-description">
-
-                                    @if (!string.IsNullOrWhiteSpace(item.CategoryDescription))
-                                    {
-                                        @(item.CategoryDescription.Length > 120
-                                            ? item.CategoryDescription.Substring(0, 120) + "..."
-                                            : item.CategoryDescription)
-                                    }
-
-                                </p>
-
-                                <a href="@Url.Action(
-                                            "Album",
-                                            "Gallery",
-                                            new { id = item.GalleryCategoryId })"
-                                   class="btn btn-gallery">
-
-                                    View Album
-
-                                </a>
-
-                                <div class="gallery-page-actions"
-                                     data-public-actions
-                                     data-item-type="gallery-album"
-                                     data-item-id="@item.GalleryCategoryId"
-                                     data-title="@item.CategoryName"
-                                     data-url="@Url.Action("Album", "Gallery", new { id = item.GalleryCategoryId }, Request.Url.Scheme)">
-                                    <button type="button" data-action="like" aria-label="Like album">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                        <span>Like</span>
-                                        <small data-like-count>0</small>
-                                    </button>
-                                    <button type="button" data-action="comment" aria-label="Comment on album">
-                                        <i class="bi bi-chat-dots"></i>
-                                        <span>Comment</span>
-                                    </button>
-                                    <button type="button" data-action="share" aria-label="Share album">
-                                        <i class="bi bi-share"></i>
-                                        <span>Share</span>
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="col-12">
-
-                    <div class="alert alert-info text-center">
-
-                        No Gallery Albums Available.
-
-                    </div>
-
+                <div class="gallery-load-more-wrap">
+                    <button type="button" class="gallery-load-more" data-gallery-load-more>
+                        <span>Load more</span>
+                        <small><span data-gallery-visible-count>9</span> of @images.Count</small>
+                        <i class="bi bi-arrow-down"></i>
+                    </button>
                 </div>
             }
-
-        </div>
-
+        }
+        else
+        {
+            <div class="gallery-index-empty">
+                <i class="bi bi-images"></i>
+                <h2>No photographs available</h2>
+                <p>New community photographs will appear here when they are published.</p>
+            </div>
+        }
     </div>
-
 </section>
 
+<div class="gallery-lightbox gallery-index-lightbox" data-gallery-lightbox aria-hidden="true">
+    <div class="gallery-lightbox-backdrop" data-gallery-close></div>
+    <button type="button" class="gallery-index-nav gallery-index-prev" data-gallery-prev aria-label="Previous image">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+    <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="galleryIndexLightboxTitle">
+        <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Close image"><i class="bi bi-x-lg"></i></button>
+        <div class="gallery-lightbox-media"><img src="" alt="" data-gallery-lightbox-img /></div>
+        <div class="gallery-lightbox-footer">
+            <h3 id="galleryIndexLightboxTitle" data-gallery-lightbox-title>Photo Gallery</h3>
+            <div class="gallery-lightbox-actions" data-public-actions data-item-type="gallery" data-item-id="" data-title="" data-url="">
+                <button type="button" data-action="like"><i class="bi bi-heart"></i> Like <span data-like-count>0</span></button>
+                <button type="button" data-action="comment"><i class="bi bi-chat-dots"></i> Comment</button>
+                <button type="button" data-action="share"><i class="bi bi-share"></i> Share</button>
+                <a class="gallery-download-btn" href="#" download data-gallery-download><i class="bi bi-download"></i> Download</a>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="gallery-index-nav gallery-index-next" data-gallery-next aria-label="Next image">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var root = document.querySelector("[data-gallery-index]");
+            if (!root) return;
+
+            var button = root.querySelector("[data-gallery-load-more]");
+            if (!button) return;
+
+            button.addEventListener("click", function () {
+                var pending = Array.prototype.slice.call(root.querySelectorAll("[data-gallery-grid-item].is-pending"), 0, 9);
+                pending.forEach(function (item) { item.classList.remove("is-pending"); });
+
+                var visible = root.querySelectorAll("[data-gallery-grid-item]:not(.is-pending)").length;
+                var count = root.querySelector("[data-gallery-visible-count]");
+                if (count) count.textContent = visible;
+
+                if (!root.querySelector("[data-gallery-grid-item].is-pending")) {
+                    button.classList.add("is-complete");
+                    button.setAttribute("disabled", "disabled");
+                    button.querySelector("span").textContent = "All photos loaded";
+                }
+            });
+        });
+    </script>
+}
+
 <style>
-
-    .gallery-page-section {
-        background: #f8fafc;
-    }
-
-    .gallery-album-card {
-        background: #ffffff;
-        border-radius: 18px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,.08);
-        transition: all .35s ease;
-    }
-
-    .gallery-album-card:hover {
-        transform: translateY(-6px);
-    }
-
-    .gallery-image-wrapper {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .gallery-cover-image {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        transition: .4s ease;
-    }
-
-    .gallery-album-card:hover .gallery-cover-image {
-        transform: scale(1.08);
-    }
-
-    .gallery-image-overlay {
-        position: absolute;
-        left: 15px;
-        top: 15px;
-    }
-
-    .gallery-count-badge {
-        background: rgba(255,153,51,.95);
+    .gallery-index-hero {
+        padding: 78px 24px 60px;
         color: #fff;
-        padding: 8px 14px;
-        border-radius: 30px;
-        font-size: 13px;
-        font-weight: 600;
+        background:
+            radial-gradient(circle at 80% 20%, rgba(212,166,43,.18), transparent 28%),
+            #071a38;
     }
 
-    .gallery-content {
-        padding: 18px;
+    .gallery-index-shell {
+        width: min(1320px, 100%);
+        margin: 0 auto;
     }
 
-    .gallery-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: #0f172a;
-    }
-
-    .gallery-description {
-        color: #64748b;
-        min-height: 70px;
+    .gallery-index-hero span {
+        display: block;
         margin-bottom: 14px;
+        color: #e5bd47;
+        font: 600 11px/1 "IBM Plex Mono", monospace;
+        letter-spacing: .2em;
     }
 
-    .btn-gallery {
-        background: #0f172a;
-        color: #fff;
+    .gallery-index-hero h1 {
+        margin: 0;
+        font: 500 clamp(36px, 5vw, 62px)/1.08 Fraunces, serif;
+    }
+
+    .gallery-index-hero p {
+        max-width: 720px;
+        margin: 17px 0 0;
+        color: #b9c5d8;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .gallery-index-section {
+        padding: 54px 24px 80px;
+        background: #fbfaf6;
+    }
+
+    .gallery-index-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+    }
+
+    .gallery-index-card {
+        overflow: hidden;
+        border: 1px solid #dedbd3;
         border-radius: 8px;
-        padding: 12px 24px;
-        text-decoration: none;
-        font-weight: 600;
+        background: #fff;
+        box-shadow: 0 9px 25px rgba(7,26,56,.065);
+        cursor: pointer;
+        transition: opacity .32s ease, transform .25s ease, box-shadow .25s ease;
     }
 
-    .btn-gallery:hover {
-        color: #fff;
-        background: #ff9933;
+    .gallery-index-card.is-pending {
+        display: none;
     }
 
-    .gallery-page-actions {
+    .gallery-index-card:hover,
+    .gallery-index-card:focus-visible {
+        outline: none;
+        transform: translateY(-6px);
+        box-shadow: 0 20px 45px rgba(7,26,56,.13);
+    }
+
+    .gallery-index-image {
+        position: relative;
+        height: 285px;
+        overflow: hidden;
+        background: #e8e9e7;
+    }
+
+    .gallery-index-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(7,26,56,.18);
+        opacity: 0;
+        transition: opacity .25s ease;
+    }
+
+    .gallery-index-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .45s ease;
+    }
+
+    .gallery-index-card:hover .gallery-index-image img {
+        transform: scale(1.045);
+    }
+
+    .gallery-index-card:hover .gallery-index-image::after {
+        opacity: 1;
+    }
+
+    .gallery-index-image > span {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        color: #071a38;
+        background: rgba(255,255,255,.94);
+        opacity: 0;
+        transform: translate(-50%, -40%);
+        transition: .25s ease;
+    }
+
+    .gallery-index-card:hover .gallery-index-image > span {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .gallery-index-copy {
+        min-height: 82px;
+        padding: 19px 22px;
+        text-align: center;
+    }
+
+    .gallery-index-copy h2 {
+        margin: 0;
+        color: #403c49;
+        font: 500 20px/1.3 Inter, sans-serif;
+    }
+
+    .gallery-index-copy p {
+        margin: 8px 0 0;
+        color: #747985;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .gallery-load-more-wrap {
         display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 14px;
-        padding-top: 14px;
-        border-top: 1px solid #e5e7eb;
+        justify-content: center;
+        margin-top: 42px;
     }
 
-    .gallery-page-actions button {
+    .gallery-load-more {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        min-height: 34px;
-        border: 1px solid #dbe4f0;
+        gap: 12px;
+        min-height: 50px;
+        border: 1px solid #c9c4b7;
         border-radius: 999px;
-        padding: 0 11px;
-        color: #22304a;
+        padding: 0 20px;
+        color: #071a38;
         background: #fff;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 800;
-        transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+        box-shadow: 0 8px 22px rgba(7,26,56,.08);
     }
 
-    .gallery-page-actions button:hover,
-    .gallery-page-actions button.is-liked {
+    .gallery-load-more small {
+        color: #7b8190;
+        font-weight: 600;
+    }
+
+    .gallery-load-more:hover {
+        border-color: #d4a62b;
+        background: #d4a62b;
+    }
+
+    .gallery-load-more.is-complete {
+        opacity: .65;
+        cursor: default;
+    }
+
+    .gallery-index-lightbox {
+        display: flex !important;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .28s ease, visibility 0s linear .28s;
+    }
+
+    .gallery-index-lightbox.is-open {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity .28s ease;
+    }
+
+    .gallery-index-lightbox .gallery-lightbox-backdrop {
+        background: rgba(5,7,11,.91);
+        backdrop-filter: blur(8px);
+    }
+
+    .gallery-index-lightbox .gallery-lightbox-dialog {
+        width: min(1200px, calc(100% - 180px));
+        border-radius: 4px;
+        background: #111;
+    }
+
+    .gallery-index-lightbox .gallery-lightbox-media img {
+        width: 100%;
+        max-height: 78vh;
+    }
+
+    .gallery-index-nav {
+        position: absolute;
+        top: 50%;
+        z-index: 4;
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 76px;
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 7px;
         color: #fff;
-        border-color: #ff9933;
-        background: #ff7a1a;
-        transform: translateY(-1px);
+        background: rgba(0,0,0,.36);
+        font-size: 35px;
+        transform: translateY(-50%);
     }
 
-    .gallery-page-actions small {
-        font-weight: 900;
+    .gallery-index-prev { left: 42px; }
+    .gallery-index-next { right: 42px; }
+
+    .gallery-index-nav:hover {
+        background: rgba(212,166,43,.88);
+        color: #071a38;
     }
 
-    @@media(max-width:767px) {
-
-        .gallery-cover-image {
-            height: 220px;
-        }
-
-        .gallery-content {
-            padding: 20px;
-        }
-
+    .gallery-index-empty {
+        padding: 80px 24px;
+        border: 1px dashed #cbc6ba;
+        border-radius: 14px;
+        text-align: center;
     }
 
+    .gallery-index-empty i { color: #d4a62b; font-size: 44px; }
+    .gallery-index-empty h2 { margin: 14px 0 7px; color: #071a38; }
+    .gallery-index-empty p { margin: 0; color: #697182; }
+
+    @@media(max-width:991px) {
+        .gallery-index-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .gallery-index-lightbox .gallery-lightbox-dialog { width: calc(100% - 120px); }
+        .gallery-index-prev { left: 18px; }
+        .gallery-index-next { right: 18px; }
+    }
+
+    @@media(max-width:620px) {
+        .gallery-index-hero { padding: 54px 18px 44px; }
+        .gallery-index-section { padding: 30px 16px 54px; }
+        .gallery-index-grid { grid-template-columns: 1fr; gap: 18px; }
+        .gallery-index-image { height: 240px; }
+        .gallery-index-lightbox { padding: 10px; }
+        .gallery-index-lightbox .gallery-lightbox-dialog { width: 100%; }
+        .gallery-index-nav { top: auto; bottom: 18px; width: 48px; height: 48px; transform: none; }
+        .gallery-index-prev { left: 18px; }
+        .gallery-index-next { right: 18px; }
+    }
 </style>

@@ -1,0 +1,16 @@
+﻿.geo-page .row.g-2.mb-3 > .col {
+    min-width: 125px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: .65rem;
+    padding: 1rem;
+    margin: .2rem
+}
+
+.geo-page code {
+    font-weight: 700
+}
+
+.geo-page .table thead th {
+    white-space: nowrap
+}

@@ -14,7 +14,7 @@ namespace PoliticalLeaderPortal.Controllers
 
         public ActionResult Index()
         {
-            var model = _galleryService.GetPublicGalleryCategories();
+            var model = _galleryService.GetPublicGalleryImages();
 
             return View(model);
         }

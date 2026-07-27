@@ -1,0 +1,353 @@
+:root {
+    --fluent-blue: #0f6cbd;
+    --fluent-blue-hover: #115ea3;
+    --fluent-sidebar: #172033;
+    --fluent-sidebar-hover: #243149;
+    --fluent-canvas: #f5f5f5;
+    --fluent-surface: #fff;
+    --fluent-text: #242424;
+    --fluent-muted: #616161;
+    --fluent-border: #e1e1e1;
+    --fluent-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+/* Restore the language selector hidden by a legacy admin.css rule. */
+.admin-navbar .admin-language-dropdown {
+    display: block !important;
+    position: relative;
+    z-index: 1080;
+}
+
+@media (max-width: 575.98px) {
+    .admin-navbar .admin-language-dropdown {
+        display: block !important;
+    }
+    .admin-language-btn span {
+        display: none;
+    }
+}
+
+html,
+body.admin-lte-shell {
+    background: var(--fluent-canvas) !important;
+    color: var(--fluent-text) !important;
+    font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+}
+
+body.admin-lte-shell button,
+body.admin-lte-shell input,
+body.admin-lte-shell select,
+body.admin-lte-shell textarea {
+    font-family: inherit !important;
+}
+
+.admin-app {
+    grid-template-columns: 252px minmax(0, 1fr) !important;
+    background: var(--fluent-canvas) !important;
+}
+
+.admin-sidebar {
+    width: 252px !important;
+    min-width: 252px !important;
+    margin: 0 !important;
+    top: 0 !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    background: var(--fluent-sidebar) !important;
+    border-right: 1px solid rgba(255, 255, 255, .08) !important;
+    box-shadow: none !important;
+    scrollbar-width: thin;
+    scrollbar-color: #536078 transparent;
+}
+
+.admin-brand {
+    min-height: 64px !important;
+    padding: 12px 16px !important;
+    background: #111827 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .1) !important;
+}
+
+.admin-brand-mark {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    background: var(--fluent-blue) !important;
+}
+
+.admin-brand strong {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+}
+
+.admin-brand small {
+    margin-top: 2px !important;
+    color: #b9c2d0 !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+}
+
+.admin-sidebar-search {
+    display: flex !important;
+    min-height: 36px !important;
+    margin: 12px 12px 8px !important;
+    padding: 0 11px !important;
+    border: 1px solid #4b5870 !important;
+    border-radius: 6px !important;
+    background: #202b3f !important;
+}
+
+.admin-sidebar-search:focus-within {
+    border-color: #72b7ef !important;
+    box-shadow: 0 0 0 1px #72b7ef !important;
+}
+
+.admin-menu {
+    padding: 4px 8px 68px !important;
+}
+
+.admin-menu-link,
+.admin-menu-heading {
+    min-height: 38px !important;
+    padding: 8px 10px !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    color: #d8deea !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    transform: none !important;
+}
+
+.admin-menu-link:hover,
+.admin-menu-heading:hover {
+    background: var(--fluent-sidebar-hover) !important;
+    color: #fff !important;
+    transform: none !important;
+}
+
+.admin-menu-item.active > .admin-menu-link,
+.admin-menu-item.open > .admin-menu-link,
+.admin-menu-item.open > .admin-menu-heading {
+    position: relative;
+    background: #293750 !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    transform: none !important;
+}
+
+.admin-menu-item.active > .admin-menu-link::before,
+.admin-menu-item.open > .admin-menu-heading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    bottom: 9px;
+    width: 3px;
+    border-radius: 3px;
+    background: #60aee8;
+}
+
+.menu-left {
+    min-width: 0;
+    gap: 10px !important;
+}
+
+.menu-left i {
+    width: 18px !important;
+    color: #b9c8db !important;
+    font-size: 14px !important;
+}
+
+.menu-left span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-submenu {
+    margin: 2px 0 5px !important;
+    padding: 2px 0 2px 10px !important;
+    background: transparent !important;
+    border-left: 1px solid #3c4960 !important;
+}
+
+.admin-submenu .admin-menu-link,
+.admin-submenu .admin-menu-heading {
+    min-height: 34px !important;
+    padding: 7px 9px !important;
+    font-size: 12.5px !important;
+}
+
+.admin-sidebar-collapse {
+    background: #111827 !important;
+    border-top: 1px solid rgba(255, 255, 255, .1) !important;
+}
+
+.admin-main {
+    min-width: 0 !important;
+}
+
+.admin-navbar {
+    min-height: 64px !important;
+    margin: 0 !important;
+    padding: 0 24px !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--fluent-border) !important;
+    border-radius: 0 !important;
+    background: var(--fluent-surface) !important;
+    box-shadow: none !important;
+}
+
+.admin-global-search {
+    width: min(420px, 38vw) !important;
+    min-height: 36px !important;
+    border: 1px solid #c7c7c7 !important;
+    border-radius: 6px !important;
+    background: #fafafa !important;
+}
+
+.admin-global-search:focus-within {
+    border-color: var(--fluent-blue) !important;
+    box-shadow: inset 0 -2px 0 var(--fluent-blue) !important;
+}
+
+.admin-navbar-user,
+.admin-language-btn,
+.admin-top-link,
+.admin-notification-btn,
+.admin-icon-btn {
+    border-radius: 6px !important;
+}
+
+.admin-navbar-user span {
+    background: var(--fluent-blue) !important;
+    color: #fff !important;
+}
+
+.admin-navbar-user strong {
+    color: var(--fluent-text) !important;
+    font-weight: 600 !important;
+}
+
+.admin-navbar-user small {
+    color: var(--fluent-muted) !important;
+}
+
+.admin-content {
+    width: 100% !important;
+    max-width: 1600px !important;
+    margin: 0 auto !important;
+    padding: 24px !important;
+}
+
+.campaign-panel,
+.card,
+.dashboard-card,
+.admin-card {
+    border: 1px solid var(--fluent-border) !important;
+    border-radius: 8px !important;
+    background: var(--fluent-surface) !important;
+    box-shadow: var(--fluent-shadow) !important;
+}
+
+.campaign-page-head h1,
+.admin-content h1 {
+    color: var(--fluent-text) !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    letter-spacing: -.02em !important;
+}
+
+.campaign-page-head p {
+    color: var(--fluent-muted) !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+}
+
+.btn,
+.campaign-btn {
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+}
+
+.btn-primary,
+.campaign-btn-primary {
+    background: var(--fluent-blue) !important;
+    border-color: var(--fluent-blue) !important;
+}
+
+.btn-primary:hover,
+.campaign-btn-primary:hover {
+    background: var(--fluent-blue-hover) !important;
+    border-color: var(--fluent-blue-hover) !important;
+}
+
+.form-control,
+.form-select {
+    min-height: 36px;
+    border-color: #c7c7c7 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--fluent-blue) !important;
+    box-shadow: inset 0 -2px 0 var(--fluent-blue) !important;
+}
+
+.table > :not(caption) > * > *,
+.campaign-table th,
+.campaign-table td {
+    padding: 10px 12px !important;
+    border-bottom-color: var(--fluent-border) !important;
+}
+
+.table thead th,
+.campaign-table thead th {
+    background: #fafafa !important;
+    color: var(--fluent-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+}
+
+@media (max-width: 991.98px) {
+    .admin-app {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .admin-sidebar {
+        position: fixed !important;
+        width: 272px !important;
+        min-width: 272px !important;
+        z-index: 1050 !important;
+    }
+
+    .admin-navbar {
+        padding: 0 14px !important;
+    }
+
+    .admin-content {
+        padding: 16px !important;
+    }
+
+    .admin-global-search {
+        width: min(58vw, 340px) !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .admin-global-search {
+        width: 46vw !important;
+    }
+
+    .admin-language-dropdown,
+    .admin-top-link span,
+    .admin-navbar-user div,
+    .admin-navbar-user > i {
+        display: none !important;
+    }
+}

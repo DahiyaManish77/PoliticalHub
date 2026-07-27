@@ -19,10 +19,20 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.EventId)
+            @Html.HiddenFor(m => m.CampaignId)
             @Html.HiddenFor(m => m.EventImagePath)
             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger m-3" })
 
             <div class="card-body">
+                <div class="admin-sensitive-note">
+                    <i class="bi bi-flag me-1"></i>
+                    Campaign:
+                    <strong>@(String.IsNullOrWhiteSpace(Model.CampaignName) ? (Convert.ToString(Session["CampaignName"]) ?? "All campaigns / unassigned") : Model.CampaignName)</strong>
+                    @if (!Model.CampaignId.HasValue)
+                    {
+                        <span> — Select a campaign in the top bar before saving if this event should be campaign-scoped.</span>
+                    }
+                </div>
                 <ul class="nav nav-tabs mb-3" role="tablist">
                     <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#publicInfo" type="button">Public Info</button></li>
                     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#locationInfo" type="button">Location</button></li>

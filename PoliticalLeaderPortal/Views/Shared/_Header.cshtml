@@ -8,89 +8,76 @@
         font-size:@Model.HeaderFontSize;">
 
     <div class="container-fluid">
-
-        <div class="row align-items-center">
+        <div class="row align-items-center g-0">
 
             <div class="col-lg-2 col-md-2 col-3">
-
                 <div class="header-logo">
-
-                    <a href="@Url.Action("Index","Home")">
+                    <a href="@Url.Action("Index", "Home")"
+                       aria-label="@Model.WebsiteName">
 
                         @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
                         {
                             <img src="@Url.Content(Model.LogoPath)"
                                  class="img-fluid"
-                                 alt="Logo" />
+                                 alt="@Model.WebsiteName logo" />
                         }
 
                     </a>
-
                 </div>
-
             </div>
 
             <div class="col-lg-6 col-md-6 col-6">
-
                 <div class="header-title">
 
-                    <h1>
-                        @Model.WebsiteName
-                    </h1>
+                    @if (!string.IsNullOrWhiteSpace(Model.WebsiteName))
+                    {
+                        <h1>@Model.WebsiteName</h1>
+                    }
 
-                    <p>
-                        @Model.WebsiteTagline
-                    </p>
+                    @if (!string.IsNullOrWhiteSpace(Model.WebsiteTagline))
+                    {
+                        <p>@Model.WebsiteTagline</p>
+                    }
 
                 </div>
-
             </div>
 
             <div class="col-lg-4 col-md-4 col-3">
-
                 <div class="header-right">
 
-                    <div class="leader-photo d-none d-md-block">
-
+                    <div class="leader-photo d-none d-md-flex">
                         @if (!string.IsNullOrWhiteSpace(Model.LeaderImagePath))
                         {
                             <img src="@Url.Content(Model.LeaderImagePath)"
                                  class="img-fluid rounded-circle"
                                  alt="Leader" />
                         }
-
                     </div>
 
                     <div class="auth-buttons d-none d-lg-flex">
 
                         @if (Model.ShowSignIn)
                         {
-                            <a href="@Url.Action("Login","Account")"
+                            <a href="@Url.Action("Login", "Account")"
                                class="btn btn-outline-warning">
-
                                 Sign In
-
                             </a>
                         }
 
                         @if (Model.ShowSignUp)
                         {
-                            <a href="#"
+                            <a href="@Url.Action("Register", "Account")"
                                class="btn btn-warning">
-
                                 Sign Up
-
                             </a>
                         }
 
                     </div>
 
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
 </header>

@@ -8,34 +8,35 @@
     bool canDelete = ViewBag.CanDelete == true;
 }
 
-<div class="container-fluid">
+<div class="container-fluid admin-page">
     <div class="card border-0 shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header">
             <div>
-                <h4 class="mb-0">Voter Management</h4>
+                <div class="admin-page-kicker">Constituency Operations</div>
+                <h4>Voter Management</h4>
                 <small>EPIC, booth, part, serial, voter contact and support mapping.</small>
             </div>
 
             @if (canCreate)
             {
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="@Url.Action("Rolls", "Voter")" class="btn btn-outline-light btn-sm">
+                <div class="admin-page-actions">
+                    <a href="@Url.Action("Rolls", "Voter")" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-file-earmark-pdf"></i>
                         Official Rolls
                     </a>
-                    <a href="@Url.Action("DownloadLatestBackup")" class="btn btn-outline-light btn-sm">
+                    <a href="@Url.Action("DownloadLatestBackup")" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-download"></i>
                         Download Backup
                     </a>
                     @using (Html.BeginForm("GenerateBackupNow", "Voter", FormMethod.Post, new { area = "Admin", @class = "d-inline" }))
                     {
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-outline-light btn-sm">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-database-down"></i>
                             Backup Now
                         </button>
                     }
-                    <a href="@Url.Action("Create")" class="btn btn-light btn-sm">
+                    <a href="@Url.Action("Create")" class="btn btn-primary btn-sm">
                         <i class="bi bi-plus-circle"></i>
                         Add Voter
                     </a>
@@ -44,7 +45,7 @@
         </div>
 
         <div class="card-body">
-            @using (Html.BeginForm("Index", "Voter", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            @using (Html.BeginForm("Index", "Voter", FormMethod.Get, new { area = "Admin", @class = "row g-2 admin-filter-bar" }))
             {
                 <div class="col-lg-4">
                     <input type="search"
@@ -73,7 +74,7 @@
                 </div>
             }
 
-            <div class="table-responsive">
+            <div class="admin-table-shell"><div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
@@ -103,16 +104,12 @@
                                     {
                                         <span class="badge bg-light text-muted">No Photo</span>
                                     }
-                                    @if (!String.IsNullOrWhiteSpace(item.AadhaarPhotoPath))
-                                    {
-                                        <a href="@Url.Content(item.AadhaarPhotoPath)" target="_blank" class="d-block small mt-1">Aadhaar</a>
-                                    }
                                 </td>
                                 <td>@(String.IsNullOrWhiteSpace(item.EpicNumber) ? "-" : item.EpicNumber)</td>
-                                <td>
+                                <td><div class="admin-row-actions">
                                     <strong>@item.VoterName</strong>
                                     <div class="small text-muted">@item.FatherOrHusbandName</div>
-                                </td>
+                                </div></td>
                                 <td>@(String.IsNullOrWhiteSpace(item.MobileNumber) ? "-" : item.MobileNumber)</td>
                                 <td>
                                     <strong>@item.BoothNumber</strong>
@@ -153,7 +150,7 @@
                         }
                     </tbody>
                 </table>
-            </div>
+            </div></div>
         </div>
     </div>
 </div>

@@ -1,0 +1,30 @@
+@{
+    var requestType = Convert.ToString(ViewData["RequestType"]);
+    var buttonText = Convert.ToString(ViewData["ButtonText"]);
+    var subjectPlaceholder = Convert.ToString(ViewData["SubjectPlaceholder"]);
+    var messagePlaceholder = Convert.ToString(ViewData["MessagePlaceholder"]);
+    var allowAttachment = ViewData["AllowAttachment"] != null && Convert.ToBoolean(ViewData["AllowAttachment"]);
+}
+<form class="campaign-form campaign-quick-form"
+      action="@Url.Action("SubmitQuick", "CitizenConnect")"
+      method="post"
+      enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="RequestType" value="@requestType" />
+    <div class="campaign-form-row">
+        <label>Full name<input type="text" name="FullName" required maxlength="160" /></label>
+        <label>Phone number<input type="tel" name="MobileNumber" required maxlength="15" pattern="[0-9+() -]{10,15}" /></label>
+    </div>
+    <label>Email address<input type="email" name="Email" maxlength="160" /></label>
+    <label>Subject<input type="text" name="Subject" required maxlength="250" placeholder="@subjectPlaceholder" /></label>
+    <label>Details<textarea name="Message" required rows="3" placeholder="@messagePlaceholder"></textarea></label>
+    @if (allowAttachment)
+    {
+        <label class="campaign-file-field">
+            Invitation card or supporting file
+            <input type="file" name="AttachmentFile" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.txt" />
+            <small>PDF, image or TXT — maximum 10 MB</small>
+        </label>
+    }
+    <button class="campaign-submit" type="submit">@buttonText</button>
+</form>

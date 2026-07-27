@@ -1,0 +1,22 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VerifiedDocumentVM
+@{ ViewBag.Title="Issue verified document"; }
+<div class="admin-page-header"><div><div class="admin-page-eyebrow">Controlled issuance</div><h1>Issue verified document</h1><p>The secure number, QR code and verification record are generated automatically.</p></div><a class="btn btn-light" href="@Url.Action("Index")">Back</a></div>
+@using(Html.BeginForm("Create","VerifiedDocument",FormMethod.Post,new{enctype="multipart/form-data"})){
+ @Html.AntiForgeryToken() @Html.ValidationSummary(false,"",new{@class="alert alert-danger"})
+ <div class="admin-card"><div class="row g-3">
+  <div class="col-md-6">@Html.LabelFor(x=>x.DocumentType,new{@class="form-label"}) @Html.DropDownListFor(x=>x.DocumentType,new[]{new SelectListItem{Text="Digital identity card",Value="DigitalCard"},new SelectListItem{Text="Appointment letter",Value="AppointmentLetter"},new SelectListItem{Text="Authorization letter",Value="AuthorizationLetter"},new SelectListItem{Text="Volunteer confirmation",Value="VolunteerLetter"}},new{@class="form-select",id="documentType"})</div>
+  <div class="col-md-6">@Html.LabelFor(x=>x.CampaignId,new{@class="form-label"}) @Html.DropDownListFor(x=>x.CampaignId,Model.Campaigns,"Organization-wide / no campaign",new{@class="form-select"})</div>
+  <div class="col-md-6">@Html.LabelFor(x=>x.RecipientName,new{@class="form-label"}) @Html.TextBoxFor(x=>x.RecipientName,new{@class="form-control",required="required"})</div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.RecipientReference,new{@class="form-label"}) @Html.TextBoxFor(x=>x.RecipientReference,new{@class="form-control"})</div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.RecipientRole,new{@class="form-label"}) @Html.TextBoxFor(x=>x.RecipientRole,new{@class="form-control"})</div>
+  <div class="col-md-6">@Html.LabelFor(x=>x.RecipientPhotoFile,new{@class="form-label"}) <input type="file" name="RecipientPhotoFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" /><div class="form-text">Shown on the digital identity card. Maximum 5 MB.</div></div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.IssueDate,new{@class="form-label"}) @Html.TextBoxFor(x=>x.IssueDate,"{0:yyyy-MM-dd}",new{@class="form-control",type="date"})</div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.ExpiryDate,new{@class="form-label"}) @Html.TextBoxFor(x=>x.ExpiryDate,"{0:yyyy-MM-dd}",new{@class="form-control",type="date"})</div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.IssuedByName,new{@class="form-label"}) @Html.TextBoxFor(x=>x.IssuedByName,new{@class="form-control"})</div>
+  <div class="col-md-3">@Html.LabelFor(x=>x.IssuedByDesignation,new{@class="form-label"}) @Html.TextBoxFor(x=>x.IssuedByDesignation,new{@class="form-control"})</div>
+ </div>
+ <div id="letterFields" class="mt-4"><hr/><div class="mb-3">@Html.LabelFor(x=>x.Subject,new{@class="form-label"}) @Html.TextBoxFor(x=>x.Subject,new{@class="form-control"})</div><div>@Html.LabelFor(x=>x.BodyText,new{@class="form-label"}) @Html.TextAreaFor(x=>x.BodyText,10,0,new{@class="form-control",placeholder="Write the official letter content..."})</div></div>
+ <div class="d-flex justify-content-end gap-2 mt-4"><a class="btn btn-light" href="@Url.Action("Index")">Cancel</a><button class="btn btn-primary" type="submit"><i class="bi bi-patch-check"></i> Issue and download PDF</button></div>
+ </div>
+}
+@section scripts{<script>(function(){var t=document.getElementById('documentType'),f=document.getElementById('letterFields');function u(){f.style.display=t.value==='DigitalCard'?'none':'block';}t.addEventListener('change',u);u();}());</script>}

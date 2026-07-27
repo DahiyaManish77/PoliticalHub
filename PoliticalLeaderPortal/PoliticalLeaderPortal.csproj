@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\SixLabors.ImageSharp.3.1.11\build\SixLabors.ImageSharp.props" Condition="Exists('..\packages\SixLabors.ImageSharp.3.1.11\build\SixLabors.ImageSharp.props')" />
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -48,24 +49,96 @@
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Enums.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.4.0.1\lib\net45\Enums.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.3.11, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.3.3\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=2.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.2.3.2\lib\net462\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI.Core, Version=2.6.2.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.6.2\lib\net472\NPOI.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.6.2.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.6.2\lib\net472\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.6.2.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.6.2\lib\net472\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.6.2.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.6.2\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="QRCoder">
+      <HintPath>..\packages\QRCoder.1.6.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="QuestPDF">
+      <HintPath>..\packages\QuestPDF.2023.12.6\lib\netstandard2.0\QuestPDF.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>..\packages\SkiaSharp.2.88.7\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.HarfBuzz">
+      <HintPath>..\packages\SkiaSharp.HarfBuzz.2.88.7\lib\net462\SkiaSharp.HarfBuzz.dll</HintPath>
+    </Reference>
+    <Reference Include="HarfBuzzSharp">
+      <HintPath>..\packages\HarfBuzzSharp.7.3.0.1\lib\net462\HarfBuzzSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Xml, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.6.0.1\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
@@ -120,6 +193,11 @@
     <Content Include="App_Data\CampaignPollSystemUpgrade.sql" />
     <Content Include="App_Data\CampaignOperationItemUpgrade.sql" />
     <Content Include="App_Data\CampaignSocialMediaWarRoomUpgrade.sql" />
+    <Content Include="App_Data\CentralizedAdminNavigationUpgrade.sql" />
+    <Content Include="App_Data\VerifiedDocumentsUpgrade.sql" />
+    <Content Include="App_Data\LeastPrivilegeRolePermissionUpgrade.sql" />
+    <Content Include="App_Data\UnifiedCampaignContextUpgrade.sql" />
+    <Content Include="App_Data\EventCampaignContextUpgrade.sql" />
     <Content Include="App_Data\ElectionWarRoomSimpleSupport.sql" />
     <Content Include="App_Data\ElectionWarRoomSidebarSubmenus.sql" />
     <Content Include="App_Data\GrantAllSidebarModuleViewPermissions.sql" />
@@ -132,6 +210,9 @@
     <Content Include="Areas\Admin\Content\admin.css" />
     <Content Include="Areas\Admin\Content\admin-campaign-dashboard.css" />
     <Content Include="Areas\Admin\Content\admin-pro-polish.css" />
+    <Content Include="Areas\Admin\Content\admin-fluent-shell.css" />
+    <Content Include="Areas\Admin\Content\admin-operations-ui.css" />
+    <Content Include="Areas\Admin\Content\constituency-master.css" />
     <Content Include="Areas\Admin\Content\css\menu-cms.css" />
     <Content Include="Areas\Admin\Content\hero-slider-admin.css" />
     <Content Include="Areas\Admin\Content\hero-slider-pro.css" />
@@ -153,9 +234,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\ai-help-agent.css" />
     <Content Include="Content\css\downloads.css" />
     <Content Include="Content\css\hero-slider.css" />
     <Content Include="Content\css\mera-kshetra.css" />
+    <Content Include="Content\css\poll-public.css" />
+    <Content Include="Content\css\site-citizen-connect-home.css" />
     <Content Include="Content\css\som-app.css" />
     <Content Include="Content\css\site-aboutleader.css" />
     <Content Include="Content\css\account.css" />
@@ -163,6 +247,7 @@
     <Content Include="Content\css\site-events.css" />
     <Content Include="Content\css\site-footer.css" />
     <Content Include="Content\css\site-final-polish.css" />
+    <Content Include="Content\css\campaign-home-reference.css" />
     <Content Include="Content\css\site-header.css" />
     <Content Include="Content\css\site-home-statistics.css" />
     <Content Include="Content\css\site-home.css" />
@@ -170,6 +255,7 @@
     <Content Include="Content\css\site-joinus-cta.css" />
     <Content Include="Content\css\site-latest-news.css" />
     <Content Include="Content\css\site-layout.css" />
+    <Content Include="Content\election-campaign-master.css" />
     <Content Include="Scripts\custom\site-latest-news.js" />
     <Content Include="Scripts\custom\site-preloader.js" />
     <Content Include="Content\css\site-preloader.css" />
@@ -183,14 +269,19 @@
     <Content Include="Content\css\site-upcoming-events.css" />
     <Content Include="Content\css\site-video-gallery.css" />
     <Content Include="Content\images\leader.png" />
+    <Content Include="Content\images\people-say-upload-leader.png" />
+    <Content Include="Content\images\bjp-lotus.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\auth\sangeet-som-auth.jpg" />
+    <Content Include="Uploads\ElectionWarRoom\Events\event_20260713123937978.png" />
+    <Content Include="Uploads\Footer\footer_639169599391133707.png" />
     <Content Include="Uploads\HeroSlider\background_20260628121304649.png" />
     <Content Include="Uploads\HeroSlider\background_20260713110016439.jpg" />
-    <Content Include="Uploads\HeroSlider\background_20260713175027837.jpg" />
     <Content Include="Uploads\HeroSlider\background_20260719225555536.png" />
     <Content Include="Uploads\HeroSlider\background_20260719225623335.png" />
     <Content Include="Uploads\HeroSlider\background_20260719231531631.png" />
+    <Content Include="Uploads\HeroSlider\background_20260724181347385.jpg" />
+    <Content Include="Uploads\HeroSlider\background_20260724181429286.jpg" />
     <Content Include="Uploads\HeroSlider\hero_639169616223734915.jpg" />
     <Content Include="Uploads\HeroSlider\hero_639169646214137178.jpg" />
     <Content Include="Uploads\HeroSlider\hero_639169651102277665.jpg" />
@@ -198,9 +289,28 @@
     <Content Include="Uploads\HeroSlider\hero_639169675952576831.png" />
     <Content Include="Uploads\HeroSlider\leader_20260628121304653.png" />
     <Content Include="Uploads\HeroSlider\leader_20260628122417416.png" />
+    <Content Include="Uploads\HomeMembers\6de93c08bd2641fbb06b8043aa89cafd.jpg" />
+    <Content Include="Uploads\HomeMembers\9e410b556ed84aa794ca1ad7b9dcf41c.jpg" />
+    <Content Include="Uploads\HomeMembers\ad266d0535c047d5bbd7ba37f51f4bb1.jpe" />
+    <Content Include="Uploads\HomeMembers\be3761c4174d4d598fe3582380229825.jpe" />
+    <Content Include="Uploads\HomeMembers\e40da87c2c664af7979eda63b8a9deb0.png" />
+    <Content Include="Uploads\HomeMembers\e9db9a4009184e63856160273e215e6e.jpe" />
+    <Content Include="Uploads\HomeMembers\ecd4aafa28fb43a5aca2b89c54df8bee.jpg" />
+    <Content Include="Uploads\HomeMembers\f833b10391414118800ebb7e012232e9.jpg" />
+    <Content Include="Uploads\LatestNews\639169733800971329.jpg" />
+    <Content Include="Uploads\LatestNews\639169736504987276.jpg" />
+    <Content Include="Uploads\LatestNews\639169754236540828.png" />
+    <Content Include="Uploads\PeopleSay\people_90459933f73e4017b5dfea7292c47f9b.mp4" />
     <Content Include="Views\Shared\_HomeVisitMenu.cshtml" />
     <Content Include="Views\Shared\_PublicEngagementWidgets.cshtml" />
     <Content Include="Scripts\custom\public-auth-modal.js" />
+    <Content Include="Scripts\custom\geography-cascade.js" />
+    <Content Include="Scripts\custom\people-say.js" />
+    <Content Include="Content\css\people-say.css" />
+    <Content Include="Views\Home\Partials\_PeopleSay.cshtml" />
+    <Content Include="Areas\Admin\Views\PeopleSay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PeopleSay\Analytics.cshtml" />
+    <Content Include="App_Data\PeopleSayModuleUpgrade.sql" />
     <Content Include="Scripts\custom\public-engagement.js" />
     <Content Include="Content\css\public-engagement.css" />
     <Content Include="Global.asax" />
@@ -234,6 +344,7 @@
       <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\Shared\_AdminSidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_CampaignSelector.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\HomePageSection\Index.cshtml" />
     <Content Include="Areas\Admin\Views\LeaderIntroduction\Index.cshtml" />
@@ -278,6 +389,14 @@
     <Content Include="Areas\Admin\Views\VideoCategory\Details.cshtml" />
     <Content Include="Areas\Admin\Views\VideoCategory\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\VideoGallery\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoMeeting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VideoMeeting\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\VoiceAgent\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VoiceAgent\BulkCaller.cshtml" />
+    <Content Include="Areas\Admin\Views\VoiceAgent\Settings.cshtml" />
+    <Content Include="Areas\Admin\Views\VoiceAgent\Details.cshtml" />
+    <Content Include="App_Data\VoiceAgentModuleUpgrade.sql" />
+    <Content Include="App_Data\VideoMeetingModuleUpgrade.sql" />
     <Content Include="Areas\Admin\Views\VideoGallery\Create.cshtml" />
     <Content Include="Areas\Admin\Views\VideoGallery\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\VideoGallery\Details.cshtml" />
@@ -330,8 +449,6 @@
     <Content Include="Areas\Admin\Views\MenuCMS\Partials\_SavePanel.cshtml" />
     <Content Include="Areas\Admin\Views\MenuCMS\Partials\_NavigationSettings.cshtml" />
     <Content Include="Areas\Admin\Views\RoleMenuPermission\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CitizenConnect\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CitizenConnect\Details.cshtml" />
     <Content Include="Areas\Admin\Views\VoterBackupSettings\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Voter\Form.cshtml" />
     <Content Include="Areas\Admin\Views\Voter\Index.cshtml" />
@@ -341,7 +458,6 @@
     <Content Include="Areas\Admin\Views\TodaySchedule\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PublicNewsTicker\Form.cshtml" />
     <Content Include="Areas\Admin\Views\PublicNewsTicker\Index.cshtml" />
-    <Content Include="Views\CitizenConnect\Form.cshtml" />
     <Content Include="Views\CampaignPoll\Details.cshtml" />
     <Content Include="Views\CampaignPoll\Thanks.cshtml" />
     <Content Include="README.md" />
@@ -355,6 +471,21 @@
     <Content Include="docs\GitWorkflow.md" />
     <Content Include="docs\Performance.md" />
     <Content Include="docs\EnterpriseStandards.md" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminSidebar_Item.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuCMS\Partials\_MenuConditions.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionCampaignMaster\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionCampaignMaster\ElectionForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ElectionCampaignMaster\CampaignForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ConstituencyMaster\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ConstituencyMaster\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\ConstituencyMaster\Import.cshtml" />
+    <Content Include="Areas\Admin\Views\CitizenConnect\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CitizenConnect\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\People\Form.cshtml" />
+    <Content Include="Areas\Admin\Views\People\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VerifiedDocument\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VerifiedDocument\Create.cshtml" />
+    <Content Include="Views\VerifyDocument\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\custom\hero-slider.js" />
     <Content Include="Scripts\custom\menu-cms.js" />
@@ -400,6 +531,9 @@
     <Content Include="Views\Home\Partials\_ImageGallery.cshtml" />
     <Content Include="Views\Home\Partials\_MediaCoverage.cshtml" />
     <Content Include="Views\Home\Partials\_PollSurvey.cshtml" />
+    <Content Include="Views\Home\Partials\_CampaignEngagement.cshtml" />
+    <Content Include="Views\Home\Partials\_QuickCitizenForm.cshtml" />
+    <Content Include="Views\Home\Partials\_QuickPoll.cshtml" />
     <Content Include="Views\Home\Partials\_JoinUsCallToAction.cshtml" />
     <Content Include="Views\Home\Partials\_ContactCallToAction.cshtml" />
     <Content Include="Views\Home\Partials\_SomAppCallToAction.cshtml" />
@@ -424,13 +558,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CitizenConnectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MemberCardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VerifiedDocumentController.cs" />
+    <Compile Include="Areas\Admin\Services\Pdf\MemberCardPdfService.cs" />
+    <Compile Include="Areas\Admin\Services\VerifiedDocumentService.cs" />
+    <Compile Include="Areas\Admin\ViewModels\DigitalMemberCardVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\VerifiedDocumentVM.cs" />
+    <Compile Include="Infrastructure\Pdf\DigitalMemberCardDocument.cs" />
+    <Compile Include="Infrastructure\Pdf\PdfConfiguration.cs" />
+    <Compile Include="Infrastructure\Pdf\PdfFontManager.cs" />
+    <Compile Include="Infrastructure\Pdf\PdfImageHelper.cs" />
+    <Compile Include="Infrastructure\Pdf\QrCodeHelper.cs" />
+    <Compile Include="Infrastructure\Pdf\VerifiedLetterDocument.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConstituencyMasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElectionCampaignMasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomePageSectionController.cs" />
     <Compile Include="Areas\Admin\Controllers\LeaderIntroductionController.cs" />
     <Compile Include="Areas\Admin\Controllers\AppDownloadSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\DownloadCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DownloadDocumentController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CitizenConnectController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElectionWarRoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\GalleryCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\GalleryImageController.cs" />
@@ -440,7 +588,29 @@
     <Compile Include="Areas\Admin\Controllers\MediaCoverageController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuCMSController.cs" />
     <Compile Include="Areas\Admin\Controllers\MeraKshetraController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PeopleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PeopleSayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PollController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PollCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleMenuPermissionController.cs" />
+    <Compile Include="Areas\Admin\Services\ConstituencyMasterService.cs" />
+    <Compile Include="Areas\Admin\Services\ElectionCampaignMasterService.cs" />
+    <Compile Include="Areas\Admin\Services\GovernmentGeographyImportService.cs" />
+    <Compile Include="Areas\Admin\Services\LgdBlockImportService.cs" />
+    <Compile Include="Areas\Admin\Services\LgdGramPanchayatImportService.cs" />
+    <Compile Include="Areas\Admin\Services\LgdVillageMappingImportService.cs" />
+    <Compile Include="Areas\Admin\Services\EciConstituencyImportService.cs" />
+    <Compile Include="Areas\Admin\Services\LgdSubDistrictImportService.cs" />
+    <Compile Include="Areas\Admin\Services\LgdVillageImportService.cs" />
+    <Compile Include="Areas\Admin\Services\MenuConditionService.cs" />
+    <Compile Include="Areas\Admin\Services\PeopleService.cs" />
+    <Compile Include="Areas\Admin\Services\Poll\PollService.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ConstituencyMaster\ConstituencyMasterVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ConstituencyMaster\GovernmentImportVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ElectionCampaignMaster\ElectionCampaignMasterVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\People\PeopleVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Poll\PollVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Poll\PollCategoryVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\PublicNewsTickerVM.cs" />
     <Compile Include="Areas\Admin\Controllers\PublicNewsTickerController.cs" />
     <Compile Include="Areas\Admin\Controllers\TodayScheduleController.cs" />
@@ -449,6 +619,8 @@
     <Compile Include="Areas\Admin\Controllers\StatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\UpcomingEventController.cs" />
     <Compile Include="Areas\Admin\Controllers\VideoGalleryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideoMeetingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VoiceAgentController.cs" />
     <Compile Include="Areas\Admin\Controllers\WebsiteFooterSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\WebsiteHeaderSettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\WebsiteSettingController.cs" />
@@ -529,16 +701,21 @@
     <Compile Include="Areas\Admin\ViewModels\VoterBackupSettingsVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\WebsiteFooterSettingVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\WebsiteHeaderSettingVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\VideoMeeting\VideoMeetingDashboardVM.cs" />
+    <Compile Include="Areas\Admin\ViewModels\VoiceAgent\VoiceAgentVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\WebsiteSettingVM.cs" />
     <Compile Include="Controllers\AboutLeaderController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CitizenConnectController.cs" />
+    <Compile Include="Controllers\VerifyDocumentController.cs" />
     <Compile Include="Controllers\CampaignPollController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
+    <Compile Include="Controllers\PeopleSayController.cs" />
     <Compile Include="Controllers\MeraKshetraController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\VideoCategoryController.cs" />
@@ -550,13 +727,43 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Infrastructure\RoleMenuAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Security\AdminAreaAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Security\AdminAntiForgeryAttribute.cs" />
+    <Compile Include="Infrastructure\Uploads\SecureUploadValidator.cs" />
+    <Compile Include="Models\AppDownloadSetting.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ApplicationRole.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationUser.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssemblyConstituencyMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlockMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CampaignAlert.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampaignMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampaignPoll.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampaignPollOption.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CampaignPollResponse.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CitizenConnectRequest.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DistrictMaster.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DownloadCategory.cs">
@@ -572,6 +779,15 @@
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ElectionCampaign.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionLocationMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElectionVoter.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventArrangement.cs">
@@ -601,6 +817,9 @@
     <Compile Include="Models\EventPollResponse.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventPublicProfile.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventTask.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
@@ -613,6 +832,9 @@
     <Compile Include="Models\EventTeamMember.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventTrackingItem.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventVehicle.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
@@ -622,7 +844,19 @@
     <Compile Include="Models\GalleryImage.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GeographyImportHistory.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GramPanchayatMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HeroSlider.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomeMember.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomePageSection.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomePageStatistic.cs">
@@ -634,13 +868,31 @@
     <Compile Include="Models\LatestNew.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeaderIntroduction.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MediaCoverage.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MenuCondition.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MenuMaster.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MeraKshetraItem.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NavigationMenu.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ParliamentaryConstituencyMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonRoleAssignment.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PoliticalLeaderPortal.Context.cs">
@@ -658,6 +910,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PoliticalLeaderPortal.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PublicNewsTicker.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoleMenuPermission.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteHitCounter.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StateMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TehsilMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TodaySchedule.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UpcomingEvent.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
@@ -665,6 +935,18 @@
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VideoGallery.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VillageMaster.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VolunteerProfile.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VoterBackupSetting.cs">
+      <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WardMaster.cs">
       <DependentUpon>PoliticalLeaderPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WebsiteFooterSetting.cs">
@@ -679,17 +961,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CitizenConnectService.cs" />
     <Compile Include="Services\GalleryService.cs" />
+    <Compile Include="Services\GeographyLookupService.cs" />
+    <Compile Include="Services\PeopleSayService.cs" />
+    <Compile Include="Services\VideoMeetingService.cs" />
+    <Compile Include="Services\VoiceAgentService.cs" />
+    <Compile Include="Services\BulkVoiceCallerService.cs" />
+    <Compile Include="Controllers\VoiceAgentWebhookController.cs" />
     <Compile Include="Services\MeraKshetraService.cs" />
     <Compile Include="Services\VideoGalleryService.cs" />
     <Compile Include="ViewModels\GalleryCategoryListVM.cs" />
     <Compile Include="ViewModels\AccountLoginVM.cs" />
     <Compile Include="ViewModels\AccountRegisterVM.cs" />
     <Compile Include="ViewModels\CitizenConnectVM.cs" />
+    <Compile Include="ViewModels\PeopleSay\PeopleSayVM.cs" />
     <Compile Include="ViewModels\GalleryCategoryVM.cs" />
     <Compile Include="ViewModels\AppDownloadDisplayVM.cs" />
     <Compile Include="ViewModels\GalleryImageListVM.cs" />
     <Compile Include="ViewModels\GalleryImageVM.cs" />
     <Compile Include="ViewModels\HeroSliderDisplayVM.cs" />
+    <Compile Include="ViewModels\HomeCitizenConnectVM.cs" />
     <Compile Include="ViewModels\HomeStatisticDisplayVM.cs" />
     <Compile Include="ViewModels\HomeMemberDisplayVM.cs" />
     <Compile Include="ViewModels\LatestNewsDisplayVM.cs" />
@@ -702,6 +992,7 @@
     <Compile Include="ViewModels\PublicGalleryAlbumVM.cs" />
     <Compile Include="ViewModels\PublicGalleryCategoryVM.cs" />
     <Compile Include="ViewModels\PublicGalleryImageVM.cs" />
+    <Compile Include="ViewModels\Poll\PublicPollVM.cs" />
     <Compile Include="ViewModels\VideoCategoryListVM.cs" />
     <Compile Include="ViewModels\VideoCategoryVM.cs" />
     <Compile Include="ViewModels\VideoGalleryListVM.cs" />
@@ -762,6 +1053,14 @@
     <Content Include="templates\AIFeaturePrompt.md" />
     <Content Include="templates\AdminModuleTemplate.md" />
     <Content Include="templates\DashboardModuleTemplate.md" />
+    <Content Include="Views\CitizenConnect\Form.cshtml" />
+    <Content Include="Views\CitizenConnect\Partials\_CitizenConnect.cshtml" />
+    <Content Include="Views\CitizenConnect\Partials\_ContactModal.cshtml" />
+    <Content Include="Views\CitizenConnect\Partials\_RequestModal.cshtml" />
+    <Content Include="Views\CitizenConnect\Partials\_SuggestionModal.cshtml" />
+    <Content Include="Views\CitizenConnect\Partials\_VolunteerModal.cshtml" />
+    <Content Include="Uploads\HomeMembers\13e3dfdcc43145d7a86f430675b13fbe.avif" />
+    <Content Include="Uploads\HomeMembers\5b6967b4b8374911898708732fb8a640.avif" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -771,6 +1070,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\NewFolder1\" />
+    <Folder Include="Areas\Admin\Views\NewFolder2\" />
     <Folder Include="Uploads\Documents\" />
     <Folder Include="Uploads\Events\" />
     <Folder Include="Uploads\Gallery\Images\" />
@@ -780,7 +1081,9 @@
     <Folder Include="Uploads\Media\" />
     <Folder Include="Uploads\Videos\" />
     <Folder Include="Uploads\Website\" />
+    <Folder Include="Views\ConstituencyMaster\" />
     <Folder Include="Views\Layout\" />
+    <Folder Include="Views\NewFolder1\" />
     <Folder Include="Views\VideoCategory\" />
   </ItemGroup>
   <ItemGroup>
@@ -818,8 +1121,11 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\SixLabors.ImageSharp.3.1.11\build\SixLabors.ImageSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SixLabors.ImageSharp.3.1.11\build\SixLabors.ImageSharp.props'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <Import Project="..\packages\SkiaSharp.NativeAssets.Win32.2.88.7\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.Win32.2.88.7\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
+  <Import Project="..\packages\HarfBuzzSharp.NativeAssets.Win32.7.3.0.1\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\HarfBuzzSharp.NativeAssets.Win32.7.3.0.1\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

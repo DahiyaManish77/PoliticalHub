@@ -203,6 +203,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
                 BuildAction("VideoGallery", "Video Gallery", "Public video gallery.", "Layout", "VideoGallery", 70),
                 BuildAction("HomeMembers", "Team Members", "Visible office bearers and public team members.", "Layout", "HomeMembers", 80),
                 BuildAction("MediaCoverage", "Media Coverage", "Press and media highlights.", "Layout", "MediaCoverage", 90),
+                BuildAction("CitizenConnect", "Citizen Connect", "Contact, suggestion and volunteer forms for the homepage.", "CitizenConnect", "HomeSection", 95),
                 BuildAction("PollSurvey", "Poll / Survey", "Public feedback and survey callout.", "Layout", "PollSurvey", 100),
                 BuildAction("Downloads", "Documents", "Public downloads and resources.", "Layout", "Downloads", 110),
                 BuildAction("AppDownload", "App Download", "Mobile app callout.", "Layout", "AppDownload", 120),

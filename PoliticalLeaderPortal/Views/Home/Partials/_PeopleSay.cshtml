@@ -1,0 +1,155 @@
+@model PoliticalLeaderPortal.ViewModels.PeopleSay.PeopleSayHomeVM
+<section class="people-say-section" id="people-say" data-people-say
+         data-engage-url="@Url.Action("Engage", "PeopleSay")"
+         data-comments-url="@Url.Action("Comments", "PeopleSay")"
+         data-comment-url="@Url.Action("Comment", "PeopleSay")">
+    <div class="container">
+        <div class="people-say-heading">
+            <div>
+                <span class="section-eyebrow">जनता की आवाज़</span>
+                <h2>People Say About Som</h2>
+                <p>Watch messages shared by people across the constituency.</p>
+            </div>
+            <button type="button" class="btn people-say-upload-btn" data-bs-toggle="modal" data-bs-target="#peopleSayUploadModal">
+                <i class="bi bi-camera-video"></i> Share Your Video
+            </button>
+        </div>
+
+        @if (TempData["PeopleSaySuccess"] != null)
+        {
+            <div class="people-say-toast is-success" role="status"><i class="bi bi-check-circle-fill"></i><span>@TempData["PeopleSaySuccess"]</span><button type="button" aria-label="Close">&times;</button></div>
+        }
+        @if (TempData["PeopleSayError"] != null)
+        {
+            <div class="people-say-toast is-error" role="alert"><i class="bi bi-exclamation-circle-fill"></i><span>@TempData["PeopleSayError"]</span><button type="button" aria-label="Close">&times;</button></div>
+        }
+
+        @if (Model.Videos.Any())
+        {
+            <div class="people-say-stage">
+                <button class="people-say-arrow people-say-prev" type="button" aria-label="Previous videos"><i class="bi bi-chevron-left"></i></button>
+                <div class="people-say-track">
+                    @foreach (var item in Model.Videos)
+                    {
+                        <article class="people-say-card" data-video-id="@item.PeopleSayVideoId"
+                                 data-video-url="@Url.Content(item.VideoPath)"
+                                 data-youtube="@(item.IsYouTube ? "true" : "false")"
+                                 data-response-url="@Url.Content(item.LeaderResponseVideoPath ?? "")">
+                            <button type="button" class="people-say-preview js-people-video" aria-label="Play @item.Title">
+                                @if (item.IsYouTube)
+                                {
+                                    <img src="@item.ThumbnailUrl" alt="@item.Title" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <video preload="metadata" muted playsinline>
+                                        <source src="@Url.Content(item.VideoPath)#t=0.2" />
+                                    </video>
+                                }
+                                <span class="people-say-play"><i class="bi bi-play-fill"></i></span>
+                                @if (item.HasLeaderResponse)
+                                {
+                                    <span class="people-say-response-badge"><i class="bi bi-patch-check-fill"></i> Leader responded</span>
+                                }
+                            </button>
+                            <div class="people-say-card-copy">
+                                <h3>@item.Title</h3>
+                                <p><strong>@item.PersonName</strong>@(!String.IsNullOrWhiteSpace(item.AreaName) ? " · " + item.AreaName : "")</p>
+                                <div class="people-say-metrics">
+                                    @if (!item.IsYouTube)
+                                    {
+                                        <button type="button" class="js-people-like"><i class="bi bi-heart"></i><span>@item.LikeCount</span></button>
+                                        <button type="button" class="js-people-comments"><i class="bi bi-chat"></i><span>@item.CommentCount</span></button>
+                                    }
+                                    <button type="button" class="js-people-share"><i class="bi bi-share"></i><span>@item.ShareCount</span></button>
+                                    @if (!item.IsYouTube)
+                                    {
+                                        <a href="@Url.Action("Download", "PeopleSay", new { id = item.PeopleSayVideoId })"><i class="bi bi-download"></i><span>@item.DownloadCount</span></a>
+                                    }
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+                <button class="people-say-arrow people-say-next" type="button" aria-label="Next videos"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        }
+        else
+        {
+            <div class="people-say-showcase people-say-placeholder-showcase">
+                <div class="people-say-showcase-intro">
+                    <span class="people-say-showcase-kicker">Voices from our constituency</span>
+                    <h3>Your Story. Your Voice.</h3>
+                    <p>Community video messages selected by our team will be featured here.</p>
+                    <button type="button" class="people-say-collection-btn" data-bs-toggle="modal" data-bs-target="#peopleSayUploadModal">Send your video</button>
+                </div>
+                <div class="people-say-poster-row" aria-label="Community video placeholders">
+                    <article class="people-say-poster people-say-poster-edge"><img src="@Url.Content("~/Uploads/Gallery/Images/00e5f64e-cf31-4c0e-84c0-13667faf57ac.jpg")" alt="" /></article>
+                    <article class="people-say-poster"><img src="@Url.Content("~/Uploads/Gallery/Images/3a298230-ca24-4844-b773-1938908044f6.jpg")" alt="Community message placeholder" /><span><i class="bi bi-play-fill"></i></span></article>
+                    <article class="people-say-poster"><img src="@Url.Content("~/Uploads/Gallery/Images/3be79d89-5bfb-4437-8501-8ad14e32c42c.jpg")" alt="Community message placeholder" /><span><i class="bi bi-play-fill"></i></span></article>
+                    <article class="people-say-poster"><img src="@Url.Content("~/Uploads/Gallery/Images/3cf3085e-19b4-4c27-b9f3-d5af176fa68f.jpg")" alt="Community message placeholder" /><span><i class="bi bi-play-fill"></i></span></article>
+                    <article class="people-say-poster people-say-poster-edge"><img src="@Url.Content("~/Uploads/Gallery/Images/3e8b2bc8-f35a-406d-8497-c51dd9d52706.jpg")" alt="" /></article>
+                </div>
+                <p class="people-say-placeholder-note"><i class="bi bi-shield-check"></i> Placeholder preview — submitted videos appear in the admin review queue.</p>
+            </div>
+        }
+    </div>
+
+    <div class="modal fade" id="peopleSayUploadModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered"><div class="modal-content people-say-upload-modal">
+            @using (Html.BeginForm("Submit", "PeopleSay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <button type="button" class="btn-close people-say-upload-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="people-say-signature notranslate" translate="no">Sangeet Som</div>
+                <div class="people-say-upload-grid">
+                    <div class="people-say-upload-visual">
+                        <img src="@Url.Content("~/Content/images/people-say-upload-leader.png")" alt="Sangeet Som" />
+                        <div><span>जनता की आवाज़</span><strong>Share your message directly with us.</strong></div>
+                    </div>
+                    <div class="people-say-upload-form">
+                        <span class="people-say-form-kicker">PEOPLE SAY ABOUT SOM</span>
+                        <h5 class="modal-title"><span>YOUR</span> VOICE</h5>
+                        <p>Your video will be securely reviewed by the authorised team.</p>
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label">Name / Surname</label><input class="form-control" name="PersonName" maxlength="150" placeholder="Enter your full name" required /></div>
+                            <div class="col-md-6"><label class="form-label">Mobile number</label><input class="form-control" name="MobileNumber" maxlength="20" placeholder="+91" required /></div>
+                            <div class="col-md-6"><label class="form-label">Village / City</label><input class="form-control" name="AreaName" maxlength="150" placeholder="Your location" /></div>
+                            <div class="col-12">
+                                <label class="form-label">Upload your video</label>
+                                <div class="people-say-landscape-note"><i class="bi bi-phone-landscape"></i><span><strong>Record horizontally in landscape format.</strong> Hold your phone sideways like a YouTube video. Portrait/Reels videos are not accepted.</span></div>
+                                <label class="people-say-file-drop"><input type="file" name="VideoFile" accept=".mp4,.webm,.mov,video/mp4,video/webm,video/quicktime" required /><i class="bi bi-cloud-arrow-up"></i><span><strong>Choose landscape video</strong><small>MP4, WEBM or MOV &middot; Maximum 100 MB</small></span></label>
+                                <small class="people-say-video-validation" aria-live="polite"></small>
+                            </div>
+                            <div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" value="true" name="PublicationConsent" id="peopleSayConsent" required /><input type="hidden" name="PublicationConsent" value="false" /><label class="form-check-label" for="peopleSayConsent">I confirm this is my video and permit its official use and publication.</label></div></div>
+                        </div>
+                        <button class="btn people-say-upload-submit" type="submit"><i class="bi bi-send"></i> Submit for review</button>
+                    </div>
+                </div>
+            }
+        </div></div>
+    </div>
+
+    <div class="people-say-lightbox" aria-hidden="true">
+        <button type="button" class="people-say-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+        <div class="people-say-player-shell">
+            <video class="people-say-player" controls playsinline></video>
+            <iframe class="people-say-youtube-player" title="YouTube video player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen hidden></iframe>
+            <div class="people-say-response-panel" hidden>
+                <span>Response from Sangeet Som</span>
+                <button type="button" class="js-play-response"><i class="bi bi-play-circle"></i> Watch response</button>
+            </div>
+            <div class="people-say-comment-panel" hidden>
+                <div class="people-say-comment-list"></div>
+                <form class="people-say-comment-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="PeopleSayVideoId" />
+                    <input class="form-control" name="PersonName" placeholder="Your name" maxlength="100" required />
+                    <textarea class="form-control" name="CommentText" placeholder="Write a respectful comment" maxlength="500" required></textarea>
+                    <button class="btn btn-primary" type="submit">Submit comment</button>
+                    <small class="people-say-comment-status"></small>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

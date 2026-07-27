@@ -1,0 +1,537 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ConstituencyMaster.GovernmentImportVM
+@{
+    ViewBag.Title = "Import Official LGD Geography";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <div>
+            <div class="text-primary fw-semibold small">
+                CONSTITUENCY MASTER · OFFICIAL LGD IMPORT
+            </div>
+            <h3 class="mb-1">Import Official LGD Geography</h3>
+            <p class="text-muted mb-0">
+                Import District, Sub-District/Tehsil, Development Block, Gram Panchayat and Village data from official LGD XLSX reports.
+            </p>
+        </div>
+
+        <a href="@Url.Action("Index", new { entityType = "District" })"
+           class="btn btn-outline-secondary">
+            Back to Constituency Master
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="text-primary fw-semibold small">CONSTITUENCY MASTER · GRAM PANCHAYAT</div>
+            <h4 class="mb-1">Import Official LGD Gram Panchayats</h4>
+            <p class="text-muted">Upload the official “PRI Local Body of a State” XLSX report. Districts and Development Blocks must already exist.</p>
+            @using (Html.BeginForm("ImportGramPanchayats", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "gramPanchayatImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-lg-4">@Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })@Html.DropDownListFor(x => x.StateId, Model.States, new { @class = "form-select", required = "required" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })@Html.TextBoxFor(x => x.SourceName, new { @class = "form-control", @readonly = "readonly" })</div>
+                    <div class="col-lg-5"><label class="form-label fw-semibold">Official LGD PRI Local Body XLSX</label><input type="file" name="GramPanchayatFile" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control" required /></div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                    <div class="form-check">@Html.CheckBoxFor(x => x.UpdateExisting, new { @class = "form-check-input" })@Html.LabelFor(x => x.UpdateExisting, "Update existing Gram Panchayats", new { @class = "form-check-label" })</div>
+                    <button type="submit" class="btn btn-success px-4" id="gramPanchayatImportButton">Validate &amp; Import Gram Panchayats</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="text-primary fw-semibold small">ELECTION GEOGRAPHY · ECI</div>
+            <h4 class="mb-1">Import Parliamentary Constituencies</h4>
+            <p class="text-muted">Import the official ECI PC number, name and reservation category first.</p>
+            @using (Html.BeginForm("ImportParliamentaryConstituencies", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "parliamentaryImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-lg-4">@Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })@Html.DropDownListFor(x => x.StateId, Model.States, new { @class = "form-select", required = "required" })</div>
+                    <div class="col-lg-5"><label class="form-label fw-semibold">Official ECI PC XLSX</label><input type="file" name="ParliamentaryFile" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control" required /></div>
+                    <div class="col-lg-3 d-flex align-items-end"><button type="submit" class="btn btn-success w-100" id="parliamentaryImportButton">Validate &amp; Import PCs</button></div>
+                </div>
+                <div class="form-check mt-3">@Html.CheckBoxFor(x => x.UpdateExisting, new { @class = "form-check-input" })@Html.LabelFor(x => x.UpdateExisting, "Update existing PCs having the same ECI number", new { @class = "form-check-label" })</div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="text-primary fw-semibold small">ELECTION GEOGRAPHY · ECI</div>
+            <h4 class="mb-1">Import Assembly Constituencies</h4>
+            <p class="text-muted">Import after PCs. Every AC row must include a PC number that already exists for the selected State.</p>
+            @using (Html.BeginForm("ImportAssemblyConstituencies", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "assemblyImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-lg-4">@Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })@Html.DropDownListFor(x => x.StateId, Model.States, new { @class = "form-select", required = "required" })</div>
+                    <div class="col-lg-5"><label class="form-label fw-semibold">Official ECI AC XLSX</label><input type="file" name="AssemblyFile" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control" required /></div>
+                    <div class="col-lg-3 d-flex align-items-end"><button type="submit" class="btn btn-success w-100" id="assemblyImportButton">Validate &amp; Import ACs</button></div>
+                </div>
+                <div class="form-check mt-3">@Html.CheckBoxFor(x => x.UpdateExisting, new { @class = "form-check-input" })@Html.LabelFor(x => x.UpdateExisting, "Update existing ACs having the same ECI number", new { @class = "form-check-label" })</div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="text-primary fw-semibold small">CONSTITUENCY MASTER · VILLAGE MAPPING</div>
+            <h4 class="mb-1">Link Villages to Gram Panchayats</h4>
+            <p class="text-muted">Upload the official “Gram Panchayat Mapping to village” XLSX after importing Gram Panchayats. This only links existing records.</p>
+            @using (Html.BeginForm("ImportVillageMappings", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "villageMappingImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-lg-4">@Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })@Html.DropDownListFor(x => x.StateId, Model.States, new { @class = "form-select", required = "required" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })@Html.TextBoxFor(x => x.SourceName, new { @class = "form-control", @readonly = "readonly" })</div>
+                    <div class="col-lg-5"><label class="form-label fw-semibold">Official LGD Mapping XLSX</label><input type="file" name="VillageMappingFile" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control" required /></div>
+                </div>
+                <div class="alert alert-warning border-0 mt-3 mb-0"><strong>Safe mapping:</strong> unmatched or cross-district rows are rejected. Existing names and official codes are never changed.</div>
+                <button type="submit" class="btn btn-success px-4 mt-4" id="villageMappingImportButton">Validate &amp; Link Villages</button>
+            }
+        </div>
+    </div>
+
+    <div class="alert alert-info border-0">
+        <strong>No manual template is required.</strong>
+        Import Districts first, followed by Sub-Districts, Development Blocks and Villages.
+        The official Village report maps villages to District and Sub-District; it does not contain Block or Gram Panchayat codes.
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <div class="mb-3">
+                <div class="text-primary fw-semibold small">
+                    CONSTITUENCY MASTER · DISTRICT
+                </div>
+                <h4 class="mb-1">Import Official LGD Districts</h4>
+                <p class="text-muted mb-0">
+                    Upload the unedited “All Districts of a State” XLSX report downloaded from LGD.
+                </p>
+            </div>
+
+            @using (Html.BeginForm("Import", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "governmentImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        @Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })
+                        @Html.DropDownListFor(x => x.StateId, Model.States,
+                                 new { @class = "form-select", required = "required" })
+                        @Html.ValidationMessageFor(x => x.StateId, "",
+                                 new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(x => x.SourceName,
+                                 new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-lg-5">
+                        <label class="form-label fw-semibold">Official LGD District XLSX</label>
+                        <input type="file" name="GovernmentFile"
+                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                               class="form-control" required />
+                        <div class="form-text">
+                            LGD selection: Download Directory → All Districts of a State → XLS Report.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(x => x.UpdateExisting,
+                                 new { @class = "form-check-input" })
+                        @Html.LabelFor(x => x.UpdateExisting,
+                                 "Update existing districts having the same LGD code",
+                                 new { @class = "form-check-label" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success px-4" id="importButton">
+                        <i class="fas fa-file-excel me-1"></i>
+                        Validate &amp; Import Districts
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="mb-3">
+                <div class="text-primary fw-semibold small">
+                    CONSTITUENCY MASTER · SUB-DISTRICT / TEHSIL
+                </div>
+                <h4 class="mb-1">Import Official LGD Sub-Districts</h4>
+                <p class="text-muted mb-0">
+                    Upload the unedited “All Sub-Districts of a State” XLSX report.
+                    Districts must already exist in District Master.
+                </p>
+            </div>
+
+            @using (Html.BeginForm("ImportSubDistricts", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "subDistrictImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        @Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })
+                        @Html.DropDownListFor(x => x.StateId, Model.States,
+                                 new { @class = "form-select", required = "required" })
+                        @Html.ValidationMessageFor(x => x.StateId, "",
+                                 new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(x => x.SourceName,
+                                 new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-lg-5">
+                        <label class="form-label fw-semibold">Official LGD Sub-District XLSX</label>
+                        <input type="file" name="OfficialFile"
+                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                               class="form-control" required />
+                        <div class="form-text">
+                            LGD selection: Download Directory → All Sub-Districts of a State → XLS Report.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(x => x.UpdateExisting,
+                                 new { @class = "form-check-input" })
+                        @Html.LabelFor(x => x.UpdateExisting,
+                                 "Update existing sub-districts having the same LGD code",
+                                 new { @class = "form-check-label" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success px-4" id="subDistrictImportButton">
+                        <i class="fas fa-file-excel me-1"></i>
+                        Validate &amp; Import Sub-Districts
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="mb-3">
+                <div class="text-primary fw-semibold small">
+                    CONSTITUENCY MASTER · DEVELOPMENT BLOCK
+                </div>
+                <h4 class="mb-1">Import Official LGD Development Blocks</h4>
+                <p class="text-muted mb-0">
+                    Upload the unedited “All Development Blocks of State” XLSX report.
+                    Districts must already exist in District Master.
+                </p>
+            </div>
+
+            @using (Html.BeginForm("ImportBlocks", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "blockImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        @Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })
+                        @Html.DropDownListFor(x => x.StateId, Model.States,
+                                 new { @class = "form-select", required = "required" })
+                        @Html.ValidationMessageFor(x => x.StateId, "",
+                                 new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(x => x.SourceName,
+                                 new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-lg-5">
+                        <label class="form-label fw-semibold">Official LGD Development Block XLSX</label>
+                        <input type="file" name="BlockFile"
+                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                               class="form-control" required />
+                        <div class="form-text">
+                            LGD selection: Download Directory → All Development Blocks of State → XLS Report.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(x => x.UpdateExisting,
+                                 new { @class = "form-check-input" })
+                        @Html.LabelFor(x => x.UpdateExisting,
+                                 "Update existing blocks having the same LGD code",
+                                 new { @class = "form-check-label" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success px-4" id="blockImportButton">
+                        <i class="fas fa-file-excel me-1"></i>
+                        Validate &amp; Import Blocks
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+            <div class="mb-3">
+                <div class="text-primary fw-semibold small">
+                    CONSTITUENCY MASTER · VILLAGE
+                </div>
+                <h4 class="mb-1">Import Official LGD Villages</h4>
+                <p class="text-muted mb-0">
+                    Upload the unedited “All Villages of a State” XLSX report.
+                    Districts and Sub-Districts must already exist.
+                </p>
+            </div>
+
+            @using (Html.BeginForm("ImportVillages", "ConstituencyMaster", FormMethod.Post,
+                new { enctype = "multipart/form-data", id = "villageImportForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        @Html.LabelFor(x => x.StateId, new { @class = "form-label fw-semibold" })
+                        @Html.DropDownListFor(x => x.StateId, Model.States,
+                                 new { @class = "form-select", required = "required" })
+                        @Html.ValidationMessageFor(x => x.StateId, "",
+                                 new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="col-lg-3">
+                        @Html.LabelFor(x => x.SourceName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(x => x.SourceName,
+                                 new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-lg-5">
+                        <label class="form-label fw-semibold">Official LGD Village XLSX</label>
+                        <input type="file" name="VillageFile"
+                               accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                               class="form-control" required />
+                        <div class="form-text">
+                            LGD selection: Download Directory → All Villages of a State → XLS Report.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border mt-3 mb-0">
+                    <strong>Mapping note:</strong>
+                    This LGD report contains District and Sub-District codes only.
+                    BlockId and GramPanchayatId are stored as null and can be linked later from official mapping reports.
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
+                    <div class="form-check">
+                        @Html.CheckBoxFor(x => x.UpdateExisting,
+                                 new { @class = "form-check-input" })
+                        @Html.LabelFor(x => x.UpdateExisting,
+                                 "Update existing villages having the same LGD code",
+                                 new { @class = "form-check-label" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success px-4" id="villageImportButton">
+                        <i class="fas fa-file-excel me-1"></i>
+                        Validate &amp; Import Villages
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.Result != null)
+    {
+        <div class="card border-0 shadow-sm mt-3">
+            <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-start mb-3">
+                    <div>
+                        <h5 class="mb-1">Import Result</h5>
+                        <div class="text-muted small">@Model.Result.FileName</div>
+                    </div>
+
+                    <span class="badge bg-@(Model.Result.IsSuccessful ? "success" : "warning")">
+                        @(Model.Result.IsSuccessful ? "Completed" : "Completed with errors")
+                    </span>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Detected report</small>
+                            <div class="fw-semibold">@Model.Result.EntityType</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">State verified</small>
+                            <div class="fw-semibold">
+                                @Model.Result.ReportStateName (@Model.Result.ReportStateCode)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Rows</small>
+                            <div class="h5 mb-0">@Model.Result.TotalRows</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Inserted</small>
+                            <div class="h5 text-success mb-0">@Model.Result.Inserted</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Updated</small>
+                            <div class="h5 text-warning mb-0">@Model.Result.Updated</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Skipped</small>
+                            <div class="h5 mb-0">@Model.Result.Skipped</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <small class="text-muted">Failed</small>
+                            <div class="h5 text-danger mb-0">@Model.Result.Failed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        if (Model.Result.Errors != null && Model.Result.Errors.Count > 0)
+        {
+            <div class="alert alert-warning mt-3">
+                <strong>Rows requiring attention</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach (var error in Model.Result.Errors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
+    }
+
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body">
+            <h5 class="mb-2">Supported official reports</h5>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-light text-dark border">District Code</span>
+                <span class="badge bg-light text-dark border">Sub-District Code</span>
+                <span class="badge bg-light text-dark border">Development Block Code</span>
+                <span class="badge bg-light text-dark border">Village Code</span>
+                <span class="badge bg-light text-dark border">Village Version</span>
+                <span class="badge bg-light text-dark border">Village Category</span>
+                <span class="badge bg-light text-dark border">Village Status</span>
+                <span class="badge bg-light text-dark border">Census 2001 Code</span>
+                <span class="badge bg-light text-dark border">Census 2011 Code</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        (function () {
+            function bindImportForm(formId, buttonId, loadingText) {
+                var form = document.getElementById(formId);
+                var button = document.getElementById(buttonId);
+
+                if (!form || !button)
+                    return;
+
+                form.addEventListener('submit', function () {
+                    if (!form.checkValidity())
+                        return;
+
+                    button.disabled = true;
+                    button.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-1"></span> ' +
+                        loadingText;
+                });
+            }
+
+            bindImportForm(
+                'governmentImportForm',
+                'importButton',
+                'Validating and importing districts...');
+
+            bindImportForm(
+                'subDistrictImportForm',
+                'subDistrictImportButton',
+                'Validating and importing sub-districts...');
+
+            bindImportForm(
+                'blockImportForm',
+                'blockImportButton',
+                'Validating and importing blocks...');
+
+            bindImportForm(
+                'villageImportForm',
+                'villageImportButton',
+                'Validating and importing villages...');
+
+            bindImportForm(
+                'gramPanchayatImportForm',
+                'gramPanchayatImportButton',
+                'Validating and importing Gram Panchayats...');
+
+            bindImportForm(
+                'villageMappingImportForm',
+                'villageMappingImportButton',
+                'Validating and linking villages...');
+
+            bindImportForm(
+                'parliamentaryImportForm',
+                'parliamentaryImportButton',
+                'Validating and importing PCs...');
+
+            bindImportForm(
+                'assemblyImportForm',
+                'assemblyImportButton',
+                'Validating and importing ACs...');
+        })();
+    </script>
+}

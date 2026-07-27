@@ -1,0 +1,33 @@
+@model PoliticalLeaderPortal.ViewModels.Poll.PublicPollVM
+@using System.Linq
+@if (Model != null)
+{
+    <div class="campaign-poll-card">
+        <span class="campaign-poll-label">Quick poll</span>
+        <h2>@Model.Question</h2>
+        @using (Html.BeginForm("Vote", "Poll", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="PollId" value="@Model.PollId" />
+            <input type="hidden" name="PublicSlug" value="@Model.PublicSlug" />
+            <input type="hidden" name="Source" value="home" />
+            <input type="hidden" name="ConsentGiven" value="true" />
+            foreach (var option in Model.Options.Take(5))
+            {
+                <label class="campaign-poll-option">
+                    <input type="radio" name="PollOptionId" value="@option.PollOptionId" required />
+                    <span>@option.OptionText</span>
+                </label>
+            }
+            <button class="campaign-vote" type="submit">Vote</button>
+        }
+        <a class="campaign-poll-details" href="@Url.Action("Details", "Poll", new { slug = Model.PublicSlug, source = "home" })">View poll details <i class="bi bi-arrow-right"></i></a>
+    </div>
+}
+else
+{
+    <div class="campaign-poll-card campaign-poll-empty">
+        <span class="campaign-poll-label">Quick poll</span>
+        <h2>No active poll is available right now.</h2>
+    </div>
+}

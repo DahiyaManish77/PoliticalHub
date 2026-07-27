@@ -20,6 +20,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom
         }
 
         public int EventId { get; set; }
+        public int? CampaignId { get; set; }
+        public string CampaignName { get; set; }
         public string EventCode { get; set; }
         public string EventTitle { get; set; }
         public string SubTitle { get; set; }

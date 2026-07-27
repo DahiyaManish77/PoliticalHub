@@ -46,5 +46,13 @@ namespace PoliticalLeaderPortal.Models
         public bool ShowLeaderImage { get; set; }
         public bool ShowOverlay { get; set; }
         public bool ShowButtons { get; set; }
+        public bool IsVideoSlide { get; set; }
+        public string VideoSourceType { get; set; }
+        public string VideoUrl { get; set; }
+        public string VideoPath { get; set; }
+        public bool VideoAutoplay { get; set; }
+        public bool VideoMuted { get; set; }
+        public bool VideoLoop { get; set; }
+        public string HeroHeightCss { get; set; }
     }
 }

@@ -1,0 +1,69 @@
+<section class="campaign-engagement" id="get-involved">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="campaign-form-notice is-success"><i class="bi bi-check-circle"></i> @TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["WarningMessage"] != null)
+    {
+        <div class="campaign-form-notice is-warning"><i class="bi bi-exclamation-circle"></i> @TempData["WarningMessage"]</div>
+    }
+
+    <div class="campaign-engagement-grid">
+        <div class="campaign-engagement-card">
+            <div class="campaign-tabs" role="tablist">
+                <button class="campaign-tab is-active" type="button" data-campaign-tab="volunteer">Be a volunteer</button>
+                <button class="campaign-tab" type="button" data-campaign-tab="member">Become a member</button>
+                <button class="campaign-tab" type="button" data-campaign-tab="suggestion">Share a suggestion</button>
+                <button class="campaign-tab" type="button" data-campaign-tab="issue">Raise an issue</button>
+                <button class="campaign-tab" type="button" data-campaign-tab="appointment">Appointment</button>
+                <button class="campaign-tab" type="button" data-campaign-tab="invitation">Invitation</button>
+            </div>
+            <div class="campaign-tab-panels">
+                <div class="campaign-tab-panel is-active" data-campaign-panel="volunteer">
+                    <h2>Be a volunteer</h2>
+                    <form class="campaign-form" action="@Url.Action("SubmitQuick", "CitizenConnect")" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="RequestType" value="Volunteer" />
+                        <input type="hidden" name="Subject" value="Volunteer Application" />
+                        <input type="hidden" name="Message" value="Volunteer application submitted from the home page." />
+                        <input type="hidden" name="PreferredRole" value="Public Outreach" />
+                        <input type="hidden" name="PrivacyConsent" value="true" />
+                        <label>Full name<input type="text" name="FullName" required maxlength="160" /></label>
+                        <label>Email address<input type="email" name="Email" maxlength="160" /></label>
+                        <label>Phone number<input type="tel" name="MobileNumber" required maxlength="15" pattern="[0-9+() -]{10,15}" /></label>
+                        <label>Village<input type="text" name="VillageName" required maxlength="160" /></label>
+                        <button class="campaign-submit" type="submit">Submit application</button>
+                    </form>
+                </div>
+
+                <div class="campaign-tab-panel" data-campaign-panel="member">
+                    <h2>Become a member</h2>
+                    <p>Join the public-service network and receive constituency updates.</p>
+                    <button type="button" class="campaign-submit campaign-inline-action" data-bs-toggle="modal" data-bs-target="#registerModal">Start membership</button>
+                </div>
+
+                <div class="campaign-tab-panel" data-campaign-panel="suggestion">
+                    <h2>Share a suggestion</h2>
+                    @Html.Partial("~/Views/Home/Partials/_QuickCitizenForm.cshtml", new ViewDataDictionary { { "RequestType", "Suggestion" }, { "ButtonText", "Submit suggestion" }, { "SubjectPlaceholder", "Suggestion subject" }, { "MessagePlaceholder", "Describe your suggestion" }, { "AllowAttachment", false } })
+                </div>
+
+                <div class="campaign-tab-panel" data-campaign-panel="issue">
+                    <h2>Raise an issue</h2>
+                    @Html.Partial("~/Views/Home/Partials/_QuickCitizenForm.cshtml", new ViewDataDictionary { { "RequestType", "Issue" }, { "ButtonText", "Report issue" }, { "SubjectPlaceholder", "Issue title" }, { "MessagePlaceholder", "Describe the issue and location" }, { "AllowAttachment", false } })
+                </div>
+
+                <div class="campaign-tab-panel" data-campaign-panel="appointment">
+                    <h2>Request an appointment</h2>
+                    @Html.Partial("~/Views/Home/Partials/_QuickCitizenForm.cshtml", new ViewDataDictionary { { "RequestType", "Appointment" }, { "ButtonText", "Request appointment" }, { "SubjectPlaceholder", "Purpose of appointment" }, { "MessagePlaceholder", "Preferred date, time and meeting purpose" }, { "AllowAttachment", true } })
+                </div>
+
+                <div class="campaign-tab-panel" data-campaign-panel="invitation">
+                    <h2>Send an invitation</h2>
+                    @Html.Partial("~/Views/Home/Partials/_QuickCitizenForm.cshtml", new ViewDataDictionary { { "RequestType", "Invitation" }, { "ButtonText", "Submit invitation" }, { "SubjectPlaceholder", "Event or programme name" }, { "MessagePlaceholder", "Event date, time, venue and invitation details" }, { "AllowAttachment", true } })
+                </div>
+            </div>
+        </div>
+
+        @Html.Action("QuickPoll", "Layout")
+    </div>
+</section>

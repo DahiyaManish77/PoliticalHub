@@ -1,0 +1,77 @@
+@model PoliticalLeaderPortal.ViewModels.PeopleSay.PeopleSayAdminVM
+@{
+    ViewBag.Title = "People Say Moderation";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div><h3 class="mb-1 fw-bold">People Say About Som</h3><p class="text-muted mb-0">Review public video submissions, comments and leader responses.</p></div>
+        <a class="btn btn-outline-primary" href="@Url.Action("Analytics")"><i class="bi bi-graph-up-arrow me-1"></i>Analytics</a>
+    </div>
+    @if (TempData["SuccessMessage"] != null) { <div class="alert alert-success">@TempData["SuccessMessage"]</div> }
+    @if (TempData["ErrorMessage"] != null) { <div class="alert alert-danger">@TempData["ErrorMessage"]</div> }
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><a class="card border-0 shadow-sm text-decoration-none" href="@Url.Action("Index", new { status="Pending" })"><div class="card-body"><span class="text-muted">Pending</span><div class="fs-2 fw-bold text-warning">@Model.PendingCount</div></div></a></div>
+        <div class="col-md-4"><a class="card border-0 shadow-sm text-decoration-none" href="@Url.Action("Index", new { status="Approved" })"><div class="card-body"><span class="text-muted">Approved</span><div class="fs-2 fw-bold text-success">@Model.ApprovedCount</div></div></a></div>
+        <div class="col-md-4"><a class="card border-0 shadow-sm text-decoration-none" href="@Url.Action("Index", new { status="Rejected" })"><div class="card-body"><span class="text-muted">Rejected</span><div class="fs-2 fw-bold text-danger">@Model.RejectedCount</div></div></a></div>
+    </div>
+    @using (Html.BeginForm("Index", "PeopleSay", FormMethod.Get, new { @class="card border-0 shadow-sm mb-4" }))
+    { <div class="card-body row g-2"><div class="col-md-3">@Html.DropDownList("status", new SelectList(new[] { "Pending", "Approved", "Rejected", "All" }, Model.Status), new { @class = "form-select" })</div><div class="col-md-7"><input class="form-control" name="keyword" value="@Model.Keyword" placeholder="Search title, person or area" /></div><div class="col-md-2"><button class="btn btn-primary w-100">Filter</button></div></div> }
+    <div class="row g-4">
+        @foreach (var item in Model.Videos)
+        {
+            <div class="col-xl-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <video class="card-img-top bg-dark" controls preload="metadata" style="height:300px;object-fit:contain"><source src="@Url.Content(item.VideoPath)" /></video>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between gap-3"><div><h5 class="fw-bold mb-1">@item.Title</h5><div class="text-muted">@item.PersonName @(!String.IsNullOrWhiteSpace(item.AreaName) ? "· " + item.AreaName : "")</div></div><span class="badge text-bg-@(item.Status=="Approved"?"success":item.Status=="Rejected"?"danger":"warning")">@item.Status</span></div>
+                        @if (!String.IsNullOrWhiteSpace(item.Message)) { <p class="mt-3 mb-2">@item.Message</p> }
+                        <div class="small text-muted mb-3"><i class="bi bi-heart"></i> @item.LikeCount &nbsp; <i class="bi bi-chat"></i> @item.CommentCount &nbsp; <i class="bi bi-share"></i> @item.ShareCount &nbsp; <i class="bi bi-eye"></i> @item.ViewCount</div>
+                        @if (item.Status == "Pending")
+                        {
+                            using (Html.BeginForm("ApproveDownloadAndDelete", "PeopleSay", FormMethod.Post, new { @class = "mb-2", onsubmit = "return confirm('Approve and download this video? The submission, comments and stored video will be permanently removed after the download is prepared.');" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.PeopleSayVideoId" />
+                                <button class="btn btn-success w-100" type="submit"><i class="bi bi-cloud-arrow-down me-1"></i> Approve, download &amp; remove</button>
+                            }
+                        }
+                        @using (Html.BeginForm("Moderate", "PeopleSay", FormMethod.Post, new { @class="row g-2 mb-3" }))
+                        {
+                            @Html.AntiForgeryToken()<input type="hidden" name="id" value="@item.PeopleSayVideoId" />
+                            <div class="col-md-7"><input class="form-control" name="reason" value="@item.RejectionReason" placeholder="Optional rejection/review reason" /></div>
+                            <div class="col-md-5 d-flex gap-1"><button class="btn btn-sm btn-danger flex-fill" name="status" value="Rejected">Reject</button><button class="btn btn-sm btn-outline-secondary flex-fill" name="status" value="Pending">Keep pending</button></div>
+                        }
+                        @if (item.Status == "Approved")
+                        {
+                            using (Html.BeginForm("LeaderResponse", "PeopleSay", FormMethod.Post, new { enctype="multipart/form-data", @class="border rounded-3 p-3" }))
+                            {
+                                @Html.AntiForgeryToken()<input type="hidden" name="id" value="@item.PeopleSayVideoId" />
+                                <strong class="d-block mb-2"><i class="bi bi-camera-video me-1"></i>Sangeet Som response</strong>
+                                <input class="form-control form-control-sm mb-2" type="file" name="responseVideo" accept=".mp4,.webm,.mov" required />
+                                <input class="form-control form-control-sm mb-2" name="responseMessage" placeholder="Optional response message" maxlength="600" />
+                                <button class="btn btn-sm btn-primary">Upload response</button>
+                                if (item.HasLeaderResponse) { <span class="text-success small ms-2"><i class="bi bi-check-circle"></i> Response available</span> }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Videos.Any()) { <div class="col-12"><div class="alert alert-info">No video submissions match this filter.</div></div> }
+    </div>
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-white"><h5 class="mb-0 fw-bold">Pending comments (@Model.Comments.Count)</h5></div>
+        <div class="list-group list-group-flush">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="list-group-item d-flex justify-content-between align-items-start gap-3"><div><strong>@comment.PersonName</strong><p class="mb-0">@comment.CommentText</p><small class="text-muted">Video #@comment.PeopleSayVideoId · @comment.CreatedDate.ToString("dd MMM yyyy HH:mm")</small></div>
+                    <div class="d-flex gap-1">
+                        @using (Html.BeginForm("ModerateComment", "PeopleSay", FormMethod.Post)) { @Html.AntiForgeryToken()<input type="hidden" name="id" value="@comment.PeopleSayCommentId" /><button class="btn btn-sm btn-success" name="status" value="Approved">Approve</button> }
+                        @using (Html.BeginForm("ModerateComment", "PeopleSay", FormMethod.Post)) { @Html.AntiForgeryToken()<input type="hidden" name="id" value="@comment.PeopleSayCommentId" /><button class="btn btn-sm btn-outline-danger" name="status" value="Rejected">Reject</button> }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+@model PoliticalLeaderPortal.ViewModels.PeopleSay.PeopleSayAnalyticsVM
+@{
+    ViewBag.Title = "People Say Analytics";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4"><div><h3 class="fw-bold mb-1">People Say Analytics</h3><p class="text-muted mb-0">Identify the community messages receiving the strongest response.</p></div><a class="btn btn-outline-secondary" href="@Url.Action("Index")">Back to moderation</a></div>
+    <div class="row g-3 mb-4">
+        @{ var metrics = new[] { new {T="Submissions",V=Model.TotalSubmissions,I="bi-camera-video"},new{T="Approved",V=Model.ApprovedVideos,I="bi-check-circle"},new{T="Pending",V=Model.PendingVideos,I="bi-hourglass"},new{T="Views",V=Model.TotalViews,I="bi-eye"},new{T="Likes",V=Model.TotalLikes,I="bi-heart"},new{T="Comments",V=Model.TotalComments,I="bi-chat"},new{T="Shares",V=Model.TotalShares,I="bi-share"},new{T="Downloads",V=Model.TotalDownloads,I="bi-download"} }; }
+        @foreach (var metric in metrics) { <div class="col-6 col-lg-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><i class="bi @metric.I text-primary"></i><div class="text-muted small mt-2">@metric.T</div><div class="fs-3 fw-bold">@metric.V</div></div></div></div> }
+    </div>
+    <div class="card border-0 shadow-sm"><div class="card-header bg-white"><h5 class="fw-bold mb-0">Top engaging videos</h5></div><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Video</th><th>Person</th><th>Views</th><th>Likes</th><th>Comments</th><th>Shares</th><th>Leader response</th></tr></thead><tbody>
+        @foreach (var item in Model.TopVideos) { <tr><td><strong>@item.Title</strong></td><td>@item.PersonName</td><td>@item.ViewCount</td><td>@item.LikeCount</td><td>@item.CommentCount</td><td>@item.ShareCount</td><td>@(item.HasLeaderResponse ? "Yes" : "Not yet")</td></tr> }
+    </tbody></table></div></div>
+</div>

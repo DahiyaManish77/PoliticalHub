@@ -1,0 +1,13 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VoiceAgent.VoiceCallVM
+@{
+    ViewBag.Title = "Voice Call Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="mb-4"><a href="@Url.Action("Index")" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Calls</a><h2 class="fw-bold mt-2">Call from @Model.CallerNumber</h2><p class="text-muted">@Model.StartedAt.ToString("dd MMMM yyyy, hh:mm tt") · @Model.Status</p></div>
+    <div class="row g-4"><div class="col-lg-4"><div class="card border-0 shadow-sm"><div class="card-body">
+        <dl class="row mb-0"><dt class="col-5">Call ID</dt><dd class="col-7">@Model.ProviderCallId</dd><dt class="col-5">Direction</dt><dd class="col-7">@Model.Direction</dd><dt class="col-5">Duration</dt><dd class="col-7">@TimeSpan.FromSeconds(Model.DurationSeconds)</dd><dt class="col-5">Language</dt><dd class="col-7">@Model.Language</dd><dt class="col-5">Purpose</dt><dd class="col-7">@Model.Intent</dd></dl>
+        @if(!String.IsNullOrWhiteSpace(Model.LocalRecordingPath)){<audio class="w-100 mt-3" controls src="@Url.Action("Recording",new{id=Model.VoiceCallId})"></audio><a class="btn btn-outline-primary w-100 mt-2" href="@Url.Action("Recording",new{id=Model.VoiceCallId})">Download recording</a>}
+    </div></div></div>
+    <div class="col-lg-8"><div class="card border-0 shadow-sm mb-4"><div class="card-header bg-white"><strong>Transcript</strong></div><div class="card-body" style="white-space:pre-wrap">@(String.IsNullOrWhiteSpace(Model.Transcript)?"Transcript will appear after speech processing is connected.":Model.Transcript)</div></div><div class="card border-0 shadow-sm"><div class="card-header bg-white"><strong>AI summary</strong></div><div class="card-body">@(String.IsNullOrWhiteSpace(Model.Summary)?"Summary will appear after the AI API is configured.":Model.Summary)</div></div></div></div>
+</div>

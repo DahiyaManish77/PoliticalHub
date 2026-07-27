@@ -1,5 +1,6 @@
 ﻿using PoliticalLeaderPortal.Areas.Admin.ViewModels;
 using PoliticalLeaderPortal.Models;
+using PoliticalLeaderPortal.Infrastructure.Uploads;
 using System;
 using System.IO;
 using System.Linq;
@@ -74,9 +75,13 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             if (model.LogoFile != null &&
                 model.LogoFile.ContentLength > 0)
             {
+                string extension = SecureUploadValidator.ValidateImage(
+                    model.LogoFile,
+                    5 * 1024 * 1024,
+                    false);
                 string fileName =
                     Guid.NewGuid().ToString()
-                    + Path.GetExtension(model.LogoFile.FileName);
+                    + extension;
 
                 string folder =
                     "~/Uploads/Website/";
@@ -99,9 +104,13 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             if (model.FaviconFile != null &&
                 model.FaviconFile.ContentLength > 0)
             {
+                string extension = SecureUploadValidator.ValidateImage(
+                    model.FaviconFile,
+                    2 * 1024 * 1024,
+                    true);
                 string fileName =
                     Guid.NewGuid().ToString()
-                    + Path.GetExtension(model.FaviconFile.FileName);
+                    + extension;
 
                 string folder =
                     "~/Uploads/Website/";

@@ -68,6 +68,63 @@
         <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_CampaignAlert_ElectionCampaign" />
         <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.MenuMaster" Width="1.5" PointX="10.375" PointY="14.75" />
         <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_MenuMaster_ParentMenu" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.AppDownloadSetting" Width="1.5" PointX="15.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CampaignPoll" Width="1.5" PointX="15.75" PointY="15.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CampaignPollOption" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CampaignPollResponse" Width="1.5" PointX="16.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CitizenConnectRequest" Width="1.5" PointX="17.75" PointY="12.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionLocationMaster" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionVoter" Width="1.5" PointX="17.75" PointY="17.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventPublicProfile" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.EventTrackingItem" Width="1.5" PointX="2.75" PointY="18.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.HomeMember" Width="1.5" PointX="18.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.HomePageSection" Width="1.5" PointX="19.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.LeaderIntroduction" Width="1.5" PointX="19.75" PointY="13.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.MenuCondition" Width="1.5" PointX="13" PointY="16.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.MeraKshetraItem" Width="1.5" PointX="19.75" PointY="19.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.PublicNewsTicker" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.RoleMenuPermission" Width="1.5" PointX="20.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.SiteHitCounter" Width="1.5" PointX="4.75" PointY="20.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.TodaySchedule" Width="1.5" PointX="21.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.VoterBackupSetting" Width="1.5" PointX="21.75" PointY="0.75" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_MenuCondition_MenuMaster" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.CampaignMaster" Width="1.5" PointX="12.625" PointY="23.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ElectionMaster" Width="1.5" PointX="10.375" PointY="23.25" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_CampaignMaster_ElectionMaster" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.AssemblyConstituencyMaster" Width="1.5" PointX="26.875" PointY="29.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.BlockMaster" Width="1.5" PointX="29.875" PointY="22.625" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.DistrictMaster" Width="1.5" PointX="24.625" PointY="21.25" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.GeographyImportHistory" Width="1.5" PointX="22.375" PointY="14.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.GramPanchayatMaster" Width="1.5" PointX="32.125" PointY="22.5" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.ParliamentaryConstituencyMaster" Width="1.5" PointX="24.625" PointY="36" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.StateMaster" Width="1.5" PointX="22.375" PointY="23.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.TehsilMaster" Width="1.5" PointX="26.875" PointY="22.75" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.VillageMaster" Width="1.5" PointX="34.375" PointY="22.125" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.WardMaster" Width="1.5" PointX="29.125" PointY="28.125" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_AC_PC" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_AC_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Ward_AC" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Block_District" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Block_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_GP_Block" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Village_Block" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_District_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_GP_District" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Tehsil_District" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Village_District" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Ward_District" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_GP_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Village_GP" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_PC_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Tehsil_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Village_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Ward_State" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_Village_Tehsil" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.PersonMaster" Width="1.5" PointX="24.375" PointY="2.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.PersonRoleAssignment" Width="1.5" PointX="26.625" PointY="1.375" />
+        <EntityTypeShape EntityType="PoliticalLeaderPortalDbModel.VolunteerProfile" Width="1.5" PointX="26.625" PointY="7.375" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_PersonRoleAssignment_PersonMaster" />
+        <AssociationConnector Association="PoliticalLeaderPortalDbModel.FK_VolunteerProfile_PersonMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

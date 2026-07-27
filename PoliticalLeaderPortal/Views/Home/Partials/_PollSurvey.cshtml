@@ -1,153 +1,47 @@
-@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom.CampaignPollVM
-
+@model PoliticalLeaderPortal.ViewModels.Poll.PublicPollVM
+@using System.Linq
 @{
     Layout = null;
+    var hasPoll = Model != null;
+    var publicUrl = hasPoll ? Url.Action("Details", "Poll", new { slug = Model.PublicSlug, source = "home" }) : "#";
+    var daysLeft = hasPoll && Model.EndDate.HasValue ? Math.Max(0, (Model.EndDate.Value.Date - DateTime.Today).Days) : 0;
 }
-
-<section class="home-poll-section">
-    <div class="container">
-        <div class="home-poll-panel">
-            <div class="home-poll-copy">
-                <span class="home-poll-kicker">Public Feedback</span>
-                <h2>Polls and Surveys</h2>
-                @if (Model != null)
-                {
-                    <p>@(String.IsNullOrWhiteSpace(Model.Description) ? "Share your opinion and help the campaign team understand local priorities." : Model.Description)</p>
-                    <strong>@Model.Question</strong>
-                    <div class="home-poll-meta">
-                        @if (!String.IsNullOrWhiteSpace(Model.TargetArea))
-                        {
-                            <span><i class="bi bi-geo-alt"></i>@Model.TargetArea</span>
-                        }
-                        <span><i class="bi bi-chat-square-text"></i>@Model.TotalResponses responses</span>
-                    </div>
-                }
-                else
-                {
-                    <p>Active public polls and surveys will appear here when they are published from the campaign dashboard.</p>
-                    <strong>Collect structured feedback from citizens, supporters and volunteers.</strong>
-                }
+@if (hasPoll)
+{
+    <section class="campaign-poll-showcase" id="poll">
+        <div class="campaign-poll-shell">
+            <div class="campaign-poll-intro">
+                <span class="campaign-kicker">POLL &amp; SURVEY</span>
+                <h2>Your voice shapes our priorities.</h2>
+                <p>Take a moment to share your view on the issues that matter to our constituency.</p>
+                <a class="campaign-explore campaign-explore-light" href="@publicUrl">Explore poll <i class="bi bi-arrow-up-right"></i></a>
             </div>
-
-            <div class="home-poll-action">
-                @if (Model != null)
-                {
-                    <a href="@Url.Action("Details", "CampaignPoll", new { slug = Model.PublicSlug, source = "home" })" class="home-poll-btn">
-                        Participate Now
-                    </a>
-                }
-                else
-                {
-                    <a href="@Url.Action("CampaignPolls", "ElectionWarRoom", new { area = "Admin" })" class="home-poll-btn">
-                        Create Poll
-                    </a>
-                }
-                <small>Results are for public feedback and issue understanding.</small>
-            </div>
+            @using (Html.BeginForm("Vote", "Poll", FormMethod.Post, new { @class = "campaign-poll-panel" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PollId" value="@Model.PollId" />
+                <input type="hidden" name="PublicSlug" value="@Model.PublicSlug" />
+                <input type="hidden" name="Source" value="home" />
+                <input type="hidden" name="ConsentGiven" value="true" />
+                <span class="campaign-poll-badge">Live public poll</span>
+                <h3>@Model.Question</h3>
+                <div class="campaign-poll-options">
+                    @foreach (var option in Model.Options.Take(5))
+                    {
+                        <label>
+                            <input type="radio" name="PollOptionId" value="@option.PollOptionId" required />
+                            <span class="campaign-poll-radio"><i class="bi bi-check-lg"></i></span>
+                            <strong>@option.OptionText</strong>
+                        </label>
+                    }
+                </div>
+                <div class="campaign-poll-meta">
+                    <div class="campaign-voter-stack" aria-hidden="true"><span>SS</span><span>VK</span><span>AS</span></div>
+                    <span><strong>@Model.TotalVotes</strong> total votes</span>
+                    @if (Model.EndDate.HasValue) { <span class="campaign-poll-dot">•</span><span>@daysLeft days left</span> }
+                    <button class="campaign-poll-submit" type="submit">Vote now <i class="bi bi-arrow-right"></i></button>
+                </div>
+            }
         </div>
-    </div>
-</section>
-
-<style>
-    .home-poll-section {
-        padding: 32px 0;
-        background: #ffffff;
-    }
-
-    .home-poll-panel {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: center;
-        gap: 24px;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 24px;
-        background: #f8fafc;
-    }
-
-    .home-poll-kicker {
-        display: inline-flex;
-        margin-bottom: 6px;
-        color: #e85d04;
-        font-size: .76rem;
-        font-weight: 800;
-        text-transform: uppercase;
-    }
-
-    .home-poll-copy h2 {
-        margin: 0;
-        color: #111827;
-        font-size: clamp(1.3rem, 2vw, 1.95rem);
-        font-weight: 800;
-    }
-
-    .home-poll-copy p {
-        margin: 8px 0 10px;
-        max-width: 720px;
-        color: #64748b;
-        line-height: 1.55;
-    }
-
-    .home-poll-copy strong {
-        display: block;
-        color: #0f172a;
-        font-size: 1rem;
-    }
-
-    .home-poll-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 12px;
-        color: #475569;
-        font-size: .88rem;
-    }
-
-    .home-poll-meta span {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .home-poll-action {
-        display: grid;
-        gap: 8px;
-        justify-items: end;
-        min-width: 190px;
-    }
-
-    .home-poll-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 42px;
-        padding: 0 18px;
-        border-radius: 6px;
-        background: #111827;
-        color: #fff;
-        font-weight: 800;
-        text-decoration: none;
-    }
-
-    .home-poll-action small {
-        color: #64748b;
-        text-align: right;
-        max-width: 260px;
-    }
-
-    @@media (max-width: 767px) {
-        .home-poll-panel {
-            grid-template-columns: 1fr;
-            padding: 18px;
-        }
-
-        .home-poll-action {
-            justify-items: stretch;
-            min-width: 0;
-        }
-
-        .home-poll-action small {
-            text-align: left;
-        }
-    }
-</style>
+    </section>
+}

@@ -2444,3 +2444,41 @@ body.public-home-layout .hero-slide img.hero-background-img {
     z-index: 31 !important;
     bottom: 16px !important;
 }
+
+/* Hero slider runtime stability: keep all slides renderable and let Swiper rotate the active slide. */
+.heroSwiper.swiper-fade .swiper-slide,
+.heroSwiper .swiper-slide {
+    visibility: visible !important;
+    pointer-events: none !important;
+    transition-property: opacity !important;
+}
+
+.heroSwiper.swiper-fade .swiper-slide {
+    opacity: 0 !important;
+}
+
+.heroSwiper.swiper-fade .swiper-slide-active,
+.heroSwiper.swiper-fade .swiper-slide-duplicate-active,
+.heroSwiper .swiper-slide-active,
+.heroSwiper .swiper-slide-duplicate-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Inner-page dark banners must retain accessible white typography. */
+body.public-inner-layout .page-banner-section .page-banner-title,
+body.public-inner-layout .page-banner-section .page-banner-description,
+body.public-inner-layout .page-banner-section .breadcrumb-item,
+body.public-inner-layout .page-banner-section .breadcrumb-item a {
+    color: #fff !important;
+    opacity: 1 !important;
+}
+
+body.public-inner-layout .page-banner-section .breadcrumb-item.active {
+    color: #ff9933 !important;
+}
+
+body.public-inner-layout .page-banner-section .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255,255,255,.78) !important;
+}

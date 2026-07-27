@@ -62,5 +62,39 @@ namespace PoliticalLeaderPortal.Models
         public virtual DbSet<EventVehicle> EventVehicles { get; set; }
         public virtual DbSet<JanSampark> JanSamparks { get; set; }
         public virtual DbSet<MenuMaster> MenuMasters { get; set; }
+        public virtual DbSet<AppDownloadSetting> AppDownloadSettings { get; set; }
+        public virtual DbSet<CampaignPoll> CampaignPolls { get; set; }
+        public virtual DbSet<CampaignPollOption> CampaignPollOptions { get; set; }
+        public virtual DbSet<CampaignPollResponse> CampaignPollResponses { get; set; }
+        public virtual DbSet<CitizenConnectRequest> CitizenConnectRequests { get; set; }
+        public virtual DbSet<ElectionLocationMaster> ElectionLocationMasters { get; set; }
+        public virtual DbSet<ElectionVoter> ElectionVoters { get; set; }
+        public virtual DbSet<EventPublicProfile> EventPublicProfiles { get; set; }
+        public virtual DbSet<EventTrackingItem> EventTrackingItems { get; set; }
+        public virtual DbSet<HomeMember> HomeMembers { get; set; }
+        public virtual DbSet<HomePageSection> HomePageSections { get; set; }
+        public virtual DbSet<LeaderIntroduction> LeaderIntroductions { get; set; }
+        public virtual DbSet<MenuCondition> MenuConditions { get; set; }
+        public virtual DbSet<MeraKshetraItem> MeraKshetraItems { get; set; }
+        public virtual DbSet<PublicNewsTicker> PublicNewsTickers { get; set; }
+        public virtual DbSet<RoleMenuPermission> RoleMenuPermissions { get; set; }
+        public virtual DbSet<SiteHitCounter> SiteHitCounters { get; set; }
+        public virtual DbSet<TodaySchedule> TodaySchedules { get; set; }
+        public virtual DbSet<VoterBackupSetting> VoterBackupSettings { get; set; }
+        public virtual DbSet<CampaignMaster> CampaignMasters { get; set; }
+        public virtual DbSet<ElectionMaster> ElectionMasters { get; set; }
+        public virtual DbSet<AssemblyConstituencyMaster> AssemblyConstituencyMasters { get; set; }
+        public virtual DbSet<BlockMaster> BlockMasters { get; set; }
+        public virtual DbSet<DistrictMaster> DistrictMasters { get; set; }
+        public virtual DbSet<GeographyImportHistory> GeographyImportHistories { get; set; }
+        public virtual DbSet<GramPanchayatMaster> GramPanchayatMasters { get; set; }
+        public virtual DbSet<ParliamentaryConstituencyMaster> ParliamentaryConstituencyMasters { get; set; }
+        public virtual DbSet<StateMaster> StateMasters { get; set; }
+        public virtual DbSet<TehsilMaster> TehsilMasters { get; set; }
+        public virtual DbSet<VillageMaster> VillageMasters { get; set; }
+        public virtual DbSet<WardMaster> WardMasters { get; set; }
+        public virtual DbSet<PersonMaster> PersonMasters { get; set; }
+        public virtual DbSet<PersonRoleAssignment> PersonRoleAssignments { get; set; }
+        public virtual DbSet<VolunteerProfile> VolunteerProfiles { get; set; }
     }
 }

@@ -1,20 +1,22 @@
-@model List<PoliticalLeaderPortal.ViewModels.CitizenConnectVM>
+﻿@model List<PoliticalLeaderPortal.ViewModels.CitizenConnectVM>
 @{
     ViewBag.Title = "Citizen Connect";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
+<div class="container-fluid admin-page">
     <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div class="card-header">
             <div>
-                <h4 class="mb-0 fw-bold">Citizen Connect</h4>
+                <div class="admin-page-kicker">Public Engagement</div>
+                <h4>Citizen Connect</h4>
                 <div class="text-muted small">Contact, volunteer and suggestion submissions.</div>
             </div>
-            <span class="badge text-bg-primary">@Model.Count records</span>
+            <div class="admin-record-count"><strong>@Model.Count</strong>records</div>
         </div>
         <div class="card-body">
-            @using (Html.BeginForm("Index", "CitizenConnect", FormMethod.Get, new { area = "Admin", @class = "row g-2 mb-3" }))
+            @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Index", "CitizenConnect", FormMethod.Get, new { area = "Admin", @class = "row g-2 admin-filter-bar" }))
             {
                 <div class="col-md-3">
                     @Html.DropDownList("requestType", new SelectList(new[] { "", "Contact", "Volunteer", "Suggestion" }, ViewBag.RequestType), "All Types", new { @class = "form-select" })
@@ -30,7 +32,7 @@
                 </div>
             }
 
-            <div class="table-responsive">
+            <div class="admin-table-shell"><div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
@@ -54,15 +56,15 @@
                                 <td>@item.Subject</td>
                                 <td><span class="badge text-bg-secondary">@item.Status</span></td>
                                 <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
-                                <td class="text-end">
+                                <td class="text-end"><div class="admin-row-actions">
                                     <a href="@Url.Action("Details", new { id = item.CitizenConnectId })" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
                                     <button type="button" class="btn btn-sm btn-outline-danger js-delete-connect" data-id="@item.CitizenConnectId"><i class="bi bi-trash"></i></button>
-                                </td>
+                                </div></td>
                             </tr>
                         }
                     </tbody>
                 </table>
-            </div>
+            </div></div>
         </div>
     </div>
 </div>
@@ -78,7 +80,7 @@
                         fetch("@Url.Action("Delete", "CitizenConnect")", {
                             method: "POST",
                             headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-                            body: "id=" + encodeURIComponent(id)
+                            body: "id=" + encodeURIComponent(id) + "&__RequestVerificationToken=" + encodeURIComponent(document.querySelector('input[name=__RequestVerificationToken]').value)
                         }).then(function (response) { return response.json(); })
                           .then(function (data) {
                               Swal.fire(data.success ? "Deleted" : "Error", data.message, data.success ? "success" : "error")

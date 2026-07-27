@@ -1,0 +1,118 @@
+@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+@{
+    Layout = null;
+    var modalId = Convert.ToString(ViewData["ModalId"]);
+    var modalTitle = Convert.ToString(ViewData["ModalTitle"]);
+    var modalLabel = Convert.ToString(ViewData["ModalLabel"]);
+    var isVolunteer = String.Equals(Model.RequestType, "Volunteer", StringComparison.OrdinalIgnoreCase);
+    var formPrefix = modalId + "_";
+}
+
+<div class="modal fade citizen-modal" id="@modalId" tabindex="-1" aria-labelledby="@(modalId)Title" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            @using (Html.BeginForm("Submit", "CitizenConnect", FormMethod.Post, new { @class = "citizen-modal-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.RequestType)
+                if (isVolunteer)
+                {
+                    @Html.HiddenFor(m => m.Subject)
+                }
+
+                <div class="modal-header">
+                    <div>
+                        <span>@modalLabel</span>
+                        <h5 class="modal-title" id="@(modalId)Title">@modalTitle</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.FullName, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Full name", id = formPrefix + "FullName" })
+                            @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", placeholder = "Mobile number", inputmode = "numeric", id = formPrefix + "MobileNumber" })
+                            @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address (optional)", type = "email", id = formPrefix + "Email" })
+                        </div>
+
+                        @if (isVolunteer)
+                        {
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.StateId, "State", new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.StateId, Model.States, "Select state", new { @class = "form-select citizen-geo", data_geo_type = "district", data_geo_child = formPrefix + "DistrictId", id = formPrefix + "StateId" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.DistrictId, "District", new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.DistrictId, Model.Districts, "Select district", new { @class = "form-select citizen-geo", data_geo_type = "block", data_geo_child = formPrefix + "BlockId", id = formPrefix + "DistrictId" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.BlockId, "Block", new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.BlockId, Model.Blocks, "Select block", new { @class = "form-select citizen-geo", data_geo_type = "grampanchayat", data_geo_child = formPrefix + "GramPanchayatId", id = formPrefix + "BlockId" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.GramPanchayatId, "Gram Panchayat", new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.GramPanchayatId, Model.GramPanchayats, "Select gram panchayat", new { @class = "form-select citizen-geo", data_geo_type = "village", data_geo_child = formPrefix + "VillageId", id = formPrefix + "GramPanchayatId" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.VillageId, "Village", new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.VillageId, Model.Villages, "Select village", new { @class = "form-select", id = formPrefix + "VillageId" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.PreferredRole, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.PreferredRole, new SelectList(new[] { "Public Outreach", "Event Management", "Social Media", "Photography", "Videography", "Data Entry", "Help Desk", "Transport", "Medical Assistance", "Other" }), "Select role", new { @class = "form-select", id = formPrefix + "PreferredRole" })
+                                @Html.ValidationMessageFor(m => m.PreferredRole, "", new { @class = "text-danger small" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                @Html.LabelFor(m => m.District, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.District, new { @class = "form-control", placeholder = "District", id = formPrefix + "District" })
+                            </div>
+                            <div class="col-12">
+                                @Html.LabelFor(m => m.Subject, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Subject", id = formPrefix + "Subject" })
+                                @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small" })
+                            </div>
+                        }
+
+                        <div class="col-12">
+                            @Html.LabelFor(m => m.Message, isVolunteer ? "Why do you want to volunteer?" : "Message", new { @class = "form-label" })
+                            @Html.TextAreaFor(m => m.Message, 4, 40, new { @class = "form-control", placeholder = "Write your message", id = formPrefix + "Message" })
+                            @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger small" })
+                        </div>
+
+                        @if (isVolunteer)
+                        {
+                            <div class="col-12">
+                                <label class="citizen-privacy-consent">
+                                    @Html.CheckBoxFor(m => m.PrivacyConsent, new { id = formPrefix + "PrivacyConsent" })
+                                    <span>I consent to the use of my details for volunteer registration and coordination.</span>
+                                </label>
+                                @Html.ValidationMessageFor(m => m.PrivacyConsent, "", new { @class = "text-danger small d-block mt-1" })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn citizen-primary-btn">
+                        <i class="bi bi-send"></i>
+                        @(isVolunteer ? "Submit application" : "Submit request")
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

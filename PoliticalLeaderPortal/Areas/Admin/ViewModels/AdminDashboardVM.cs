@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace PoliticalLeaderPortal.Areas.Admin.ViewModels
 {
@@ -30,12 +31,27 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels
         public int PendingCampaignTasks { get; set; }
         public int OpenCampaignAlerts { get; set; }
         public int OpenJanSampark { get; set; }
+        public int TodayFieldEvents { get; set; }
+        public int OverdueTasks { get; set; }
+        public int CriticalAlerts { get; set; }
+        public int ActiveVerifiedDocuments { get; set; }
+        public int ExpiringVerifiedDocuments { get; set; }
+        public int NewCitizenIssuesToday { get; set; }
+        public int TotalCampaignTasks { get; set; }
+        public int CompletedCampaignTasks { get; set; }
+        public int ResolvedJanSampark { get; set; }
         public int BoothsCovered { get; set; }
         public int TotalBooths { get; set; }
+        public decimal PlannedEventBudget { get; set; }
+        public decimal ActualEventExpense { get; set; }
         public decimal BoothCoveragePercent { get; set; }
+        public decimal TaskCompletionPercent { get; set; }
+        public decimal IssueResolutionPercent { get; set; }
+        public decimal BudgetUtilizationPercent { get; set; }
         public decimal PublicContentReadiness { get; set; }
         public decimal CampaignReadiness { get; set; }
         public string TodaySummary { get; set; }
+        public bool IsCampaignFiltered { get; set; }
 
         public List<AdminDashboardMetricVM> Metrics { get; set; }
         public List<AdminDashboardActionVM> QuickActions { get; set; }
@@ -78,6 +94,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
         public object RouteValues { get; set; }
+        public string TypeText { get; set; }
+        public string StatusText { get; set; }
     }
 
     public class AdminDashboardActivityVM
@@ -105,5 +123,18 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels
         public string Constituency { get; set; }
         public string RegisteredOn { get; set; }
         public string Status { get; set; }
+    }
+
+    public class CampaignContextVM
+    {
+        public CampaignContextVM()
+        {
+            Campaigns = new List<SelectListItem>();
+        }
+
+        public int? CampaignId { get; set; }
+        public string CampaignName { get; set; }
+        public IList<SelectListItem> Campaigns { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

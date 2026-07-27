@@ -1,9 +1,11 @@
-@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+﻿@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
 @{
     ViewBag.Title = ViewBag.FormTitle ?? "Citizen Connect";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var isVolunteer = String.Equals(Model.RequestType, "Volunteer", StringComparison.OrdinalIgnoreCase);
+    var allowsAttachment = String.Equals(Model.RequestType, "Appointment", StringComparison.OrdinalIgnoreCase)
+        || String.Equals(Model.RequestType, "Invitation", StringComparison.OrdinalIgnoreCase);
 }
-
 <section class="citizen-connect-page">
     <div class="container">
         <div class="citizen-connect-shell">
@@ -17,14 +19,16 @@
                     <div><i class="bi bi-person-check"></i> Duplicate entries prevented</div>
                 </div>
             </div>
-
             <div class="citizen-connect-card">
-                @using (Html.BeginForm("Submit", "CitizenConnect", FormMethod.Post, new { @class = "row g-3" }))
+                @using (Html.BeginForm("Submit", "CitizenConnect", FormMethod.Post, new { @class = "row g-3", id = "citizenConnectForm", enctype = "multipart/form-data", data_geography_form = "true", data_geography_url = Url.Action("GeographyOptions", "CitizenConnect") }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.RequestType)
+                    if (isVolunteer)
+                    {
+                        @Html.HiddenFor(m => m.Subject)
+                    }
                     @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.FullName, new { @class = "form-label" })
                         @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Your full name" })
@@ -32,37 +36,56 @@
                     </div>
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", placeholder = "Mobile number" })
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", placeholder = "10-digit mobile number", inputmode = "numeric" })
+                        @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger small" })
                     </div>
                     <div class="col-md-6">
                         @Html.LabelFor(m => m.Email, new { @class = "form-label" })
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
                     </div>
-                    <div class="col-md-6">
-                        @Html.LabelFor(m => m.District, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.District, new { @class = "form-control", placeholder = "District" })
-                    </div>
-                    <div class="col-md-6">
-                        @Html.LabelFor(m => m.Assembly, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.Assembly, new { @class = "form-control", placeholder = "Assembly constituency" })
-                    </div>
-                    <div class="col-md-6">
-                        @Html.LabelFor(m => m.Subject, new { @class = "form-label" })
-                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Subject" })
-                        @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small" })
-                    </div>
-                    <div class="col-12">
-                        @Html.LabelFor(m => m.Message, new { @class = "form-label" })
-                        @Html.TextAreaFor(m => m.Message, 5, 40, new { @class = "form-control", placeholder = "Write your message" })
-                        @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger small" })
-                    </div>
-                    <div class="col-12 d-flex justify-content-end">
-                        <button class="btn connect-submit-btn" type="submit">
-                            <i class="bi bi-send"></i> Submit Request
-                        </button>
-                    </div>
+                    if (isVolunteer)
+                    {
+                        <div class="col-md-6">@Html.LabelFor(m => m.StateId, "State", new { @class = "form-label" })@Html.DropDownListFor(m => m.StateId, Model.States, "Select State", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.DistrictId, "District", new { @class = "form-label" })@Html.DropDownListFor(m => m.DistrictId, Model.Districts, "Select District", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.ParliamentaryConstituencyId, new { @class = "form-label" })@Html.DropDownListFor(m => m.ParliamentaryConstituencyId, Model.ParliamentaryConstituencies, "Select Parliamentary Constituency", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.AssemblyConstituencyId, "Assembly Constituency", new { @class = "form-label" })@Html.DropDownListFor(m => m.AssemblyConstituencyId, Model.AssemblyConstituencies, "Select Assembly", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.BlockId, "Block", new { @class = "form-label" })@Html.DropDownListFor(m => m.BlockId, Model.Blocks, "Select Block", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.GramPanchayatId, "Gram Panchayat", new { @class = "form-label" })@Html.DropDownListFor(m => m.GramPanchayatId, Model.GramPanchayats, "Select Gram Panchayat", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.VillageId, "Village", new { @class = "form-label" })@Html.DropDownListFor(m => m.VillageId, Model.Villages, "Select Village", new { @class = "form-select" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.PreferredRole, new { @class = "form-label" })@Html.DropDownListFor(m => m.PreferredRole, new SelectList(new[] { "Public Outreach", "Event Management", "Social Media", "Photography", "Videography", "Data Entry", "Help Desk", "Transport", "Medical Assistance", "Other" }), "Select role", new { @class = "form-select" })@Html.ValidationMessageFor(m => m.PreferredRole, "", new { @class = "text-danger small" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.Skills, new { @class = "form-label" })@Html.TextBoxFor(m => m.Skills, new { @class = "form-control", placeholder = "Skills, experience or interests" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.AvailableDays, new { @class = "form-label" })@Html.TextBoxFor(m => m.AvailableDays, new { @class = "form-control", placeholder = "Example: Saturday and Sunday" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.AvailableTime, new { @class = "form-label" })@Html.TextBoxFor(m => m.AvailableTime, new { @class = "form-control", placeholder = "Example: 5 PM to 8 PM" })</div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6">@Html.LabelFor(m => m.District, new { @class = "form-label" })@Html.TextBoxFor(m => m.District, new { @class = "form-control", placeholder = "District" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.Assembly, new { @class = "form-label" })@Html.TextBoxFor(m => m.Assembly, new { @class = "form-control", placeholder = "Assembly constituency" })</div>
+                        <div class="col-md-6">@Html.LabelFor(m => m.Subject, new { @class = "form-label" })@Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Subject" })@Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger small" })</div>
+                    }
+                    <div class="col-12">@Html.LabelFor(m => m.Message, isVolunteer ? "Why do you want to volunteer?" : "Message", new { @class = "form-label" })@Html.TextAreaFor(m => m.Message, 5, 40, new { @class = "form-control", placeholder = "Write your message" })@Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger small" })</div>
+                    if (allowsAttachment)
+                    {
+                        <div class="col-12">
+                            @Html.LabelFor(m => m.AttachmentFile, new { @class = "form-label" })
+                            <input type="file" name="AttachmentFile" class="form-control" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.txt" />
+                            <small class="text-muted">PDF, image, or TXT. Maximum size: 10 MB.</small>
+                        </div>
+                    }
+                    if (isVolunteer)
+                    {
+                        <div class="col-12"><div class="border rounded-3 p-3"><strong class="d-block mb-2">Communication consent</strong><div class="form-check">@Html.CheckBoxFor(m => m.WhatsAppConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.WhatsAppConsent, new { @class = "form-check-label" })</div><div class="form-check">@Html.CheckBoxFor(m => m.SmsConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.SmsConsent, new { @class = "form-check-label" })</div><div class="form-check">@Html.CheckBoxFor(m => m.EmailConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.EmailConsent, new { @class = "form-check-label" })</div><div class="form-check">@Html.CheckBoxFor(m => m.VoiceConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.VoiceConsent, new { @class = "form-check-label" })</div><hr /><div class="form-check">@Html.CheckBoxFor(m => m.PrivacyConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.PrivacyConsent, "I consent to the use of my details for volunteer registration and coordination.", new { @class = "form-check-label" })@Html.ValidationMessageFor(m => m.PrivacyConsent, "", new { @class = "text-danger small d-block" })</div></div></div>
+                    }
+                    <div class="col-12 d-flex justify-content-end"><button class="btn connect-submit-btn" type="submit"><i class="bi bi-send"></i> @(isVolunteer ? "Submit Volunteer Application" : "Submit Request")</button></div>
                 }
             </div>
         </div>
     </div>
 </section>
+@section Scripts {
+    @if (isVolunteer)
+    {
+        <script src="@Url.Content("~/Scripts/custom/geography-cascade.js")"></script>
+    }
+}

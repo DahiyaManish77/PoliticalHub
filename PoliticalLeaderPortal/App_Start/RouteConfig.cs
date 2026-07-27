@@ -10,6 +10,28 @@ namespace PoliticalLeaderPortal
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "PublicPollVote",
+                url: "poll/vote",
+                defaults: new
+                {
+                    controller = "Poll",
+                    action = "Vote"
+                },
+                namespaces: new[] { "PoliticalLeaderPortal.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "PublicPoll",
+                url: "poll/{slug}",
+                defaults: new
+                {
+                    controller = "Poll",
+                    action = "Details"
+                },
+                namespaces: new[] { "PoliticalLeaderPortal.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "NewsDetails",
                 url: "news/{id}",
                 defaults: new

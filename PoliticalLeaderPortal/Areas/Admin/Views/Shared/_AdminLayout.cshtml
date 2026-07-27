@@ -20,11 +20,11 @@
 
     <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css" rel="stylesheet" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
     <link href="~/Areas/Admin/Content/admin.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/admin-pro-polish.css?v=20260719-1" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/admin-campaign-dashboard.css?v=20260723-1" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/admin-fluent-shell.css?v=20260726-1" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/admin-operations-ui.css?v=20260726-1" rel="stylesheet" />
 
     @RenderSection("Styles", false)
 
@@ -53,8 +53,8 @@
                     <i class="fas fa-hand-holding-heart"></i>
                 </span>
                 <span>
-                    <strong>जनसेवा अभियान</strong>
-                    <small>Election Campaign</small>
+                    <strong>Campaign Command</strong>
+                    <small>Political Operations</small>
                 </span>
             </a>
 
@@ -98,10 +98,14 @@
                         <i class="bi bi-list"></i>
                     </button>
 
+                    @Html.Action("CampaignSelector", "Dashboard", new { area = "Admin" })
+
                     <div class="admin-global-search">
                         <input type="search"
-                               placeholder="Search anything..."
-                               aria-label="Global search" />
+                               id="adminGlobalMenuSearch"
+                               placeholder="Search navigation"
+                               aria-label="Search navigation"
+                               autocomplete="off" />
                         <i class="bi bi-search"></i>
                     </div>
                 </div>
@@ -140,7 +144,6 @@
 
                     <button type="button" class="admin-notification-btn" aria-label="Notifications">
                         <i class="bi bi-bell"></i>
-                        <span>7</span>
                     </button>
 
                     <div class="admin-navbar-user">
@@ -161,6 +164,10 @@
     </div>
 
     <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
+    <div class="d-none" id="adminRequestVerificationToken">
+        @Html.AntiForgeryToken()
+    </div>
 
     <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 

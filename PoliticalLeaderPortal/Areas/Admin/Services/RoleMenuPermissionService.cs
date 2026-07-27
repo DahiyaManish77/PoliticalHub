@@ -742,6 +742,144 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
                         AND ActionName = 'Index';
                   END
 
+                  DECLARE @CommunicationMenuId INT =
+                  (
+                      SELECT TOP 1 MenuId
+                      FROM dbo.MenuMaster
+                      WHERE MenuName IN ('Communication', 'Communication & Media')
+                        AND IsActive = 1
+                      ORDER BY CASE WHEN MenuName = 'Communication & Media' THEN 0 ELSE 1 END, MenuId
+                  );
+
+                  DECLARE @VideoMeetingMenuId INT =
+                  (
+                      SELECT TOP 1 MenuId
+                      FROM dbo.MenuMaster
+                      WHERE MenuName = 'Video Meetings'
+                         OR (AreaName = 'Admin' AND ControllerName = 'VideoMeeting' AND ActionName = 'Index')
+                      ORDER BY
+                          CASE WHEN ParentMenuId = @CommunicationMenuId THEN 0 ELSE 1 END,
+                          CASE WHEN ControllerName = 'VideoMeeting' AND ActionName = 'Index' THEN 0 ELSE 1 END,
+                          MenuId
+                  );
+
+                  IF @VideoMeetingMenuId IS NULL
+                  BEGIN
+                      INSERT INTO dbo.MenuMaster
+                      (
+                          ParentMenuId, MenuName, MenuDescription, AreaName, ControllerName, ActionName,
+                          CustomUrl, MenuType, IconClass, CssClass, DisplayOrder, IsActive, ShowOnHome,
+                          ShowInAdminSidebar, OpenInNewTab, IsClickable, HasMegaMenu, PageTitle,
+                          MetaDescription, CreatedBy, CreatedDate, MenuLevel, ShowInFooter,
+                          ShowInQuickLinks, IsSystemMenu
+                      )
+                      VALUES
+                      (
+                          @CommunicationMenuId, 'Video Meetings', 'Create secure video meetings and invite authorised participants.',
+                          'Admin', 'VideoMeeting', 'Index', NULL, 'Admin', 'fas fa-video',
+                          NULL, 166, 1, 0, 1, 0, 1, 0, 'Video Meetings',
+                          'Schedule and manage secure video meetings.', NULL, GETDATE(),
+                          CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END, 0, 0, 1
+                      );
+                      SET @VideoMeetingMenuId = SCOPE_IDENTITY();
+                  END
+                  ELSE
+                  BEGIN
+                      UPDATE dbo.MenuMaster
+                      SET ParentMenuId = @CommunicationMenuId,
+                          MenuName = 'Video Meetings',
+                          MenuDescription = 'Create secure video meetings and invite authorised participants.',
+                          IconClass = 'fas fa-video',
+                          DisplayOrder = 166,
+                          IsActive = 1,
+                          ShowOnHome = 0,
+                          ShowInAdminSidebar = 1,
+                          IsClickable = 1,
+                          MenuLevel = CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END,
+                          ModifiedDate = GETDATE()
+                      WHERE MenuId = @VideoMeetingMenuId;
+                  END
+
+                  UPDATE dbo.MenuMaster
+                  SET IsActive = 0,
+                      ShowInAdminSidebar = 0,
+                      ModifiedDate = GETDATE()
+                  WHERE MenuId <> @VideoMeetingMenuId
+                    AND
+                    (
+                        MenuName = 'Video Meetings'
+                        OR (AreaName = 'Admin' AND ControllerName = 'VideoMeeting' AND ActionName = 'Index')
+                    );
+
+                  DECLARE @VoiceAgentMenuId INT =
+                  (
+                      SELECT TOP 1 MenuId FROM dbo.MenuMaster
+                      WHERE MenuName = 'Voice Agent'
+                         OR (AreaName='Admin' AND ControllerName='VoiceAgent' AND ActionName='Index')
+                      ORDER BY MenuId
+                  );
+                  IF @VoiceAgentMenuId IS NULL
+                  BEGIN
+                      INSERT dbo.MenuMaster
+                      (
+                          ParentMenuId,MenuName,MenuDescription,AreaName,ControllerName,ActionName,
+                          CustomUrl,MenuType,IconClass,CssClass,DisplayOrder,IsActive,ShowOnHome,
+                          ShowInAdminSidebar,OpenInNewTab,IsClickable,HasMegaMenu,PageTitle,
+                          MetaDescription,CreatedBy,CreatedDate,MenuLevel,ShowInFooter,
+                          ShowInQuickLinks,IsSystemMenu
+                      )
+                      VALUES
+                      (
+                          @CommunicationMenuId,'Voice Agent','Manage incoming calls, missed calls, recordings and voice API settings.',
+                          'Admin','VoiceAgent','Index',NULL,'Admin','fas fa-headset',NULL,165,1,0,1,0,1,0,
+                          'Voice Agent','AI voice call operations and analytics.',NULL,GETDATE(),
+                          CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END,0,0,1
+                      );
+                      SET @VoiceAgentMenuId=SCOPE_IDENTITY();
+                  END
+                  ELSE
+                  BEGIN
+                      UPDATE dbo.MenuMaster SET ParentMenuId=@CommunicationMenuId,MenuName='Voice Agent',
+                          MenuDescription='Manage incoming calls, missed calls, recordings and voice API settings.',
+                          AreaName='Admin',ControllerName='VoiceAgent',ActionName='Index',IconClass='fas fa-headset',
+                          DisplayOrder=165,IsActive=1,ShowInAdminSidebar=1,IsClickable=1,
+                          MenuLevel=CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END,ModifiedDate=GETDATE()
+                      WHERE MenuId=@VoiceAgentMenuId;
+                  END
+
+                  IF NOT EXISTS
+                  (
+                      SELECT 1 FROM dbo.MenuMaster
+                      WHERE AreaName='Admin' AND ControllerName='PeopleSay' AND ActionName='Index'
+                  )
+                  BEGIN
+                      INSERT INTO dbo.MenuMaster
+                      (
+                          ParentMenuId, MenuName, MenuDescription, AreaName, ControllerName, ActionName,
+                          CustomUrl, MenuType, IconClass, CssClass, DisplayOrder, IsActive, ShowOnHome,
+                          ShowInAdminSidebar, OpenInNewTab, IsClickable, HasMegaMenu, PageTitle,
+                          MetaDescription, CreatedBy, CreatedDate, MenuLevel, ShowInFooter,
+                          ShowInQuickLinks, IsSystemMenu
+                      )
+                      VALUES
+                      (
+                          @CommunicationMenuId, 'People Say', 'Moderate public testimonial videos, comments and leader responses.',
+                          'Admin', 'PeopleSay', 'Index', NULL, 'Admin', 'fas fa-comment-dots',
+                          NULL, 167, 1, 0, 1, 0, 1, 0, 'People Say About Som',
+                          'Review and analyse public testimonial videos.', NULL, GETDATE(),
+                          CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END, 0, 0, 1
+                      );
+                  END
+                  ELSE
+                  BEGIN
+                      UPDATE dbo.MenuMaster SET ParentMenuId=@CommunicationMenuId,MenuName='People Say',
+                          MenuDescription='Moderate public testimonial videos, comments and leader responses.',
+                          IconClass='fas fa-comment-dots',DisplayOrder=167,IsActive=1,ShowInAdminSidebar=1,
+                          IsClickable=1,MenuLevel=CASE WHEN @CommunicationMenuId IS NULL THEN 0 ELSE 1 END,
+                          ModifiedDate=GETDATE()
+                      WHERE AreaName='Admin' AND ControllerName='PeopleSay' AND ActionName='Index';
+                  END
+
                   MERGE dbo.RoleMenuPermission AS Target
                   USING
                   (

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using PoliticalLeaderPortal.Areas.Admin.Infrastructure;
 using PoliticalLeaderPortal.Areas.Admin.Services;
@@ -119,7 +120,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
         }
         public ActionResult MembershipDrive()
         {
-            return View("CampaignErpModule", _service.GetCampaignErpModule("membership"));
+            return RedirectToAction("Index", "VerifiedDocument");
         }
 
         public ActionResult SocialMediaWarRoom(string keyword = null)
@@ -319,9 +320,12 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
 
         public ActionResult Events(string status = null, string keyword = null)
         {
+            int? campaignId = SelectedCampaignId();
             IEnumerable<EventVM> records = !string.IsNullOrWhiteSpace(keyword)
-                ? _service.SearchEvents(keyword)
-                : !string.IsNullOrWhiteSpace(status) ? _service.GetEventsByStatus(status) : _service.GetEvents();
+                ? _service.SearchEvents(keyword, campaignId)
+                : !string.IsNullOrWhiteSpace(status)
+                    ? _service.GetEventsByStatus(status, campaignId)
+                    : _service.GetEvents(campaignId);
 
             return Module("Events", "Campaign event planning, turnout, priority and status tracking.", records, "CreateEvent", "EditEvent", "DeleteEvent", "EventId");
         }
@@ -336,6 +340,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventVehicleVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchVehicles(keyword)
                 : _service.GetDashboardVehicles(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Vehicles", "Vehicle allocation, owner details, village movement, passenger count, fuel cost and verification tracking.", records, "CreateVehicle", "EditVehicle", "DeleteVehicle", "EventVehicleId");
         }
@@ -345,6 +350,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventAttendanceVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchAttendances(keyword)
                 : _service.GetDashboardAttendances(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Attendance", "Worker, volunteer and VIP attendance monitoring.", records, "CreateAttendance", "EditAttendance", "DeleteAttendance", "AttendanceId");
         }
@@ -354,6 +360,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventTeamVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchTeams(keyword)
                 : _service.GetDashboardTeams(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Teams", "Team ownership, assigned areas, members and completion status.", records, "CreateTeam", "EditTeam", "DeleteTeam", "EventTeamId");
         }
@@ -363,6 +370,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventTeamVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchTeams(keyword)
                 : _service.GetDashboardTeams(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Volunteer Management", "Volunteer teams, area assignment, leader contact and active field status.", records, "CreateTeam", "EditTeam", "DeleteTeam", "EventTeamId");
         }
@@ -372,6 +380,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventGuestVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchGuests(keyword)
                 : _service.GetDashboardGuests(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Guests", "Guest invitations, confirmation and logistics requirements.", records, "CreateGuest", "EditGuest", "DeleteGuest", "EventGuestId");
         }
@@ -381,6 +390,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventArrangementVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchArrangements(keyword)
                 : _service.GetDashboardArrangements(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Arrangements", "Venue, vendor, logistics and verification tracking.", records, "CreateArrangement", "EditArrangement", "DeleteArrangement", "EventArrangementId");
         }
@@ -390,6 +400,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventExpenseVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchExpenses(keyword)
                 : _service.GetExpenses();
+            records = ApplySelectedCampaign(records);
 
             return Module("Expenses", "Budget, payment and approval monitoring.", records, "CreateExpense", "EditExpense", "DeleteExpense", "EventExpenseId");
         }
@@ -399,6 +410,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventMediaVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchMedia(keyword)
                 : _service.GetDashboardMedia(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Media", "Photos, videos, documents and campaign media approvals.", records, "CreateMedia", "EditMedia", "DeleteMedia", "EventMediaId");
         }
@@ -408,6 +420,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventTaskVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchTasks(keyword)
                 : !string.IsNullOrWhiteSpace(status) ? _service.GetTasksByStatus(status) : _service.GetDashboardTasks(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Tasks", "Task assignment, progress, priority and completion monitoring.", records, "CreateTask", "EditTask", "DeleteTask", "EventTaskId");
         }
@@ -422,6 +435,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<EventPollVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchPolls(keyword)
                 : _service.GetDashboardPolls(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Event Polls", "Event poll publishing, survey responses and question tracking.", records, "CreateEventPoll", "EditEventPoll", "DeleteEventPoll", "EventPollId");
         }
@@ -454,6 +468,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             IEnumerable<JanSamparkVM> records = !string.IsNullOrWhiteSpace(keyword)
                 ? _service.SearchJanSampark(keyword)
                 : _service.GetRecentJanSampark(200);
+            records = ApplySelectedCampaign(records);
 
             return Module("Jan Sampark", "Public contact, complaint, assignment and resolution tracking.", records, "CreateJanSampark", "EditJanSampark", "DeleteJanSampark", "JanSamparkId");
         }
@@ -483,11 +498,49 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
 
         public ActionResult CampaignAlerts(string keyword = null)
         {
+            int? campaignId = SelectedCampaignId();
             IEnumerable<CampaignAlertVM> records = !string.IsNullOrWhiteSpace(keyword)
-                ? _service.SearchCampaignAlerts(keyword, null, null, null)
-                : _service.GetDashboardAlerts();
+                ? _service.SearchCampaignAlerts(keyword, null, null, campaignId)
+                : campaignId.HasValue
+                    ? _service.GetCampaignAlertsByCampaign(campaignId.Value)
+                    : _service.GetDashboardAlerts();
 
             return Module("Campaign Alerts", "Critical alerts, assigned action, read status and resolution monitoring.", records, "CreateCampaignAlert", "EditCampaignAlert", "DeleteCampaignAlert", "CampaignAlertId");
+        }
+
+        private int? SelectedCampaignId()
+        {
+            int campaignId;
+            return Int32.TryParse(Convert.ToString(Session["CampaignId"]), out campaignId)
+                ? (int?)campaignId
+                : null;
+        }
+
+        private IEnumerable<T> ApplySelectedCampaign<T>(IEnumerable<T> records)
+        {
+            int? campaignId = SelectedCampaignId();
+            if (!campaignId.HasValue || records == null)
+            {
+                return records ?? Enumerable.Empty<T>();
+            }
+
+            PropertyInfo eventIdProperty = typeof(T).GetProperty("EventId");
+            if (eventIdProperty == null)
+            {
+                return records;
+            }
+
+            HashSet<int> allowedEventIds = new HashSet<int>(
+                _service.GetEventIdsByCampaign(campaignId.Value));
+
+            return records.Where(item =>
+            {
+                object value = item == null ? null : eventIdProperty.GetValue(item, null);
+                if (value == null) return false;
+                int eventId;
+                return Int32.TryParse(Convert.ToString(value), out eventId) &&
+                       allowedEventIds.Contains(eventId);
+            }).ToList();
         }
 
         public ActionResult ExpenseTracking(string keyword = null)
@@ -520,6 +573,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             if (!HasPermission("CanCreate")) return AccessDenied();
             return View("EventForm", new EventVM
             {
+                CampaignId = SelectedCampaignId(),
                 EventDate = DateTime.Today,
                 EventScope = "ElectionWarRoom",
                 ShowInElectionWarRoom = true,
@@ -543,6 +597,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
                 ModelState.AddModelError("", "This event already exists for the same date and venue.");
                 return View("EventForm", model);
             }
+
+            _service.SetEventCampaign(model.EventId, model.CampaignId, CurrentUserId());
 
             TempData["Success"] = "Event created successfully.";
             return RedirectToAction("Events");
@@ -569,6 +625,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Unable to update this event. Please check duplicate title/date/venue.");
                 return View("EventForm", model);
             }
+
+            _service.SetEventCampaign(model.EventId, model.CampaignId, CurrentUserId());
 
             TempData["Success"] = "Event updated successfully.";
             return RedirectToAction("Events");

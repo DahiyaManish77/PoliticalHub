@@ -108,6 +108,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
 
                                      .ToList();
 
+                menuEntities = ApplyMenuConditions(menuEntities, "PublicHeader");
+
                 var menuViewModels =
                     MapMenuCollection(menuEntities);
 
@@ -172,10 +174,13 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
                                      .ToList();
 
                 menuEntities = ApplyRoleMenuFilter(menuEntities);
+                menuEntities = ApplyMenuConditions(menuEntities, "AdminSidebar");
 
                 var menuViewModels = MapMenuCollection(menuEntities);
 
                 var menuTree = BuildMenuTree(menuViewModels);
+
+                AddMissingCoreAdminModules(menuTree);
 
                 MarkActiveMenus(menuTree, currentPath);
 
@@ -190,6 +195,94 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             }
         }
         #endregion
+
+        /// <summary>
+        /// Keeps essential, implemented administration modules reachable even when
+        /// an older database has not yet been seeded with the corresponding
+        /// MenuMaster rows. Existing database-driven entries always win, so this
+        /// does not duplicate or replace configured menus.
+        /// </summary>
+        private static void AddMissingCoreAdminModules(List<MenuVM> menuTree)
+        {
+            if (menuTree == null) return;
+
+            var required = new[]
+            {
+                CoreAdminMenu("Video Meeting", "VideoMeeting", "Index", "fas fa-video", 1),
+                CoreAdminMenu("Voice Agent", "VoiceAgent", "Index", "fas fa-headset", 2),
+                CoreAdminMenu("Bulk Voice Caller", "VoiceAgent", "BulkCaller", "fas fa-phone-volume", 3),
+                CoreAdminMenu("News Marquee", "PublicNewsTicker", "Index", "fas fa-bullhorn", 4),
+                CoreAdminMenu("Navbar Menu", "MenuCMS", "Index", "fas fa-bars", 5),
+                CoreAdminMenu("Header Settings", "WebsiteHeaderSetting", "Index", "fas fa-heading", 6),
+                CoreAdminMenu("Footer Settings", "WebsiteFooterSetting", "Index", "fas fa-shoe-prints", 7),
+                CoreAdminMenu("Poll & Survey", "Poll", "Index", "fas fa-poll", 8),
+                CoreAdminMenu("Events", "UpcomingEvent", "Index", "fas fa-calendar-alt", 9)
+            };
+
+            var missing = required
+                .Where(x => !ContainsAdminRoute(menuTree, x.ControllerName, x.ActionName))
+                .ToList();
+
+            if (missing.Count == 0) return;
+
+            menuTree.Add(new MenuVM
+            {
+                MenuId = -1000,
+                MenuName = "Website & Communication",
+                AreaName = "Admin",
+                IconClass = "fas fa-globe",
+                DisplayOrder = Int32.MaxValue - 10,
+                IsClickable = false,
+                Children = missing
+            });
+        }
+
+        private static MenuVM CoreAdminMenu(
+            string name,
+            string controller,
+            string action,
+            string icon,
+            int order)
+        {
+            return new MenuVM
+            {
+                MenuId = -1000 - order,
+                ParentMenuId = -1000,
+                MenuName = name,
+                AreaName = "Admin",
+                ControllerName = controller,
+                ActionName = action,
+                IconClass = icon,
+                DisplayOrder = order,
+                IsClickable = true
+            };
+        }
+
+        private static bool ContainsAdminRoute(
+            IEnumerable<MenuVM> menus,
+            string controller,
+            string action)
+        {
+            if (menus == null) return false;
+
+            foreach (var menu in menus)
+            {
+                if (String.Equals(menu.ControllerName, controller, StringComparison.OrdinalIgnoreCase) &&
+                    String.Equals(menu.ActionName, action, StringComparison.OrdinalIgnoreCase) &&
+                    (String.IsNullOrWhiteSpace(menu.AreaName) ||
+                     String.Equals(menu.AreaName, "Admin", StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+
+                if (ContainsAdminRoute(menu.Children, controller, action))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         private List<MenuMaster> ApplyRoleMenuFilter(List<MenuMaster> menuEntities)
         {
@@ -250,7 +343,19 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
         }
 
 
-
+        private List<MenuMaster> ApplyMenuConditions(List<MenuMaster> menuEntities, string location)
+        {
+            try
+            {
+                var allowed = new MenuConditionService(db)
+                    .GetVisibleMenuIds(menuEntities.Select(x => x.MenuId), location);
+                return menuEntities.Where(x => allowed.Contains(x.MenuId)).ToList();
+            }
+            catch
+            {
+                return menuEntities;
+            }
+        }
 
         #region MENU LIST
 
@@ -423,7 +528,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
                 if (entity == null)
                     return null;
 
-                return new MenuEditVM
+                var model = new MenuEditVM
                 {
                     MenuId = entity.MenuId,
 
@@ -477,6 +582,9 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
 
                     ParentMenus = GetParentMenuDropdown(menuId)
                 };
+
+                new MenuConditionService(db).Populate(model);
+                return model;
             }
             catch
             {
@@ -621,23 +729,25 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             db.MenuMasters.Add(entity);
 
             try
-{
-    db.SaveChanges();
-}
-catch (System.Data.Entity.Validation.DbEntityValidationException ex)
-{
-    foreach (var entityErrors in ex.EntityValidationErrors)
-    {
-        foreach (var validationError in entityErrors.ValidationErrors)
-        {
-            System.Diagnostics.Debug.WriteLine(
-                validationError.PropertyName + " : " +
-                validationError.ErrorMessage);
-        }
-    }
+            {
+                db.SaveChanges();
+                vm.MenuId = entity.MenuId;
+                new MenuConditionService(db).Save(vm);
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                foreach (var entityErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityErrors.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            validationError.PropertyName + " : " +
+                            validationError.ErrorMessage);
+                    }
+                }
 
-    throw;
-}
+                throw;
+            }
 
             return true;
         }
@@ -767,6 +877,7 @@ catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             entity.ModifiedDate = DateTime.Now;
 
             db.SaveChanges();
+            new MenuConditionService(db).Save(vm);
 
             return true;
         }

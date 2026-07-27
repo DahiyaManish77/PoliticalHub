@@ -2,6 +2,7 @@
     "use strict";
 
     var storagePrefix = "politicalPortal.publicActions.";
+    var currentGalleryIndex = -1;
 
     function getKey($root) {
         return storagePrefix + ($root.data("item-type") || "item") + "." + ($root.data("item-id") || "0");
@@ -176,10 +177,13 @@
         var title = $card.data("image-title") || "Photo Gallery";
         var id = $card.data("image-id") || src;
         var $lightbox = $("[data-gallery-lightbox]");
+        var $galleryItems = $(".js-gallery-lightbox");
 
         if (!$lightbox.length || !src) {
             return;
         }
+
+        currentGalleryIndex = $galleryItems.index($card);
 
         $lightbox.find("[data-gallery-lightbox-img]")
             .attr("src", src)
@@ -208,6 +212,70 @@
             .attr("aria-hidden", "true");
 
         $("body").removeClass("gallery-lightbox-open");
+        currentGalleryIndex = -1;
+    }
+
+    function browseGallery(direction) {
+        var $galleryItems = $(".js-gallery-lightbox");
+        if (!$galleryItems.length) return;
+
+        currentGalleryIndex += direction;
+        if (currentGalleryIndex < 0) currentGalleryIndex = $galleryItems.length - 1;
+        if (currentGalleryIndex >= $galleryItems.length) currentGalleryIndex = 0;
+
+        openGallery($galleryItems.eq(currentGalleryIndex));
+    }
+
+    function openVideo($card) {
+        var src = $card.data("video-src");
+        var title = $card.data("video-title") || "Latest broadcast";
+        var id = $card.data("video-id") || src;
+        var $modal = $("[data-campaign-video-modal]");
+
+        if (!$modal.length || !src) {
+            return;
+        }
+
+        var isEmbed = /youtube\.com\/embed|player\.vimeo\.com/i.test(src);
+        var media = isEmbed
+            ? $("<iframe>", { src: src, title: title, allow: "autoplay; encrypted-media; picture-in-picture", allowfullscreen: "allowfullscreen" })
+            : $("<video>", { src: src, controls: "controls", autoplay: "autoplay", playsinline: "playsinline" });
+
+        $modal.find("[data-video-frame]").empty().append(media);
+        $modal.find("[data-video-modal-title]").text(title);
+
+        var $actions = $modal.find("[data-public-actions]");
+        $actions
+            .attr("data-item-id", id)
+            .attr("data-title", title)
+            .attr("data-url", src)
+            .data("item-id", id)
+            .data("title", title)
+            .data("url", src);
+
+        $modal.addClass("is-open").attr("aria-hidden", "false");
+        $("body").addClass("campaign-modal-open");
+        hydrateActions();
+    }
+
+    function closeVideo() {
+        var $modal = $("[data-campaign-video-modal]");
+        $modal.removeClass("is-open").attr("aria-hidden", "true");
+        $modal.find("[data-video-frame]").empty();
+        $("body").removeClass("campaign-modal-open");
+    }
+
+    function bindVideoModal() {
+        var $modal = $("[data-campaign-video-modal]");
+        if ($modal.length && !$modal.parent().is("body")) {
+            $modal.appendTo("body");
+        }
+        $(document).on("click", ".js-campaign-video", function () {
+            openVideo($(this));
+        });
+        $(document).on("click", "[data-video-close]", function () {
+            closeVideo();
+        });
     }
 
     function bindGalleryLightbox() {
@@ -232,12 +300,31 @@
             closeGallery();
         });
 
+        $(document).on("click", "[data-gallery-prev]", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            browseGallery(-1);
+        });
+
+        $(document).on("click", "[data-gallery-next]", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            browseGallery(1);
+        });
+
         $(document).on("keydown", function (event) {
             if (event.key === "Escape") {
                 closeGallery();
+                closeVideo();
                 $("[data-media-comment-modal]")
                     .removeClass("is-open")
                     .attr("aria-hidden", "true");
+            }
+            else if (event.key === "ArrowLeft" && $("[data-gallery-lightbox].is-open").length) {
+                browseGallery(-1);
+            }
+            else if (event.key === "ArrowRight" && $("[data-gallery-lightbox].is-open").length) {
+                browseGallery(1);
             }
         });
     }
@@ -246,5 +333,6 @@
         hydrateActions();
         bindPublicActions();
         bindGalleryLightbox();
+        bindVideoModal();
     });
 })(jQuery);

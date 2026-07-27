@@ -1,0 +1,95 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VideoMeeting.VideoMeetingDashboardVM
+@{
+    ViewBag.Title = "Video Meetings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <span class="text-uppercase text-primary fw-semibold small">Communication</span>
+            <h2 class="mb-1 fw-bold">Video Meetings</h2>
+            <p class="text-muted mb-0">Create secure leadership meetings, invite participants and control meeting permissions.</p>
+        </div>
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <i class="bi bi-camera-video me-1"></i>Create Meeting
+        </a>
+    </div>
+
+    @if (!Model.ProviderConnected)
+    {
+        <div class="alert alert-warning border-0 shadow-sm d-flex align-items-start gap-3" role="alert">
+            <i class="bi bi-shield-lock fs-4"></i>
+            <div>
+                <strong class="d-block">Video provider setup is required</strong>
+                <span>Scheduling and invitation controls are active. Connect Zoom Video SDK or another approved provider before starting live audio/video.</span>
+            </div>
+        </div>
+    }
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100"><div class="card-body">
+                <div class="text-muted small">Upcoming</div><div class="fs-2 fw-bold">@Model.UpcomingMeetings</div>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100"><div class="card-body">
+                <div class="text-muted small">Live now</div><div class="fs-2 fw-bold text-danger">@Model.LiveMeetings</div>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100"><div class="card-body">
+                <div class="text-muted small">Completed</div><div class="fs-2 fw-bold">@Model.CompletedMeetings</div>
+            </div></div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center"><h5 class="mb-0 fw-bold">Meeting schedule</h5><span class="badge text-bg-light">@Model.Meetings.Count records</span></div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead><tr><th>Meeting</th><th>Start</th><th>Capacity</th><th>Recording</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+                <tbody>
+                @foreach (var meeting in Model.Meetings)
+                {
+                    <tr>
+                        <td><strong>@meeting.Title</strong><div class="small text-muted">@meeting.MeetingType · @meeting.DurationMinutes minutes</div></td>
+                        <td>@meeting.ScheduledStart.ToString("dd MMM yyyy, hh:mm tt")</td>
+                        <td>@meeting.MaximumParticipants</td>
+                        <td>@(meeting.AllowRecording ? "Allowed" : "Disabled")</td>
+                        <td><span class="badge text-bg-@(meeting.Status=="Live"?"danger":meeting.Status=="Completed"?"success":meeting.Status=="Cancelled"?"secondary":"primary")">@meeting.Status</span></td>
+                        <td class="text-end">
+                            @using (Html.BeginForm("Status", "VideoMeeting", FormMethod.Post, new { @class="d-inline-flex gap-1" }))
+                            {
+                                @Html.AntiForgeryToken()<input type="hidden" name="id" value="@meeting.VideoMeetingId" />
+                                if (meeting.Status == "Scheduled") { <button class="btn btn-sm btn-danger" name="status" value="Live">Mark live</button> }
+                                if (meeting.Status == "Live") { <button class="btn btn-sm btn-success" name="status" value="Completed">Complete</button> }
+                                if (meeting.Status != "Completed" && meeting.Status != "Cancelled") { <button class="btn btn-sm btn-outline-secondary" name="status" value="Cancelled">Cancel</button> }
+                            }
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Meetings.Any()) { <tr><td colspan="6" class="text-center text-muted py-4">No meetings scheduled yet.</td></tr> }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3"><h5 class="mb-0 fw-bold">Planned capabilities</h5></div>
+        <div class="card-body">
+            <div class="row g-3">
+                @foreach (var capability in Model.Capabilities)
+                {
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                            <span>@capability</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VoiceAgent.BulkVoiceCallerDashboardVM
+@{
+    ViewBag.Title = "Bulk Voice Caller";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var connectedNumber = String.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Not connected" : Model.PhoneNumber;
+    var maskedNumber = connectedNumber == "Not connected" || connectedNumber.Length < 5
+        ? connectedNumber
+        : new String('*', Math.Max(0, connectedNumber.Length - 4)) + connectedNumber.Substring(connectedNumber.Length - 4);
+}
+<div class="container-fluid">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div><a href="@Url.Action("Index")" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Voice Agent</a><h2 class="fw-bold mt-2 mb-1">Bulk Voice Caller</h2><p class="text-muted mb-0">Calls explicitly consented members sequentially—never more than one active queue call.</p></div>
+        <a class="btn btn-primary" href="@Url.Action("Settings")"><i class="bi bi-key me-1"></i>Manage shared credentials</a>
+    </div>
+    @if(TempData["SuccessMessage"]!=null){<div class="alert alert-success">@TempData["SuccessMessage"]</div>}
+    @if(TempData["ErrorMessage"]!=null){<div class="alert alert-danger">@TempData["ErrorMessage"]</div>}
+    <div class="row g-3 mb-4">
+        <div class="col-lg-8"><div class="card border-0 shadow-sm h-100"><div class="card-header bg-white py-3 d-flex justify-content-between"><strong>Shared Voice Agent connection</strong><span class="badge text-bg-@(Model.IsConfigured&&Model.IsEnabled?"success":"warning")">@(Model.IsConfigured&&Model.IsEnabled?"Ready":"Setup required")</span></div><div class="card-body"><div class="row g-3">
+            <div class="col-md-4"><label class="small text-muted">Provider</label><div class="form-control bg-light">@Model.ProviderName</div></div>
+            <div class="col-md-4"><label class="small text-muted">Caller number</label><div class="form-control bg-light font-monospace">@maskedNumber</div></div>
+            <div class="col-md-4"><label class="small text-muted">Credentials</label><div class="form-control bg-light">@(Model.IsConfigured?"Encrypted & saved":"Not configured")</div></div>
+        </div>@if(Model.MissingConfiguration.Any()){<div class="alert alert-warning mt-3 mb-0"><strong>Missing:</strong> @String.Join(", ",Model.MissingConfiguration)</div>}</div></div></div>
+        <div class="col-lg-4"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted small">Eligible consented members</div><div class="display-5 fw-bold text-success">@Model.EligibleMembers</div><p class="small text-muted mb-3">Active, unique phone numbers with voice-call consent and no opt-out.</p><div class="d-flex justify-content-between small"><span>Provider readiness</span><strong>@Model.ReadinessPercent%</strong></div><div class="progress mt-2" style="height:8px"><div class="progress-bar bg-@(Model.ReadinessPercent==100?"success":"warning")" style="width:@Model.ReadinessPercent%"></div></div></div></div></div>
+    </div>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white py-3"><h5 class="fw-bold mb-0">Create member calling campaign</h5></div>
+        @using(Html.BeginForm("CreateBulkCampaign","VoiceAgent",FormMethod.Post,new{@class="card-body"})){
+            @Html.AntiForgeryToken()
+            <div class="row g-3">
+                <div class="col-md-7"><label class="form-label fw-semibold">Campaign name</label><input class="form-control" name="CampaignName" required maxlength="120" placeholder="Example: Member meeting reminder" /></div>
+                <div class="col-md-5"><label class="form-label fw-semibold">Voice language</label><select class="form-select" name="LanguageCode"><option value="hi-IN">Hindi</option><option value="en-IN">English (India)</option></select></div>
+                <div class="col-12"><label class="form-label fw-semibold">Message spoken during the call</label><textarea class="form-control" name="MessageText" rows="4" required maxlength="1000" placeholder="Enter a clear informational message."></textarea><div class="form-text">Do not include sensitive personal data. Members can opt out through the office.</div></div>
+                <div class="col-12">
+                    <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-2">
+                        <div><label class="form-label fw-semibold mb-1">Select recipients</label><div class="small text-muted">Only currently consented people are shown.</div></div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="badge text-bg-success"><span id="bulkSelectedCount">0</span> selected</span>
+                            <input type="search" id="bulkRecipientSearch" class="form-control form-control-sm" style="width:240px" placeholder="Search name, mobile or village" />
+                        </div>
+                    </div>
+                    <div class="border rounded overflow-auto" style="max-height:340px">
+                        <table class="table table-sm table-hover align-middle mb-0" id="bulkRecipientTable">
+                            <thead class="table-light sticky-top"><tr>
+                                <th style="width:42px"><input type="checkbox" class="form-check-input" id="bulkSelectAll" title="Select all visible" /></th>
+                                <th>Member</th><th>Mobile</th><th>Village / Gram Panchayat</th><th>Consent</th>
+                            </tr></thead>
+                            <tbody>
+                            @foreach(var person in Model.EligiblePeople){
+                                var searchable=((person.FullName??"")+" "+(person.MobileNumber??"")+" "+(person.VillageName??"")+" "+(person.GramPanchayatName??"")).ToLowerInvariant();
+                                <tr data-search="@searchable">
+                                    <td><input class="form-check-input bulk-recipient-check" type="checkbox" name="selectedPersonIds" value="@person.PersonId" /></td>
+                                    <td><strong>@person.FullName</strong><div class="small text-muted">@(String.IsNullOrWhiteSpace(person.PreferredLanguage)?"Language not set":person.PreferredLanguage)</div></td>
+                                    <td class="font-monospace">@person.MobileNumber</td>
+                                    <td>@(String.IsNullOrWhiteSpace(person.VillageName)?"—":person.VillageName)<div class="small text-muted">@person.GramPanchayatName</div></td>
+                                    <td><span class="badge text-bg-light">@(person.ConsentDate.HasValue?person.ConsentDate.Value.ToString("dd MMM yyyy"):"Verified")</span></td>
+                                </tr>
+                            }
+                            @if(!Model.EligiblePeople.Any()){<tr><td colspan="5" class="text-center text-muted py-4">No eligible members. Enable Voice Call Consent in People records first.</td></tr>}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" required id="confirmConsent"/><label class="form-check-label" for="confirmConsent">I confirm this campaign is for members with explicit voice-call consent.</label></div></div>
+                <div class="col-12"><button class="btn btn-success" @(Model.IsConfigured&&Model.IsEnabled&&Model.EligibleMembers>0?null:"disabled")><i class="bi bi-people me-1"></i>Create consented-member queue</button></div>
+            </div>
+        }
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between"><h5 class="fw-bold mb-0">Calling campaigns</h5><span class="badge text-bg-light">@Model.Campaigns.Count</span></div>
+        <div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Campaign</th><th>Recipients</th><th>Progress</th><th>Status</th><th>Created</th><th class="text-end">Controls</th></tr></thead><tbody>
+        @foreach(var campaign in Model.Campaigns){
+            var finished=campaign.CompletedCount+campaign.FailedCount;
+            var percent=campaign.TotalRecipients==0?0:(int)Math.Round(finished*100m/campaign.TotalRecipients);
+            <tr>
+                <td><strong>@campaign.CampaignName</strong><div class="small text-muted text-truncate" style="max-width:360px">@campaign.MessageText</div></td>
+                <td><strong>@campaign.TotalRecipients</strong><div class="small text-muted">@campaign.PendingCount pending · @campaign.InProgressCount active</div></td>
+                <td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-success" style="width:@percent%"></div></div><small class="text-muted">@campaign.CompletedCount completed · @campaign.FailedCount failed</small></td>
+                <td><span class="badge text-bg-@(campaign.Status=="Running"?"success":campaign.Status=="Completed"?"primary":campaign.Status=="Stopped"?"danger":"secondary")">@campaign.Status</span></td>
+                <td>@campaign.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")</td>
+                <td class="text-end">
+                    @using(Html.BeginForm("BulkCampaignAction","VoiceAgent",FormMethod.Post,new{@class="d-inline-flex gap-1"})){
+                        @Html.AntiForgeryToken()<input type="hidden" name="id" value="@campaign.BulkVoiceCampaignId"/>
+                        if(campaign.Status=="Draft"){<button class="btn btn-sm btn-success" name="command" value="start" onclick="return confirm('Start sequential calls to @campaign.TotalRecipients consented members?')">Start</button>}
+                        if(campaign.Status=="Running"){<button class="btn btn-sm btn-warning" name="command" value="pause">Pause</button><button class="btn btn-sm btn-outline-danger" name="command" value="stop" onclick="return confirm('Stop this campaign?')">Stop</button>}
+                        if(campaign.Status=="Paused"){<button class="btn btn-sm btn-success" name="command" value="resume">Resume</button><button class="btn btn-sm btn-outline-danger" name="command" value="stop">Stop</button>}
+                    }
+                </td>
+            </tr>
+        }
+        @if(!Model.Campaigns.Any()){<tr><td colspan="6" class="text-center text-muted py-5">No campaigns yet. Create a draft above; calls start only after you press Start.</td></tr>}
+        </tbody></table></div>
+    </div>
+</div>
+<script>
+(function(){
+    var search=document.getElementById('bulkRecipientSearch'), all=document.getElementById('bulkSelectAll');
+    var checks=function(){return Array.prototype.slice.call(document.querySelectorAll('.bulk-recipient-check'));};
+    var rows=function(){return Array.prototype.slice.call(document.querySelectorAll('#bulkRecipientTable tbody tr[data-search]'));};
+    function update(){document.getElementById('bulkSelectedCount').textContent=checks().filter(function(x){return x.checked;}).length;}
+    if(search) search.addEventListener('input',function(){
+        var term=(search.value||'').toLowerCase().trim();
+        rows().forEach(function(row){row.style.display=!term||row.getAttribute('data-search').indexOf(term)>=0?'':'none';});
+        if(all) all.checked=false;
+    });
+    if(all) all.addEventListener('change',function(){
+        rows().forEach(function(row){if(row.style.display!=='none'){var box=row.querySelector('.bulk-recipient-check');if(box)box.checked=all.checked;}});
+        update();
+    });
+    checks().forEach(function(box){box.addEventListener('change',update);});
+})();
+</script>

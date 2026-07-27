@@ -1,0 +1,25 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.CampaignContextVM
+@using System.Linq
+@{
+    Layout = null;
+}
+<div class="admin-campaign-context">
+    @using (Html.BeginForm("SetCampaign", "Dashboard", new { area = "Admin" }, FormMethod.Post, new { id = "campaignContextForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+        <i class="bi bi-flag"></i>
+        <label for="adminCampaignContext">Campaign</label>
+        <select id="adminCampaignContext" name="campaignId" onchange="this.form.submit()" aria-label="Select operational campaign">
+            <option value="">All campaigns</option>
+            @foreach (var item in Model.Campaigns)
+            {
+                <option value="@item.Value" @(item.Selected ? "selected" : null)>@item.Text</option>
+            }
+        </select>
+    }
+    @if (!Model.Campaigns.Any())
+    {
+        <a href="@Url.Action("Campaigns", "ElectionWarRoom", new { area = "Admin" })">Create campaign</a>
+    }
+</div>

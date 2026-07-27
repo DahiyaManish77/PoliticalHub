@@ -1,0 +1,8 @@
+@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+@{
+    Layout = null;
+    ViewData["ModalId"] = "contactOfficeModal";
+    ViewData["ModalTitle"] = "Contact the Office";
+    ViewData["ModalLabel"] = "Citizen Connect";
+}
+@Html.Partial("~/Views/CitizenConnect/Partials/_RequestModal.cshtml", Model, ViewData)

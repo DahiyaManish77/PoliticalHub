@@ -3,16 +3,92 @@
 
     var AdminUi = {
         init: function () {
+            this.installRequestProtection();
             this.bindShell();
             this.bindSidebarMenus();
             this.bindLanguageSelector();
             this.bindSidebarSearch();
+            this.bindGlobalMenuSearch();
             this.showFlashMessages();
             this.initTables();
             this.bindAjaxDeleteButtons();
             this.bindFormFeedback();
             this.bindDeleteConfirmations();
             this.dismissLegacyAlerts();
+        },
+
+        installRequestProtection: function () {
+            var tokenInput = document.querySelector("#adminRequestVerificationToken input[name='__RequestVerificationToken']");
+
+            if (!tokenInput) {
+                return;
+            }
+
+            var token = tokenInput.value;
+
+            $.ajaxPrefilter(function (options, originalOptions) {
+                var method = (options.type || options.method || "GET").toUpperCase();
+
+                if (method === "GET" || method === "HEAD" || method === "OPTIONS") {
+                    return;
+                }
+
+                if (options.data instanceof FormData) {
+                    if (!options.data.has("__RequestVerificationToken")) {
+                        options.data.append("__RequestVerificationToken", token);
+                    }
+                    return;
+                }
+
+                if (typeof options.data === "string") {
+                    if (options.data.indexOf("__RequestVerificationToken=") < 0) {
+                        options.data += (options.data ? "&" : "") +
+                            "__RequestVerificationToken=" + encodeURIComponent(token);
+                    }
+                    return;
+                }
+
+                options.data = options.data || {};
+                if (!options.data.__RequestVerificationToken) {
+                    options.data.__RequestVerificationToken = token;
+                }
+            });
+
+            if (!window.fetch || window.fetch.__adminRequestProtected) {
+                return;
+            }
+
+            var nativeFetch = window.fetch;
+            var protectedFetch = function (resource, init) {
+                init = init || {};
+                var method = (init.method || "GET").toUpperCase();
+
+                if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
+                    if (init.body instanceof FormData) {
+                        if (!init.body.has("__RequestVerificationToken")) {
+                            init.body.append("__RequestVerificationToken", token);
+                        }
+                    } else if (init.body instanceof URLSearchParams) {
+                        if (!init.body.has("__RequestVerificationToken")) {
+                            init.body.append("__RequestVerificationToken", token);
+                        }
+                    } else if (typeof init.body === "string") {
+                        if (init.body.indexOf("__RequestVerificationToken=") < 0) {
+                            init.body += (init.body ? "&" : "") +
+                                "__RequestVerificationToken=" + encodeURIComponent(token);
+                        }
+                    } else if (!init.body) {
+                        var requestBody = new URLSearchParams();
+                        requestBody.append("__RequestVerificationToken", token);
+                        init.body = requestBody;
+                    }
+                }
+
+                return nativeFetch.call(window, resource, init);
+            };
+
+            protectedFetch.__adminRequestProtected = true;
+            window.fetch = protectedFetch;
         },
 
         bindShell: function () {
@@ -225,6 +301,26 @@
                         item.classList.add("open");
                     }
                 });
+            });
+        },
+
+        bindGlobalMenuSearch: function () {
+            var globalInput = document.getElementById("adminGlobalMenuSearch");
+            var sidebarInput = document.getElementById("adminSidebarSearch");
+
+            if (!globalInput || !sidebarInput) {
+                return;
+            }
+
+            globalInput.addEventListener("input", function () {
+                sidebarInput.value = globalInput.value;
+                sidebarInput.dispatchEvent(new Event("input", { bubbles: true }));
+            });
+
+            globalInput.addEventListener("focus", function () {
+                if (window.innerWidth < 992) {
+                    document.body.classList.add("admin-sidebar-open");
+                }
             });
         },
 

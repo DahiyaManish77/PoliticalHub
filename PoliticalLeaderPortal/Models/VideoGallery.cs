@@ -25,6 +25,7 @@ namespace PoliticalLeaderPortal.Models
         public bool IsActive { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string VideoFilePath { get; set; }
     
         public virtual VideoCategory VideoCategory { get; set; }
     }

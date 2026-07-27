@@ -383,7 +383,7 @@ END;");
             try
             {
                 var model =
-                    _galleryService.GetHomepageGallery(7);
+                    _galleryService.GetHomepageGallery(20);
 
                 return PartialView(
                     "~/Views/Home/Partials/_ImageGallery.cshtml",
@@ -402,7 +402,7 @@ END;");
             try
             {
                 var model =
-                    _videoService.GetHomepageVideos(5);
+                    _videoService.GetHomepageVideos(20);
 
                 return PartialView(
                     "~/Views/Home/Partials/_VideoGallery.cshtml",
@@ -420,14 +420,8 @@ END;");
         {
             try
             {
-                var service = new ElectionWarRoomService();
-                var model = service.GetCampaignPolls(null)
-                    .Where(x =>
-                        x.IsActive &&
-                        (!x.StartDate.HasValue || x.StartDate.Value.Date <= DateTime.Today) &&
-                        (!x.EndDate.HasValue || x.EndDate.Value.Date >= DateTime.Today))
-                    .OrderByDescending(x => x.CreatedOn)
-                    .FirstOrDefault();
+                var service = new Areas.Admin.Services.Poll.PollService();
+                var model = service.GetFeaturedPoll();
 
                 return PartialView(
                     "~/Views/Home/Partials/_PollSurvey.cshtml",
@@ -437,6 +431,24 @@ END;");
             {
                 return PartialView(
                     "~/Views/Home/Partials/_PollSurvey.cshtml",
+                    null);
+            }
+        }
+
+        [ChildActionOnly]
+        public ActionResult QuickPoll()
+        {
+            try
+            {
+                var service = new Areas.Admin.Services.Poll.PollService();
+                return PartialView(
+                    "~/Views/Home/Partials/_QuickPoll.cshtml",
+                    service.GetFeaturedPoll());
+            }
+            catch
+            {
+                return PartialView(
+                    "~/Views/Home/Partials/_QuickPoll.cshtml",
                     null);
             }
         }
@@ -693,6 +705,26 @@ END;");
                     EmailAddress =
                         header != null
                         ? header.EmailAddress
+                        : "",
+
+                    FacebookUrl =
+                        header != null
+                        ? header.FacebookUrl
+                        : "",
+
+                    InstagramUrl =
+                        header != null
+                        ? header.InstagramUrl
+                        : "",
+
+                    TwitterUrl =
+                        header != null
+                        ? header.TwitterUrl
+                        : "",
+
+                    YoutubeUrl =
+                        header != null
+                        ? header.YoutubeUrl
                         : "",
 
                     ShowTopBar =

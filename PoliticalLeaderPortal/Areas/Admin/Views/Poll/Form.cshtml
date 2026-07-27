@@ -1,0 +1,64 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Poll.PollEditVM
+@{
+    bool isEdit = Model != null && Model.PollId > 0;
+    ViewBag.Title = isEdit ? "Edit Poll" : "Create Poll";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm(isEdit ? "Edit" : "Create", "Poll", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.PollId)
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@ViewBag.Title</h4>
+                <a href="@Url.Action("Index")" class="btn btn-light btn-sm">Back</a>
+            </div>
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                <div class="row g-3">
+                    <div class="col-lg-4">@Html.LabelFor(m => m.PollCategoryId, new { @class = "form-label" }) @Html.DropDownListFor(m => m.PollCategoryId, Model.Categories, "Select Category", new { @class = "form-select" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.Title, new { @class = "form-label" }) @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</div>
+                    <div class="col-lg-2">@Html.LabelFor(m => m.PollType, new { @class = "form-label" }) @Html.TextBoxFor(m => m.PollType, new { @class = "form-control" })</div>
+                    <div class="col-lg-2">@Html.LabelFor(m => m.QuestionType, new { @class = "form-label" }) @Html.DropDownListFor(m => m.QuestionType, new[] { new SelectListItem { Text = "Single choice (options)", Value = "SingleChoice" } }, new { @class = "form-select" })</div>
+                    <div class="col-12">@Html.LabelFor(m => m.Question, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Question, 3, 40, new { @class = "form-control" })</div>
+                    <div class="col-12">@Html.LabelFor(m => m.Description, new { @class = "form-label" }) @Html.TextAreaFor(m => m.Description, 3, 40, new { @class = "form-control" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.TargetArea, new { @class = "form-label" }) @Html.TextBoxFor(m => m.TargetArea, new { @class = "form-control" })</div>
+                    <div class="col-lg-4">@Html.LabelFor(m => m.DisplayMode, new { @class = "form-label" }) @Html.DropDownListFor(m => m.DisplayMode, new[] { new SelectListItem { Text = "Dedicated page only", Value = "PageOnly" }, new SelectListItem { Text = "Homepage section", Value = "HomePartial" }, new SelectListItem { Text = "Homepage modal popup", Value = "HomeModal" } }, new { @class = "form-select" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.StartDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })</div>
+                    <div class="col-lg-3">@Html.LabelFor(m => m.EndDate, new { @class = "form-label" }) @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })</div>
+                    <div class="col-lg-2 form-check pt-4">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active</label></div>
+                </div>
+
+                <hr />
+                <h5>Settings</h5>
+                <div class="row g-3">
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.Setting.RequireConsent, new { @class = "form-check-input" }) <label class="form-check-label">Consent</label></div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.Setting.ShowPublicResults, new { @class = "form-check-input" }) <label class="form-check-label">Public Results</label></div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.Setting.RequireName, new { @class = "form-check-input" }) <label class="form-check-label">Name Required</label></div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.Setting.RequireMobile, new { @class = "form-check-input" }) <label class="form-check-label">Mobile Required</label></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.Setting.ThankYouMessage, new { @class = "form-control", placeholder = "Thank you message" })</div>
+                </div>
+
+                <hr />
+                <h5>Options</h5>
+                <div class="row g-2" id="pollOptions">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        string value = Model.Options != null && Model.Options.Count > i ? Model.Options[i].OptionText : "";
+                        <div class="col-md-6"><input name="optionTexts" class="form-control" value="@value" placeholder="Option @(i + 1)" /></div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-primary">Save Poll</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

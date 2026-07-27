@@ -1,0 +1,40 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VoiceAgent.VoiceAgentSettingVM
+@{
+    ViewBag.Title = "Voice Agent Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="mb-4"><a href="@Url.Action("Index")" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Voice Agent</a><h2 class="fw-bold mt-2">Provider &amp; AI configuration</h2><p class="text-muted">Replace the placeholders after purchasing the voice API. Secrets are encrypted before database storage.</p></div>
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body"><span class="badge text-bg-primary mb-2">STEP 1</span><h5 class="fw-bold">Buy voice API number</h5><p class="text-muted small mb-0">Complete provider KYC and obtain the account ID, secret and voice-enabled number.</p></div></div></div>
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body"><span class="badge text-bg-primary mb-2">STEP 2</span><h5 class="fw-bold">Paste values below</h5><p class="text-muted small mb-0">No source-code editing is required. Credentials are encrypted before storage.</p></div></div></div>
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body"><span class="badge text-bg-primary mb-2">STEP 3</span><h5 class="fw-bold">Configure provider webhooks</h5><p class="text-muted small mb-0">Copy the generated URLs into the corresponding provider-console fields and enable the agent.</p></div></div></div>
+    </div>
+    <div class="card border-0 shadow-sm mb-4"><div class="card-header bg-white"><strong>URLs to paste in your provider console</strong></div><div class="card-body">
+        @{ var setupHooks = new[] { new { L="A call comes in / Answer URL",U=Convert.ToString(ViewBag.IncomingWebhookUrl) },new{L="Call status callback",U=Convert.ToString(ViewBag.StatusWebhookUrl)},new{L="Recording status callback",U=Convert.ToString(ViewBag.RecordingWebhookUrl)},new{L="Health check",U=Convert.ToString(ViewBag.HealthCheckUrl)} }; }
+        <div class="row g-2">@foreach(var hook in setupHooks){<div class="col-lg-6"><label class="form-label small fw-semibold">@hook.L</label><div class="input-group"><input class="form-control form-control-sm font-monospace" readonly value="@hook.U"/><button class="btn btn-sm btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button></div></div>}</div>
+    </div></div>
+    @using(Html.BeginForm("Settings","VoiceAgent",FormMethod.Post,new{@class="card border-0 shadow-sm"})){
+        @Html.AntiForgeryToken()
+        <div class="card-body p-4">
+            @Html.ValidationSummary(false,"",new{@class="alert alert-danger"})
+            <div class="alert alert-info"><strong>No code change will be required later.</strong> Enter the purchased provider values here and copy the webhook from the dashboard into the provider console.</div>
+            <div class="row g-3">
+                <div class="col-md-4"><label class="form-label">Voice API provider</label>@Html.DropDownListFor(x=>x.ProviderName,new SelectList(new[]{"TwilioCompatible","Exotel","Knowlarity","Ozonetel","GenericWebhook"},Model.ProviderName),new{@class="form-select"})</div>
+                <div class="col-md-4"><label class="form-label">Account SID / API key</label>@Html.TextBoxFor(x=>x.AccountSid,new{@class="form-control",placeholder="PAID_PROVIDER_ACCOUNT_ID"})</div>
+                <div class="col-md-4"><label class="form-label">Auth token / API secret</label>@Html.PasswordFor(x=>x.AuthToken,new{@class="form-control",placeholder="PAID_PROVIDER_SECRET",value=Model.AuthToken})</div>
+                <div class="col-md-4"><label class="form-label">Voice-enabled phone number</label>@Html.TextBoxFor(x=>x.PhoneNumber,new{@class="form-control",placeholder="+91XXXXXXXXXX"})</div>
+                <div class="col-md-4"><label class="form-label">Public HTTPS base URL</label>@Html.TextBoxFor(x=>x.PublicBaseUrl,new{@class="form-control",placeholder="https://yourdomain.com"})</div>
+                <div class="col-md-4"><label class="form-label">Webhook security secret</label>@Html.TextBoxFor(x=>x.WebhookSecret,new{@class="form-control font-monospace"})</div>
+                <div class="col-12"><label class="form-label">Recording consent announcement</label>@Html.TextAreaFor(x=>x.RecordingConsentText,3,new{@class="form-control"})</div>
+                <div class="col-md-6"><label class="form-label">Hindi welcome message</label>@Html.TextAreaFor(x=>x.WelcomeMessageHindi,4,new{@class="form-control"})</div>
+                <div class="col-md-6"><label class="form-label">English welcome message</label>@Html.TextAreaFor(x=>x.WelcomeMessageEnglish,4,new{@class="form-control"})</div>
+                <div class="col-md-5"><label class="form-label">AI API endpoint (optional)</label>@Html.TextBoxFor(x=>x.AiApiEndpoint,new{@class="form-control",placeholder="https://api-provider.example/v1/..."})</div>
+                <div class="col-md-4"><label class="form-label">AI API key (optional)</label>@Html.PasswordFor(x=>x.AiApiKey,new{@class="form-control",placeholder="AI_API_KEY",value=Model.AiApiKey})</div>
+                <div class="col-md-3"><label class="form-label">Recording retention days</label>@Html.TextBoxFor(x=>x.RecordingRetentionDays,new{@class="form-control",type="number",min="1",max="3650"})</div>
+                <div class="col-md-3"><div class="form-check mt-4">@Html.CheckBoxFor(x=>x.EnableRecording,new{@class="form-check-input"})<label class="form-check-label">Enable recording</label></div></div>
+                <div class="col-md-3"><div class="form-check mt-4">@Html.CheckBoxFor(x=>x.IsEnabled,new{@class="form-check-input"})<label class="form-check-label">Enable live agent</label></div></div>
+            </div>
+        </div><div class="card-footer bg-white p-3 text-end"><button class="btn btn-primary px-4">Save configuration</button></div>
+    }
+</div>

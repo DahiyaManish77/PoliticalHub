@@ -1,0 +1,68 @@
+﻿@model PoliticalLeaderPortal.ViewModels.HomeCitizenConnectVM
+@{
+    Layout = null;
+}
+
+<section class="home-connect-section" id="citizen-connect">
+    <div class="container">
+        <div class="home-connect-heading">
+            <span>Citizen Participation</span>
+            <h2>Connect directly with the campaign team</h2>
+            <p>Share an issue, send a development suggestion, or register as a volunteer. Every submission is recorded for review.</p>
+        </div>
+
+        <div class="home-connect-grid">
+            <button type="button" class="home-connect-card" data-bs-toggle="modal" data-bs-target="#contactOfficeModal">
+                <i class="bi bi-chat-left-text"></i>
+                <strong>Contact Us</strong>
+                <small>Send your issue or message</small>
+                <span>Open form <i class="bi bi-arrow-up-right"></i></span>
+            </button>
+            <button type="button" class="home-connect-card" data-bs-toggle="modal" data-bs-target="#suggestionModal">
+                <i class="bi bi-lightbulb"></i>
+                <strong>Suggestion</strong>
+                <small>Share an idea for development</small>
+                <span>Open form <i class="bi bi-arrow-up-right"></i></span>
+            </button>
+            <button type="button" class="home-connect-card home-connect-card-featured" data-bs-toggle="modal" data-bs-target="#volunteerModal">
+                <i class="bi bi-people"></i>
+                <strong>Become a Volunteer</strong>
+                <small>Join public-service activities</small>
+                <span>Apply now <i class="bi bi-arrow-up-right"></i></span>
+            </button>
+        </div>
+
+        <div class="home-connect-future">
+            <span><i class="bi bi-person-badge"></i> Membership <small>Coming soon</small></span>
+            <span><i class="bi bi-megaphone"></i> Complaint <small>Coming soon</small></span>
+            <span><i class="bi bi-heart"></i> Donation Interest <small>Coming soon</small></span>
+            <span><i class="bi bi-calendar-check"></i> Event Registration <small>Coming soon</small></span>
+        </div>
+    </div>
+</section>
+
+@Html.Partial("~/Views/CitizenConnect/Partials/_ContactModal.cshtml", Model.Contact)
+@Html.Partial("~/Views/CitizenConnect/Partials/_SuggestionModal.cshtml", Model.Suggestion)
+@Html.Partial("~/Views/CitizenConnect/Partials/_VolunteerModal.cshtml", Model.Volunteer)
+
+<script>
+(function () {
+    document.querySelectorAll(".citizen-geo").forEach(function (source) {
+        source.addEventListener("change", function () {
+            var target = document.getElementById(source.getAttribute("data-geo-child"));
+            var type = source.getAttribute("data-geo-type");
+            if (!target) return;
+            target.innerHTML = '<option value="">Select option</option>';
+            if (!source.value) return;
+            fetch('@Url.Action("GeographyOptions", "CitizenConnect", new { area = "" })?type=' +
+                encodeURIComponent(type) + '&parentId=' + encodeURIComponent(source.value))
+                .then(function (response) { return response.json(); })
+                .then(function (items) {
+                    (items || []).forEach(function (item) {
+                        target.add(new Option(item.Text, item.Value));
+                    });
+                });
+        });
+    });
+})();
+</script>

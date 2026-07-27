@@ -46,14 +46,14 @@
     </div>
 
     <div class="row g-3 mb-4">
-        @foreach (var section in Model.Sections)
+        @foreach (var moduleSection in Model.Sections)
         {
             <div class="col-lg-4">
                 <div class="module-section">
-                    <h5 class="fw-bold mb-1">@section.Title</h5>
-                    <p class="text-muted small mb-3">@section.Description</p>
+                    <h5 class="fw-bold mb-1">@moduleSection.Title</h5>
+                    <p class="text-muted small mb-3">@moduleSection.Description</p>
                     <div>
-                        @foreach (var field in section.Fields)
+                        @foreach (var field in moduleSection.Fields)
                         {
                             <span class="field-chip">@field</span>
                         }

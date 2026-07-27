@@ -356,6 +356,21 @@ namespace PoliticalLeaderPortal.Services
                 })
                 .ToList();
         }
+        public List<PublicGalleryImageVM> GetPublicGalleryImages()
+        {
+            return _db.GalleryImages
+                .Where(x => x.IsActive)
+                .OrderByDescending(x => x.CreatedDate)
+                .ThenBy(x => x.DisplayOrder)
+                .Select(x => new PublicGalleryImageVM
+                {
+                    GalleryImageId = x.GalleryImageId,
+                    ImageTitle = x.ImageTitle,
+                    ImageCaption = x.ImageCaption,
+                    ImagePath = x.ImagePath
+                })
+                .ToList();
+        }
         public PublicGalleryAlbumVM GetPublicGalleryAlbum(int categoryId)
         {
             var category = _db.GalleryCategories

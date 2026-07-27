@@ -1,0 +1,101 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.People.PersonEditVM
+@{
+    ViewBag.Title = Model.PersonId > 0 ? "Edit Person" : "Add Person";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3"><div><h3 class="mb-1">@ViewBag.Title</h3><p class="text-muted mb-0">Maintain one master record and optional volunteer profile.</p></div><a class="btn btn-outline-secondary" href="@Url.Action("Index")">Back</a></div>
+    @using (Html.BeginForm(Model.PersonId > 0 ? "Edit" : "Create", "People", FormMethod.Post, new { @class = "needs-validation", data_geography_form = "true", data_geography_url = Url.Action("GeographyOptions") }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.PersonId)
+        @Html.HiddenFor(m => m.VolunteerProfileId)
+        @Html.HiddenFor(m => m.ConsentSource)
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header"><strong>Basic information</strong></div><div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">@Html.LabelFor(m => m.FullName, new { @class = "form-label" })@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })@Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })</div>
+                    <div class="col-md-4">@Html.LabelFor(m => m.MobileNumber, new { @class = "form-label" })@Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })@Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger" })</div>
+                    <div class="col-md-4">@Html.LabelFor(m => m.Email, new { @class = "form-label" })@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })</div>
+                    <div class="col-md-3"><label class="form-label">Gender</label>@Html.DropDownListFor(m => m.Gender, new SelectList(new[] { "Male", "Female", "Other" }, Model.Gender), "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Date of birth</label>@Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-3"><label class="form-label">Language</label>@Html.TextBoxFor(m => m.PreferredLanguage, new { @class = "form-control" })</div>
+                    <div class="col-md-3"><label class="form-label">Pin code</label>@Html.TextBoxFor(m => m.PinCode, new { @class = "form-control" })</div>
+                    <div class="col-md-8"><label class="form-label">Address</label>@Html.TextBoxFor(m => m.AddressLine, new { @class = "form-control" })</div>
+                    <div class="col-md-4"><label class="form-label">Landmark</label>@Html.TextBoxFor(m => m.Landmark, new { @class = "form-control" })</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header"><strong>Geography</strong></div><div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3"><label class="form-label">State</label>@Html.DropDownListFor(m => m.StateId, Model.States, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">District</label>@Html.DropDownListFor(m => m.DistrictId, Model.Districts, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Parliament</label>@Html.DropDownListFor(m => m.ParliamentaryConstituencyId, Model.ParliamentaryConstituencies, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Assembly</label>@Html.DropDownListFor(m => m.AssemblyConstituencyId, Model.AssemblyConstituencies, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Tehsil</label>@Html.DropDownListFor(m => m.TehsilId, Model.Tehsils, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Block</label>@Html.DropDownListFor(m => m.BlockId, Model.Blocks, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Gram Panchayat</label>@Html.DropDownListFor(m => m.GramPanchayatId, Model.GramPanchayats, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Village</label>@Html.DropDownListFor(m => m.VillageId, Model.Villages, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Ward</label>@Html.DropDownListFor(m => m.WardId, Model.Wards, "Select", new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Booth</label>@Html.DropDownListFor(m => m.BoothId, Model.Booths, "Select", new { @class = "form-select" })</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header"><strong>Consent and status</strong></div><div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-2 form-check ms-3">@Html.CheckBoxFor(m => m.WhatsAppConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.WhatsAppConsent, new { @class = "form-check-label" })</div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.SmsConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.SmsConsent, new { @class = "form-check-label" })</div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.EmailConsent, new { @class = "form-check-input" }) @Html.LabelFor(m => m.EmailConsent, new { @class = "form-check-label" })</div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.VoiceConsent, new { @class = "form-check-input" }) <label class="form-check-label">Voice call</label></div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.IsOptedOut, new { @class = "form-check-input" }) <label class="form-check-label">Opted out</label></div>
+                    <div class="col-md-2 form-check">@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" }) <label class="form-check-label">Active</label></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header"><div class="form-check">@Html.CheckBoxFor(m => m.IsVolunteer, new { @class = "form-check-input", id = "IsVolunteer" }) <label class="form-check-label fw-bold" for="IsVolunteer">Create/maintain volunteer profile</label></div></div><div class="card-body" id="volunteerFields">
+                <div class="row g-3">
+                    <div class="col-md-4"><label class="form-label">Preferred role</label>@Html.TextBoxFor(m => m.PreferredRole, new { @class = "form-control" })</div>
+                    <div class="col-md-4"><label class="form-label">Skills</label>@Html.TextBoxFor(m => m.Skills, new { @class = "form-control" })</div>
+                    <div class="col-md-4"><label class="form-label">Joining date</label>@Html.TextBoxFor(m => m.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-3"><label class="form-label">Available days</label>@Html.TextBoxFor(m => m.AvailableDays, new { @class = "form-control" })</div>
+                    <div class="col-md-3"><label class="form-label">Available time</label>@Html.TextBoxFor(m => m.AvailableTime, new { @class = "form-control" })</div>
+                    <div class="col-md-3"><label class="form-label">Profile status</label>@Html.DropDownListFor(m => m.ApprovalStatus, new SelectList(new[] { "Pending", "Approved", "Rejected", "Inactive" }, Model.ApprovalStatus), new { @class = "form-select" })</div>
+                    <div class="col-md-3"><label class="form-label">Verification</label>@Html.DropDownListFor(m => m.VerificationStatus, new SelectList(new[] { "Pending", "Verified", "Rejected" }, Model.VerificationStatus), new { @class = "form-select" })</div>
+                    <div class="col-md-4"><label class="form-label">Emergency contact name</label>@Html.TextBoxFor(m => m.EmergencyContactName, new { @class = "form-control" })</div>
+                    <div class="col-md-4"><label class="form-label">Emergency contact mobile</label>@Html.TextBoxFor(m => m.EmergencyContactMobile, new { @class = "form-control" })</div>
+<div class="col-md-12">
+    <label class="form-label">Notes</label>
+    @Html.TextAreaFor(m => m.Notes, new
+    {
+        @class = "form-control",
+        rows = "3",
+        placeholder = "Enter notes"
+    })
+</div>           
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Save</button>
+    }
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/custom/geography-cascade.js")"></script>
+    <script>
+$(function(){
+ function toggleVolunteer(){ $('#volunteerFields').toggle($('#IsVolunteer').is(':checked')); }
+ toggleVolunteer(); $('#IsVolunteer').on('change',toggleVolunteer);
+});
+    </script>
+}
+
+
+
+
+

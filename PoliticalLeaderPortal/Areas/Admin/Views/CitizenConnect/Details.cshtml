@@ -1,4 +1,4 @@
-@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
+﻿@model PoliticalLeaderPortal.ViewModels.CitizenConnectVM
 @{
     ViewBag.Title = "Citizen Request";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -15,12 +15,29 @@
                 </div>
                 <div class="card-body">
                     <dl class="row mb-0">
-                        <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.FullName</dd>
-                        <dt class="col-sm-3">Mobile</dt><dd class="col-sm-9">@Model.MobileNumber</dd>
-                        <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.Email</dd>
-                        <dt class="col-sm-3">District</dt><dd class="col-sm-9">@Model.District</dd>
-                        <dt class="col-sm-3">Assembly</dt><dd class="col-sm-9">@Model.Assembly</dd>
-                        <dt class="col-sm-3">Message</dt><dd class="col-sm-9">@Model.Message</dd>
+                        <dt class="col-sm-3">Name</dt>
+                        <dd class="col-sm-9">@Model.FullName</dd>
+                        <dt class="col-sm-3">Mobile</dt>
+                        <dd class="col-sm-9">@Model.MobileNumber</dd>
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9">@Model.Email</dd>
+                        <dt class="col-sm-3">District</dt>
+                        <dd class="col-sm-9">@Model.District</dd>
+                        <dt class="col-sm-3">Assembly</dt>
+                        <dd class="col-sm-9">@Model.Assembly</dd>
+                        @if (String.Equals(Model.RequestType, "Volunteer", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <dt class="col-sm-3">Preferred Role</dt>
+                            <dd class="col-sm-9">@(Model.PreferredRole ?? "—")</dd>
+                            <dt class="col-sm-3">Skills</dt>
+                            <dd class="col-sm-9">@(Model.Skills ?? "—")</dd>
+                            <dt class="col-sm-3">Availability</dt>
+                            <dd class="col-sm-9">@Model.AvailableDays @Model.AvailableTime</dd>
+                            <dt class="col-sm-3">Consent</dt>
+                            <dd class="col-sm-9">WhatsApp: @(Model.WhatsAppConsent ? "Yes" : "No"), SMS: @(Model.SmsConsent ? "Yes" : "No"), Email: @(Model.EmailConsent ? "Yes" : "No"), Voice: @(Model.VoiceConsent ? "Yes" : "No")</dd>
+                        }
+                        <dt class="col-sm-3">Message</dt>
+                        <dd class="col-sm-9">@Model.Message</dd>
                     </dl>
                 </div>
             </div>
@@ -38,6 +55,22 @@
                         <label class="form-label">Admin Remarks</label>
                         <textarea name="adminRemarks" class="form-control mb-3" rows="5">@Model.AdminRemarks</textarea>
                         <button class="btn btn-primary w-100" type="submit">Update Status</button>
+                    }
+                    @if (String.Equals(Model.RequestType, "Volunteer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Model.IsConverted)
+                        {
+                            <a href="@Url.Action("Edit", "People", new { area = "Admin", id = Model.ConvertedPersonId })" class="btn btn-success w-100 mt-2"><i class="bi bi-person-check"></i> Open People Record</a>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("ConvertVolunteer", "CitizenConnect", FormMethod.Post, new { area = "Admin", @class = "mt-2" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.CitizenConnectId)
+                                <button type="submit" class="btn btn-success w-100" onclick="return confirm('Convert this application into People Master and Volunteer Profile?');"><i class="bi bi-person-plus"></i> Convert to Volunteer</button>
+                            }
+                        }
                     }
                     <a href="@Url.Action("Index")" class="btn btn-outline-secondary w-100 mt-2">Back</a>
                 </div>

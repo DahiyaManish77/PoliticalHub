@@ -1,0 +1,35 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ConstituencyMaster.GeographyEditVM
+@{ ViewBag.Title = (Model.Id == 0 ? "Add " : "Edit ") + Model.EntityType; Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white"><h4 class="mb-0">@ViewBag.Title</h4></div><div class="card-body">
+            @using (Html.BeginForm(Model.Id == 0 ? "Create" : "Edit", "ConstituencyMaster", FormMethod.Post, new { data_geography_form = "true", data_geography_url = Url.Action("Options") }))
+            {@Html.AntiForgeryToken() @Html.HiddenFor(x => x.Id) @Html.HiddenFor(x => x.EntityType) @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="row g-3">
+                <div class="col-md-4"><label class="form-label">Official Code</label>@Html.TextBoxFor(x => x.Code, new { @class = "form-control" })@Html.ValidationMessageFor(x => x.Code)</div><div class="col-md-4"><label class="form-label">Name (English)</label>@Html.TextBoxFor(x => x.NameEnglish, new { @class = "form-control" })</div><div class="col-md-4"><label class="form-label">नाम (हिंदी)</label>@Html.TextBoxFor(x => x.NameHindi, new { @class = "form-control" })</div>
+                @if (Model.EntityType != "State")
+                {<div class="col-md-4"><label class="form-label">State</label>@Html.DropDownListFor(x => x.StateId, Model.States, "Select State", new { @class = "form-select", id = "StateId" })</div>}
+                @if (new[] { "Tehsil", "Block", "Ward", "GramPanchayat", "Village" }.Contains(Model.EntityType))
+                {<div class="col-md-4"><label class="form-label">District</label>@Html.DropDownListFor(x => x.DistrictId, Model.Districts, "Select District", new { @class = "form-select", id = "DistrictId" })</div>}
+                @if (Model.EntityType == "Village")
+                {<div class="col-md-4"><label class="form-label">Tehsil</label>@Html.DropDownListFor(x => x.TehsilId, Model.Tehsils, "Select Tehsil", new { @class = "form-select", id = "TehsilId" })</div>}
+                @if (Model.EntityType == "GramPanchayat" || Model.EntityType == "Village")
+                {<div class="col-md-4"><label class="form-label">Block</label>@Html.DropDownListFor(x => x.BlockId, Model.Blocks, "Select Block", new { @class = "form-select", id = "BlockId" })</div>}
+                @if (Model.EntityType == "Village")
+                {<div class="col-md-4"><label class="form-label">Gram Panchayat</label>@Html.DropDownListFor(x => x.GramPanchayatId, Model.GramPanchayats, "Select Gram Panchayat", new { @class = "form-select", id = "GramPanchayatId" })</div>}
+                @if (Model.EntityType == "AssemblyConstituency")
+                {<div class="col-md-4"><label class="form-label">Parliamentary Constituency</label>@Html.DropDownListFor(x => x.ParliamentaryConstituencyId, Model.ParliamentaryConstituencies, "Select PC", new { @class = "form-select", id = "ParliamentaryConstituencyId" })</div>}
+                @if (Model.EntityType == "Ward")
+                {<div class="col-md-4"><label class="form-label">Assembly Constituency</label>@Html.DropDownListFor(x => x.AssemblyConstituencyId, Model.AssemblyConstituencies, "Select AC", new { @class = "form-select", id = "AssemblyConstituencyId" })</div>}
+                @if (Model.EntityType.Contains("Constituency"))
+                {<div class="col-md-4"><label class="form-label">Reservation</label>@Html.DropDownListFor(x => x.ReservationCategory, new[] { new SelectListItem { Text = "General", Value = "General" }, new SelectListItem { Text = "SC", Value = "SC" }, new SelectListItem { Text = "ST", Value = "ST" } }, "Select", new { @class = "form-select" })</div>}
+                @if (Model.EntityType == "Ward" || Model.EntityType == "Village")
+                {<div class="col-md-4"><label class="form-label">Area Type</label>@Html.DropDownListFor(x => x.AreaType, new[] { new SelectListItem { Text = "Urban", Value = "Urban" }, new SelectListItem { Text = "Rural", Value = "Rural" } }, "Select", new { @class = "form-select" })</div>}
+                <div class="col-12"><div class="form-check">@Html.CheckBoxFor(x => x.IsActive, new { @class = "form-check-input" })<label class="form-check-label">Active</label></div></div>
+            </div><div class="mt-4"><button class="btn btn-primary">Save</button> <a href="@Url.Action("Index",new{entityType=Model.EntityType})" class="btn btn-light">Cancel</a></div>}
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/custom/geography-cascade.js")"></script>
+}

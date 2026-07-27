@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+using PoliticalLeaderPortal.Infrastructure.Security;
+using PoliticalLeaderPortal.Areas.Admin.Infrastructure;
+using System.Web.Mvc;
 
 namespace PoliticalLeaderPortal
 {
@@ -9,6 +11,12 @@ namespace PoliticalLeaderPortal
         {
             filters.Add(
                 new HandleErrorAttribute());
+            filters.Add(
+                new AdminAreaAuthorizeAttribute());
+            filters.Add(
+                new AdminAntiForgeryAttribute());
+            filters.Add(
+                new RoleMenuAuthorizeAttribute());
         }
     }
 }

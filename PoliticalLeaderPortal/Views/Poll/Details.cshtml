@@ -1,0 +1,92 @@
+@model PoliticalLeaderPortal.ViewModels.Poll.PublicPollVM
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    bool isOpen = ViewBag.IsOpen != null && (bool)ViewBag.IsOpen;
+    string source = Convert.ToString(ViewBag.Source ?? "web");
+}
+
+<section class="poll-public-page">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-lg-5">
+                        <span class="badge text-bg-primary mb-3">@Model.Status</span>
+                        <h1 class="fw-bold mb-2">@Model.Title</h1>
+                        <p class="lead">@Model.Question</p>
+                        @if (!String.IsNullOrWhiteSpace(Model.Description))
+                        {
+                            <p class="text-muted">@Model.Description</p>
+                        }
+
+                        @if (!isOpen)
+                        {
+                            <div class="alert alert-warning">@(String.IsNullOrWhiteSpace(Model.ClosedMessage) ? "This poll is currently closed." : Model.ClosedMessage)</div>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("Vote", "Poll", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("PollId", Model.PollId)
+                                @Html.Hidden("PublicSlug", Model.PublicSlug)
+                                @Html.Hidden("Source", source)
+                                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                                <div class="d-grid gap-2 my-4">
+                                    @foreach (var option in Model.Options)
+                                    {
+                                        <label class="poll-option">
+                                            <input type="radio" name="PollOptionId" value="@option.PollOptionId" required />
+                                            <span>@option.OptionText</span>
+                                        </label>
+                                    }
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6"><input class="form-control" name="RespondentName" placeholder="Name @(Model.RequireName ? "" : "(optional)")" @(Model.RequireName ? "required" : "") /></div>
+                                    <div class="col-md-6"><input class="form-control" name="MobileNo" placeholder="Mobile @(Model.RequireMobile ? "" : "(optional)")" @(Model.RequireMobile ? "required" : "") /></div>
+                                    <div class="col-12"><input class="form-control" name="AreaName" placeholder="Area / ward optional" /></div>
+                                    <div class="col-12"><textarea class="form-control" name="Remarks" rows="3" placeholder="Remark optional"></textarea></div>
+                                </div>
+
+                                if (Model.RequireConsent)
+                                {
+                                    <label class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" name="ConsentGiven" value="true" required />
+                                        <span class="form-check-label">I agree to submit this feedback voluntarily.</span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <input type="hidden" name="ConsentGiven" value="true" />
+                                }
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Submit Vote</button>
+                            }
+                        }
+
+                        @if (Model.ShowPublicResults && Model.Options.Any())
+                        {
+                            <div class="mt-4 pt-4 border-top">
+                                <h5 class="fw-bold">Current Results</h5>
+                                @foreach (var option in Model.Options)
+                                {
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between small"><strong>@option.OptionText</strong><span>@option.VotePercent%</span></div>
+                                        <div class="progress"><div class="progress-bar" style="width:@option.VotePercent%"></div></div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <link href="~/Content/css/poll-public.css?v=20260724-1" rel="stylesheet" />
+}

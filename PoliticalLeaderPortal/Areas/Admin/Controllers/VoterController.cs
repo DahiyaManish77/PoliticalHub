@@ -1,6 +1,7 @@
 using PoliticalLeaderPortal.Areas.Admin.Infrastructure;
 using PoliticalLeaderPortal.Areas.Admin.Services;
 using PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionWarRoom;
+using PoliticalLeaderPortal.Infrastructure.Uploads;
 using System;
 using System.IO;
 using System.Linq;
@@ -361,18 +362,7 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
                 return;
             }
 
-            string extension = Path.GetExtension(model.PdfFile.FileName);
-
-            if (String.IsNullOrWhiteSpace(extension) ||
-                !String.Equals(extension, ".pdf", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new InvalidOperationException("Only official PDF voter-roll files are allowed.");
-            }
-
-            if (model.PdfFile.ContentLength > 25 * 1024 * 1024)
-            {
-                throw new InvalidOperationException("PDF size must be less than 25 MB.");
-            }
+            SecureUploadValidator.ValidatePdf(model.PdfFile, 25 * 1024 * 1024);
 
             string relativeFolder = "~/Uploads/VoterRolls/Sardhana/";
             string absoluteFolder = Server.MapPath(relativeFolder);
@@ -394,19 +384,10 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
 
         private string SaveImage(System.Web.HttpPostedFileBase file, string folderName)
         {
-            string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".webp" };
-            string extension = Path.GetExtension(file.FileName);
-
-            if (String.IsNullOrWhiteSpace(extension) ||
-                !allowedExtensions.Contains(extension.ToLowerInvariant()))
-            {
-                throw new InvalidOperationException("Only JPG, PNG and WEBP images are allowed.");
-            }
-
-            if (file.ContentLength > 2 * 1024 * 1024)
-            {
-                throw new InvalidOperationException("Image size must be less than 2 MB.");
-            }
+            string extension = SecureUploadValidator.ValidateImage(
+                file,
+                2 * 1024 * 1024,
+                false);
 
             string relativeFolder = "~/Uploads/Voters/" + folderName + "/";
             string absoluteFolder = Server.MapPath(relativeFolder);

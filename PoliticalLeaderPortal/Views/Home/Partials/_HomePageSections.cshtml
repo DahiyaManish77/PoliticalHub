@@ -1,20 +1,14 @@
-@using PoliticalLeaderPortal.Areas.Admin.Services
-@using PoliticalLeaderPortal.Areas.Admin.ViewModels
-@{
-    var sectionService = new HomePageSectionService();
-    var sections = sectionService.GetVisibleSectionsForHome();
-}
+@* Campaign homepage sequence. Every content section remains database-driven. *@
+<div class="campaign-home-page">
+    @Html.Action("HeroSlider", "Layout")
+    @Html.Action("PhotoGallery", "Layout")
 
-<div class="site-home-page">
-    @foreach (HomePageSectionVM section in sections)
-    {
-        if (String.Equals(section.RenderType, "Action", StringComparison.OrdinalIgnoreCase))
-        {
-            @Html.Action(section.ActionName, section.ControllerName)
-        }
-        else if (!String.IsNullOrWhiteSpace(section.PartialViewPath))
-        {
-            @Html.Partial(section.PartialViewPath)
-        }
-    }
+    @Html.Action("VideoGallery", "Layout")
+    @Html.Action("LatestNews", "Layout")
+    @Html.Action("HomeMembers", "Layout")
+    @Html.Action("MediaCoverage", "Layout")
+    @Html.Action("UpcomingEvents", "Layout")
+
+    @Html.Action("HomeSection", "PeopleSay")
+    @Html.Partial("~/Views/Home/Partials/_CampaignEngagement.cshtml")
 </div>

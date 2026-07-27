@@ -299,15 +299,10 @@ namespace PoliticalLeaderPortal.Services
             {
                 string playlistId = GetConfiguredPlaylistId(client, apiKey, channelId);
 
-                if (!String.IsNullOrWhiteSpace(playlistId))
-                {
-                    imported = ImportYouTubePlaylistVideos(client, apiKey, playlistId, categoryId, maxVideos, out scanned);
-                }
+                if (String.IsNullOrWhiteSpace(playlistId))
+                    throw new InvalidOperationException("A dedicated leader YouTube playlist ID or playlist name is required.");
 
-                if (scanned == 0)
-                {
-                    imported = ImportYouTubeChannelVideos(client, apiKey, channelId, categoryId, maxVideos, out scanned);
-                }
+                imported = ImportYouTubePlaylistVideos(client, apiKey, playlistId, categoryId, maxVideos, out scanned);
             }
 
             _db.SaveChanges();
@@ -449,7 +444,7 @@ namespace PoliticalLeaderPortal.Services
                 }
             }
 
-            return GetChannelUploadsPlaylistId(client, apiKey, channelId);
+            return null;
         }
 
         private string FindPlaylistIdByName(WebClient client, string apiKey, string channelId, string playlistName)

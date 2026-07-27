@@ -18,6 +18,7 @@ namespace PoliticalLeaderPortal.Models
         public MenuMaster()
         {
             this.MenuMaster1 = new HashSet<MenuMaster>();
+            this.MenuConditions = new HashSet<MenuCondition>();
         }
     
         public int MenuId { get; set; }
@@ -53,5 +54,7 @@ namespace PoliticalLeaderPortal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MenuMaster> MenuMaster1 { get; set; }
         public virtual MenuMaster MenuMaster2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MenuCondition> MenuConditions { get; set; }
     }
 }

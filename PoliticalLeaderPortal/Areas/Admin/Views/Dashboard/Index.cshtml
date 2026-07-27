@@ -7,19 +7,39 @@
 <section class="campaign-dashboard">
     <div class="campaign-page-head">
         <div>
-            <h1>Dashboard</h1>
-            <p>Welcome back! Here's what's happening with your campaign.</p>
+            <div class="admin-page-kicker">Campaign Command</div>
+            <h1>Daily Command Dashboard</h1>
+            <p>@Model.TodaySummary</p>
         </div>
         <div class="campaign-page-actions">
-            <a href="@Url.Action("EventForm", "ElectionWarRoom", new { area = "Admin" })" class="campaign-btn campaign-btn-primary">
+            <a href="@Url.Action("CreateEvent", "ElectionWarRoom", new { area = "Admin" })" class="campaign-btn campaign-btn-primary">
                 <i class="fas fa-calendar-plus"></i>
                 New Event
             </a>
-            <a href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom", new { area = "Admin" })" class="campaign-btn campaign-btn-outline">
+            <a href="@Url.Action("ExportCsv", "Dashboard", new { area = "Admin" })" class="campaign-btn campaign-btn-outline">
                 <i class="fas fa-file-lines"></i>
-                Generate Report
+                Export Report
             </a>
         </div>
+    </div>
+
+    <div class="campaign-command-strip">
+        <a href="@Url.Action("Events", "ElectionWarRoom", new { area = "Admin" })">
+            <span class="campaign-command-icon blue"><i class="fas fa-calendar-day"></i></span>
+            <span><small>Field events today</small><strong>@Model.TodayFieldEvents</strong></span>
+        </a>
+        <a href="@Url.Action("Tasks", "ElectionWarRoom", new { area = "Admin", status = "Pending" })">
+            <span class="campaign-command-icon orange"><i class="fas fa-clock"></i></span>
+            <span><small>Overdue tasks</small><strong>@Model.OverdueTasks</strong></span>
+        </a>
+        <a href="@Url.Action("CampaignAlerts", "ElectionWarRoom", new { area = "Admin" })">
+            <span class="campaign-command-icon red"><i class="fas fa-triangle-exclamation"></i></span>
+            <span><small>High-priority alerts</small><strong>@Model.CriticalAlerts</strong></span>
+        </a>
+        <a href="@Url.Action("JanSampark", "ElectionWarRoom", new { area = "Admin" })">
+            <span class="campaign-command-icon violet"><i class="fas fa-comments"></i></span>
+            <span><small>New citizen issues</small><strong>@Model.NewCitizenIssuesToday</strong></span>
+        </a>
     </div>
 
     <div class="campaign-metric-grid">
@@ -30,10 +50,37 @@
                 <div class="campaign-metric-copy">
                     <span>@item.Label</span>
                     <strong>@item.Value</strong>
-                    <small><i class="fas @(item.ToneClass == "red" ? "fa-arrow-down" : "fa-arrow-up")"></i> @item.Hint</small>
+                    <small><i class="fas fa-circle-info"></i> @item.Hint</small>
                 </div>
                 <div class="campaign-sparkline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
             </a>
+        }
+    </div>
+
+    <div class="campaign-priority-panel">
+        <div class="campaign-panel-head">
+            <div>
+                <h2>Priority Attention</h2>
+                <small>Open campaign alerts ordered by severity</small>
+            </div>
+            <a href="@Url.Action("CampaignAlerts", "ElectionWarRoom", new { area = "Admin" })">View all alerts</a>
+        </div>
+        @if (!Model.CampaignAlerts.Any())
+        {
+            <div class="campaign-priority-empty"><i class="bi bi-check2-circle"></i> No unresolved campaign alerts.</div>
+        }
+        else
+        {
+            <div class="campaign-priority-list">
+                @foreach (var alert in Model.CampaignAlerts)
+                {
+                    <a href="@Url.Action(alert.ActionName, alert.ControllerName, new { area = "Admin" })">
+                        <span class="badge text-bg-@alert.BadgeClass">@alert.BadgeText</span>
+                        <span><strong>@alert.Title</strong><small>@(String.IsNullOrWhiteSpace(alert.Description) ? "Unassigned" : alert.Description)</small></span>
+                        <time>@(alert.Date.HasValue ? alert.Date.Value.ToString("dd MMM") : "—")</time>
+                    </a>
+                }
+            </div>
         }
     </div>
 
@@ -53,10 +100,10 @@
             </div>
         </div>
 
-        <div class="campaign-panel campaign-overview-panel" rowspan="2">
+        <div class="campaign-panel campaign-overview-panel">
             <div class="campaign-panel-head">
                 <h2>Campaign Overview</h2>
-                <a href="@Url.Action("CampaignErpBlueprint", "ElectionWarRoom", new { area = "Admin" })">View Report</a>
+                <a href="@Url.Action("ExportCsv", "Dashboard", new { area = "Admin" })">Export Report</a>
             </div>
             <div class="campaign-overview-list">
                 @foreach (var item in Model.OverviewItems)
@@ -131,8 +178,8 @@
                                     <td>@(item.Date.HasValue ? item.Date.Value.ToString("MMM dd, yyyy") : "-")</td>
                                     <td>@(String.IsNullOrWhiteSpace(item.BadgeText) ? "-" : item.BadgeText)</td>
                                     <td>@item.Description</td>
-                                    <td>Meeting</td>
-                                    <td><span class="campaign-status">Upcoming</span></td>
+                                    <td>@(String.IsNullOrWhiteSpace(item.TypeText) ? "-" : item.TypeText)</td>
+                                    <td><span class="campaign-status">@(String.IsNullOrWhiteSpace(item.StatusText) ? "-" : item.StatusText)</span></td>
                                 </tr>
                             }
                         }
@@ -170,10 +217,10 @@
                                     <td>
                                         <span class="campaign-person-cell">
                                             <span>@(String.IsNullOrWhiteSpace(item.Name) ? "A" : item.Name.Substring(0, 1).ToUpper())</span>
-                                            @item.Name
+                                            @(String.IsNullOrWhiteSpace(item.Name) ? "Anonymous" : item.Name)
                                         </span>
                                     </td>
-                                    <td>@item.Mobile</td>
+                                    <td>@(String.IsNullOrWhiteSpace(item.Mobile) || item.Mobile.Length < 4 ? "—" : "••••••" + item.Mobile.Substring(item.Mobile.Length - 4))</td>
                                     <td>@item.Constituency</td>
                                     <td>@item.RegisteredOn</td>
                                     <td><span class="campaign-status active">@item.Status</span></td>

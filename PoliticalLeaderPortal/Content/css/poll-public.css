@@ -1,0 +1,25 @@
+.poll-public-page {
+    background: #f8fafc;
+    min-height: 60vh;
+}
+
+.poll-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid #dbe3ef;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.poll-option:hover {
+    border-color: #0d6efd;
+    background: #f1f6ff;
+}
+
+.poll-option input {
+    width: 18px;
+    height: 18px;
+}

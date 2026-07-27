@@ -1,129 +1,61 @@
-﻿@model PoliticalLeaderPortal.ViewModels.LayoutHeaderVM
-
-@if (Model.ShowTopBar)
-{
-    <div class="top-bar">
-
-        <div class="container-fluid">
-
-            <div class="row align-items-center">
-
-                <!-- LEFT -->
-
-                <div class="col-lg-6 col-md-6 d-none d-md-block">
-
-                    <div class="top-bar-left">
-
-                        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
-                        {
-                            <a href="tel:@Model.PhoneNumber">
-
-                                <i class="bi bi-telephone-fill"></i>
-
-                                <span>@Model.PhoneNumber</span>
-
-                            </a>
-                        }
-
-                        @if (!string.IsNullOrWhiteSpace(Model.EmailAddress))
-                        {
-                            <a href="mailto:@Model.EmailAddress">
-
-                                <i class="bi bi-envelope-fill"></i>
-
-                                <span>@Model.EmailAddress</span>
-
-                            </a>
-                        }
-
-                    </div>
-
-                </div>
-
-                <!-- RIGHT -->
-
-                <div class="col-lg-6 col-md-6 col-12">
-
-                    <div class="top-bar-right">
-
-                        @if (Model.ShowLanguageSwitcher)
-                        {
-
-                            <div class="custom-language-dropdown"
-                                 id="bkkuLangWrapper">
-
-                                <button type="button"
-                                        class="language-btn"
-                                        onclick="toggleLanguageMenu()">
-
-                                    <i class="bi bi-globe2"></i>
-
-                                    <span>
-
-                                        Language
-
-                                    </span>
-
-                                    <i class="bi bi-chevron-down"></i>
-
-                                </button>
-
-                                <ul class="language-menu">
-
-                                    <li onclick="changeLanguage('en')">
-
-                                        🇬🇧 English
-
-                                    </li>
-
-                                    <li onclick="changeLanguage('hi')">
-
-                                        🇮🇳 हिन्दी
-
-                                    </li>
-
-                                    <li onclick="changeLanguage('pa')">
-
-                                        Punjabi
-
-                                    </li>
-
-                                    <li onclick="changeLanguage('ur')">
-
-                                        Urdu
-
-                                    </li>
-
-                                    <li onclick="changeLanguage('ta')">
-
-                                        Tamil
-
-                                    </li>
-
-                                    <li onclick="changeLanguage('gu')">
-
-                                        Gujarati
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                            <div id="google_translate_element"
-                                 style="display:none;">
-                            </div>
-
-                        }
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+@model PoliticalLeaderPortal.ViewModels.LayoutHeaderVM
+@{
+    var facebook = String.IsNullOrWhiteSpace(Model == null ? null : Model.FacebookUrl) ? "https://www.facebook.com/" : Model.FacebookUrl;
+    var instagram = String.IsNullOrWhiteSpace(Model == null ? null : Model.InstagramUrl) ? "https://www.instagram.com/" : Model.InstagramUrl;
+    var twitter = String.IsNullOrWhiteSpace(Model == null ? null : Model.TwitterUrl) ? "https://x.com/" : Model.TwitterUrl;
+    var youtube = String.IsNullOrWhiteSpace(Model == null ? null : Model.YoutubeUrl) ? "https://www.youtube.com/" : Model.YoutubeUrl;
 }
+<div class="campaign-utility-bar">
+    <div class="campaign-utility-left">
+        <div class="campaign-font-tools" aria-label="Text size controls">
+            <button type="button" data-font-change="increase" aria-label="Zoom in" title="Zoom in">A+</button>
+            <button type="button" data-font-change="decrease" aria-label="Zoom out" title="Zoom out">A-</button>
+        </div>
+        <span class="campaign-utility-divider"></span>
+        @if (Model != null && Model.ShowLanguageSwitcher)
+        {
+            <div class="campaign-language" id="siteLanguageWrapper">
+                <button type="button" class="campaign-language-trigger" id="siteLanguageButton" aria-expanded="false" aria-haspopup="true">
+                    <i class="bi bi-translate" aria-hidden="true"></i>
+                    <span id="siteSelectedLanguage" data-current-language>English</span>
+                    <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="campaign-language-menu notranslate" translate="no" role="menu" aria-label="Select language">
+                    <button type="button" role="menuitem" data-lang="en">English</button>
+                    <button type="button" role="menuitem" data-lang="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</button>
+                    <button type="button" role="menuitem" data-lang="pa">&#2602;&#2672;&#2588;&#2622;&#2604;&#2624;</button>
+                    <button type="button" role="menuitem" data-lang="gu">&#2711;&#2753;&#2716;&#2736;&#2750;&#2724;&#2752;</button>
+                    <button type="button" role="menuitem" data-lang="mr">&#2350;&#2352;&#2366;&#2336;&#2368;</button>
+                    <button type="button" role="menuitem" data-lang="bn">&#2476;&#2494;&#2434;&#2482;&#2494;</button>
+                    <button type="button" role="menuitem" data-lang="ta">&#2980;&#2990;&#3007;&#2996;&#3021;</button>
+                    <button type="button" role="menuitem" data-lang="te">&#3108;&#3142;&#3122;&#3137;&#3095;&#3137;</button>
+                    <button type="button" role="menuitem" data-lang="ur">&#1575;&#1585;&#1583;&#1608;</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="campaign-utility-center">
+        <span>Connect with us</span>
+        <div class="campaign-top-social">
+            <a href="@facebook" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="@instagram" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="@twitter" target="_blank" rel="noopener" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="@youtube" target="_blank" rel="noopener" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+    </div>
+    <div class="campaign-utility-right">
+        <div class="campaign-auth-links">
+            @if (Model == null || Model.ShowSignIn)
+            {
+                <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person"></i> Sign in</button>
+            }
+            @if (Model == null || Model.ShowSignUp)
+            {
+                <button type="button" class="campaign-signup-link" data-bs-toggle="modal" data-bs-target="#registerModal">Sign up</button>
+            }
+        </div>
+        <span class="campaign-utility-divider"></span>
+        <a class="campaign-utility-text-link" href="@Url.Action("Index", "News", new { area = "" })">Press</a>
+        <a class="campaign-utility-text-link" href="#contact-section">Contact</a>
+    </div>
+</div>

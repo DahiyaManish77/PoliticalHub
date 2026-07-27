@@ -1,0 +1,32 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VideoMeeting.VideoMeetingEditVM
+@{
+    ViewBag.Title = "Create Video Meeting";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4"><div><h3 class="fw-bold mb-1">Create Video Meeting</h3><p class="text-muted mb-0">Schedule the session and define participant permissions.</p></div><a class="btn btn-outline-secondary" href="@Url.Action("Index")">Back</a></div>
+    <div class="card border-0 shadow-sm">
+        @using (Html.BeginForm("Create", "VideoMeeting", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class="alert alert-danger m-3 mb-0" })
+            <div class="card-body"><div class="row g-3">
+                <div class="col-md-8">@Html.LabelFor(x=>x.Title,new{@class="form-label"})@Html.TextBoxFor(x=>x.Title,new{@class="form-control",placeholder="Meeting title"})@Html.ValidationMessageFor(x=>x.Title,"",new{@class="text-danger"})</div>
+                <div class="col-md-4">@Html.LabelFor(x=>x.MeetingType,new{@class="form-label"})@Html.DropDownListFor(x=>x.MeetingType,new SelectList(new[]{"Private Leadership Meeting","Constituency Public Meeting","Digital Rally / Webinar"},Model.MeetingType),new{@class="form-select"})</div>
+                <div class="col-12">@Html.LabelFor(x=>x.Description,new{@class="form-label"})@Html.TextAreaFor(x=>x.Description,3,40,new{@class="form-control"})</div>
+                <div class="col-md-4">@Html.LabelFor(x=>x.ScheduledStart,new{@class="form-label"})@Html.TextBoxFor(x=>x.ScheduledStart,"{0:yyyy-MM-ddTHH:mm}",new{@class="form-control",type="datetime-local"})</div>
+                <div class="col-md-4">@Html.LabelFor(x=>x.DurationMinutes,new{@class="form-label"})@Html.TextBoxFor(x=>x.DurationMinutes,new{@class="form-control",type="number",min="15",max="1440"})</div>
+                <div class="col-md-4">@Html.LabelFor(x=>x.MaximumParticipants,new{@class="form-label"})@Html.TextBoxFor(x=>x.MaximumParticipants,new{@class="form-control",type="number",min="2",max="5000"})</div>
+                <div class="col-12"><label class="form-label">Participant and recording controls</label><div class="border rounded-3 p-3 row g-2">
+                    <div class="col-md-4 form-check ms-2">@Html.CheckBoxFor(x=>x.AllowParticipantCamera,new{@class="form-check-input"}) @Html.LabelFor(x=>x.AllowParticipantCamera,new{@class="form-check-label"})</div>
+                    <div class="col-md-4 form-check">@Html.CheckBoxFor(x=>x.AllowParticipantMicrophone,new{@class="form-check-input"}) @Html.LabelFor(x=>x.AllowParticipantMicrophone,new{@class="form-check-label"})</div>
+                    <div class="col-md-3 form-check">@Html.CheckBoxFor(x=>x.RequireHostApproval,new{@class="form-check-input"}) @Html.LabelFor(x=>x.RequireHostApproval,new{@class="form-check-label"})</div>
+                    <div class="col-md-4 form-check ms-2">@Html.CheckBoxFor(x=>x.AllowRecording,new{@class="form-check-input"}) @Html.LabelFor(x=>x.AllowRecording,new{@class="form-check-label"})</div>
+                    <div class="col-md-4 form-check">@Html.CheckBoxFor(x=>x.AutoRecord,new{@class="form-check-input"}) @Html.LabelFor(x=>x.AutoRecord,new{@class="form-check-label"})</div>
+                </div></div>
+                <div class="col-12">@Html.LabelFor(x=>x.Invitees,new{@class="form-label"})@Html.TextAreaFor(x=>x.Invitees,4,40,new{@class="form-control",placeholder="Enter mobile numbers or email addresses, separated by commas or new lines"})<small class="text-muted">Invitations will be activated after a messaging provider is connected.</small></div>
+            </div></div>
+            <div class="card-footer bg-white text-end"><button class="btn btn-primary"><i class="bi bi-calendar-check me-1"></i>Schedule Meeting</button></div>
+        }
+    </div>
+</div>

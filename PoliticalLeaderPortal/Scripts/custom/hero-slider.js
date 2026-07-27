@@ -185,7 +185,7 @@
 
                     disableOnInteraction: false,
 
-                    pauseOnMouseEnter: true
+                    pauseOnMouseEnter: false
 
                 },
 
@@ -196,6 +196,8 @@
                         self.playCurrentSlideAnimation();
 
                         self.syncSlidePlayback();
+
+                        self.startAutoplay();
 
                     },
 
@@ -219,6 +221,18 @@
 
             });
 
+            window.setTimeout(function () {
+
+                if (self.swiper) {
+
+                    self.swiper.update();
+
+                    self.startAutoplay();
+
+                }
+
+            }, 250);
+
         },
 
         bindEvents: function () {
@@ -228,12 +242,6 @@
             self.$slider.on("mouseenter", function () {
 
                 self.isPointerInside = true;
-
-                if (self.swiper && self.swiper.autoplay) {
-
-                    self.swiper.autoplay.stop();
-
-                }
 
             });
 
@@ -301,13 +309,9 @@
 
             self.pauseInactiveVideos();
 
-            if (!isVideoSlide) {
+                if (!isVideoSlide) {
 
-                if (self.swiper.autoplay && !document.hidden && !self.isPointerInside) {
-
-                    self.swiper.autoplay.start();
-
-                }
+                self.startAutoplay();
 
                 return;
 
@@ -326,6 +330,24 @@
             }
 
             self.playActiveVideo($activeSlide);
+
+        },
+
+        startAutoplay: function () {
+
+            if (!this.swiper ||
+                !this.swiper.autoplay ||
+                document.hidden) {
+
+                return;
+
+            }
+
+            if (this.$slides && this.$slides.length > 1) {
+
+                this.swiper.autoplay.start();
+
+            }
 
         },
 

@@ -1,0 +1,23 @@
+﻿
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu.MenuEditVM
+<div class="menu-card menu-shadow menu-rounded mt-4">
+    <div class="menu-card-header"><div class="menu-card-header-left"><div class="menu-card-header-icon"><i class="fas fa-shield-halved"></i></div><div class="menu-card-header-content"><h5 class="menu-card-title">Enterprise Conditions</h5><div class="menu-card-subtitle">Schedule and restrict menu visibility.</div></div></div></div>
+    <div class="menu-card-body">
+        <div class="row g-3">
+            <div class="col-md-4">@Html.LabelFor(m => m.MenuLocation, new { @class = "form-label" })@Html.TextBoxFor(m => m.MenuLocation, new { @class = "form-control", placeholder = "AdminSidebar / PublicHeader" })</div>
+            <div class="col-md-4">@Html.LabelFor(m => m.RequiredRole, new { @class = "form-label" })@Html.TextBoxFor(m => m.RequiredRole, new { @class = "form-control", placeholder = "Admin,Manager" })</div>
+            <div class="col-md-4">@Html.LabelFor(m => m.RequiredPermissionKey, new { @class = "form-label" })@Html.TextBoxFor(m => m.RequiredPermissionKey, new { @class = "form-control" })</div>
+            <div class="col-md-4">@Html.LabelFor(m => m.FeatureKey, new { @class = "form-label" })@Html.TextBoxFor(m => m.FeatureKey, new { @class = "form-control" })</div>
+            <div class="col-md-4">@Html.LabelFor(m => m.LanguageCode, new { @class = "form-label" })@Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control", placeholder = "en / hi" })</div>
+            <div class="col-md-4">@Html.LabelFor(m => m.BadgeKey, new { @class = "form-label" })@Html.TextBoxFor(m => m.BadgeKey, new { @class = "form-control" })</div>
+            <div class="col-md-6">@Html.LabelFor(m => m.VisibleFrom, new { @class = "form-label" })@Html.TextBoxFor(m => m.VisibleFrom, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })</div>
+            <div class="col-md-6">@Html.LabelFor(m => m.VisibleUntil, new { @class = "form-label" })@Html.TextBoxFor(m => m.VisibleUntil, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })</div>
+            <div class="col-12 d-flex flex-wrap gap-4">
+                <label>@Html.CheckBoxFor(m => m.RequireLogin) Login required</label>
+                <label>@Html.CheckBoxFor(m => m.RequireCampaignContext) Campaign context required</label>
+                <label>@Html.CheckBoxFor(m => m.ShowOnDesktop) Desktop</label>
+                <label>@Html.CheckBoxFor(m => m.ShowOnMobile) Mobile</label>
+            </div>
+        </div>
+    </div>
+</div>

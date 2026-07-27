@@ -401,6 +401,11 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
                 .ToList();
         }
 
+        public List<EventVM> GetEvents(int? campaignId)
+        {
+            return FilterEventsByCampaign(GetEvents(), campaignId);
+        }
+
         public EventVM GetEventById(int eventId)
         {
             EventMaster entity = _db.EventMasters
@@ -443,8 +448,78 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             vm.Remarks = entity.Remarks;
 
             AttachEventProfile(vm);
+            AttachEventCampaign(vm);
 
             return vm;
+        }
+
+        public void SetEventCampaign(int eventId, int? campaignId, int userId)
+        {
+            EnsureEventCampaignContextTable();
+            if (!campaignId.HasValue)
+            {
+                ExecuteSql("DELETE FROM dbo.EventCampaignContext WHERE EventId=@EventId",
+                    new SqlParameter("@EventId", eventId));
+                return;
+            }
+
+            ExecuteSql(
+                @"MERGE dbo.EventCampaignContext AS target
+                  USING (SELECT @EventId EventId) AS source ON target.EventId=source.EventId
+                  WHEN MATCHED THEN UPDATE SET OperationalCampaignId=@CampaignId,UpdatedBy=@UserId,UpdatedDate=GETDATE()
+                  WHEN NOT MATCHED THEN INSERT (EventId,OperationalCampaignId,CreatedBy,CreatedDate)
+                  VALUES (@EventId,@CampaignId,@UserId,GETDATE());",
+                new SqlParameter("@EventId", eventId),
+                new SqlParameter("@CampaignId", campaignId.Value),
+                new SqlParameter("@UserId", userId));
+        }
+
+        public List<EventVM> SearchEvents(string keyword, int? campaignId)
+        {
+            return FilterEventsByCampaign(SearchEvents(keyword), campaignId);
+        }
+
+        public List<EventVM> GetEventsByStatus(string status, int? campaignId)
+        {
+            return FilterEventsByCampaign(GetEventsByStatus(status), campaignId);
+        }
+
+        private List<EventVM> FilterEventsByCampaign(List<EventVM> events, int? campaignId)
+        {
+            if (!campaignId.HasValue) return events;
+            HashSet<int> allowed = new HashSet<int>(GetEventIdsByCampaign(campaignId.Value));
+            return events.Where(x => allowed.Contains(x.EventId)).ToList();
+        }
+
+        public List<int> GetEventIdsByCampaign(int campaignId)
+        {
+            EnsureEventCampaignContextTable();
+            return _db.Database.SqlQuery<int>(
+                "SELECT EventId FROM dbo.EventCampaignContext WHERE OperationalCampaignId=@CampaignId",
+                new SqlParameter("@CampaignId", campaignId))
+                .ToList();
+        }
+
+        private void AttachEventCampaign(EventVM vm)
+        {
+            EnsureEventCampaignContextTable();
+            DataTable table = QuerySql(
+                @"SELECT context.OperationalCampaignId,campaign.CampaignName
+                  FROM dbo.EventCampaignContext context
+                  INNER JOIN dbo.ElectionCampaign campaign ON campaign.CampaignId=context.OperationalCampaignId
+                  WHERE context.EventId=@EventId",
+                new SqlParameter("@EventId", vm.EventId));
+            if (table.Rows.Count > 0)
+            {
+                vm.CampaignId = Convert.ToInt32(table.Rows[0]["OperationalCampaignId"]);
+                vm.CampaignName = Convert.ToString(table.Rows[0]["CampaignName"]);
+            }
+        }
+
+        private void EnsureEventCampaignContextTable()
+        {
+            ExecuteSql(@"IF OBJECT_ID(N'dbo.EventCampaignContext',N'U') IS NULL
+                         THROW 50001, 'Run App_Data/EventCampaignContextUpgrade.sql before using campaign-scoped events.', 1;");
         }
 
         public List<EventVM> GetTodayEvents()
@@ -14217,20 +14292,20 @@ namespace PoliticalLeaderPortal.Areas.Admin.Services
             };
 
             model.Pillars.Add(CreatePillar("Campaign Dashboard", "Live command center for countdown, schedule, tasks, alerts, booth coverage, volunteers, media and performance.", "Implemented", "bi-speedometer2", "Index", "Election countdown", "Today's schedule", "Pending tasks", "Booth coverage", "Alerts and notifications", "District performance"));
-            model.Pillars.Add(CreatePillar("Campaign Management", "Election setup, manifesto, campaign goals, timeline, calendar, team ownership and status control.", "Foundation", "bi-calendar-range", "Campaigns", "State election", "Lok Sabha", "Vidhan Sabha", "Municipal", "Panchayat", "Campaign goals"));
+            model.Pillars.Add(CreatePillar("Campaign Management", "Election setup, manifesto, campaign goals, timeline, calendar, team ownership and status control.", "Implemented", "bi-calendar-range", "Campaigns", "State election", "Lok Sabha", "Vidhan Sabha", "Municipal", "Panchayat", "Campaign goals"));
             model.Pillars.Add(CreatePillar("Leader Campaign Kit", "Leader branding, approved biography, speeches, slogans, media kit and public promise tracker for party-style campaigns.", "Foundation", "bi-megaphone", "LeaderCampaignKit", "Leader profile", "Approved slogans", "Speech bank", "Media kit", "Manifesto points", "Training notes"));
             model.Pillars.Add(CreatePillar("Booth Committee Network", "Booth-level committee structure, page/pramukh coordination, meeting calendar and responsible contact tracking.", "Foundation", "bi-diagram-3", "BoothCommittee", "Booth committee", "Area coordinator", "Meeting plan", "Responsibility map", "Follow-up"));
-            model.Pillars.Add(CreatePillar("Candidate Management", "Candidate profile, affidavit documents, media files, election history, expenses and approval workflow.", "Planned", "bi-person-badge", "CandidateManagement", "Bio", "Education", "Profession", "Assets", "Affidavit", "Approval workflow"));
+            model.Pillars.Add(CreatePillar("Candidate Management", "Candidate profile, affidavit documents, media files, election history, expenses and approval workflow.", "Implemented", "bi-person-badge", "CandidateManagement", "Bio", "Education", "Profession", "Assets", "Affidavit", "Approval workflow"));
             model.Pillars.Add(CreatePillar("Constituency Management", "Administrative geography, booth mapping, past results, voter strength and performance insights.", "Foundation", "bi-map", "ElectionBooths", "State", "District", "Assembly", "Parliament", "Block", "Village", "Ward", "Polling booth"));
             model.Pillars.Add(CreatePillar("Booth Management", "Booth committees, booth volunteers, booth visits, attendance, daily reporting and weak/strong indicators.", "Implemented", "bi-building-check", "BoothMonitoring", "Booth committee", "Booth president", "Booth agents", "Panna pramukh", "Booth visits", "Daily reporting"));
             model.Pillars.Add(CreatePillar("Voter Management", "Lawful voter roll import, search, family mapping and feedback with duplicate prevention.", "Foundation", "bi-people", "BoothVisits", "Official roll import", "Search voter", "Family mapping", "Feedback", "Duplicate prevention", "Data governance"));
             model.Pillars.Add(CreatePillar("Volunteer Management", "Volunteer registration, verification, skill, availability, work assignment, attendance and performance.", "Implemented", "bi-person-check", "Volunteers", "Registration", "Verification", "Skill", "Availability", "Attendance", "Reward points", "Training"));
-            model.Pillars.Add(CreatePillar("Membership Management", "Membership drive extension, analytics, renewals, digital card, approval and team allocation.", "Existing module extension", "bi-card-checklist", "MembershipDrive", "Membership drive", "Analytics", "Renewal", "Digital card", "Approval", "Team allocation"));
+            model.Pillars.Add(CreatePillar("Membership Management", "Issue secure digital membership cards and official appointment or authorization letters with QR verification, expiry and revocation.", "Implemented", "bi-card-checklist", "MembershipDrive", "Digital card", "Official letters", "QR verification", "Expiry control", "Revocation", "Document register"));
             model.Pillars.Add(CreatePillar("Event Management", "Rallies, public meetings, road shows, guest management, attendance, expenses, media and QR readiness.", "Implemented", "bi-calendar-event", "RallyEvents", "Public meeting", "Rally", "Road show", "QR check-in", "Expense tracking", "Photo gallery", "Guest management"));
             model.Pillars.Add(CreatePillar("Task Management", "Daily tasks, assignment, priority, deadline, progress, reminder and escalation.", "Implemented", "bi-check2-square", "CampaignTasks", "Daily tasks", "Assign", "Priority", "Deadline", "Reminder", "Escalation", "Progress"));
-            model.Pillars.Add(CreatePillar("Social Media War Room", "Content calendar, approval, publishing queue, hashtag tracking and performance analytics.", "Planned", "bi-share", "SocialMediaWarRoom", "Facebook", "Instagram", "X", "YouTube", "WhatsApp", "Content approval", "Analytics"));
-            model.Pillars.Add(CreatePillar("Poll & Survey Management", "Shareable public feedback polls with WhatsApp, Facebook, QR/public link support and source-wise response tracking.", "Foundation", "bi-bar-chart-line", "CampaignPolls", "Poll builder", "Public link", "WhatsApp share", "Facebook share", "Source tracking", "Results dashboard"));
-            model.Pillars.Add(CreatePillar("Digital Media Library", "Photos, videos, documents, press coverage and approved campaign assets.", "Foundation", "bi-images", "Media", "Photos", "Videos", "Documents", "Press coverage", "Approval status"));
+            model.Pillars.Add(CreatePillar("Social Media War Room", "Content calendar, approval, publishing queue, hashtag tracking and performance analytics.", "Implemented", "bi-share", "SocialMediaWarRoom", "Facebook", "Instagram", "X", "YouTube", "WhatsApp", "Content approval", "Analytics"));
+            model.Pillars.Add(CreatePillar("Poll & Survey Management", "Shareable public feedback polls with WhatsApp, Facebook, QR/public link support and source-wise response tracking.", "Implemented", "bi-bar-chart-line", "CampaignPolls", "Poll builder", "Public link", "WhatsApp share", "Facebook share", "Source tracking", "Results dashboard"));
+            model.Pillars.Add(CreatePillar("Digital Media Library", "Photos, videos, documents, press coverage and approved campaign assets.", "Implemented", "bi-images", "Media", "Photos", "Videos", "Documents", "Press coverage", "Approval status"));
             model.Pillars.Add(CreatePillar("Finance and Donations", "Fund collection, donation progress, event spending, approvals and audit-ready expense records.", "Foundation", "bi-cash-stack", "FinanceAndDonations", "Fund collection", "Donation progress", "Campaign expenses", "Approvals", "Audit trail"));
             model.Pillars.Add(CreatePillar("Compliance and Security", "Role-based authorization, lawful data handling, audit logging and production readiness controls.", "Ongoing", "bi-shield-lock", "ComplianceCenter", "Role permissions", "Audit trail", "Legal voter data handling", "Secure uploads", "Production configuration"));
 

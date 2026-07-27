@@ -1,0 +1,41 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.VerifiedDocumentIndexVM
+@{ ViewBag.Title = "Verified Cards & Letters"; }
+<div class="admin-page-header">
+ <div><div class="admin-page-eyebrow">Communication control</div><h1>Verified Cards &amp; Letters</h1><p>Issue traceable credentials and official communication from one register.</p></div>
+ <a class="btn btn-primary" href="@Url.Action("Create")"><i class="bi bi-plus-lg"></i> Issue document</a>
+</div>
+@if(TempData["SuccessMessage"]!=null){<div class="alert alert-success">@TempData["SuccessMessage"]</div>}
+@if(TempData["ErrorMessage"]!=null){<div class="alert alert-danger">@TempData["ErrorMessage"]</div>}
+<div class="row g-3 mb-4">
+ <div class="col-md-4"><div class="admin-stat-card"><span>Currently valid</span><strong>@Model.ActiveCount</strong></div></div>
+ <div class="col-md-4"><div class="admin-stat-card"><span>Expired</span><strong>@Model.ExpiredCount</strong></div></div>
+ <div class="col-md-4"><div class="admin-stat-card"><span>Revoked</span><strong>@Model.RevokedCount</strong></div></div>
+</div>
+<div class="admin-card"><div class="table-responsive"><table class="table admin-table align-middle">
+<thead><tr><th>Document</th><th>Recipient</th><th>Campaign</th><th>Validity</th><th>Status</th><th class="text-end">Actions</th></tr></thead><tbody>
+@foreach(var item in Model.Documents){
+ var expired=item.ExpiryDate.HasValue&&item.ExpiryDate.Value.Date<DateTime.Today;
+ var state=item.Status=="Revoked"?"Revoked":(expired?"Expired":"Valid");
+ <tr>
+  <td><strong>@item.DocumentNumber</strong><div class="text-muted small">@item.DocumentType</div></td>
+  <td><strong>@item.RecipientName</strong><div class="text-muted small">@item.RecipientRole @item.RecipientReference</div></td>
+  <td>@(item.CampaignName??"—")</td>
+  <td>@item.IssueDate.ToString("dd MMM yyyy")<div class="text-muted small">Until @(item.ExpiryDate.HasValue?item.ExpiryDate.Value.ToString("dd MMM yyyy"):"No expiry")</div></td>
+  <td><span class="badge @(state=="Valid"?"bg-success":state=="Expired"?"bg-warning text-dark":"bg-danger")">@state</span></td>
+  <td class="text-end">
+   <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Download",new{id=item.VerifiedDocumentId})">PDF</a>
+   @if(item.Status=="Active"){
+    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#revoke-@item.VerifiedDocumentId">Revoke</button>
+    <div class="modal fade text-start" id="revoke-@item.VerifiedDocumentId" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    @using(Html.BeginForm("Revoke","VerifiedDocument",FormMethod.Post)){
+     @Html.AntiForgeryToken() @Html.Hidden("id",item.VerifiedDocumentId)
+     <div class="modal-header"><h5 class="modal-title">Revoke @item.DocumentNumber</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+     <div class="modal-body"><label class="form-label">Reason</label><textarea class="form-control" name="reason" maxlength="300" required></textarea></div>
+     <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button class="btn btn-danger">Revoke</button></div>
+    }</div></div></div>
+   }
+  </td>
+ </tr>
+}
+@if(!Model.Documents.Any()){<tr><td colspan="6"><div class="admin-empty-state"><h3>No documents issued</h3><p>Issue the first digital card or official letter.</p></div></td></tr>}
+</tbody></table></div></div>

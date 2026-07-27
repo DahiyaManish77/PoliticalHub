@@ -1,5 +1,6 @@
 using PoliticalLeaderPortal.Areas.Admin.Services;
 using PoliticalLeaderPortal.Areas.Admin.ViewModels;
+using PoliticalLeaderPortal.Infrastructure.Uploads;
 using System;
 using System.IO;
 using System.Web.Mvc;
@@ -37,13 +38,16 @@ namespace PoliticalLeaderPortal.Areas.Admin.Controllers
             {
                 if (model.PortraitImageFile != null && model.PortraitImageFile.ContentLength > 0)
                 {
+                    string extension = SecureUploadValidator.ValidateImage(
+                        model.PortraitImageFile,
+                        5 * 1024 * 1024,
+                        false);
                     string folder = Server.MapPath("~/Uploads/Leader");
                     if (!Directory.Exists(folder))
                     {
                         Directory.CreateDirectory(folder);
                     }
 
-                    string extension = Path.GetExtension(model.PortraitImageFile.FileName);
                     string fileName = "leader-introduction-" + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
                     string physicalPath = Path.Combine(folder, fileName);
                     model.PortraitImageFile.SaveAs(physicalPath);

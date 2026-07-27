@@ -1,0 +1,166 @@
+﻿.ecm-page {
+    padding: 8px 2px 28px
+}
+
+.ecm-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 22px
+}
+
+    .ecm-head h1, .ecm-form-head h1 {
+        font-size: 28px;
+        margin: 2px 0 6px;
+        color: #172033
+    }
+
+    .ecm-head p {
+        margin: 0;
+        color: #667085
+    }
+
+.ecm-kicker {
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #d16a22;
+    font-size: 12px;
+    font-weight: 700
+}
+
+.ecm-actions {
+    display: flex;
+    gap: 10px
+}
+
+.ecm-stats {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 14px;
+    margin-bottom: 18px
+}
+
+.ecm-stat, .ecm-card, .ecm-form-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15,23,42,.05)
+}
+
+.ecm-stat {
+    padding: 18px
+}
+
+    .ecm-stat span {
+        display: block;
+        color: #667085;
+        font-size: 13px
+    }
+
+    .ecm-stat strong {
+        display: block;
+        font-size: 28px;
+        color: #172033;
+        margin-top: 5px
+    }
+
+.ecm-filter {
+    display: flex;
+    gap: 10px;
+    margin: 0 0 18px
+}
+
+.ecm-card {
+    margin-bottom: 18px;
+    overflow: hidden
+}
+
+.ecm-card-head {
+    padding: 16px 18px;
+    border-bottom: 1px solid #e5e7eb
+}
+
+    .ecm-card-head h3 {
+        margin: 0;
+        font-size: 18px
+    }
+
+.ecm-card table {
+    margin: 0
+}
+
+.ecm-card td, .ecm-card th {
+    padding: 14px 16px;
+    vertical-align: middle
+}
+
+    .ecm-card td small {
+        display: block;
+        color: #667085;
+        margin-top: 3px
+    }
+
+.ecm-card .progress {
+    min-width: 110px;
+    height: 18px
+}
+
+.ecm-form-card {
+    padding: 22px;
+    max-width: 1050px;
+    margin: 8px auto 30px
+}
+
+.ecm-form-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    margin: -4px 0 20px;
+    padding-bottom: 14px
+}
+
+.req {
+    color: #dc3545;
+    margin-left: 3px
+}
+
+.field-validation-error {
+    display: block;
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px
+}
+
+@media(max-width:900px) {
+    .ecm-stats {
+        grid-template-columns: repeat(2,1fr)
+    }
+
+    .ecm-head {
+        display: block
+    }
+
+    .ecm-actions {
+        margin-top: 14px
+    }
+
+    .ecm-filter {
+        flex-wrap: wrap
+    }
+}
+
+@media(max-width:520px) {
+    .ecm-stats {
+        grid-template-columns: 1fr
+    }
+
+    .ecm-actions {
+        flex-direction: column
+    }
+
+    .ecm-form-card {
+        padding: 16px
+    }
+}

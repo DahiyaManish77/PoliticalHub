@@ -1,385 +1,67 @@
 @model List<PoliticalLeaderPortal.ViewModels.UpcomingEventListVM>
-
 @{
     Layout = null;
     var events = Model ?? new List<PoliticalLeaderPortal.ViewModels.UpcomingEventListVM>();
-    var featured = events.FirstOrDefault();
-    var agenda = events.Skip(1).Take(4).ToList();
-
-    Func<System.DateTime, string> getBadge = date =>
-    {
-        if (date.Date == System.DateTime.Today) return "TODAY";
-        if (date.Date == System.DateTime.Today.AddDays(1)) return "TOMORROW";
-        return "UPCOMING";
-    };
 }
-
-<section class="bhagwa-program-section">
-    <div class="container">
-        <div class="bhagwa-program-shell">
-            <div class="bhagwa-program-head">
-                <div>
-                    <span>Upcoming Programs</span>
-                    <h2>Public Meetings & Jan Sampark</h2>
-                    <p>Public interactions, development reviews, social campaigns and constituency activities.</p>
-                </div>
-                <a href="@Url.Action("Index", "Event")">View All</a>
-            </div>
-
-            @if (featured != null)
+<section class="campaign-showcase campaign-events-showcase" id="events">
+    <div class="campaign-showcase-head">
+        <div>
+            <span class="campaign-kicker">UPCOMING EVENTS</span>
+            <h2>Meet us on the ground</h2>
+            <p>Public meetings, Jan Sampark programmes and constituency activities.</p>
+        </div>
+        <a class="campaign-explore" href="@Url.Action("Index", "Event")">View all events <i class="bi bi-arrow-up-right"></i></a>
+    </div>
+    @if (events.Any())
+    {
+        <div class="campaign-event-line" aria-hidden="true"></div>
+        <div class="campaign-event-track">
+            @foreach (var item in events)
             {
-                var eventImage = !String.IsNullOrWhiteSpace(featured.EventImagePath)
-                    ? Url.Content(featured.EventImagePath)
-                    : Url.Content("~/Uploads/Website/e45ddc09-8844-4bab-8c66-86f52f0dbacd.png");
-
-                <div class="bhagwa-program-layout">
-                    <article class="bhagwa-feature">
-                        <a href="@Url.Action("Details", "Event", new { id = featured.EventId })"
-                           class="bhagwa-feature-image">
-                            <img src="@eventImage" alt="@featured.Title" />
-                            <span>@getBadge(featured.EventDate)</span>
-                        </a>
-
-                        <div class="bhagwa-feature-info">
-                            <div class="bhagwa-date-tile">
-                                <strong>@featured.EventDate.ToString("dd")</strong>
-                                <span>@featured.EventDate.ToString("MMM").ToUpper()</span>
-                            </div>
-
-                            <div class="bhagwa-feature-copy">
-                                <div class="bhagwa-meta">
-                                    @if (!String.IsNullOrWhiteSpace(featured.EventTime))
-                                    {
-                                        <span><i class="bi bi-clock-fill"></i>@featured.EventTime</span>
-                                    }
-                                    @if (!String.IsNullOrWhiteSpace(featured.EventLocation))
-                                    {
-                                        <span><i class="bi bi-geo-alt-fill"></i>@featured.EventLocation</span>
-                                    }
-                                </div>
-                                <h3>@featured.Title</h3>
-                                <p>@featured.ShortDescription</p>
-                                <a href="@Url.Action("Details", "Event", new { id = featured.EventId })">
-                                    View Details
-                                    <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <div class="bhagwa-agenda">
-                        @foreach (var item in agenda)
-                        {
-                            <a href="@Url.Action("Details", "Event", new { id = item.EventId })"
-                               class="bhagwa-agenda-item">
-                                <div class="bhagwa-agenda-date">
-                                    <strong>@item.EventDate.ToString("dd")</strong>
-                                    <span>@item.EventDate.ToString("MMM").ToUpper()</span>
-                                </div>
-                                <div>
-                                    <span class="bhagwa-chip">@getBadge(item.EventDate)</span>
-                                    <h3>@item.Title</h3>
-                                    @if (!String.IsNullOrWhiteSpace(item.EventLocation))
-                                    {
-                                        <p><i class="bi bi-geo-alt-fill"></i>@item.EventLocation</p>
-                                    }
-                                </div>
-                            </a>
-                        }
+                var image = String.IsNullOrWhiteSpace(item.EventImagePath) ? Url.Content("~/Content/images/event-placeholder.jpg") : Url.Content(item.EventImagePath);
+                <article class="campaign-event-card">
+                    <span class="campaign-event-clip" aria-hidden="true"></span>
+                    <a class="campaign-event-image" href="@Url.Action("Details", "Event", new { id = item.EventId })">
+                        <img src="@image" alt="@item.Title" loading="lazy" />
+                        <time datetime="@item.EventDate.ToString("yyyy-MM-dd")"><strong>@item.EventDate.ToString("dd")</strong><span>@item.EventDate.ToString("MMM").ToUpper()</span></time>
+                    </a>
+                    <div class="campaign-event-copy">
+                        <h3><a href="@Url.Action("Details", "Event", new { id = item.EventId })">@item.Title</a></h3>
+                        <p>
+                            @if (!String.IsNullOrWhiteSpace(item.EventTime)) { <span><i class="bi bi-clock"></i> @item.EventTime</span> }
+                            @if (!String.IsNullOrWhiteSpace(item.EventLocation)) { <span><i class="bi bi-geo-alt"></i> @item.EventLocation</span> }
+                        </p>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-info text-center mb-0">No Upcoming Events Available.</div>
+                </article>
             }
         </div>
-    </div>
+    }
+    else
+    {
+        var placeholders = new[]
+        {
+            new { Title = "Jan Sampark Programme", Location = "Constituency programme", Image = "~/Uploads/Gallery/Images/00e5f64e-cf31-4c0e-84c0-13667faf57ac.jpg" },
+            new { Title = "Public Meeting", Location = "Venue to be announced", Image = "~/Uploads/Gallery/Images/3a298230-ca24-4844-b773-1938908044f6.jpg" },
+            new { Title = "Youth Dialogue", Location = "Schedule coming soon", Image = "~/Uploads/Gallery/Images/3be79d89-5bfb-4437-8501-8ad14e32c42c.jpg" },
+            new { Title = "Community Outreach", Location = "Details to be announced", Image = "~/Uploads/Gallery/Images/3cf3085e-19b4-4c27-b9f3-d5af176fa68f.jpg" }
+        };
+        <div class="campaign-event-line" aria-hidden="true"></div>
+        <div class="campaign-event-track campaign-event-placeholders">
+            @foreach (var item in placeholders)
+            {
+                <article class="campaign-event-card is-placeholder">
+                    <span class="campaign-event-clip" aria-hidden="true"></span>
+                    <a class="campaign-event-image" href="@Url.Action("Index", "Event")">
+                        <img src="@Url.Content(item.Image)" alt="" loading="lazy" />
+                        <span class="campaign-event-coming"><i class="bi bi-calendar-event"></i> Coming soon</span>
+                    </a>
+                    <div class="campaign-event-copy">
+                        <h3><a href="@Url.Action("Index", "Event")">@item.Title</a></h3>
+                        <p><span><i class="bi bi-geo-alt"></i> @item.Location</span></p>
+                    </div>
+                </article>
+            }
+        </div>
+        <p class="campaign-event-placeholder-note"><i class="bi bi-info-circle"></i> Programme dates and venues will appear here after they are announced.</p>
+    }
 </section>
-
-<style>
-    .bhagwa-program-section {
-        padding: 30px 0;
-        background:
-            linear-gradient(180deg, #fff7ed 0%, #ffffff 58%, #f8fafc 100%);
-    }
-
-    .bhagwa-program-shell {
-        position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(234, 88, 12, .16);
-        border-radius: 12px;
-        padding: 18px;
-        background:
-            linear-gradient(135deg, rgba(255, 237, 213, .88), rgba(255,255,255,.96) 45%, rgba(255,247,237,.82));
-        box-shadow: 0 16px 36px rgba(154, 52, 18, .08);
-    }
-
-    .bhagwa-program-shell::before {
-        content: "";
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 7px;
-        background: linear-gradient(180deg, #ff7a00, #dc2626);
-    }
-
-    .bhagwa-program-head {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 14px;
-        padding-left: 10px;
-    }
-
-    .bhagwa-program-head span {
-        display: inline-flex;
-        margin-bottom: 5px;
-        color: #c2410c;
-        font-size: .75rem;
-        font-weight: 900;
-        text-transform: uppercase;
-    }
-
-    .bhagwa-program-head h2 {
-        margin: 0;
-        color: #111827;
-        font-size: clamp(1.35rem, 1.85vw, 2rem);
-        line-height: 1.12;
-        font-weight: 900;
-    }
-
-    .bhagwa-program-head p {
-        max-width: 720px;
-        margin: 6px 0 0;
-        color: #64748b;
-        font-size: .9rem;
-        line-height: 1.5;
-    }
-
-    .bhagwa-program-head > a {
-        flex: 0 0 auto;
-        border-radius: 6px;
-        padding: 9px 14px;
-        color: #fff;
-        background: #ea580c;
-        font-size: .84rem;
-        font-weight: 900;
-        text-decoration: none;
-        box-shadow: 0 10px 20px rgba(234, 88, 12, .22);
-    }
-
-    .bhagwa-program-layout {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: minmax(0, 1.18fr) minmax(330px, .82fr);
-        gap: 14px;
-    }
-
-    .bhagwa-feature {
-        overflow: hidden;
-        border: 1px solid rgba(234, 88, 12, .14);
-        border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 12px 28px rgba(154, 52, 18, .07);
-    }
-
-    .bhagwa-feature-image {
-        position: relative;
-        display: block;
-        height: clamp(220px, 24vw, 320px);
-        overflow: hidden;
-        background: #111827;
-    }
-
-    .bhagwa-feature-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform .28s ease;
-    }
-
-    .bhagwa-feature:hover .bhagwa-feature-image img {
-        transform: scale(1.035);
-    }
-
-    .bhagwa-feature-image span {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        border-radius: 999px;
-        padding: 5px 10px;
-        color: #fff;
-        background: #16a34a;
-        font-size: .7rem;
-        font-weight: 900;
-    }
-
-    .bhagwa-feature-info {
-        display: grid;
-        grid-template-columns: 74px minmax(0, 1fr);
-        gap: 14px;
-        padding: 14px;
-    }
-
-    .bhagwa-date-tile,
-    .bhagwa-agenda-date {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        color: #fff;
-        background: linear-gradient(160deg, #ff7a00, #c2410c);
-        box-shadow: 0 10px 20px rgba(234, 88, 12, .18);
-    }
-
-    .bhagwa-date-tile {
-        height: 78px;
-    }
-
-    .bhagwa-date-tile strong,
-    .bhagwa-agenda-date strong {
-        font-size: 1.55rem;
-        line-height: 1;
-        font-weight: 900;
-    }
-
-    .bhagwa-date-tile span,
-    .bhagwa-agenda-date span {
-        margin-top: 5px;
-        font-size: .68rem;
-        font-weight: 900;
-    }
-
-    .bhagwa-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        color: #c2410c;
-        font-size: .78rem;
-        font-weight: 800;
-    }
-
-    .bhagwa-meta span {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .bhagwa-feature-copy h3 {
-        margin: 8px 0 7px;
-        color: #111827;
-        font-size: clamp(1.15rem, 1.45vw, 1.55rem);
-        line-height: 1.22;
-        font-weight: 900;
-    }
-
-    .bhagwa-feature-copy p {
-        margin: 0 0 10px;
-        color: #64748b;
-        font-size: .9rem;
-        line-height: 1.5;
-    }
-
-    .bhagwa-feature-copy > a {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        color: #c2410c;
-        text-decoration: none;
-        font-size: .86rem;
-        font-weight: 900;
-    }
-
-    .bhagwa-agenda {
-        display: grid;
-        gap: 10px;
-    }
-
-    .bhagwa-agenda-item {
-        display: grid;
-        grid-template-columns: 64px minmax(0, 1fr);
-        gap: 12px;
-        align-items: center;
-        min-height: 94px;
-        border: 1px solid rgba(234, 88, 12, .14);
-        border-radius: 10px;
-        padding: 10px;
-        color: inherit;
-        background: #fff;
-        text-decoration: none;
-        box-shadow: 0 10px 24px rgba(154, 52, 18, .055);
-        transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .bhagwa-agenda-item:hover {
-        transform: translateX(4px);
-        box-shadow: 0 14px 30px rgba(154, 52, 18, .09);
-    }
-
-    .bhagwa-agenda-date {
-        height: 66px;
-    }
-
-    .bhagwa-chip {
-        display: inline-flex;
-        border-radius: 999px;
-        padding: 3px 8px;
-        color: #9a3412;
-        background: #ffedd5;
-        font-size: .64rem;
-        font-weight: 900;
-    }
-
-    .bhagwa-agenda-item h3 {
-        margin: 5px 0 4px;
-        color: #111827;
-        font-size: .95rem;
-        line-height: 1.3;
-        font-weight: 900;
-    }
-
-    .bhagwa-agenda-item p {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        margin: 0;
-        color: #64748b;
-        font-size: .78rem;
-        font-weight: 700;
-    }
-
-    @@media (max-width: 991px) {
-        .bhagwa-program-layout {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @@media (max-width: 575px) {
-        .bhagwa-program-section {
-            padding: 22px 0;
-        }
-
-        .bhagwa-program-shell {
-            padding: 14px;
-        }
-
-        .bhagwa-program-head {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .bhagwa-program-head > a {
-            width: 100%;
-            text-align: center;
-        }
-
-        .bhagwa-feature-info {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>

@@ -23,6 +23,8 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu
             ShowInQuickLinks = false;
 
             MenuLevel = 0;
+            ShowOnDesktop = true;
+            ShowOnMobile = true;
         }
 
         public int MenuId { get; set; }
@@ -87,6 +89,42 @@ namespace PoliticalLeaderPortal.Areas.Admin.ViewModels.Menu
         public string PageTitle { get; set; }
 
         public string MetaDescription { get; set; }
+
+        [Display(Name = "Menu Location")]
+        public string MenuLocation { get; set; }
+
+        [Display(Name = "Login Required")]
+        public bool RequireLogin { get; set; }
+
+        [Display(Name = "Required Role")]
+        public string RequiredRole { get; set; }
+
+        [Display(Name = "Required Permission Key")]
+        public string RequiredPermissionKey { get; set; }
+
+        [Display(Name = "Campaign Context Required")]
+        public bool RequireCampaignContext { get; set; }
+
+        [Display(Name = "Feature Key")]
+        public string FeatureKey { get; set; }
+
+        [Display(Name = "Visible From")]
+        public System.DateTime? VisibleFrom { get; set; }
+
+        [Display(Name = "Visible Until")]
+        public System.DateTime? VisibleUntil { get; set; }
+
+        [Display(Name = "Show on Desktop")]
+        public bool ShowOnDesktop { get; set; }
+
+        [Display(Name = "Show on Mobile")]
+        public bool ShowOnMobile { get; set; }
+
+        [Display(Name = "Language Code")]
+        public string LanguageCode { get; set; }
+
+        [Display(Name = "Badge Key")]
+        public string BadgeKey { get; set; }
 
         public List<SelectListItem> ParentMenus { get; set; }
     }

@@ -1,0 +1,10 @@
+@model PoliticalLeaderPortal.Areas.Admin.ViewModels.Poll.PollCategoryVM
+@{
+    ViewBag.Title = "Edit Poll Category";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@Html.Partial("_Form", Model)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,46 +1,176 @@
 ﻿/* ===========================
-   HEADER
+   COMPACT PUBLIC HEADER
 =========================== */
 
 .site-header {
     background: #ffffff;
-    padding: 15px 0;
+    color: #1f2937;
+    padding: 0;
     border-bottom: 1px solid #e5e7eb;
 }
 
-.header-logo img {
-    max-height: 80px;
+    .site-header .container-fluid {
+        padding-right: 24px;
+        padding-left: 24px;
+    }
+
+    .site-header .row {
+        min-height: 56px;
+    }
+
+/* Logo */
+.header-logo {
+    height: 56px;
+    display: flex;
+    align-items: center;
 }
 
-.header-title h1 {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 700;
-    color: #FF671F;
+    .header-logo a {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        text-decoration: none;
+    }
+
+    .header-logo img {
+        width: auto;
+        max-width: 100%;
+        max-height: 48px;
+        object-fit: contain;
+        display: block;
+    }
+
+/* Website name and tagline */
+.header-title {
+    min-width: 0;
+    padding: 4px 0;
 }
 
-.header-title p {
-    margin: 0;
-    font-size: 15px;
-    color: #6b7280;
-}
+    .header-title h1 {
+        margin: 0;
+        color: #FF671F;
+        font-size: 25px;
+        font-weight: 800;
+        line-height: 1.05;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
+    .header-title p {
+        margin: 3px 0 0;
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+/* Right-side content */
 .header-right {
+    min-height: 56px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 15px;
-}
-
-.leader-photo img {
-    width: 75px;
-    height: 75px;
-    object-fit: cover;
-    border: 3px solid #FF671F;
-}
-
-.auth-buttons {
     gap: 10px;
+}
+
+.leader-photo {
+    display: flex;
+    align-items: center;
+}
+
+    .leader-photo img {
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border: 2px solid #FF671F;
+    }
+
+/* Sign-in and sign-up buttons */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .auth-buttons .btn {
+        min-width: 84px;
+        min-height: 36px;
+        padding: 7px 14px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .auth-buttons .btn-outline-warning {
+        color: #b45309;
+        border-color: #d97706;
+        background: #ffffff;
+    }
+
+        .auth-buttons .btn-outline-warning:hover,
+        .auth-buttons .btn-outline-warning:focus {
+            color: #ffffff;
+            border-color: #d97706;
+            background: #d97706;
+        }
+
+    .auth-buttons .btn-warning {
+        color: #111827;
+        border-color: #e0a800;
+        background: #e0a800;
+    }
+
+        .auth-buttons .btn-warning:hover,
+        .auth-buttons .btn-warning:focus {
+            color: #111827;
+            border-color: #f0b90b;
+            background: #f0b90b;
+        }
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 991px) {
+    .site-header .container-fluid {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .site-header .row {
+        min-height: 52px;
+    }
+
+    .header-logo,
+    .header-right {
+        min-height: 52px;
+        height: 52px;
+    }
+
+        .header-logo img {
+            max-height: 44px;
+        }
+
+    .header-title h1 {
+        font-size: 21px;
+    }
+
+    .header-title p {
+        font-size: 11px;
+    }
+
+    .leader-photo img {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 /* ===========================
@@ -48,20 +178,45 @@
 =========================== */
 
 @media (max-width: 767px) {
-
-    .site-header {
-        padding: 10px 0;
+    .site-header .container-fluid {
+        padding-right: 12px;
+        padding-left: 12px;
     }
 
-    .header-logo img {
-        max-height: 55px;
+    .site-header .row {
+        min-height: 48px;
     }
 
+    .header-logo,
+    .header-right {
+        min-height: 48px;
+        height: 48px;
+    }
+
+        .header-logo img {
+            max-height: 40px;
+        }
+
+    .header-title {
+        padding: 2px 4px;
+    }
+
+        .header-title h1 {
+            font-size: 18px;
+        }
+
+        .header-title p {
+            margin-top: 2px;
+            font-size: 10px;
+        }
+}
+
+@media (max-width: 575px) {
     .header-title h1 {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .header-title p {
-        font-size: 12px;
+        display: none;
     }
 }

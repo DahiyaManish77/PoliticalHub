@@ -1,0 +1,61 @@
+﻿@model PoliticalLeaderPortal.Areas.Admin.ViewModels.ElectionCampaignMaster.ElectionCampaignDashboardVM
+@{ ViewBag.Title = "Election & Campaign Masters"; Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
+<link href="@Url.Content("~/Areas/Admin/Content/election-campaign-master.css")" rel="stylesheet" />
+<div class="ecm-page">
+    <div class="ecm-head">
+        <div><div class="ecm-kicker">Election Operations</div><h1>Election & Campaign Masters</h1><p>Maintain election schedules, candidate campaigns, constituency ownership and campaign lifecycle.</p></div>
+        @if (ViewBag.CanCreate == true)
+        {<div class="ecm-actions"><a class="btn btn-outline-primary" href="@Url.Action("CreateElection")"><i class="fa fa-calendar-plus"></i> New Election</a><a class="btn btn-primary" href="@Url.Action("CreateCampaign")"><i class="fa fa-bullhorn"></i> New Campaign</a></div>}
+    </div>
+    @if (TempData["Success"] != null)
+    {<div class="alert alert-success">@TempData["Success"]</div>}
+    <div class="ecm-stats">
+        <div class="ecm-stat"><span>Total Elections</span><strong>@Model.TotalElections</strong></div><div class="ecm-stat"><span>Active Elections</span><strong>@Model.ActiveElections</strong></div><div class="ecm-stat"><span>Total Campaigns</span><strong>@Model.TotalCampaigns</strong></div><div class="ecm-stat"><span>Active Campaigns</span><strong>@Model.ActiveCampaigns</strong></div>
+    </div>
+    <form method="get" class="ecm-filter"><input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Search election, campaign, candidate or constituency" /><button class="btn btn-dark">Search</button><a class="btn btn-light" href="@Url.Action("Index")">Reset</a></form>
+    <div class="ecm-card">
+        <div class="ecm-card-head"><h3>Election Masters</h3></div><div class="table-responsive">
+            <table class="table align-middle">
+                <thead><tr><th>Election</th><th>Type / Year</th><th>Polling</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                    @foreach (var x in Model.Elections)
+                    {
+                        <tr><td><strong>@x.ElectionName</strong><small>@x.StateName @x.DistrictName</small></td><td>@x.ElectionType / @x.ElectionYear</td><td>@(x.PollingDate.HasValue?x.PollingDate.Value.ToString("dd MMM yyyy"):"Not scheduled")</td><td><span class="badge bg-secondary">@x.Status</span></td><td>@if (ViewBag.CanEdit == true)
+                        {<a class="btn btn-sm btn-outline-primary" href="@Url.Action("EditElection",new{id=x.ElectionId})">Edit</a>} @if (ViewBag.CanDelete == true)
+                        {
+                            using (Html.BeginForm("DeleteElection", "ElectionCampaignMaster", new { id = x.ElectionId }, FormMethod.Post, new { @class = "d-inline", onsubmit = "return confirm('Delete this election? It will only delete when no campaign is linked.');" }))
+                            {@Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger">Delete</button>}
+                    }</td></tr>
+}
+                    @if (!Model.Elections.Any())
+                    {
+                        <tr><td colspan="5" class="text-center text-muted py-4">No election masters found.</td></tr>
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ecm-card">
+        <div class="ecm-card-head"><h3>Campaign Masters</h3></div><div class="table-responsive">
+            <table class="table align-middle">
+                <thead><tr><th>Campaign</th><th>Candidate / Constituency</th><th>Period</th><th>Progress</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                    @foreach (var x in Model.Campaigns)
+                    {
+                        <tr><td><strong>@x.CampaignName</strong><small>@x.CampaignCode · @x.ElectionName</small></td><td>@x.CandidateName<small>@x.ConstituencyName @x.ConstituencyNumber</small></td><td>@x.StartDate.ToString("dd MMM yyyy") – @(x.EndDate.HasValue?x.EndDate.Value.ToString("dd MMM yyyy"):"Open")</td><td><div class="progress"><div class="progress-bar" style="width:@x.ProgressPercent%">@x.ProgressPercent%</div></div></td><td><span class="badge bg-primary">@x.Status</span>@if (x.IsPrimary)
+                        {<span class="badge bg-success">Primary</span>}</td><td>@if (ViewBag.CanEdit == true)
+                        {<a class="btn btn-sm btn-outline-primary" href="@Url.Action("EditCampaign",new{id=x.CampaignMasterId})">Edit</a>} @if (ViewBag.CanDelete == true)
+                        {
+                            using (Html.BeginForm("DeleteCampaign", "ElectionCampaignMaster", new { id = x.CampaignMasterId }, FormMethod.Post, new { @class = "d-inline", onsubmit = "return confirm('Archive this campaign?');" }))
+                            {@Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger">Archive</button>}
+                    }</td></tr>
+}
+                    @if (!Model.Campaigns.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-4">No campaign masters found.</td></tr>
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
